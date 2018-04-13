@@ -1,6 +1,7 @@
 package com.nsoft.nphysics;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -8,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class ArrowActor extends Actor{
 
+	//POLYGON-TYPE 1
+	
 	public static ArrowActor debug;
 	
 	private Vector2 start,end;
@@ -45,9 +48,9 @@ public class ArrowActor extends Actor{
 		
 		//TRIANGLE 2
 		
-		vertices[3][0] = len - height*2;
+		vertices[3][0] = len - height*2 -2;
 		vertices[3][1] = height;
-		vertices[4][0] = len - height*2;
+		vertices[4][0] = len - height*2 -2;
 		vertices[4][1] = -height;
 		vertices[5][0] = len;
 		vertices[5][1] = 0;
@@ -73,15 +76,15 @@ public class ArrowActor extends Actor{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		super.draw(batch, parentAlpha);
-		Sandbox.shaperenderer.triangle(
+		Sandbox.shapefill.setColor(Color.BLACK);
+		Sandbox.shapefill.triangle(
 				buffervertices[0][0], 
 				buffervertices[0][1], 
 				buffervertices[1][0],
 				buffervertices[1][1], 
 				buffervertices[2][0], 
 				buffervertices[2][1]);
-		Sandbox.shaperenderer.triangle(
+		Sandbox.shapefill.triangle(
 				buffervertices[3][0], 
 				buffervertices[3][1], 
 				buffervertices[4][0],

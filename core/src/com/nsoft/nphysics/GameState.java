@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class GameState {
 
-	static State current;
+	static State current = State.START;
 	
 	
 	public static boolean is(State s) {
@@ -22,6 +22,7 @@ public class GameState {
 
 enum State{
 	
+	START("Bienvenido a NPhysics2"),
 	HOOK_FORCE_ARROW("Dibuja el vector de fuerza"),
 	HOOK_FORCE_ARROW2("Dibuja el vector de fuerza")
 ;	

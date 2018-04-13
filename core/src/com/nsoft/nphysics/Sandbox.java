@@ -2,20 +2,30 @@ package com.nsoft.nphysics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Sandbox extends Stage {
 
-	public static ShapeRenderer shaperenderer;
+	public static ShapeRenderer shapefill;
+	public static ShapeRenderer shapeline;
+	public static ShapeRenderer shapepoint;
+	
+	public static BitmapFont bitmapfont;
+	
 	public Sandbox() {
 		super();
 		
 		//VARIABLE INIT:
-		shaperenderer = new ShapeRenderer();
-		shaperenderer.setColor(Color.BLACK);
+		shapefill = new ShapeRenderer();
+		shapeline = new ShapeRenderer();
+		shapepoint = new ShapeRenderer();
+		
+		bitmapfont = new BitmapFont();
 		init();
 	}
 	
@@ -26,11 +36,16 @@ public class Sandbox extends Stage {
 	}
 	
 	private void initdebug() {
-		
+		/*
+		Vector2 center = new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		GameState.set(State.HOOK_FORCE_ARROW);
-		ArrowActor.debug = new ArrowActor(new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2));
+		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
 		addActor(ArrowActor.debug);
+		
+		Axis axis = new Axis(new Vector2(center.x, center.y), 0);
+		addActor(axis);*/
+		
 	}
 	
 	
@@ -38,9 +53,15 @@ public class Sandbox extends Stage {
 	@Override
 	public void draw() {
 		
-		shaperenderer.begin(ShapeType.Filled);
+		shapefill.begin(ShapeType.Filled);
+		shapepoint.begin(ShapeType.Point);
+		shapeline.begin(ShapeType.Line);
+		
 		super.draw();
-		shaperenderer.end();
+		
+		shapefill.end();
+		shapepoint.end();
+		shapeline.end();
 	}
 	
 	@Override

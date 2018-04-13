@@ -1,0 +1,115 @@
+package com.nsoft.nphysics;
+
+import static com.nsoft.nphysics.Util.*;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
+public class Axis extends Actor{
+
+	//POLYGON-TYPE-2
+	
+	private Vector2 point;
+	private float anglerad;
+	
+	private float[][] vertices = new float[6][2];
+	private float[][] buffervertices = new float[6][2];
+	
+	private float size = 10;
+	private float lineDistance;
+	
+	public Axis(Vector2 point, float anglerad) {
+
+		this.point = point;
+		this.anglerad = anglerad;
+		
+		updateVertices();
+	}
+
+	public Vector2 getPoint() { return point; }
+
+	public void setPoint(Vector2 point) { this.point = point;  updateProjection();}
+
+	public float getAnglerad() { return anglerad; }
+
+	public void setAnglerad(float anglerad) { this.anglerad = anglerad; updateProjection();}
+	
+	public void setSize(float size) {this.size = size; updateVertices();}
+	
+	private void updateVertices() {
+		
+		//HORITZONTAL LINE
+		vertices[0][0] = -UNIT*size;
+		vertices[0][1] = 0;
+		vertices[1][0] = UNIT*size;
+		vertices[1][1] = 0;
+		
+		//VERTICAL LINE
+		vertices[2][0] = 0;
+		vertices[2][1] = -UNIT*size;
+		vertices[3][0] = 0;
+		vertices[3][1] = UNIT*size;
+
+		
+		//X-TEXT-POS
+		vertices[4][0] = 10;
+		vertices[4][1] = -10;
+		
+		//Y-TEXT-POS
+		vertices[5][0] = -10;
+		vertices[5][1] = 10;
+		
+		lineDistance = UNIT*size;
+		
+		updateProjection();
+	}
+	
+	private void updateProjection() {
+		
+		Util.proj(vertices, buffervertices, point.x, point.y, anglerad);
+	}
+	//----------------ACTOR-METHODS-------------------
+	
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		
+		for (int j = 0; j < 4; j++) {
+			
+			if(j > 1)Sandbox.shapeline.setColor(Color.RED);
+			else Sandbox.shapeline.setColor(Color.GREEN);
+			
+			Gdx.gl.glLineWidth(size/3);
+			float cos = (buffervertices[j][0] - point.x)/lineDistance;
+			float sin = (buffervertices[j][1] - point.y)/lineDistance;
+			
+			int pair = 0;
+			for (float i = -lineDistance + lineDistance/10; i < lineDistance*2; i+=lineDistance/10) {
+				
+				if(pair % 3 == 0) {
+					
+					Sandbox.shapeline.line(
+							(i*cos) + buffervertices[j][0], 
+							(i*sin) + buffervertices[j][1], 
+							((i + lineDistance/10) * cos) + buffervertices[j][0], 
+							((i + lineDistance/10) * sin) + buffervertices[j][1]);
+				}
+				
+				pair++;
+			}
+		}
+		
+		Sandbox.bitmapfont.draw(batch, "x", buffervertices[4][0], buffervertices[4][1]);
+		Sandbox.bitmapfont.draw(batch, "y", buffervertices[5][0], buffervertices[5][1]);
+		
+	}
+	
+	@Override
+	public void act(float delta) {
+		// TODO Auto-generated method stub
+		super.act(delta);
+	}
+}
