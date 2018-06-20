@@ -16,12 +16,15 @@ public class NPhysics extends ApplicationAdapter {
 		current = this;
 		sandbox = new Sandbox();
 		Gdx.input.setInputProcessor(sandbox);
+		System.out.println(Thread.currentThread());
 	}
 
+	boolean first = true;
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		if(first) { System.out.println(Thread.currentThread()); first = false;}
 		sandbox.draw();
 		sandbox.act();
 	}

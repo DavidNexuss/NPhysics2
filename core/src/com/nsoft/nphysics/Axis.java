@@ -19,7 +19,7 @@ public class Axis extends Actor{
 	private float[][] vertices = new float[6][2];
 	private float[][] buffervertices = new float[6][2];
 	
-	private float size = 10;
+	private float size = 5;
 	private float lineDistance;
 	
 	public Axis(Vector2 point, float anglerad) {
@@ -77,19 +77,21 @@ public class Axis extends Actor{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
+		Sandbox.shapeline.begin(ShapeType.Line);
+		Gdx.gl.glLineWidth(3);
+		
 		for (int j = 0; j < 4; j++) {
 			
 			if(j > 1)Sandbox.shapeline.setColor(Color.RED);
 			else Sandbox.shapeline.setColor(Color.GREEN);
 			
-			Gdx.gl.glLineWidth(size/3);
 			float cos = (buffervertices[j][0] - point.x)/lineDistance;
 			float sin = (buffervertices[j][1] - point.y)/lineDistance;
 			
 			int pair = 0;
 			for (float i = -lineDistance + lineDistance/10; i < lineDistance*2; i+=lineDistance/10) {
 				
-				if(pair % 3 == 0) {
+				if(pair % 2 == 0) {
 					
 					Sandbox.shapeline.line(
 							(i*cos) + buffervertices[j][0], 
@@ -102,6 +104,7 @@ public class Axis extends Actor{
 			}
 		}
 		
+		Sandbox.shapeline.end();
 		Sandbox.bitmapfont.draw(batch, "x", buffervertices[4][0], buffervertices[4][1]);
 		Sandbox.bitmapfont.draw(batch, "y", buffervertices[5][0], buffervertices[5][1]);
 		

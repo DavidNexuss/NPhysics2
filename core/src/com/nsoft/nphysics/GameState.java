@@ -20,9 +20,11 @@ public class GameState {
 	}
 }
 
-enum State{
+enum State {
 	
 	START("Bienvenido a NPhysics2"),
+	CREATE_POINT("Crea un punto"),
+	DRAG_POINT("Mueve un punto"),
 	HOOK_FORCE_ARROW("Dibuja el vector de fuerza"),
 	HOOK_FORCE_ARROW2("Dibuja el vector de fuerza")
 ;	

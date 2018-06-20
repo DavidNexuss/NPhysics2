@@ -1,0 +1,17 @@
+uniform sampler2D u_texture;
+
+void main()
+{
+    
+    float x = mod(gl_FragCoord.x,20.0);
+    float y = mod(gl_FragCoord.y,20.0);
+    
+    if(int(x) == 0 || int(y) == 0){
+    
+    	gl_FragColor = vec4(0.2,0.2,0.2,1.0);
+    }else{
+    
+    	gl_FragColor = vec4(1.0,1.0,1.0,1.0);
+    }
+    // Output to screen
+}

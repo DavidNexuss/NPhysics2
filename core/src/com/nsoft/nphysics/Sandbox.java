@@ -3,12 +3,13 @@ package com.nsoft.nphysics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
+import static com.nsoft.nphysics.Util.*;
 public class Sandbox extends Stage {
 
 	public static ShapeRenderer shapefill;
@@ -26,6 +27,7 @@ public class Sandbox extends Stage {
 		shapepoint = new ShapeRenderer();
 		
 		bitmapfont = new BitmapFont();
+		
 		init();
 	}
 	
@@ -33,19 +35,40 @@ public class Sandbox extends Stage {
 	private void init() {
 		
 		initdebug();
+		setDebugAll(true);
+		addActor(Point.lastPoint);
 	}
 	
 	private void initdebug() {
-		/*
-		Vector2 center = new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-		GameState.set(State.HOOK_FORCE_ARROW);
+		
+
+		Vector2 center = new Vector2(UNIT*8,UNIT*8);
+		GameState.set(State.CREATE_POINT);
+		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
-		addActor(ArrowActor.debug);
+		ArrowActor.debug.setColor(Color.PURPLE);
+		
 		
 		Axis axis = new Axis(new Vector2(center.x, center.y), 0);
-		addActor(axis);*/
 		
+		
+		ArrowActor blue = new ArrowActor(new Vector2(0, 0), new Vector2(200, 200));
+		ArrowActor yellow = new ArrowActor(center, new Vector2(center).add(-UNIT*5,UNIT*6));
+		ArrowActor cyan = new ArrowActor(center, new Vector2(center).add(UNIT*5,-UNIT*5));
+		
+		blue.setColor(Color.BLUE);
+		yellow.setColor(Color.OLIVE);
+		cyan.setColor(Color.CYAN);
+		
+		addActor(blue);
+		addActor(yellow);
+		addActor(cyan);
+		
+		addActor(ArrowActor.debug);
+		addActor(axis);
+		*/
+	//	addActor(new SimpleArrow(center, new Vector2(center).add(200,200)));
 	}
 	
 	
@@ -53,17 +76,22 @@ public class Sandbox extends Stage {
 	@Override
 	public void draw() {
 		
+
+		drawGrid();
 		shapefill.begin(ShapeType.Filled);
-		shapepoint.begin(ShapeType.Point);
-		shapeline.begin(ShapeType.Line);
-		
+
 		super.draw();
 		
 		shapefill.end();
-		shapepoint.end();
-		shapeline.end();
+		
+
 	}
 	
+
+	public float snapGrid(float v) {
+		
+		return Util.UNIT*Math.round(v/Util.UNIT);
+	}
 	@Override
 	public void act() {
 
@@ -73,27 +101,73 @@ public class Sandbox extends Stage {
 	//--------DRAW-METHODS-----------------
 	
 	
+	public static void drawGrid() {
+		
+		shapeline.begin(ShapeType.Line);
+		shapeline.setColor(Color.GRAY);
+		Gdx.gl.glLineWidth(1);
+		
+		int X = Gdx.graphics.getWidth()/Util.UNIT;
+		int Y = Gdx.graphics.getHeight()/Util.UNIT;
+		
+		for (int i = 0; i < Gdx.graphics.getWidth(); i+=UNIT) {
+			
+			shapeline.line(0, i, Gdx.graphics.getWidth(), i);
+			shapeline.line(i, 0, i, Gdx.graphics.getHeight());
+		}
+		
+		shapeline.end();
+
+	}
+	
 	//---------------------INPUT--------------------------//
 	
-	
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		
+		switch (GameState.current) {
+		case DRAG_POINT:
+			
+			break;
+
+		default:
+
+			return super.touchDragged(screenX, screenY, pointer);
+		}
+		
+		return true;
+	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
+		System.out.println(Thread.currentThread());
 		switch (GameState.current) {
+		case CREATE_POINT:
+			
+			Point.lastPoint.isTemp = false;
+			Point.lastPoint = new Point(snapGrid(screenX),snapGrid(Gdx.graphics.getHeight()- screenY), true);
+			addActor(Point.lastPoint);
+			break;
+		case DRAG_POINT:
+			
+			break;
 		case HOOK_FORCE_ARROW2:
 			
 			ArrowActor.unhook();
 			break;
-
+			
 		default:
-			break;
+			return super.touchDown(screenX, screenY, pointer, button);
 		}
-		return super.touchDown(screenX, screenY, pointer, button);
+		return true;
 	}
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		
 		switch (GameState.current) {
+		case CREATE_POINT:
+			
+			Point.lastPoint.setPosition(snapGrid(screenX),snapGrid(Gdx.graphics.getHeight()- screenY));
 		case HOOK_FORCE_ARROW2:
 			
 			ArrowActor.updateHook(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
