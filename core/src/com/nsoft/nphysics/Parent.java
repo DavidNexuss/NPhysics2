@@ -1,6 +1,10 @@
 package com.nsoft.nphysics;
 
-public interface Parent {
+import java.util.ArrayList;
 
-	public void updatePosition(float x,float y,Object p);
+public interface Parent<T> {
+
+	public void updatePosition(float x,float y,T p);
+	
+	public ArrayList<T> getChildList();
 }

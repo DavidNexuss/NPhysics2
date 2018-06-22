@@ -43,7 +43,13 @@ public class Sandbox extends Stage {
 		
 
 		Vector2 center = new Vector2(UNIT*8,UNIT*8);
-		GameState.set(State.CREATE_POINT);
+		GameState.set(State.CREATE_SEGMENTS);
+		
+		for (int i = 0; i < 20; i++) {
+			
+			addActor(new Point((float)Math.random()*Gdx.graphics.getWidth(),(float) Math.random()*Gdx.graphics.getHeight(), false));
+		}
+		
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
@@ -83,7 +89,7 @@ public class Sandbox extends Stage {
 		super.draw();
 		
 		shapefill.end();
-		
+		Gdx.gl.glLineWidth(1);
 
 	}
 	
@@ -155,7 +161,9 @@ public class Sandbox extends Stage {
 			
 			ArrowActor.unhook();
 			break;
+		case CREATE_SEGMENT:
 			
+			return super.touchDown(screenX, screenY, pointer, button);
 		default:
 			return super.touchDown(screenX, screenY, pointer, button);
 		}

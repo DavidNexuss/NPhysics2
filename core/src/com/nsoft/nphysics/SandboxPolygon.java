@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class SandboxPolygon extends Actor implements Parent{
+public class SandboxPolygon extends Actor implements Parent<Segment>{
 
 	ArrayList<Point> points;
 	private boolean end;
@@ -21,10 +21,17 @@ public class SandboxPolygon extends Actor implements Parent{
 		
 		end = true;
 	}
+	
 	@Override
-	public void updatePosition(float x, float y, Object p) {
+	public void updatePosition(float x, float y, Segment p) {
 		
 		
+	}
+
+	@Override
+	public ArrayList<Segment> getChildList() {
+		
+		return null;
 	}
 
 }

@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class ArrowActor extends Actor{
+public class ArrowActor extends Actor implements ClickIn<ArrowActor>{
 
 	//POLYGON-TYPE 1
 	
@@ -162,6 +162,11 @@ public class ArrowActor extends Actor{
 		});
 	}
 	
+	@Override
+	public void select(ArrowActor dis) {
+		
+		selected = dis;
+	}
 	//---------------CHECK-IF-POINT-IS-INSIDE-ARROW---------------
 	
 	float sign (Vector2 p1, Vector2 p2, Vector2 p3)
@@ -169,7 +174,7 @@ public class ArrowActor extends Actor{
 	    return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
 	}
 	
-	boolean isInside(float x,float y) {
+	public boolean isInside(float x,float y) {
 		
 		boolean b1,b2,b3;
 		
