@@ -3,9 +3,11 @@ package com.nsoft.nphysics;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 
-public class Point extends Actor implements ClickIn<Point>{
+public class Point extends Actor implements ClickIn<Point>, Position{
 
 	public static int RADIUS = 8;
 	
@@ -25,6 +27,7 @@ public class Point extends Actor implements ClickIn<Point>{
 		setSize(RADIUS, RADIUS);
 		this.isTemp = isTemp;
 		addInput();
+		addDragListener();
 		pointCounter ++;
 	}
 	@Override
@@ -54,6 +57,7 @@ public class Point extends Actor implements ClickIn<Point>{
 	@Override public float getY() {return super.getY() + RADIUS/2f;}
 	@Override public void setPosition(float x, float y) { super.setPosition(x, y); updatePosition(); }
 	
+	//----------------------INPUT----------------------
 	@Override
 	public Actor hit (float x, float y, boolean touchable) {
 		if (touchable && this.getTouchable() != Touchable.enabled) return null;
@@ -73,7 +77,18 @@ public class Point extends Actor implements ClickIn<Point>{
 		return len2 < RADIUS2;
 	}
 
-	//------------SEGMENT-CREATION
+	private void addDragListener() {
+		
+		Point dis = this;
+		addListener(new DragListener() {
+		    public void drag(InputEvent event, float x, float y, int pointer) {
+		    	selected = dis;
+		        moveBy(x - getWidth() / 2, y - getHeight() / 2);
+		        updatePosition();
+		    }
+		});
+	}
+	//------------SEGMENT-CREATION--------------------------
 	
 	static Point A,B;
 	
@@ -89,9 +104,6 @@ public class Point extends Actor implements ClickIn<Point>{
 			
 			Segment seg = new Segment(A, B);
 			getStage().addActor(seg);
-			
-			A.setObjectParent(seg);
-			B.setObjectParent(seg);
 
 			if(cont) {
 				

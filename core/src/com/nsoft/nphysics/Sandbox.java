@@ -2,6 +2,7 @@ package com.nsoft.nphysics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -35,21 +36,21 @@ public class Sandbox extends Stage {
 	private void init() {
 		
 		initdebug();
-		setDebugAll(true);
 		addActor(Point.lastPoint);
 	}
 	
 	private void initdebug() {
 		
 
-		Vector2 center = new Vector2(UNIT*8,UNIT*8);
-		GameState.set(State.CREATE_SEGMENTS);
+		Point A = new Point(50, 80, false);
+		Point B = new Point(600, 400, false);
 		
-		for (int i = 0; i < 20; i++) {
-			
-			addActor(new Point((float)Math.random()*Gdx.graphics.getWidth(),(float) Math.random()*Gdx.graphics.getHeight(), false));
-		}
+		Segment R = new Segment(A, B);
+		R.select();
 		
+		addActor(A);
+		addActor(B); 
+		addActor(R);
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
@@ -83,6 +84,8 @@ public class Sandbox extends Stage {
 	public void draw() {
 		
 
+		  Gdx.gl.glEnable(GL20.GL_BLEND);
+	        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		drawGrid();
 		shapefill.begin(ShapeType.Filled);
 
@@ -91,6 +94,8 @@ public class Sandbox extends Stage {
 		shapefill.end();
 		Gdx.gl.glLineWidth(1);
 
+
+		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
 	
 

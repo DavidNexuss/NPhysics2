@@ -8,6 +8,18 @@ public class Util {
 	
 	public static int UNIT = 30;
 	
+	/*
+	 * p[0] =  A.x
+	 * p[1] =  A.y
+	 * p[2] =  B.x
+	 * p[3] =  B.y
+	 * p[4] =  C.x
+	 * p[5] =  C.y
+	 */
+	public static float triangleArea(float ... p) {
+		
+		return Math.abs((p[0]*(p[3] - p[5]) + p[2]*(p[5] - p[1]) + p[4]*(p[1] - p[3]))/2);
+	}
 	public static float rotx(float x,float y,float rad) {
 		
 		return x*MathUtils.cos(rad) - y*MathUtils.sin(rad);
