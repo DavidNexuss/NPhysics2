@@ -227,6 +227,7 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 		
 		Arc.setAngle(getVector().angle());
 		Arc.setRadius(modulus);
+		Arc.update();
 	}
 	@Override
 	public void updatePosition(float x, float y, Point p) {

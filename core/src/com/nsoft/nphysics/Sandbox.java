@@ -51,15 +51,7 @@ public class Sandbox extends Stage {
 		addActor(A);
 		addActor(B); 
 		addActor(R);
-		
-		Point AB = new Point(200, 80, false);
-		Point BB = new Point(100, 200, false);
-		
-		Segment RB = new Segment(AB, BB);
-		
-		addActor(AB);
-		addActor(BB); 
-		addActor(RB);
+
 		
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
