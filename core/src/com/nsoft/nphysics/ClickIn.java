@@ -22,12 +22,12 @@ public interface ClickIn<T extends Actor> {
 				x = coords.x;
 				y = coords.y;
 				
-				if(isInside(x, y)) { event.cancel(); select(dis);}
+				if(isInside(x, y)) { event.cancel(); select();}
 			}
 		});
 	}
 	
 	public boolean isInside(float x,float y);
 	
-	public void select(T dis);
+	public void select();
 }

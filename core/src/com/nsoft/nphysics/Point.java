@@ -117,22 +117,22 @@ public class Point extends Actor implements ClickIn<Point>, Position{
 		}
 	}
 	@Override
-	public void select(Point dis) {
+	public void select() {
 		
 		selected = this;
 		switch (GameState.current) {
 		case CREATE_SEGMENT:
 			
-			createSegment(dis, false);
+			createSegment(this, false);
 			break;
 		case CREATE_SEGMENTS:
 			
-			createSegment(dis, true);
+			createSegment(this, true);
 			break;
 
 		default:
 			
-			selected = dis;
+			selected = this;
 			break;
 		}
 	}

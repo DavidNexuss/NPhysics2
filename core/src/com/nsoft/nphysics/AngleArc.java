@@ -21,17 +21,18 @@ public class AngleArc extends AlphaActor{
 		
 		this.center = center;
 		setAlpha(0);
+		setDebug(true);
 	}
 	
 	public void show() {
 		
-		addAction(Actions.fadeIn(2f, Interpolation.exp5));
+		addAction(Actions.fadeIn(1f, Interpolation.exp5));
 
 	}
 	
 	public void hide() {
 		
-		addAction(Actions.fadeOut(2f,Interpolation.exp5));
+		addAction(Actions.fadeOut(1f,Interpolation.exp5));
 	}
 	
 	public void setAngle(float angle) {

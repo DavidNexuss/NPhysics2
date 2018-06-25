@@ -163,9 +163,9 @@ public class ArrowActor extends Actor implements ClickIn<ArrowActor>{
 	}
 	
 	@Override
-	public void select(ArrowActor dis) {
+	public void select() {
 		
-		selected = dis;
+		selected = this;
 	}
 	//---------------CHECK-IF-POINT-IS-INSIDE-ARROW---------------
 	

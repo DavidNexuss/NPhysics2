@@ -5,12 +5,18 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-public class Segment extends Group implements Parent<Point>{
+public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment>{
 
+	public static final float SHOW_DELAY = 1f;
+	public static final float INPUT_EPSILON = 20f;
+	
 	private Point A,B;
 	private SimpleAxis Axis;
 	private AngleArc Arc;
@@ -36,20 +42,31 @@ public class Segment extends Group implements Parent<Point>{
 		A.setObjectParent(this);
 		B.setObjectParent(this);
 		
-		
 		Arc = new AngleArc(A);
 		addActor(Arc);
 	
 		Axis = new SimpleAxis(A);
 		addActor(Axis);
 		
+		setAlpha(0);
 		updateAll();
+		addInput();
 	}	
 
+	
+	//------------------GEOMETRY--------------------------
+
+	private float modulus;
+	
 	public boolean isReady() {
 		
 		return (A!= null && !A.isTemp()) && (B != null && !B.isTemp());
 	}
+	
+	private void notReady() { throw new IllegalStateException("The segment isn't ready.");}
+	
+	public float getModulus() {return modulus;}
+	public void updateModulus() {modulus = getLenght();}
 	
 	public Vector2 getVector() {
 		
@@ -60,21 +77,36 @@ public class Segment extends Group implements Parent<Point>{
 		}
 	}
 	
-	public float getLenght() {
+	public float getLenght() { 
 		
-		return getVector().len();
+		if(!isReady()) notReady();
+		return getVector().len(); 
+		
+	}
+	public float getSlope() {
+		
+		if(!isReady()) notReady();
+		Vector2 v = getVector();
+		return v.y/v.x;
+	}
+	
+	public float getN() {
+		
+		if(!isReady()) notReady();
+		return A.getY() - getSlope()*A.getX();
 	}
 	public void setPointA(Point p) {A = p; lst.set(0, A);}
 	public void setPointB(Point p) {B = p; lst.set(1, B);}
 	
-	
+	//--------------------------END-GEOMETRY-------------------------
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
 		if(isReady()) {
 			
+			Sandbox.shapeline.setColor(0.2f, 0.2f, 0.2f, 1);
 			Sandbox.shapeline.begin(ShapeType.Line);
-			Gdx.gl.glLineWidth(3);
+			Gdx.gl.glLineWidth(3 + 3*getAlpha());
 			Sandbox.shapeline.line(A.getX(), A.getY(), B.getX(), B.getY());
 			Sandbox.shapeline.end();
 		}
@@ -82,53 +114,73 @@ public class Segment extends Group implements Parent<Point>{
 		super.draw(batch, parentAlpha);
 	}
 	
+	//------------------------FADE---------------------------
+	
+	
+	public void show() {
+		
+		addAction(Actions.fadeIn(1f, Interpolation.exp5));
+	}
+	
+	public void hide() {
+		
+		addAction(Actions.fadeOut(1f, Interpolation.exp5));
+	}
 	//----------------------------INPUT----------------------
 	
-	float[] vertexArray = new float[8];
-	private float modulus;
-	static float LW = 5;  //Width of the line hitbox
+	public boolean isSelected() {return this == selected;}
+	public void unselect() {
+		
+		if(isSelected()) {
+			
+			Axis.hide();
+			Arc.hide();
+			hide();
+			selected = null;
+		}
+	}
+	@Override
+	public void select() {
+		
+		if(isSelected()) {
+			
+			unselect();
+			return;
+		}
+		if(selected != null) {
+			
+
+			selected.unselect();
+		}
+		
+
+		selected = this;
+		Axis.show();
+		Arc.show();
+		show();
+		
+		
+	}
 	
-	public void updateVertexArray() {
+	@Override
+	public boolean isInside(float x, float y) {
 		
-		vertexArray[0] = 0;
-		vertexArray[1] = LW;
-		
-		vertexArray[2] = 0;
-		vertexArray[3] = -LW;
-		
-		vertexArray[4] = modulus;
-		vertexArray[5] = LW;
-		
-		vertexArray[6] = modulus;
-		vertexArray[7] = -LW;
-		
-		Util.rot(vertexArray, getVector().angleRad());
+		float val = y - getSlope()*x - getN();
+		return val < INPUT_EPSILON && val > -INPUT_EPSILON;
+	}
+	
+	//---------------------------END-INPUT-------------------
+	
+	//--------------UPDATE--------------------
+	
+	private void updateHitBox() {
 		
 		setX(A.getX());
 		setY(A.getY());
 		setSize(B.getX() - A.getX(), B.getY() - A.getY());
 	}
 	
-	//---------------------------END-INPUT-------------------
-	public void select() {
-		
-		if(selected != null) {
-			
 
-			selected.Axis.hide();
-			selected.Arc.hide();
-		}
-		
-		selected = this;
-		Axis.show();
-		Arc.show();
-		
-		
-	}
-	
-	public float getModulus() {return modulus;}
-	public void updateModulus() {modulus = getLenght();}
-	
 	private void updateArc(){
 		
 		Arc.setAngle(getVector().angle());
@@ -144,11 +196,12 @@ public class Segment extends Group implements Parent<Point>{
 		
 		updateModulus();
 		updateArc();
-		updateVertexArray();
+		updateHitBox();
 	}
 	@Override
 	public ArrayList<Point> getChildList() {
 		
 		return lst;
 	}
+
 }

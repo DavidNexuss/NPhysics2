@@ -51,6 +51,16 @@ public class Sandbox extends Stage {
 		addActor(A);
 		addActor(B); 
 		addActor(R);
+		
+		Point AB = new Point(200, 80, false);
+		Point BB = new Point(100, 200, false);
+		
+		Segment RB = new Segment(AB, BB);
+		
+		addActor(AB);
+		addActor(BB); 
+		addActor(RB);
+		
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
@@ -151,7 +161,7 @@ public class Sandbox extends Stage {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
-		System.out.println(Thread.currentThread());
+		System.out.println(GameState.current);
 		switch (GameState.current) {
 		case CREATE_POINT:
 			
