@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 
 public class Point extends Actor implements ClickIn<Point>, Position{
 
-	public static int RADIUS = 8;
+	public static int RADIUS = 5;
 	
 	public static int INPUT_RADIUS = RADIUS*3;
 	
@@ -43,8 +43,12 @@ public class Point extends Actor implements ClickIn<Point>, Position{
 			else Sandbox.shapefill.setColor(0.2f, 0.4f, 0.2f, 1f);
 		} 
 		
-		if(A == this)Sandbox.shapefill.circle(getX(), getY(), 5*1.2f);
-		else Sandbox.shapefill.circle(getX(), getY(), 5);
+		if(selected == this)Sandbox.shapefill.circle(getX(), getY(), RADIUS*1.4f);
+		else {
+			
+			if(!hit)Sandbox.shapefill.circle(getX(), getY(), RADIUS);
+			else Sandbox.shapefill.circle(getX(), getY(), RADIUS*1.3f);
+		}
 	}
 	
 	public Parent getObjectParent() {return parent;}
@@ -60,10 +64,14 @@ public class Point extends Actor implements ClickIn<Point>, Position{
 	@Override public void setPosition(float x, float y) { super.setPosition(x, y); updatePosition(); }
 	
 	//----------------------INPUT----------------------
+	
+	boolean hit;
 	@Override
 	public Actor hit (float x, float y, boolean touchable) {
 		if (touchable && this.getTouchable() != Touchable.enabled) return null;
-		return x >= -INPUT_RADIUS/2f && x < getWidth() + INPUT_RADIUS/2f && y >= -INPUT_RADIUS/2f && y < getHeight() + INPUT_RADIUS/2f ? this : null;
+		
+		hit =  x >= -INPUT_RADIUS/2f && x < getWidth() + INPUT_RADIUS/2f && y >= -INPUT_RADIUS/2f && y < getHeight() + INPUT_RADIUS/2f;
+		return hit ? this : null;
 	}
 	
 	public void updatePosition() {

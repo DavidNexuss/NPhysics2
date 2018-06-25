@@ -108,7 +108,8 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 		
 		if(isReady()) {
 			
-			Sandbox.shapeline.setColor(0.2f, 0.2f, 0.2f, 1);
+			if(!hit)Sandbox.shapeline.setColor(0.2f, 0.2f, 0.2f, 1);
+			else Sandbox.shapeline.setColor(0.8f, 0.2f, 0.2f, 1);
 			Sandbox.shapeline.begin(ShapeType.Line);
 			Gdx.gl.glLineWidth(3 + 3*getAlpha());
 			Sandbox.shapeline.line(A.getX(), A.getY(), B.getX(), B.getY());
@@ -133,6 +134,7 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 	//----------------------------INPUT----------------------
 	
 	private static Vector2 temp = new Vector2();
+	private boolean hit;
 	@Override
 	public Actor hit(float x, float y, boolean touchable) {
 
@@ -150,9 +152,12 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 		boolean insideBox =  x >= 0 && x < getWidth() && y >= 0 && y < getHeight();
 		
 		if(isInside(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY(),INPUT_EPSILON*1.2f) && insideBox) {
-			
+			hit = true;
 			return this;
-		}else return null;
+		}else {
+			hit = false;
+			return null;
+		}
 
 	}
 	@Override

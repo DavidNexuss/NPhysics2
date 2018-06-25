@@ -36,7 +36,6 @@ public class Sandbox extends Stage {
 	private void init() {
 		
 		initdebug();
-		setDebugAll(true);
 		addActor(Point.lastPoint);
 	}
 	
