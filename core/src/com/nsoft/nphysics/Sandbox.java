@@ -36,6 +36,7 @@ public class Sandbox extends Stage {
 	private void init() {
 		
 		initdebug();
+		setDebugAll(true);
 		addActor(Point.lastPoint);
 	}
 	
@@ -161,7 +162,7 @@ public class Sandbox extends Stage {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
-		System.out.println(GameState.current);
+		//System.out.println(GameState.current);
 		switch (GameState.current) {
 		case CREATE_POINT:
 			

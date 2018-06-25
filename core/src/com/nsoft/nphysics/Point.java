@@ -11,6 +11,8 @@ public class Point extends Actor implements ClickIn<Point>, Position{
 
 	public static int RADIUS = 8;
 	
+	public static int INPUT_RADIUS = RADIUS*3;
+	
 	static int RADIUS2 = RADIUS*RADIUS;
 	
 	boolean isTemp;
@@ -24,7 +26,7 @@ public class Point extends Actor implements ClickIn<Point>, Position{
 		
 		setX(x);
 		setY(y);
-		setSize(RADIUS, RADIUS);
+		setSize(INPUT_RADIUS, INPUT_RADIUS);
 		this.isTemp = isTemp;
 		addInput();
 		addDragListener();
@@ -51,17 +53,17 @@ public class Point extends Actor implements ClickIn<Point>, Position{
 	
 	public boolean isTemp() {return isTemp;}
 	
-	@Override public void setX(float x) { super.setX(x - RADIUS/2f); updatePosition();}
-	@Override public void setY(float y) { super.setY(y - RADIUS/2f); updatePosition();}
-	@Override public float getX() {return super.getX() + RADIUS/2f;}
-	@Override public float getY() {return super.getY() + RADIUS/2f;}
+	@Override public void setX(float x) { super.setX(x - INPUT_RADIUS/2f); updatePosition();}
+	@Override public void setY(float y) { super.setY(y - INPUT_RADIUS/2f); updatePosition();}
+	@Override public float getX() {return super.getX() + INPUT_RADIUS/2f;}
+	@Override public float getY() {return super.getY() + INPUT_RADIUS/2f;}
 	@Override public void setPosition(float x, float y) { super.setPosition(x, y); updatePosition(); }
 	
 	//----------------------INPUT----------------------
 	@Override
 	public Actor hit (float x, float y, boolean touchable) {
 		if (touchable && this.getTouchable() != Touchable.enabled) return null;
-		return x >= -RADIUS/2f && x < getWidth() + RADIUS/2f && y >= -RADIUS/2f && y < getHeight() + RADIUS/2f ? this : null;
+		return x >= -INPUT_RADIUS/2f && x < getWidth() + INPUT_RADIUS/2f && y >= -INPUT_RADIUS/2f && y < getHeight() + INPUT_RADIUS/2f ? this : null;
 	}
 	
 	public void updatePosition() {
@@ -74,7 +76,7 @@ public class Point extends Actor implements ClickIn<Point>, Position{
 	public boolean isInside(float x, float y) {
 		
 		float len2 = new Vector2(x - getX(), y - getY()).len2();
-		return len2 < RADIUS2;
+		return len2 < INPUT_RADIUS*INPUT_RADIUS;
 	}
 
 	private void addDragListener() {

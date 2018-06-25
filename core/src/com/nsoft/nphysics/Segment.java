@@ -17,6 +17,8 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 	public static final float SHOW_DELAY = 1f;
 	public static final float INPUT_EPSILON = 20f;
 	
+	private static ArrayList<Segment> segments = new ArrayList<Segment>();
+	
 	private Point A,B;
 	private SimpleAxis Axis;
 	private AngleArc Arc;
@@ -51,6 +53,8 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 		setAlpha(0);
 		updateAll();
 		addInput();
+		
+		segments.add(this);
 	}	
 
 	
@@ -128,6 +132,45 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 	}
 	//----------------------------INPUT----------------------
 	
+	private static Vector2 temp = new Vector2();
+	@Override
+	public Actor hit(float x, float y, boolean touchable) {
+
+		if (touchable && getTouchable() == Touchable.disabled) return null;
+		Actor[] childrenArray = getChildren().items;
+		Vector2 point = temp;
+		for (int i = getChildren().size - 1; i >= 0; i--) {
+			Actor child = childrenArray[i];
+			if (!child.isVisible()) continue;
+			child.parentToLocalCoordinates(point.set(x, y));
+			Actor hit = child.hit(point.x, point.y, touchable);
+			if (hit != null) return hit;
+		}
+		
+		boolean insideBox =  x >= 0 && x < getWidth() && y >= 0 && y < getHeight();
+		
+		if(isInside(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY(),INPUT_EPSILON*1.2f) && insideBox) {
+			
+			return this;
+		}else return null;
+
+	}
+	@Override
+	public boolean isInside(float x, float y) {
+		
+		if(isInside(x, y, INPUT_EPSILON)){
+			
+			return true;
+		}else return false;
+	}
+	
+	public boolean isInside(float x, float y,float epsilon) {
+		
+		
+		float val = y - getSlope()*x - getN();
+		return val < epsilon && val > -epsilon;
+	}
+	
 	public boolean isSelected() {return this == selected;}
 	public void unselect() {
 		
@@ -162,12 +205,6 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 		
 	}
 	
-	@Override
-	public boolean isInside(float x, float y) {
-		
-		float val = y - getSlope()*x - getN();
-		return val < INPUT_EPSILON && val > -INPUT_EPSILON;
-	}
 	
 	//---------------------------END-INPUT-------------------
 	
