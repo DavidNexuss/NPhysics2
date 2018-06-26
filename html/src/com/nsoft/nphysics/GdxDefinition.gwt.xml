@@ -8,5 +8,5 @@
 	<inherits name='NPhysics' />
 	<entry-point class='com.nsoft.nphysics.client.HtmlLauncher' />
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
-	<set-configuration-property name="gdx.assetpath" value="../android/assets" />
+	<set-configuration-property name="gdx.assetpath" value="../desktop/assets" />
 </module>

@@ -18,7 +18,6 @@ public class NPhysics extends ApplicationAdapter {
 		UILoader.loadUI();
 		sandbox = new Sandbox();
 		Gdx.input.setInputProcessor(sandbox);
-		System.out.println(Thread.currentThread());
 	}
 
 	boolean first = true;
@@ -26,7 +25,7 @@ public class NPhysics extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 0.7f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if(first) { System.out.println(Thread.currentThread()); first = false;}
+		if(first) { System.out.println(first = false);}
 		sandbox.draw();
 		sandbox.act();
 	}

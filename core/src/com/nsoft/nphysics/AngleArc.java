@@ -28,8 +28,6 @@ public class AngleArc extends AlphaActor{
 	private Table table;
 	private TextButton input;
 	
-	static DecimalFormat df = new DecimalFormat();
-	static{df.setMaximumFractionDigits(2);}
 	
 	public AngleArc(Position center,Segment s) {
 		
@@ -47,20 +45,6 @@ public class AngleArc extends AlphaActor{
 	public void show() {
 		
 		addAction(Actions.fadeIn(1f, Interpolation.exp5));
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				
-				
-			}
-		}).start();
 
 	}
 	
