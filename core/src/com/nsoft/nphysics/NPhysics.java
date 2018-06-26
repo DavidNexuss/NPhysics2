@@ -24,7 +24,7 @@ public class NPhysics extends ApplicationAdapter {
 	boolean first = true;
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 0.7f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		if(first) { System.out.println(Thread.currentThread()); first = false;}
 		sandbox.draw();

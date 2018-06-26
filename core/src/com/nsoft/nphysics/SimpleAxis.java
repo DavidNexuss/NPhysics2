@@ -39,7 +39,7 @@ public class SimpleAxis extends AlphaActor{
 		Sandbox.shapeline.setColor(Color.RED);
 		Sandbox.shapeline.line(-MAX*getAlpha() + center.getX(), center.getY(), MAX*getAlpha() + center.getX(), center.getY());
 		
-		Sandbox.shapeline.setColor(Color.GREEN);
+		Sandbox.shapeline.setColor(new Color(0.1f, 0.5f, 0.1f, 1f));
 		Sandbox.shapeline.line(center.getX(), -MAX*getAlpha() + center.getY(), center.getX(), MAX*getAlpha() + center.getY());
 		
 		Sandbox.shapeline.end();

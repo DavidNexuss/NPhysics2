@@ -41,6 +41,8 @@ public class Sandbox extends Stage {
 	
 	private void initdebug() {
 		
+		
+		
 		Point A = new Point(300, 300, false);
 		Point B = new Point(300, 200, false);
 		
