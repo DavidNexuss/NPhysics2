@@ -16,10 +16,11 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 
 	public static final float SHOW_DELAY = 1f;
 	public static final float INPUT_EPSILON = 20f;
-	
+	public static final float DETECT_EPSILON = 0.1f;
 	private static ArrayList<Segment> segments = new ArrayList<Segment>();
 	
-	private Point A,B;
+	private Point A;
+	private Point B;
 	private SimpleAxis Axis;
 	private AngleArc Arc;
 	
@@ -38,13 +39,14 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 		this.A = A;
 		this.B = B;
 		
+		//setDebug(true);
 		lst.set(0, A);
 		lst.set(1, B);
 		
 		A.setObjectParent(this);
 		B.setObjectParent(this);
 		
-		Arc = new AngleArc(A);
+		Arc = new AngleArc(A,this);
 		addActor(Arc);
 	
 		Axis = new SimpleAxis(A);
@@ -114,6 +116,26 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 			Gdx.gl.glLineWidth(3 + 3*getAlpha());
 			Sandbox.shapeline.line(A.getX(), A.getY(), B.getX(), B.getY());
 			Sandbox.shapeline.end();
+			
+			Sandbox.shapefill.setColor(0.8f, 0.2f, 0.2f, 0.3f);
+			
+			//RENDER HITBOX TRIANGLES
+			/*
+			Sandbox.shapefill.triangle(trianglesBuffer[0][0], trianglesBuffer[0][1], 
+									   trianglesBuffer[0][2], trianglesBuffer[0][3], 
+									   trianglesBuffer[0][4], trianglesBuffer[0][5]);
+			
+			Sandbox.shapefill.triangle(trianglesBuffer[1][0], trianglesBuffer[1][1], 
+					   				   trianglesBuffer[1][2], trianglesBuffer[1][3], 
+					   				   trianglesBuffer[1][4], trianglesBuffer[1][5]);
+			
+			Sandbox.shapefill.triangle(trianglesBuffer[2][0], trianglesBuffer[2][1], 
+					   				   trianglesBuffer[2][2], trianglesBuffer[2][3], 
+					   				   trianglesBuffer[2][4], trianglesBuffer[2][5]);
+			
+			Sandbox.shapefill.triangle(trianglesBuffer[3][0], trianglesBuffer[3][1], 
+	   				   				   trianglesBuffer[3][2], trianglesBuffer[3][3], 
+	   				   				   trianglesBuffer[3][4], trianglesBuffer[3][5]);*/
 		}
 		
 		super.draw(batch, parentAlpha);
@@ -134,11 +156,12 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 	//----------------------------INPUT----------------------
 	
 	private static Vector2 temp = new Vector2();
-	private boolean hit;
-	@Override
-	public Actor hit(float x, float y, boolean touchable) {
-
-		if (touchable && getTouchable() == Touchable.disabled) return null;
+	boolean hit;
+	
+	private final float[][] trianglesBuffer = new float[4][6];
+	
+	public Actor hitChildren(float x,float y,boolean touchable) {
+		
 		Actor[] childrenArray = getChildren().items;
 		Vector2 point = temp;
 		for (int i = getChildren().size - 1; i >= 0; i--) {
@@ -149,7 +172,68 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 			if (hit != null) return hit;
 		}
 		
-		boolean insideBox =  x >= 0 && x < getWidth() && y >= 0 && y < getHeight();
+		return null;
+	}
+	@Override
+	public Actor hit(float x, float y, boolean touchable) {
+
+		if (touchable && getTouchable() == Touchable.disabled) return null;
+		
+		Actor p = hitChildren(x,y,touchable);
+		if(p != null) return p;
+		
+		
+		float PX = Gdx.input.getX();
+		float PY = Gdx.graphics.getHeight() - Gdx.input.getY();
+		
+		float AX = A.getX();
+		float AY = A.getY();
+		
+		boolean insideBox = false;
+		
+		if(getWidth() != 0) {
+			
+			trianglesBuffer[0][0] = PX;
+			trianglesBuffer[0][1] = PY;
+			trianglesBuffer[1][0] = PX;
+			trianglesBuffer[1][1] = PY;
+			trianglesBuffer[2][0] = PX;
+			trianglesBuffer[2][1] = PY;
+			trianglesBuffer[3][0] = PX;
+			trianglesBuffer[3][1] = PY;
+			
+			trianglesBuffer[0][2] = AX;
+			trianglesBuffer[0][3] = AY;
+			trianglesBuffer[0][4] = AX + getWidth();
+			trianglesBuffer[0][5] = AY;
+			
+			trianglesBuffer[1][2] = AX;
+			trianglesBuffer[1][3] = AY;
+			trianglesBuffer[1][4] = AX;
+			trianglesBuffer[1][5] = AY + getHeight();
+			
+			trianglesBuffer[2][2] = AX;
+			trianglesBuffer[2][3] = AY + getHeight();
+			trianglesBuffer[2][4] = AX + getWidth();
+			trianglesBuffer[2][5] = AY + getHeight();
+			
+			trianglesBuffer[3][2] = AX + getWidth();
+			trianglesBuffer[3][3] = AY + getHeight();
+			trianglesBuffer[3][4] = AX + getWidth();
+			trianglesBuffer[3][5] = AY;
+			
+			float T1 = Util.triangleArea(trianglesBuffer[0]);
+			float T2 = Util.triangleArea(trianglesBuffer[1]);
+			float T3 = Util.triangleArea(trianglesBuffer[2]);
+			float T4 = Util.triangleArea(trianglesBuffer[3]);
+			
+			float A = Math.abs(getWidth() * getHeight()) - T1 - T2 - T3 - T4;
+			
+			insideBox = A < DETECT_EPSILON && A > -DETECT_EPSILON;
+		}else {
+			
+			insideBox = x > INPUT_EPSILON && x < -INPUT_EPSILON && y > A.getY() && y < getHeight();
+		}
 		
 		if(isInside(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY(),INPUT_EPSILON*1.2f) && insideBox) {
 			hit = true;
@@ -171,8 +255,19 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 	
 	public boolean isInside(float x, float y,float epsilon) {
 		
+		Actor hit = hitChildren(x - A.getX(), y - A.getY(), true);
+		if (hit != null) {
+			return false;
+		}
+		float slope = getSlope();
+		float n = getN();
 		
-		float val = y - getSlope()*x - getN();
+		float val = epsilon*10;
+		if(getWidth() == 0) {
+			
+			val = A.getX() - x;
+		}
+		else val = (float) (Math.abs(slope*x - y + n)/Math.sqrt(Math.pow(slope, 2) + 1));
 		return val < epsilon && val > -epsilon;
 	}
 	

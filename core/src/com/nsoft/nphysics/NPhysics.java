@@ -10,10 +10,12 @@ public class NPhysics extends ApplicationAdapter {
 	
 	Sandbox sandbox;
 	static NPhysics current;
+
 	
 	@Override
 	public void create () {
 		current = this;
+		UILoader.loadUI();
 		sandbox = new Sandbox();
 		Gdx.input.setInputProcessor(sandbox);
 		System.out.println(Thread.currentThread());

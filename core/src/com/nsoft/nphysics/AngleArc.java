@@ -1,5 +1,7 @@
 package com.nsoft.nphysics;
 
+import java.text.DecimalFormat;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,20 +13,28 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AddAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class AngleArc extends AlphaActor{
 
 	Position center;
+	Segment s;
 	float radius;
 	float angle;
 	
-	private TextArea angleInput;
+	private Table table;
+	private TextButton input;
 	
-	public AngleArc(Position center) {
+	static DecimalFormat df = new DecimalFormat();
+	static{df.setMaximumFractionDigits(2);}
+	
+	public AngleArc(Position center,Segment s) {
 		
 		this.center = center;
-		
+		this.s = s;
 		update();
 		setAlpha(0);
 		setDebug(true);
@@ -37,6 +47,20 @@ public class AngleArc extends AlphaActor{
 	public void show() {
 		
 		addAction(Actions.fadeIn(1f, Interpolation.exp5));
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				
+			}
+		}).start();
 
 	}
 	
@@ -58,6 +82,7 @@ public class AngleArc extends AlphaActor{
 		
 		setHeight(MathUtils.sinDeg(angle)*radius/3f);
 		setWidth(radius/3f);
+		
 	}
 	boolean hit = false;
 	@Override
@@ -68,6 +93,7 @@ public class AngleArc extends AlphaActor{
 		if(x > 0 && y > 0 && x < getWidth() && y < getHeight() && MathUtils.atan2(y, x)*MathUtils.radDeg < angle && x*x + y*y < radius/3f*radius/3f) {
 			
 			if(!hit)addAction(Actions.scaleTo(1.2f, 1.2f, 0.5f, Interpolation.exp5));
+			s.hit =false;
 			hit = true;
 			return this;
 		}else {
@@ -76,16 +102,18 @@ public class AngleArc extends AlphaActor{
 			hit = false;
 			return null;
 		}
+		
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
 		Sandbox.shapefill.setColor(new Color(0.5f, 0.5f, 0.9f, 0.4f));
 		
-		if(!hit)Sandbox.shapefill.arc(center.getX(), center.getY(), radius*getAlpha()/3f, 0, angle);
-		else Sandbox.shapefill.arc(center.getX(), center.getY(), radius*getAlpha()*getScaleX()/3f, 0, angle);
+		Sandbox.shapefill.arc(center.getX(), center.getY(), radius*getAlpha()*getScaleX()/3f, 0, angle);
 		Sandbox.bitmapfont.setColor(Color.BLACK);
 		Sandbox.bitmapfont.draw(batch, "Ángulo actual" + angle, 100, 100);
+		
+		super.draw(batch, parentAlpha);
 	}
 	
 }
