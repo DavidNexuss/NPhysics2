@@ -38,8 +38,6 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 	}
 	public Segment() {}
 	
-	@Override
-	public void drawDebug(ShapeRenderer shapes) {} //EMPTY SO IT DOESN'T RENDER ANYTHING
 	public Segment(Point A,Point B) {
 		
 		this.A = A;

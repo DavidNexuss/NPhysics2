@@ -41,6 +41,10 @@ public class AngleArcActor extends Actor implements Showable{
 		setDebug(true);
 	}
 	
+
+	@Override
+	public void drawDebug(ShapeRenderer shapes) {} //EMPTY SO IT DOESN'T RENDER ANYTHING
+	
 	public void setAngle(float angle) { this.angle = angle; }
 	public void setRadius(float newRadius) { radius = newRadius; }
 	

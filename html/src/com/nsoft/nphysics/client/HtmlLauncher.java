@@ -3,7 +3,7 @@ package com.nsoft.nphysics.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.nsoft.nphysics.sandbox.NPhysics;
+import com.nsoft.nphysics.NPhysics;
 
 public class HtmlLauncher extends GwtApplication {
 
