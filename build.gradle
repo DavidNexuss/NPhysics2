@@ -23,6 +23,7 @@ allprojects {
     ext {
         appName = "NPhysics2"
         gdxVersion = '1.9.8'
+		visuiVersion = '1.4.0'
         roboVMVersion = '2.3.3'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
@@ -62,6 +63,7 @@ project(":html") {
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
+		compile "com.kotcrab.vis:vis-ui:$visuiVersion:sources"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion:sources"
         
     }
@@ -77,6 +79,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
+		compile "com.kotcrab.vis:vis-ui:$visuiVersion"
         
     }
 	

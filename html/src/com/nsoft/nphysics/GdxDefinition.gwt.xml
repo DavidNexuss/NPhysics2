@@ -4,7 +4,7 @@
 	<inherits name='com.badlogic.gdx.backends.gdx_backends_gwt' />
 	<inherits name='com.badlogic.gdx.physics.box2d.box2d-gwt' />
 	<inherits name='Box2DLights' />
-
+	<inherits name='com.kotcrab.vis.vis-ui' />
 	<inherits name='NPhysics' />
 	<entry-point class='com.nsoft.nphysics.client.HtmlLauncher' />
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
