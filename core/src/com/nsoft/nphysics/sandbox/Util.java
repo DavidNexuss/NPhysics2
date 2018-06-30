@@ -56,9 +56,6 @@ public class Util {
 		
 		return rotPivot(new Vector2(), point, anglerad);
 	}
-	public static void rot(float[] xy,float rad) {
-		
-	}
 	
 	public static void proj(float[][] vertices,float[][] buffer,float xoffset,float yoffset,float anglerad) {
 		

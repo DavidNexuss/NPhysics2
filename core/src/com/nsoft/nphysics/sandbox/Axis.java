@@ -109,10 +109,4 @@ public class Axis extends Actor{
 		Sandbox.bitmapfont.draw(batch, "y", buffervertices[5][0], buffervertices[5][1]);
 		
 	}
-	
-	@Override
-	public void act(float delta) {
-		// TODO Auto-generated method stub
-		super.act(delta);
-	}
 }

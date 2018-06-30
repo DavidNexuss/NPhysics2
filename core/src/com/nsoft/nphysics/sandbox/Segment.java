@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
@@ -37,6 +38,8 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 	}
 	public Segment() {}
 	
+	@Override
+	public void drawDebug(ShapeRenderer shapes) {} //EMPTY SO IT DOESN'T RENDER ANYTHING
 	public Segment(Point A,Point B) {
 		
 		this.A = A;
