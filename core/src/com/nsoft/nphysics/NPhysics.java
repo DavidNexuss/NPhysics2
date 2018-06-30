@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nsoft.nphysics.sandbox.Sandbox;
+import com.nsoft.nphysics.sandbox.ui.UIStage;
 
 public class NPhysics extends ApplicationAdapter {
 	
 	Sandbox sandbox;
+	UIStage ui;
 	static NPhysics current;
 
 	
@@ -18,6 +20,7 @@ public class NPhysics extends ApplicationAdapter {
 		current = this;
 		UILoader.loadUI();
 		sandbox = new Sandbox();
+		ui = new UIStage();
 		Gdx.input.setInputProcessor(sandbox);
 	}
 
@@ -29,6 +32,8 @@ public class NPhysics extends ApplicationAdapter {
 		if(first) { System.out.println(first = false);}
 		sandbox.draw();
 		sandbox.act();
+		ui.draw();
+		ui.act();
 	}
 	
 	@Override
