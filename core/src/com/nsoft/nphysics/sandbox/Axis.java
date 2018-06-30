@@ -1,6 +1,6 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
-import static com.nsoft.nphysics.Util.*;
+import static com.nsoft.nphysics.sandbox.Util.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

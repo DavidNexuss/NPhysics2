@@ -1,4 +1,6 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
+
+import com.nsoft.nphysics.sandbox.interfaces.Position;
 
 public class PositionVector implements Position{
 

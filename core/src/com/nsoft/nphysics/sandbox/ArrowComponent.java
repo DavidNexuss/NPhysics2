@@ -1,6 +1,7 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
 import com.badlogic.gdx.math.Vector2;
+import com.nsoft.nphysics.sandbox.interfaces.AxisComponent;
 
 public class ArrowComponent extends SimpleArrow implements AxisComponent {
 

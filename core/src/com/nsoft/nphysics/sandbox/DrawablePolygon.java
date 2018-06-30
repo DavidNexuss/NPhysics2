@@ -1,4 +1,4 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
 public class DrawablePolygon {
 

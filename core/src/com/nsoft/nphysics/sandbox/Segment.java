@@ -1,4 +1,4 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
 import java.util.ArrayList;
 
@@ -11,8 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.interfaces.Parent;
+import com.nsoft.nphysics.sandbox.interfaces.Showable;
 
-public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment>{
+public class Segment extends Group implements Parent<Point>,ClickIn<Segment>,Showable{
 
 	public static final float SHOW_DELAY = 1f;
 	public static final float INPUT_EPSILON = 20f;
@@ -22,7 +25,7 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 	private Point A;
 	private Point B;
 	private SimpleAxis Axis;
-	private AngleArc Arc;
+	private AngleArcActor Arc;
 	
 	public static Segment selected;
 	
@@ -46,7 +49,7 @@ public class Segment extends AlphaActor implements Parent<Point>,ClickIn<Segment
 		A.setObjectParent(this);
 		B.setObjectParent(this);
 		
-		Arc = new AngleArc(A,this);
+		Arc = new AngleArcActor(A,this);
 		addActor(Arc);
 	
 		Axis = new SimpleAxis(A);

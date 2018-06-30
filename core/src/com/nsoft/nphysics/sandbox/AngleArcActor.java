@@ -1,4 +1,4 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
 import java.text.DecimalFormat;
 
@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -17,8 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.nsoft.nphysics.sandbox.interfaces.Position;
+import com.nsoft.nphysics.sandbox.interfaces.Showable;
 
-public class AngleArc extends AlphaActor{
+public class AngleArcActor extends Actor implements Showable{
 
 	Position center;
 	Segment s;
@@ -29,7 +32,7 @@ public class AngleArc extends AlphaActor{
 	private TextButton input;
 	
 	
-	public AngleArc(Position center,Segment s) {
+	public AngleArcActor(Position center,Segment s) {
 		
 		this.center = center;
 		this.s = s;
@@ -41,16 +44,6 @@ public class AngleArc extends AlphaActor{
 	@Override
 	protected void drawDebugBounds(ShapeRenderer shapes) {
 		
-	}
-	public void show() {
-		
-		addAction(Actions.fadeIn(1f, Interpolation.exp5));
-
-	}
-	
-	public void hide() {
-		
-		addAction(Actions.fadeOut(1f,Interpolation.exp5));
 	}
 	
 	public void setAngle(float angle) {
@@ -99,5 +92,4 @@ public class AngleArc extends AlphaActor{
 		
 		super.draw(batch, parentAlpha);
 	}
-	
 }

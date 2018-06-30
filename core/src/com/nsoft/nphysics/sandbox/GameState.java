@@ -1,4 +1,4 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
 import java.util.ArrayList;
 import java.util.HashMap;

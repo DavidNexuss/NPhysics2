@@ -1,4 +1,4 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -6,9 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.nsoft.nphysics.sandbox.interfaces.Position;
+import com.nsoft.nphysics.sandbox.interfaces.Showable;
+import com.nsoft.nphysics.sandbox.interfaces.VertexBuffer;
 
-public class DoubleArrow extends AlphaActor implements VertexBuffer {
+public class DoubleArrow extends Actor implements VertexBuffer,Showable {
 
 	private float[][] vertexBuffer  = new float[8][2];
 	private float[][] bufferVertices = new float[8][2];
@@ -34,17 +38,6 @@ public class DoubleArrow extends AlphaActor implements VertexBuffer {
 		}
 		createVertexArray();
 		updateVertexArray();
-	}
-	//----------------SHOW-HIDE----------------
-	
-	public void show() {
-		
-		addAction(Actions.fadeIn(1f,Interpolation.exp5));
-	}
-	
-	public void hide() {
-		
-		addAction(Actions.fadeOut(1f,Interpolation.exp5));
 	}
 	
 	//---------------VECTOR-------------------

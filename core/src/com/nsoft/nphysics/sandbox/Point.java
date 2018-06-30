@@ -1,4 +1,4 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.interfaces.Parent;
+import com.nsoft.nphysics.sandbox.interfaces.Position;
 
 public class Point extends Actor implements ClickIn<Point>, Position{
 

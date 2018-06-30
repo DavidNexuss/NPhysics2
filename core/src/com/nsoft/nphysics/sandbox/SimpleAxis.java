@@ -1,4 +1,4 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -8,8 +8,10 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.nsoft.nphysics.sandbox.interfaces.Position;
+import com.nsoft.nphysics.sandbox.interfaces.Showable;
 
-public class SimpleAxis extends AlphaActor{
+public class SimpleAxis extends Actor implements Showable{
 
 	static float MAX = 400;
 	Position center;
@@ -19,15 +21,6 @@ public class SimpleAxis extends AlphaActor{
 		
 		center = p;
 		setAlpha(0);
-	}
-	
-	public void show() {
-		
-		addAction(Actions.fadeIn(1f, Interpolation.exp5));
-	}
-	public void hide() {
-		
-		addAction(Actions.fadeOut(1f, Interpolation.exp5));
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {

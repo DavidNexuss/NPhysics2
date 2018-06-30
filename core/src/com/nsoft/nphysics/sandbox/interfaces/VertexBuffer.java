@@ -1,4 +1,6 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox.interfaces;
+
+import com.nsoft.nphysics.sandbox.Sandbox;
 
 public interface VertexBuffer {
 

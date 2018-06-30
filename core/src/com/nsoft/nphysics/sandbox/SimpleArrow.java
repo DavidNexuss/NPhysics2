@@ -1,4 +1,4 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g3d.environment.AmbientCubemap;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nsoft.nphysics.sandbox.interfaces.Pointer;
+import com.nsoft.nphysics.sandbox.interfaces.VertexBuffer;
 
 public class SimpleArrow extends Actor implements VertexBuffer,Pointer{
 

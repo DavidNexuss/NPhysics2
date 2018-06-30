@@ -1,7 +1,8 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.nsoft.nphysics.sandbox.interfaces.VertexBuffer;
 
 public class Grid implements VertexBuffer{
 

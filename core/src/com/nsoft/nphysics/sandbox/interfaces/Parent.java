@@ -1,4 +1,4 @@
-package com.nsoft.nphysics;
+package com.nsoft.nphysics.sandbox.interfaces;
 
 import java.util.ArrayList;
 
