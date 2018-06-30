@@ -1,7 +1,11 @@
 package com.nsoft.nphysics.sandbox;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class Util {
 
@@ -64,5 +68,10 @@ public class Util {
 			buffer[i][0] = rotx(vertices[i][0], vertices[i][1], anglerad) + xoffset;
 			buffer[i][1] = roty(vertices[i][0], vertices[i][1], anglerad) + yoffset;
 		}
+	}
+	
+	public static Drawable getDrawable(Texture t) {
+		
+		return new TextureRegionDrawable(new TextureRegion(t));
 	}
 }
