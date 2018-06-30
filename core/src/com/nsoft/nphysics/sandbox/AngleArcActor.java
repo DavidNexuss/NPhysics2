@@ -41,26 +41,16 @@ public class AngleArcActor extends Actor implements Showable{
 		setDebug(true);
 	}
 	
-	@Override
-	protected void drawDebugBounds(ShapeRenderer shapes) {
-		
-	}
+	public void setAngle(float angle) { this.angle = angle; }
+	public void setRadius(float newRadius) { radius = newRadius; }
 	
-	public void setAngle(float angle) {
-		
-		this.angle = angle;
-	}
-	public void setRadius(float newRadius) {
-		
-		radius = newRadius;
-	}
 	
 	public void update() {
 		
 		setHeight(MathUtils.sinDeg(angle)*radius/3f);
-		setWidth(radius/3f);
-		
+		setWidth(radius/3f);	
 	}
+	
 	boolean hit = false;
 	@Override
 	public Actor hit(float x, float y, boolean touchable) {

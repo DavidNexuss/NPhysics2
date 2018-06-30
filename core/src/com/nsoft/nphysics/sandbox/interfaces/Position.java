@@ -8,6 +8,11 @@ public interface Position {
 	public float getX();
 	public float getY();
 	
+	public default Vector2 getVector() {
+		
+		return new Vector2(getX(), getY());
+	}
+	
 	public default float getLen2() {
 		
 		return getX()*getX() + getY()*getY();

@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 
-public class ArrowActor extends Actor implements ClickIn<ArrowActor>{
+public class ArrowActor extends Actor implements ClickIn{
 
 	//POLYGON-TYPE 1
 	

@@ -15,7 +15,7 @@ import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Showable;
 
-public class Segment extends Group implements Parent<Point>,ClickIn<Segment>,Showable{
+public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 
 	public static final float SHOW_DELAY = 1f;
 	public static final float INPUT_EPSILON = 20f;

@@ -10,7 +10,7 @@ import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 
-public class Point extends Actor implements ClickIn<Point>, Position{
+public class Point extends Actor implements ClickIn, Position{
 
 	public static int RADIUS = 5;
 	
@@ -34,6 +34,7 @@ public class Point extends Actor implements ClickIn<Point>, Position{
 		addInput();
 		addDragListener();
 		pointCounter ++;
+
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {

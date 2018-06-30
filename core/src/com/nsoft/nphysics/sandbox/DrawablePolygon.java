@@ -1,6 +1,6 @@
 package com.nsoft.nphysics.sandbox;
 
-public class DrawablePolygon {
+public class DrawablePolygon { //TODO:INCOMPLETE
 
 	private float[][] vertices; 
 	private float[][] buffervertices;
