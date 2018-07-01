@@ -3,8 +3,10 @@ package com.nsoft.nphysics.sandbox;
 import static com.nsoft.nphysics.sandbox.Util.*;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -31,6 +33,7 @@ public class Sandbox extends Stage {
 		bitmapfont = new BitmapFont();
 		
 		init();
+		
 	}
 	
 	//------------INIT-METHODS--------------
@@ -53,7 +56,6 @@ public class Sandbox extends Stage {
 		addActor(A);
 		addActor(B); 
 		addActor(R);
-
 		
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
@@ -135,6 +137,27 @@ public class Sandbox extends Stage {
 
 	}
 	
+	float centerX;
+	float centerY;
+	
+	public void setCenter(float screenX,float screenY) {
+		
+		centerX = screenX;
+		centerY = Gdx.graphics.getHeight() - screenY;
+	}
+	public void dragCamera(float screenX,float screenY) {
+		
+		float screeny = Gdx.graphics.getHeight() - screenY;
+		
+		((OrthographicCamera)getCamera()).translate(centerX - screenX,centerY - screeny);
+		setCenter(screenX , screenY);
+		getCamera().update();
+		
+		shapefill.setProjectionMatrix(getCamera().combined);
+		shapeline.setProjectionMatrix(getCamera().combined);
+		shapepoint.setProjectionMatrix(getCamera().combined);
+	}
+	
 	//---------------------INPUT--------------------------//
 	
 	@Override
@@ -147,7 +170,11 @@ public class Sandbox extends Stage {
 
 		default:
 
-			return super.touchDragged(screenX, screenY, pointer);
+			if(!super.touchDragged(screenX, screenY, pointer)) {
+				
+				dragCamera(screenX, screenY);
+
+			}
 		}
 		
 		return true;
@@ -170,11 +197,12 @@ public class Sandbox extends Stage {
 			
 			ArrowActor.unhook();
 			break;
-		case CREATE_SEGMENT:
-			
-			return super.touchDown(screenX, screenY, pointer, button);
 		default:
-			return super.touchDown(screenX, screenY, pointer, button);
+			
+			if(!super.touchDown(screenX, screenY, pointer, button)) {
+				
+				setCenter(screenX, screenY);
+			}
 		}
 		return true;
 	}

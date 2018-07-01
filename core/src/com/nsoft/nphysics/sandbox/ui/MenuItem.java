@@ -1,20 +1,34 @@
 package com.nsoft.nphysics.sandbox.ui;
 
+import java.lang.Thread.State;
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AddAction;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kotcrab.vis.ui.widget.VisImage;
 import com.kotcrab.vis.ui.widget.VisImageButton;
+import com.nsoft.nphysics.sandbox.GState;
+import com.nsoft.nphysics.sandbox.GameState;
 import com.nsoft.nphysics.sandbox.Util;
 
 public class MenuItem extends VisImageButton{
 	
+	public static HashMap<String, Runnable> runSet = new HashMap<>();
+	public static Runnable StateChange;
+	
 	private Runnable run;
+	private GState gstate;
+	
+	private Texture texture;
+	
 	public MenuItem(String name) {
 		
 		this(getTexture(name));
@@ -22,35 +36,54 @@ public class MenuItem extends VisImageButton{
 	public MenuItem(Texture t) {
 		
 		super(Util.getDrawable(t));
+		texture = t;
+		
+		addInput();
 	}
 	
+	private void addInput() {
+		
+		addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				
+				if(run != null) run.run();
+				if(gstate != null) GameState.set(gstate);
+				
+				if(getDebug()) System.out.println(this + ": Handled");
+			}
+		});
+	}
 	public static Texture getTexture(String name) {
 		
 		return new Texture(Gdx.files.internal("menu/" + name));
 	}
 	
+	public static MenuItem loadNewItem(String name,GState g) {
+		
+		MenuItem m = initMenuItem(name);
+		m.gstate = g;
+		return m;
+		
+	}
+	
+	public static MenuItem loadNewItem(String name,String runnableKey) {
+		
+		return loadNewItem(name, runSet.get(runnableKey));
+	}
 	public static MenuItem loadNewItem(String name,Runnable run) {
 		
-		MenuItem m = new MenuItem(name);
+		MenuItem m = initMenuItem(name);
 		m.run = run;
-		m.setSize(32, 32);
 		return m;
 	}
 	
-	float h,w;
-	@Override
-	public void draw(Batch batch, float parentAlpha) {
-
-		h = getHeight();
-		w =  getWidth();
+	public static MenuItem initMenuItem(String name) {
 		
-		setHeight(h*getScaleY());
-		setWidth(w*getScaleX());
+		MenuItem m = new MenuItem(name);
+		m.setSize(32, 32);
+		return m;
 		
-		super.draw(batch, parentAlpha);
-		
-		setHeight(h);
-		setWidth(w);
 	}
-	
 }
