@@ -16,6 +16,8 @@ public class DesktopLauncher {
 		config.useGL30 = true;
 		config.vSyncEnabled = true;
 		config.foregroundFPS = 60;
+		config.width = 1280;
+		config.height = 720;
 		config.samples = 4;
 		config.fullscreen = false;
 		new LwjglApplication(new NPhysics(), config);
