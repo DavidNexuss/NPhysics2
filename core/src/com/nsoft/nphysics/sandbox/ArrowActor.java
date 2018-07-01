@@ -204,22 +204,22 @@ public class ArrowActor extends Actor implements ClickIn{
 	//--------------CLASS-FUNCTIONS----------------------
 	private static ArrowActor hook;
 
-	public static boolean isHooking() {return GameState.is(State.HOOK_FORCE_ARROW2);}
+	public static boolean isHooking() {return GameState.is(GState.HOOK_FORCE_ARROW2);}
 		
 	public static void hook(ArrowActor arrow) {
 			
-		if(GameState.is(State.HOOK_FORCE_ARROW)) {		
+		if(GameState.is(GState.HOOK_FORCE_ARROW)) {		
 			hook = arrow;
-			GameState.set(State.HOOK_FORCE_ARROW2);
+			GameState.set(GState.HOOK_FORCE_ARROW2);
 		}
 	}
 	
 	public static void unhook() {
 		
-		if(GameState.is(State.HOOK_FORCE_ARROW2)) {
+		if(GameState.is(GState.HOOK_FORCE_ARROW2)) {
 			
 			hook = null;
-			GameState.set(State.HOOK_FORCE_ARROW);
+			GameState.set(GState.HOOK_FORCE_ARROW);
 		}
 	}
 	public static void updateHook(float x,float y) {
