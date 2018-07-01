@@ -27,9 +27,9 @@ public class Sandbox extends Stage {
 	public static ShapeRenderer shapepoint;
 	
 	public static ShaderProgram gridShader;
-	public static FrameBuffer gridBuffer;
-	public static TextureRegion gridRegion;
 	public static SpriteBatch gridBatch;
+	
+	
 	public static Texture nullTexture;
 	
 	public static BitmapFont bitmapfont;
@@ -66,10 +66,6 @@ public class Sandbox extends Stage {
 	     gridShader = new ShaderProgram(vertexShader, fragmentShader);
 	     gridShader.pedantic = false;
 	     System.out.println(gridShader.getLog());
-	     
-	     gridBuffer = new FrameBuffer(Format.RGB888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
-	     gridRegion = new TextureRegion(gridBuffer.getColorBufferTexture());
-	     gridRegion.flip(false, true);
 	     
 	     Pixmap p = new Pixmap(1, 1, Format.RGB888);
 	     p.setColor(Color.WHITE);
