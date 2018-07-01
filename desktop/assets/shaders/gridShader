@@ -1,10 +1,14 @@
-uniform sampler2D u_texture;
+uniform float u_texture;
+uniform float grid;
+uniform float xoffset;
+uniform float yoffset;
+uniform mat4 u_projTrans;
 
 void main()
 {
     
-    float x = mod(gl_FragCoord.x,20.0);
-    float y = mod(gl_FragCoord.y,20.0);
+    float x = mod(gl_FragCoord.x + xoffset + 10.0,grid);
+    float y = mod(gl_FragCoord.y + yoffset,grid);
     
     if(int(x) == 0 || int(y) == 0){
     

@@ -7,7 +7,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -19,6 +25,12 @@ public class Sandbox extends Stage {
 	public static ShapeRenderer shapefill;
 	public static ShapeRenderer shapeline;
 	public static ShapeRenderer shapepoint;
+	
+	public static ShaderProgram gridShader;
+	public static FrameBuffer gridBuffer;
+	public static TextureRegion gridRegion;
+	public static SpriteBatch gridBatch;
+	public static Texture nullTexture;
 	
 	public static BitmapFont bitmapfont;
 	
@@ -37,18 +49,43 @@ public class Sandbox extends Stage {
 	}
 	
 	//------------INIT-METHODS--------------
+	
 	private void init() {
 		
 		initdebug();
 		addActor(Point.lastPoint);
+		initOrtographicCamera();
+		initGridShader();
+	}
+	
+	private void initGridShader() {
+		
+		 String vertexShader = Gdx.files.internal("shaders/vertexShader").readString();
+	     String fragmentShader = Gdx.files.internal("shaders/gridShader").readString();
+	     
+	     gridShader = new ShaderProgram(vertexShader, fragmentShader);
+	     gridShader.pedantic = false;
+	     System.out.println(gridShader.getLog());
+	     
+	     gridBuffer = new FrameBuffer(Format.RGB888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+	     gridRegion = new TextureRegion(gridBuffer.getColorBufferTexture());
+	     gridRegion.flip(false, true);
+	     
+	     Pixmap p = new Pixmap(1, 1, Format.RGB888);
+	     p.setColor(Color.WHITE);
+	     p.drawPixel(0, 0);
+	     nullTexture = new Texture(p);
+	     
+	     gridBatch = new SpriteBatch();
+	     gridBatch.setShader(gridShader);
 	}
 	
 	private void initdebug() {
 		
 		
 		
-		Point A = new Point(300, 300, false);
-		Point B = new Point(300, 200, false);
+		Point A = new Point(0, 0, false);
+		Point B = new Point(300, 300, false);
 		
 		Segment R = new Segment(A, B);
 		R.select();
@@ -94,13 +131,18 @@ public class Sandbox extends Stage {
 	        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		drawGrid();
 		shapefill.begin(ShapeType.Filled);
-
+		
+		gridBatch.begin();
+		gridShader.setUniformf("grid", UNIT);
+		gridShader.setUniformf("yoffset", camera.position.y);
+		gridShader.setUniformf("xoffset", camera.position.x);
+		gridBatch.draw(nullTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		gridBatch.end();
 		super.draw();
 		
 		shapefill.end();
 		Gdx.gl.glLineWidth(1);
-
-
+		
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
 	
@@ -118,7 +160,7 @@ public class Sandbox extends Stage {
 	//--------DRAW-METHODS-----------------
 	
 	
-	public static void drawGrid() {
+	public void drawGrid() {
 		
 		shapeline.begin(ShapeType.Line);
 		shapeline.setColor(Color.GRAY);
@@ -127,7 +169,7 @@ public class Sandbox extends Stage {
 		int X = Gdx.graphics.getWidth()/Util.UNIT;
 		int Y = Gdx.graphics.getHeight()/Util.UNIT;
 		
-		for (int i = 0; i < Gdx.graphics.getWidth(); i+=UNIT) {
+		for (int i = 0 ; i < Gdx.graphics.getWidth(); i+=UNIT) {
 			
 			shapeline.line(0, i, Gdx.graphics.getWidth(), i);
 			shapeline.line(i, 0, i, Gdx.graphics.getHeight());
@@ -136,10 +178,21 @@ public class Sandbox extends Stage {
 		shapeline.end();
 
 	}
+	//-----------------------CAMERA---------------------------
+	
 	
 	float centerX;
 	float centerY;
 	
+	float offsetX;
+	float offsetY;
+	
+	private OrthographicCamera camera;
+	
+	public void initOrtographicCamera() {
+		
+		camera = (OrthographicCamera)getCamera();
+	}
 	public void setCenter(float screenX,float screenY) {
 		
 		centerX = screenX;
@@ -156,6 +209,9 @@ public class Sandbox extends Stage {
 		shapefill.setProjectionMatrix(getCamera().combined);
 		shapeline.setProjectionMatrix(getCamera().combined);
 		shapepoint.setProjectionMatrix(getCamera().combined);
+		gridShader.setUniformMatrix("u_projTrans", getCamera().combined);
+		offsetX = screenX;
+		offsetY = screeny;
 	}
 	
 	//---------------------INPUT--------------------------//
