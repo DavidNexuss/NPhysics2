@@ -11,8 +11,8 @@ import com.nsoft.nphysics.sandbox.ui.UIStage;
 
 public class NPhysics extends ApplicationAdapter {
 	
-	Sandbox sandbox;
-	UIStage ui;
+	public static Sandbox sandbox;
+	public static UIStage ui;
 	static NPhysics current;
 
 	

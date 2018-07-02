@@ -14,17 +14,24 @@ public class UIStage extends Stage{
 		
 		loadOptionMenu();
 		loadSubMenu();
+		loadViewMenu();
 	}
 	
 	private void loadViewMenu() {
 		
+		Table container = new Table(UILoader.skin);
+		container.setPosition(40, Gdx.graphics.getHeight() - 12);
+		container.setWidth(Gdx.graphics.getWidth() - 40);
+
 		ViewSelection view= new ViewSelection();
 		view.add(new ViewTab());
 		
-		Table p = view.getTable();
-		p.setPosition(40, Gdx.graphics.getHeight() - 12);
-		p.setWidth(Gdx.graphics.getWidth() - 40);
-		addActor(p);
+		DragPane p = view.getTabsPane();
+		container.add(p).expand().fill();
+		
+		addActor(container);
+		
+		container.setDebug(true);
 	}
 	private void loadSubMenu() {
 		

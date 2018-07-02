@@ -52,10 +52,11 @@ public class Sandbox extends Stage {
 	
 	private void init() {
 		
-		initdebug();
-		addActor(Point.lastPoint);
 		initOrtographicCamera();
 		initGridShader();
+		initdebug();
+		addActor(Point.lastPoint);
+
 	}
 	
 	private void initGridShader() {
@@ -65,7 +66,7 @@ public class Sandbox extends Stage {
 	     
 	     gridShader = new ShaderProgram(vertexShader, fragmentShader);
 	     gridShader.pedantic = false;
-	     System.out.println(gridShader.getLog());
+	     System.out.println("Shader compiler log: " + gridShader.getLog());
 	     
 	     Pixmap p = new Pixmap(1, 1, Format.RGB888);
 	     p.setColor(Color.WHITE);
@@ -125,13 +126,13 @@ public class Sandbox extends Stage {
 
 		  Gdx.gl.glEnable(GL20.GL_BLEND);
 	        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		drawGrid();
+//		drawGrid();
 		shapefill.begin(ShapeType.Filled);
 		
 		gridBatch.begin();
-		gridShader.setUniformf("grid", UNIT);
-		gridShader.setUniformf("yoffset", camera.position.y);
-		gridShader.setUniformf("xoffset", camera.position.x);
+		gridShader.setUniformf("grid", UNIT/camera.zoom);
+		gridShader.setUniformf("yoffset", camera.position.y/camera.zoom);
+		gridShader.setUniformf("xoffset", camera.position.x/camera.zoom);
 		gridBatch.draw(nullTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		gridBatch.end();
 		super.draw();
@@ -183,7 +184,7 @@ public class Sandbox extends Stage {
 	float offsetX;
 	float offsetY;
 	
-	private OrthographicCamera camera;
+	public OrthographicCamera camera;
 	
 	public void initOrtographicCamera() {
 		
@@ -194,6 +195,13 @@ public class Sandbox extends Stage {
 		centerX = screenX;
 		centerY = Gdx.graphics.getHeight() - screenY;
 	}
+	
+	public void updateMatrix() {
+		
+		shapefill.setProjectionMatrix(getCamera().combined);
+		shapeline.setProjectionMatrix(getCamera().combined);
+		shapepoint.setProjectionMatrix(getCamera().combined);
+	}
 	public void dragCamera(float screenX,float screenY) {
 		
 		float screeny = Gdx.graphics.getHeight() - screenY;
@@ -201,11 +209,7 @@ public class Sandbox extends Stage {
 		((OrthographicCamera)getCamera()).translate(centerX - screenX,centerY - screeny);
 		setCenter(screenX , screenY);
 		getCamera().update();
-		
-		shapefill.setProjectionMatrix(getCamera().combined);
-		shapeline.setProjectionMatrix(getCamera().combined);
-		shapepoint.setProjectionMatrix(getCamera().combined);
-		gridShader.setUniformMatrix("u_projTrans", getCamera().combined);
+		updateMatrix();
 		offsetX = screenX;
 		offsetY = screeny;
 	}
@@ -274,5 +278,15 @@ public class Sandbox extends Stage {
 			break;
 		}
 		return super.mouseMoved(screenX, screenY);
+	}
+	
+	@Override
+	public boolean scrolled(int amount) {
+		
+		if(camera.zoom == 1 && amount < 0) return true;
+		camera.zoom += amount;
+		camera.update();
+		updateMatrix();
+		return true;
 	}
 }
