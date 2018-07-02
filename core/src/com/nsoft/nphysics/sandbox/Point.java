@@ -65,7 +65,7 @@ public class Point extends Actor implements ClickIn, Position{
 	@Override public void setY(float y) { super.setY(y - INPUT_RADIUS/2f); updatePosition();}
 	@Override public float getX() {return super.getX() + INPUT_RADIUS/2f;}
 	@Override public float getY() {return super.getY() + INPUT_RADIUS/2f;}
-	@Override public void setPosition(float x, float y) { super.setPosition(x, y); updatePosition(); }
+	@Override public void setPosition(float x, float y) { super.setPosition(x- INPUT_RADIUS/2f, y - INPUT_RADIUS/2f); updatePosition(); }
 	
 	//----------------------INPUT----------------------
 	
@@ -97,7 +97,13 @@ public class Point extends Actor implements ClickIn, Position{
 		addListener(new DragListener() {
 		    public void drag(InputEvent event, float x, float y, int pointer) {
 		    	selected = dis;
-		        moveBy(x - getWidth() / 2, y - getHeight() / 2);
+		        
+		    	if (Sandbox.snapping) {
+		    		moveBy(Sandbox.snapGrid(x - getWidth() / 2),Sandbox.snapGrid( y - getHeight() / 2));
+				}else {
+					moveBy(x - getWidth() / 2, y - getHeight() / 2);
+				}
+		    	
 		        updatePosition();
 		    }
 		});

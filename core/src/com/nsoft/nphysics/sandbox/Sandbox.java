@@ -22,6 +22,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 public class Sandbox extends Stage {
 
+	public static boolean snapping = false;
 	public static ShapeRenderer shapefill;
 	public static ShapeRenderer shapeline;
 	public static ShapeRenderer shapepoint;
@@ -146,7 +147,7 @@ public class Sandbox extends Stage {
 	}
 	
 
-	public float snapGrid(float v) {
+	public static float snapGrid(float v) {
 		
 		return Util.UNIT*Math.round(v/Util.UNIT);
 	}
