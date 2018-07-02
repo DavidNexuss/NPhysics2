@@ -16,6 +16,8 @@ public class GameState {
 	
 	public static void set(GState s) {
 		
+		if(current.hasCleanTask())current.cleanTask.run();
+		if(s.hasSetUpTask()) s.setUpTask.run();
 		current = s;
 	}
 }

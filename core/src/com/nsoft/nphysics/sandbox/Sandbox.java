@@ -19,10 +19,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 public class Sandbox extends Stage {
 
-	public static boolean snapping = false;
+	public static boolean snapping = true;
 	public static ShapeRenderer shapefill;
 	public static ShapeRenderer shapeline;
 	public static ShapeRenderer shapepoint;
@@ -205,6 +206,10 @@ public class Sandbox extends Stage {
 		shapeline.setProjectionMatrix(getCamera().combined);
 		shapepoint.setProjectionMatrix(getCamera().combined);
 	}
+	
+	public float unprojectX(float x) {return camera.unproject(new Vector3(x, 0, 0)).x;}
+	public float unprojectY(float y) {return camera.unproject(new Vector3(0, y, 0)).y;}
+	
 	public void dragCamera(float screenX,float screenY) {
 		
 		float screeny = Gdx.graphics.getHeight() - screenY;
@@ -246,7 +251,8 @@ public class Sandbox extends Stage {
 		case CREATE_POINT:
 			
 			Point.lastPoint.isTemp = false;
-			Point.lastPoint = new Point(snapGrid(screenX),snapGrid(Gdx.graphics.getHeight()- screenY), true);
+			if(snapping)Point.lastPoint = new Point(snapGrid(screenX),snapGrid(Gdx.graphics.getHeight()- screenY), true);
+			else Point.lastPoint = new Point(screenX,Gdx.graphics.getHeight()- screenY, true);
 			addActor(Point.lastPoint);
 			break;
 		case DRAG_POINT:
@@ -268,10 +274,13 @@ public class Sandbox extends Stage {
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		
+		float screenx = unprojectX(screenX);
+		float screeny = unprojectY(screenY);
 		switch (GameState.current) {
 		case CREATE_POINT:
 			
-			Point.lastPoint.setPosition(snapGrid(screenX),snapGrid(Gdx.graphics.getHeight()- screenY));
+			if(snapping)Point.lastPoint.setPosition(snapGrid(screenx),snapGrid(screeny));
+			else Point.lastPoint.setPosition(screenx,screeny);
 		case HOOK_FORCE_ARROW2:
 			
 			ArrowActor.updateHook(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());

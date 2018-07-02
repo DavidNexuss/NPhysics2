@@ -1,5 +1,6 @@
 package com.nsoft.nphysics.sandbox;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -99,6 +100,8 @@ public class Point extends Actor implements ClickIn, Position{
 		    	selected = dis;
 		        
 		    	if (Sandbox.snapping) {
+		    		
+		    		setPosition(Sandbox.snapGrid(getX()), Sandbox.snapGrid(getY()));
 		    		moveBy(Sandbox.snapGrid(x - getWidth() / 2),Sandbox.snapGrid( y - getHeight() / 2));
 				}else {
 					moveBy(x - getWidth() / 2, y - getHeight() / 2);

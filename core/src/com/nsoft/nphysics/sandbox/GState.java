@@ -1,9 +1,11 @@
 package com.nsoft.nphysics.sandbox;
 
+import com.nsoft.nphysics.NPhysics;
+
 public enum GState {
 	
 	START("Bienvenido a NPhysics2"),
-	CREATE_POINT("Crea un punto"),
+	CREATE_POINT("Crea un punto",()->{Point.lastPoint.setVisible(false);},()->{Point.lastPoint.setVisible(true);}),
 	CREATE_SEGMENT("Crea un segmento"),
 	CREATE_SEGMENTS("Crea segmentos"),
 	DRAG_POINT("Mueve un punto"),
@@ -11,10 +13,26 @@ public enum GState {
 	HOOK_FORCE_ARROW2("Dibuja el vector de fuerza"), 
 ;	
 	public String description;
+	public Runnable cleanTask;
+	public Runnable setUpTask;
 	
-	GState(String description){
+	public boolean hasCleanTask() {return cleanTask != null;}
+	public boolean hasSetUpTask() {return setUpTask != null;}
+	
+	private GState(String description) {
+		
+		this(description, null);
+	}
+	
+	GState(String description,Runnable cleanTask) {
+		
+		this(description, cleanTask,null);
+	}
+	GState(String description,Runnable cleanTask,Runnable setUpTask){
 		
 		this.description = description;
+		this.cleanTask = cleanTask;
+		this.setUpTask = setUpTask;
 	}
 	
 }
