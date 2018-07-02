@@ -131,6 +131,8 @@ public class Sandbox extends Stage {
 		
 		gridBatch.begin();
 		gridShader.setUniformf("grid", UNIT/camera.zoom);
+		gridShader.setUniformf("width", Gdx.graphics.getWidth());
+		gridShader.setUniformf("height", Gdx.graphics.getHeight());
 		gridShader.setUniformf("yoffset", camera.position.y/camera.zoom);
 		gridShader.setUniformf("xoffset", camera.position.x/camera.zoom);
 		gridBatch.draw(nullTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

@@ -2,20 +2,22 @@ uniform float u_texture;
 uniform float grid;
 uniform float xoffset;
 uniform float yoffset;
+uniform float width;
+uniform float height;
 uniform mat4 u_projTrans;
 
 void main()
 {
     
-    float x = mod(gl_FragCoord.x + xoffset + 10.0,grid);
-    float y = mod(gl_FragCoord.y + yoffset,grid);
+    float x = mod(width + width - gl_FragCoord.x - xoffset,grid);
+    float y = mod(height + height - gl_FragCoord.y - yoffset,grid);
     
     if(int(x) == 0 || int(y) == 0){
     
-    	gl_FragColor = vec4(0.2,0.2,0.2,1.0);
+    	gl_FragColor = vec4(0.4,0.4,0.4,1.0);
     }else{
     
-    	gl_FragColor = vec4(1.0,1.0,1.0,1.0);
+    	gl_FragColor = vec4(0.8,0.9,1.0,0.7);
     }
     // Output to screen
 }
