@@ -1,17 +1,25 @@
 package com.nsoft.nphysics.sandbox.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.kotcrab.vis.ui.layout.DragPane;
 import com.nsoft.nphysics.UILoader;
 import com.nsoft.nphysics.sandbox.GState;
+import com.nsoft.nphysics.sandbox.Sandbox;
 
 public class UIStage extends Stage{
 
 	OptionPane options;
+	ViewSelection view;
+	ShapeRenderer shapefill;
+	Table container;
 	public UIStage() {
 		
+		shapefill = new ShapeRenderer();
 		loadOptionMenu();
 		loadSubMenu();
 		loadViewMenu();
@@ -19,24 +27,28 @@ public class UIStage extends Stage{
 	
 	private void loadViewMenu() {
 		
-		Table container = new Table(UILoader.skin);
-		container.setPosition(40, Gdx.graphics.getHeight() - 12);
+		container = new Table(UILoader.skin);
+		
+		container.setPosition(40, Gdx.graphics.getHeight()- 30);
 		container.setWidth(Gdx.graphics.getWidth() - 40);
-
-		ViewSelection view= new ViewSelection();
-		view.add(new ViewTab());
+		container.setHeight(30);
+		view= new ViewSelection();
+		view.add(new ViewTab("Studio"));
+		view.add(new ViewTab("Prefab Studio"));
+		view.add(new ViewTab("Simulation"));
 		
 		DragPane p = view.getTabsPane();
+		p.pack();
 		container.add(p).expand().fill();
-		
+
 		addActor(container);
 		
-		container.setDebug(true);
+		container.setDebug(false);
 	}
 	private void loadSubMenu() {
 		
 		//DOWN-MENU
-		MenuItem grid = MenuItem.loadNewItem("home.png", ()->{});
+		MenuItem grid = MenuItem.loadNewItem("home.png", ()->{Sandbox.snapping = !Sandbox.snapping;});
 		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
 		addActor(grid);
 		addActor(options);	
@@ -52,5 +64,15 @@ public class UIStage extends Stage{
 		options.add(MenuItem.loadNewItem("start.png", GState.START));
 		options.add(MenuItem.loadNewItem("home.png", GState.CREATE_POINT));
 		options.pack();
+	}
+	
+	@Override
+	public void draw() {
+		
+		shapefill.begin(ShapeType.Filled);
+		shapefill.setColor(0.1f, 0.1f, 0.1f, 1f);
+		shapefill.rect(container.getX(), container.getY(), container.getWidth(), container.getHeight());
+		shapefill.end();
+		super.draw();
 	}
 }

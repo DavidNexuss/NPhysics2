@@ -5,15 +5,16 @@ import com.kotcrab.vis.ui.widget.tabbedpane.Tab;
 
 public class ViewTab extends Tab{
 
-	
-	public ViewTab() {
+	private String name;
+	public ViewTab(String name) {
 		
 		super(false, false);
+		this.name = name;
 	}
 	@Override
 	public String getTabTitle() {
 		
-		return "Test";
+		return name;
 	}
 
 	@Override
