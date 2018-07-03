@@ -86,13 +86,6 @@ public class Sandbox extends Stage {
 		Point A = new Point(0, 0, false);
 		Point B = new Point(300, 300, false);
 		
-		Segment R = new Segment(A, B);
-		R.select();
-		
-		addActor(A);
-		addActor(B); 
-		addActor(R);
-		
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
@@ -259,6 +252,7 @@ public class Sandbox extends Stage {
 			
 			if(!super.touchDown(screenX, screenY, pointer, button)) {
 				
+				Point.selected = null;
 				setCenter(screenX, screenY);
 			}
 		}

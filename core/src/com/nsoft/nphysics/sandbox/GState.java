@@ -7,6 +7,7 @@ public enum GState {
 	START("Bienvenido a NPhysics2"),
 	CREATE_POINT("Crea un punto",()->{Point.lastPoint.setVisible(false);},()->{Point.lastPoint.setVisible(true);}),
 	CREATE_SEGMENT("Crea un segmento"),
+	CREATE_POLYGON("Crea un objeto"),
 	CREATE_SEGMENTS("Crea segmentos"),
 	HOOK_FORCE_ARROW("Dibuja el vector de fuerza"),
 	HOOK_FORCE_ARROW2("Dibuja el vector de fuerza"), 

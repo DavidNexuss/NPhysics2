@@ -1,5 +1,7 @@
 package com.nsoft.nphysics.sandbox;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -20,7 +22,9 @@ public class Point extends Actor implements ClickIn, Position{
 	static int RADIUS2 = RADIUS*RADIUS;
 	
 	boolean isTemp;
-	private Parent parent;
+	
+	private Parent segmentParent;
+	private Parent polygonParent;
 	
 	static Point lastPoint = new Point(Float.NaN, Float.NaN, true);
 	static Point selected;
@@ -55,10 +59,14 @@ public class Point extends Actor implements ClickIn, Position{
 			else Sandbox.shapefill.circle(getX(), getY(), RADIUS*1.3f);
 		}
 	}
+
+	public Parent getPolygonParent() {return polygonParent;}
+	public boolean hasPolygonParent() { return polygonParent != null;}
+	public void setPolygonParent(Parent newParent) {polygonParent = newParent;}
 	
-	public Parent getObjectParent() {return parent;}
-	public boolean hasObjectParent() { return parent != null;}
-	public void setObjectParent(Parent newParent) {parent = newParent;}
+	public Parent getSegmentParent() {return segmentParent;}
+	public boolean hasSegmentParent() { return segmentParent != null;}
+	public void setSegmentParent(Parent newParent) {segmentParent = newParent;}
 	
 	public boolean isTemp() {return isTemp;}
 	
@@ -81,8 +89,10 @@ public class Point extends Actor implements ClickIn, Position{
 	
 	public void updatePosition() {
 		
-		if(hasObjectParent())
-			parent.updatePosition(getX(), getY(), this);
+		if(hasPolygonParent())
+			polygonParent.updatePosition(getX(), getY(), this);
+		if(hasSegmentParent())
+			segmentParent.updatePosition(getX(), getY(), this);
 	}
 
 	@Override
@@ -123,7 +133,7 @@ public class Point extends Actor implements ClickIn, Position{
 		else { 
 			
 			B = this;
-			if(hasObjectParent() && getObjectParent().getChildList().contains(B) && getObjectParent().getChildList().contains(A)) return;
+			if(hasSegmentParent() && getSegmentParent().getChildList().contains(B) && getSegmentParent().getChildList().contains(A)) return;
 			
 			Segment seg = new Segment(A, B);
 			getStage().addActor(seg);
@@ -152,7 +162,12 @@ public class Point extends Actor implements ClickIn, Position{
 			
 			createSegment(this, true);
 			break;
-
+		case CREATE_POLYGON:
+			
+			if(Polygon.temp == null) Polygon.temp = new Polygon();
+			
+			Polygon.temp.addPoint(this);
+			break;
 		default:
 			
 			selected = this;
