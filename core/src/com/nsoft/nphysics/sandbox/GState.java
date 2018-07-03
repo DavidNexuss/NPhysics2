@@ -8,7 +8,6 @@ public enum GState {
 	CREATE_POINT("Crea un punto",()->{Point.lastPoint.setVisible(false);},()->{Point.lastPoint.setVisible(true);}),
 	CREATE_SEGMENT("Crea un segmento"),
 	CREATE_SEGMENTS("Crea segmentos"),
-	DRAG_POINT("Mueve un punto"),
 	HOOK_FORCE_ARROW("Dibuja el vector de fuerza"),
 	HOOK_FORCE_ARROW2("Dibuja el vector de fuerza"), 
 ;	

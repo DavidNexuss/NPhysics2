@@ -48,7 +48,7 @@ public class UIStage extends Stage{
 	private void loadSubMenu() {
 		
 		//DOWN-MENU
-		MenuItem grid = MenuItem.loadNewItem("home.png", ()->{Sandbox.snapping = !Sandbox.snapping;});
+		MenuItem grid = MenuItem.loadNewItem("grid.png", ()->{Sandbox.snapping = !Sandbox.snapping;});
 		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
 		addActor(grid);
 		addActor(options);	
@@ -62,7 +62,8 @@ public class UIStage extends Stage{
 		options.setWidth(40);
 			
 		options.add(MenuItem.loadNewItem("start.png", GState.START));
-		options.add(MenuItem.loadNewItem("home.png", GState.CREATE_POINT));
+		options.add(MenuItem.loadNewItem("point.png", GState.CREATE_POINT));
+		options.add(MenuItem.loadNewItem("segment.png", GState.CREATE_SEGMENT));
 		options.pack();
 	}
 	

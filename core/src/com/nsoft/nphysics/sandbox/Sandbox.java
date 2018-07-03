@@ -56,7 +56,7 @@ public class Sandbox extends Stage {
 		
 		initOrtographicCamera();
 		initGridShader();
-		initdebug();
+	//	initdebug();
 		addActor(Point.lastPoint);
 
 	}
@@ -228,15 +228,11 @@ public class Sandbox extends Stage {
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		
 		switch (GameState.current) {
-		case DRAG_POINT:
-			
-			break;
-
 		default:
 
 			if(!super.touchDragged(screenX, screenY, pointer)) {
 				
-				dragCamera(screenX, screenY);
+				if(!GameState.is(GState.CREATE_POINT))dragCamera(screenX, screenY);
 
 			}
 		}
@@ -254,9 +250,6 @@ public class Sandbox extends Stage {
 			if(snapping)Point.lastPoint = new Point(snapGrid(screenX),snapGrid(Gdx.graphics.getHeight()- screenY), true);
 			else Point.lastPoint = new Point(screenX,Gdx.graphics.getHeight()- screenY, true);
 			addActor(Point.lastPoint);
-			break;
-		case DRAG_POINT:
-			
 			break;
 		case HOOK_FORCE_ARROW2:
 			
