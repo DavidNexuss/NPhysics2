@@ -16,16 +16,17 @@ import com.nsoft.nphysics.sandbox.Sandbox;
 
 public class UIStage extends Stage{
 
-	OptionPane options;
-	ViewSelection view;
-	ShapeRenderer shapefill;
-	Table container;
+	static OptionPane options;
+	static ViewSelection view;
+	static ShapeRenderer shapefill;
+	static Table container;
+	
 	public UIStage() {
 		
 		super(new ScreenViewport());
 		shapefill = new ShapeRenderer();
-		loadOptionMenu();
-		loadSubMenu();
+		
+		setStateMenu();
 		loadViewMenu();
 	}
 	
@@ -36,7 +37,7 @@ public class UIStage extends Stage{
 		container.setPosition(40, Gdx.graphics.getHeight()- 30);
 		container.setWidth(Gdx.graphics.getWidth() - 40);
 		container.setHeight(30);
-		
+
 		view= new ViewSelection();
 		view.add(new ViewTab("Studio"));
 		view.add(new ViewTab("Prefab Studio"));
@@ -57,15 +58,15 @@ public class UIStage extends Stage{
 		
 
 		container.setDebug(false);
-	}
-	private void loadSubMenu() {
+	}	
+	
+	public void setStateMenu() {
 		
-		//DOWN-MENU
-		MenuItem grid = MenuItem.loadNewItem("grid.png", ()->{Sandbox.snapping = !Sandbox.snapping;});
-		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
-		addActor(grid);
-		addActor(options);	
+		loadOptionMenu();
+		loadSubMenu();
 	}
+	
+
 	private void loadOptionMenu() {
 		
 		options = new OptionPane();
@@ -73,13 +74,25 @@ public class UIStage extends Stage{
 		options.setPosition(0, 0);
 		options.setHeight(Gdx.graphics.getHeight());
 		options.setWidth(40);
-			
+
+		setOptionMenuItems();
+		options.pack();
+		addActor(options);	
+	}
+	
+	private void setOptionMenuItems() {
+		
 		options.add(MenuItem.loadNewItem("start.png", GState.START));
 		options.add(MenuItem.loadNewItem("point.png", GState.CREATE_POINT));
 		options.add(MenuItem.loadNewItem("segment.png", GState.CREATE_SEGMENT));
-
 		options.add(MenuItem.loadNewItem("shape.png", GState.CREATE_POLYGON));
-		options.pack();
+	}
+	
+	private void loadSubMenu() {
+		
+		MenuItem grid = MenuItem.loadNewItem("grid.png", ()->{Sandbox.snapping = !Sandbox.snapping;});
+		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
+		addActor(grid);
 	}
 	
 	@Override
@@ -91,4 +104,7 @@ public class UIStage extends Stage{
 		shapefill.end();
 		super.draw();
 	}
+	
+	
+	
 }
