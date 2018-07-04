@@ -1,4 +1,4 @@
-package com.nphysics.simulation.dynamic;
+package com.nsoft.nphysics.simulation.dynamic;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;

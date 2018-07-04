@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.nphysics.simulation.dynamic.SimulationStage;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
+import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 public class NPhysics extends ApplicationAdapter {
 	
