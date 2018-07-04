@@ -95,6 +95,9 @@ public class Polygon extends Actor implements Parent<Point>{
 	
 	private void createDefinition() {
 		
+		definition.vertices.clear();
+		definition.indexes.clear();
+		
 		definition.indexes = indexes;
 		for (Point p : points) {
 			
@@ -126,6 +129,7 @@ public class Polygon extends Actor implements Parent<Point>{
 		
 		if(!isEnded())return;
 		triangulate();
+		createDefinition();
 	}
 
 	@Override

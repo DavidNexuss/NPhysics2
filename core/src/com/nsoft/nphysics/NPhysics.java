@@ -16,6 +16,7 @@ public class NPhysics extends ApplicationAdapter {
 	public static Sandbox sandbox;
 	public static UIStage ui;
 	public static SimulationStage simulation;
+	
 	public static Stage currentStage;
 	static NPhysics current;
 
