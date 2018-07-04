@@ -1,19 +1,21 @@
 package com.nsoft.nphysics.sandbox;
 
+import com.badlogic.gdx.math.Vector2;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 
-public class PositionVector implements Position{
+public class PositionVector extends Vector2 implements Position{
 
-	float x,y;
+	
 	public PositionVector(float x,float y) {
-		
-		this.x = x;
-		this.y = y;
+		super(x, y);
 	}
 	
+	public PositionVector(Vector2 v) {
+		super(v);
+	}
 	@Override
-	public float getX() { return x; }
-	
+	public float getX() { return super.x; }
+
 	@Override
-	public float getY() { return y; }
+	public float getY() { return super.y; }
 }

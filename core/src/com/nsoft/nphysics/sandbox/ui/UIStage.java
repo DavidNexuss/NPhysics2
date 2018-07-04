@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
+import com.kotcrab.vis.ui.widget.VisWindow;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.UILoader;
 import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.Sandbox;
@@ -19,6 +22,7 @@ public class UIStage extends Stage{
 	Table container;
 	public UIStage() {
 		
+		super(new ScreenViewport());
 		shapefill = new ShapeRenderer();
 		loadOptionMenu();
 		loadSubMenu();
@@ -32,17 +36,26 @@ public class UIStage extends Stage{
 		container.setPosition(40, Gdx.graphics.getHeight()- 30);
 		container.setWidth(Gdx.graphics.getWidth() - 40);
 		container.setHeight(30);
+		
 		view= new ViewSelection();
 		view.add(new ViewTab("Studio"));
 		view.add(new ViewTab("Prefab Studio"));
-		view.add(new ViewTab("Simulation"));
+		view.add(new ViewTab("Simulation",()->{
+			
+			NPhysics.switchToSimulation();
+		}));
+		
+		view.switchTab(0);
 		
 		DragPane p = view.getTabsPane();
 		p.pack();
 		container.add(p).expand().fill();
 
+
+		view.initInput();
 		addActor(container);
 		
+
 		container.setDebug(false);
 	}
 	private void loadSubMenu() {

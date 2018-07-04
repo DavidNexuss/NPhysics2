@@ -21,23 +21,22 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-public class Sandbox extends Stage {
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.kotcrab.vis.ui.layout.DragPane;
+import com.nsoft.nphysics.DragStage;
+import com.nsoft.nphysics.GridStage;
+public class Sandbox extends GridStage{
 
 	public static boolean snapping = true;
 	public static ShapeRenderer shapefill;
 	public static ShapeRenderer shapeline;
 	public static ShapeRenderer shapepoint;
 	
-	public static ShaderProgram gridShader;
-	public static SpriteBatch gridBatch;
-	
-	
-	public static Texture nullTexture;
-	
 	public static BitmapFont bitmapfont;
 	
 	public Sandbox() {
-		super();
+		
+		super(new ScreenViewport());
 		
 		//VARIABLE INIT:
 		shapefill = new ShapeRenderer();
@@ -54,30 +53,12 @@ public class Sandbox extends Stage {
 	
 	private void init() {
 		
-		initOrtographicCamera();
-		initGridShader();
-	//	initdebug();
+		
 		addActor(Point.lastPoint);
 
 	}
 	
-	private void initGridShader() {
-		
-		 String vertexShader = Gdx.files.internal("shaders/vertexShader").readString();
-	     String fragmentShader = Gdx.files.internal("shaders/gridShader").readString();
-	     
-	     gridShader = new ShaderProgram(vertexShader, fragmentShader);
-	     gridShader.pedantic = false;
-	     System.out.println("Shader compiler log: " + gridShader.getLog());
-	     
-	     Pixmap p = new Pixmap(1, 1, Format.RGB888);
-	     p.setColor(Color.WHITE);
-	     p.drawPixel(0, 0);
-	     nullTexture = new Texture(p);
-	     
-	     gridBatch = new SpriteBatch();
-	     gridBatch.setShader(gridShader);
-	}
+	
 	
 	private void initdebug() {
 		
@@ -119,19 +100,12 @@ public class Sandbox extends Stage {
 	public void draw() {
 		
 
-		  Gdx.gl.glEnable(GL20.GL_BLEND);
-	        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-//		drawGrid();
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+	    
 		shapefill.begin(ShapeType.Filled);
 		
-		gridBatch.begin();
-		gridShader.setUniformf("grid", UNIT/camera.zoom);
-		gridShader.setUniformf("width", Gdx.graphics.getWidth());
-		gridShader.setUniformf("height", Gdx.graphics.getHeight());
-		gridShader.setUniformf("yoffset", camera.position.y/camera.zoom);
-		gridShader.setUniformf("xoffset", camera.position.x/camera.zoom);
-		gridBatch.draw(nullTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		gridBatch.end();
 		super.draw();
 		
 		shapefill.end();
@@ -174,45 +148,11 @@ public class Sandbox extends Stage {
 	}
 	//-----------------------CAMERA---------------------------
 	
-	
-	float centerX;
-	float centerY;
-	
-	float offsetX;
-	float offsetY;
-	
-	public OrthographicCamera camera;
-	
-	public void initOrtographicCamera() {
-		
-		camera = (OrthographicCamera)getCamera();
-	}
-	public void setCenter(float screenX,float screenY) {
-		
-		centerX = screenX;
-		centerY = Gdx.graphics.getHeight() - screenY;
-	}
-	
 	public void updateMatrix() {
 		
 		shapefill.setProjectionMatrix(getCamera().combined);
 		shapeline.setProjectionMatrix(getCamera().combined);
 		shapepoint.setProjectionMatrix(getCamera().combined);
-	}
-	
-	public float unprojectX(float x) {return camera.unproject(new Vector3(x, 0, 0)).x;}
-	public float unprojectY(float y) {return camera.unproject(new Vector3(0, y, 0)).y;}
-	
-	public void dragCamera(float screenX,float screenY) {
-		
-		float screeny = Gdx.graphics.getHeight() - screenY;
-		
-		((OrthographicCamera)getCamera()).translate(centerX - screenX,centerY - screeny);
-		setCenter(screenX , screenY);
-		getCamera().update();
-		updateMatrix();
-		offsetX = screenX;
-		offsetY = screeny;
 	}
 	
 	//---------------------INPUT--------------------------//
@@ -234,14 +174,16 @@ public class Sandbox extends Stage {
 	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		
+
+		float screenx = unprojectX(screenX);
+		float screeny = unprojectY(screenY);
 		//System.out.println(GameState.current);
 		switch (GameState.current) {
 		case CREATE_POINT:
 			
 			Point.lastPoint.isTemp = false;
-			if(snapping)Point.lastPoint = new Point(snapGrid(screenX),snapGrid(Gdx.graphics.getHeight()- screenY), true);
-			else Point.lastPoint = new Point(screenX,Gdx.graphics.getHeight()- screenY, true);
+			if(snapping)Point.lastPoint = new Point(snapGrid(screenx),snapGrid(screeny), true);
+			else Point.lastPoint = new Point(screenx,screeny, true);
 			addActor(Point.lastPoint);
 			break;
 		case HOOK_FORCE_ARROW2:

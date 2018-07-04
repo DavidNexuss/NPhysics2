@@ -75,10 +75,12 @@ public class AngleArcActor extends Actor implements Showable{
 		}
 		
 	}
+	
+	final static Color arcColor = new Color(0.5f, 0.5f, 0.9f, 0.4f);
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		Sandbox.shapefill.setColor(new Color(0.5f, 0.5f, 0.9f, 0.4f));
+		Sandbox.shapefill.setColor(arcColor);
 		
 		Sandbox.shapefill.arc(center.getX(), center.getY(), radius*getAlpha()*getScaleX()/3f, 0, angle);
 		Sandbox.bitmapfont.setColor(Color.BLACK);

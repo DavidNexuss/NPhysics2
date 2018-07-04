@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nphysics.simulation.dynamic.PolygonDefinition;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 
@@ -14,37 +15,37 @@ import earcut4j.Earcut;
 
 public class Polygon extends Actor implements Parent<Point>{
 
+	public static ArrayList<Polygon> polygonlist = new ArrayList<>();
+	
 	private ArrayList<Point> points = new ArrayList<>();
 	private Point initial;
-	private List<Integer> indexes = new ArrayList<Integer>();
+	private ArrayList<Integer> indexes = new ArrayList<Integer>();
 	private double[] buffer;
 	private boolean end = false;
 	
+	private PolygonDefinition definition;
+	
 	public static Polygon temp;
+	
 	public Polygon() {
 		
 		setDebug(true);
+		definition = new PolygonDefinition();
 	}
 	
+	public PolygonDefinition getDefinition() {return definition;}
 	@Override
 	protected void drawDebugBounds(ShapeRenderer shapes) {}
 	
-	final Color shape = new Color(0.2f, 0.8f, 0.2f, 0.6f);
+	final static Color shape = new Color(0.2f, 0.8f, 0.2f, 0.6f);
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
 		if(!isEnded()) return;
 		
 		Sandbox.shapefill.setColor(shape);
-		for (int i = 0; i < indexes.size(); i+=3) {
-			
-			Sandbox.shapefill.triangle(points.get(indexes.get(i)).getX(), 
-									   points.get(indexes.get(i)).getY(), 
-									   points.get(indexes.get(i + 1)).getX(), 
-									   points.get(indexes.get(i + 1)).getY(), 
-									   points.get(indexes.get(i + 2)).getX(), 
-									   points.get(indexes.get(i + 2)).getY());
-		}
+		
+		Util.renderPolygon(Sandbox.shapefill, points, indexes);
 		
 	}
 	public Polygon addPoint(Point p){
@@ -89,7 +90,16 @@ public class Polygon extends Actor implements Parent<Point>{
 		
 		createBuffer();
 		
-		indexes = Earcut.earcut(buffer);
+		indexes = (ArrayList<Integer>) Earcut.earcut(buffer);
+	}
+	
+	private void createDefinition() {
+		
+		definition.indexes = indexes;
+		for (Point p : points) {
+			
+			definition.vertices.add(new PositionVector(p.getX(), p.getY()));
+		}
 	}
 	public void end() {
 		
@@ -106,6 +116,9 @@ public class Polygon extends Actor implements Parent<Point>{
 			NPhysics.sandbox.addActor(this);
 			temp = null;
 		}
+		
+		polygonlist.add(this);
+		createDefinition();
 	}
 
 	@Override
@@ -120,4 +133,5 @@ public class Polygon extends Actor implements Parent<Point>{
 		
 		return isEnded() ? points : null;
 	}
+	
 }

@@ -1,11 +1,16 @@
 package com.nsoft.nphysics.sandbox;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.nsoft.nphysics.sandbox.interfaces.Position;
 
 public class Util {
 
@@ -23,6 +28,32 @@ public class Util {
 	public static float triangleArea(float ... p) {
 		
 		return Math.abs((p[0]*(p[3] - p[5]) + p[2]*(p[5] - p[1]) + p[4]*(p[1] - p[3]))/2);
+	}
+	
+	public static void renderPolygonPos(ShapeRenderer rend,ArrayList<PositionVector> points,ArrayList<Integer> indexes) {
+		
+		for (int i = 0; i < indexes.size(); i+=3) {
+			
+			rend.triangle(points.get(indexes.get(i)).getX(), 
+									   points.get(indexes.get(i)).getY(), 
+									   points.get(indexes.get(i + 1)).getX(), 
+									   points.get(indexes.get(i + 1)).getY(), 
+									   points.get(indexes.get(i + 2)).getX(), 
+									   points.get(indexes.get(i + 2)).getY());
+		}
+	}
+
+	public static void renderPolygon(ShapeRenderer rend,ArrayList<Point> points,List<Integer> indexes) {
+		
+		for (int i = 0; i < indexes.size(); i+=3) {
+			
+			rend.triangle(points.get(indexes.get(i)).getX(), 
+									   points.get(indexes.get(i)).getY(), 
+									   points.get(indexes.get(i + 1)).getX(), 
+									   points.get(indexes.get(i + 1)).getY(), 
+									   points.get(indexes.get(i + 2)).getX(), 
+									   points.get(indexes.get(i + 2)).getY());
+		}
 	}
 	public static float rotx(float x,float y,float rad) {
 		

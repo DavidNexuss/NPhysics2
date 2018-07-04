@@ -3,6 +3,7 @@ package com.nsoft.nphysics.sandbox;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -109,13 +110,16 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 	public void setPointB(Point p) {B = p; lst.set(1, B);}
 	
 	//--------------------------END-GEOMETRY-------------------------
+	
+	final static Color line = new Color(0.2f, 0.2f, 0.2f, 1);
+	final static Color Cselected = new Color(0.8f, 0.2f, 0.2f, 1);
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
 		if(isReady()) {
 			
-			if(!hit)Sandbox.shapeline.setColor(0.2f, 0.2f, 0.2f, 1);
-			else Sandbox.shapeline.setColor(0.8f, 0.2f, 0.2f, 1);
+			if(!hit)Sandbox.shapeline.setColor(line);
+			else Sandbox.shapeline.setColor(Cselected);
 			Sandbox.shapeline.begin(ShapeType.Line);
 			Gdx.gl.glLineWidth(3 + 3*getAlpha());
 			Sandbox.shapeline.line(A.getX(), A.getY(), B.getX(), B.getY());
