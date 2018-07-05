@@ -24,8 +24,9 @@ public class NPhysics extends ApplicationAdapter {
 	@Override
 	public void create () {
 		current = this;
-		UILoader.loadUI();
 		
+		UILoader.loadUI();
+		GridStage.initGridShader();
 		sandbox = new Sandbox();
 		simulation = new SimulationStage(sandbox.getCamera());
 		currentStage = sandbox;

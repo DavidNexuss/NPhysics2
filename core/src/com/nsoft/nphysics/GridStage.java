@@ -19,10 +19,9 @@ public abstract class GridStage extends DragStage{
 	public GridStage(Viewport v) {
 		
 		super(v);
-		initGridShader();
 	}
 	
-	private void initGridShader() {
+	public static void initGridShader() {
 		
 		 String vertexShader = Gdx.files.internal("shaders/vertexShader").readString();
 	     String fragmentShader = Gdx.files.internal("shaders/gridShader").readString();
@@ -46,6 +45,8 @@ public abstract class GridStage extends DragStage{
 		gridShader.setUniformf("height", Gdx.graphics.getHeight());
 		gridShader.setUniformf("yoffset", camera.position.y/camera.zoom);
 		gridShader.setUniformf("xoffset", camera.position.x/camera.zoom);
+		gridShader.setUniformf("X", Gdx.input.getX());
+		gridShader.setUniformf("Y", Gdx.graphics.getHeight() - Gdx.input.getY());
 		gridBatch.draw(nullTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		gridBatch.end();
 		super.draw();

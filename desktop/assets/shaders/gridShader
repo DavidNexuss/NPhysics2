@@ -4,6 +4,8 @@ uniform float xoffset;
 uniform float yoffset;
 uniform float width;
 uniform float height;
+uniform float X;
+uniform float Y;
 uniform mat4 u_projTrans;
 
 void main()
@@ -14,7 +16,9 @@ void main()
     
     if(int(x) == 0 || int(y) == 0){
     
-    	gl_FragColor = vec4(0.4,0.4,0.4,1.0);
+		float d = (X - gl_FragCoord.x)*(X - gl_FragCoord.x) + (Y - gl_FragCoord.y)*(Y - gl_FragCoord.y);
+		
+    	gl_FragColor = vec4(0.4 + 1000.0/d,0.4,0.4,1.0);
     }else{
     
     	gl_FragColor = vec4(0.8,0.9,1.0,0.7);
