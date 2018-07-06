@@ -1,6 +1,7 @@
 package com.nsoft.nphysics.sandbox.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -17,6 +18,7 @@ import com.nsoft.nphysics.sandbox.Sandbox;
 public class UIStage extends Stage{
 
 	static OptionPane options;
+	public static OptionPane contextMenu;
 	static ViewSelection view;
 	static ShapeRenderer shapefill;
 	static Table container;
@@ -63,10 +65,10 @@ public class UIStage extends Stage{
 	public void setStateMenu() {
 		
 		loadOptionMenu();
+		loadContextMenu();
 		loadSubMenu();
 	}
 	
-
 	private void loadOptionMenu() {
 		
 		options = new OptionPane();
@@ -78,6 +80,17 @@ public class UIStage extends Stage{
 		setOptionMenuItems();
 		options.pack();
 		addActor(options);	
+	}
+	private void loadContextMenu() {
+		
+		contextMenu = new OptionPane();
+
+		contextMenu.setPosition(40, 0);
+		contextMenu.setHeight(Gdx.graphics.getHeight() - 30);
+		contextMenu.setWidth(40);
+		contextMenu.color = new Color(0.1f, 0.1f, 0.1f, 1f);
+		contextMenu.pack();
+		addActor(contextMenu);	
 	}
 	
 	private void setOptionMenuItems() {

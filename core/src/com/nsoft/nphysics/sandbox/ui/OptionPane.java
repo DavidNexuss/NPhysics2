@@ -12,10 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kotcrab.vis.ui.widget.Separator;
 import com.kotcrab.vis.ui.widget.VisTable;
+import com.nsoft.nphysics.sandbox.interfaces.Showable;
 
-public class OptionPane extends VisTable {
+public class OptionPane extends VisTable implements Showable {
 
-	
+	Color color = new Color(0.2f, 0.2f, 0.2f, 1f);
 	@Override
 	public void pack() {
 		
@@ -25,7 +26,7 @@ public class OptionPane extends VisTable {
 	public void generateBackground() {
 	
 		Pixmap a = new Pixmap((int)getWidth(), (int)getHeight(), Pixmap.Format.RGB888);
-		a.setColor(new Color(0.2f, 0.2f, 0.2f, 1f));
+		a.setColor(color);
 		a.fillRectangle(0, 0, a.getWidth(), a.getHeight());
 		setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(a))));
 	}
@@ -47,4 +48,13 @@ public class OptionPane extends VisTable {
 		return a;
 	}
 	
+	@Override
+	public void show() {
+		Showable.super.show();
+	}
+	
+	@Override
+	public void hide() {
+		Showable.super.hide();
+	}
 }

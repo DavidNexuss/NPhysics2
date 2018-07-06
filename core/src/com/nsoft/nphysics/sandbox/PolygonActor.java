@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
+import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 
 import earcut4j.Earcut;
@@ -56,12 +57,14 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn{
 	public void unselect() {
 		
 		current = shape;
+		UIStage.contextMenu.hide();
 		
 	}
 	@Override
 	public void select() {
 		
 		current = shapeSelected;
+		UIStage.contextMenu.show();
 	}
 	
 	@Override
