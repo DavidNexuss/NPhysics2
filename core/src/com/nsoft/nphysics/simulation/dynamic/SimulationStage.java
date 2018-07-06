@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
-import com.nsoft.nphysics.sandbox.Polygon;
+import com.nsoft.nphysics.sandbox.PolygonActor;
 
 public class SimulationStage extends GridStage{
 
@@ -45,7 +45,7 @@ public class SimulationStage extends GridStage{
 	private void initObjects() {
 		
 		objects = new ArrayList<>();
-		for (Polygon d: SimulationPackage.polygons)  {
+		for (PolygonActor d: SimulationPackage.polygons)  {
 			
 			PolygonObject o = new PolygonObject(d.getDefinition());
 			objects.add(o);

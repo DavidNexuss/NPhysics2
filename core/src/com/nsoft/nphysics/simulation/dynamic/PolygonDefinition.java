@@ -15,6 +15,24 @@ public class PolygonDefinition {
 	public float friction;
 	public float restitution;
 	
+	private float[] rawVertices;
+	
+	public void init() {
+		
+		dupeRawVertices();
+	}
+	
+	private void dupeRawVertices() {
+		
+		rawVertices = new float[vertices.size()*2];
+		
+		for (int i = 0; i < rawVertices.length; i+=2) {
+			
+			rawVertices[i] = vertices.get(i/2).x;
+			rawVertices[i + 1] = vertices.get(i/2).y;
+		}
+	}
+	public float[] getRawVertices() {return rawVertices;}
 	public float[][] getTriangles(boolean relative,boolean PhysValue){
 		
 		float[][] Buff = new float[indexes.size()/3][6];

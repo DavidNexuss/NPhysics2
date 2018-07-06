@@ -3,19 +3,24 @@ package com.nsoft.nphysics.sandbox;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 
 import earcut4j.Earcut;
 
-public class Polygon extends Actor implements Parent<Point>{
+public class PolygonActor extends Actor implements Parent<Point>,ClickIn{
 
-	public static ArrayList<Polygon> polygonlist = new ArrayList<>();
+	public static ArrayList<PolygonActor> polygonlist = new ArrayList<>();
 	
 	private ArrayList<Point> points = new ArrayList<>();
 	private Point initial;
@@ -23,32 +28,63 @@ public class Polygon extends Actor implements Parent<Point>{
 	private double[] buffer;
 	private boolean end = false;
 	
+	private float X,Y,width,height; //BOUNDS
+	
 	private PolygonDefinition definition;
+	private Polygon hitboxPolygon;
+	public static PolygonActor temp;
 	
-	public static Polygon temp;
-	
-	public Polygon() {
+	public PolygonActor() {
 		
 		setDebug(true);
+		addInput();
 		definition = new PolygonDefinition();
 	}
 	
 	public PolygonDefinition getDefinition() {return definition;}
-	@Override
-	protected void drawDebugBounds(ShapeRenderer shapes) {}
 	
-	final static Color shape = new Color(0.2f, 0.8f, 0.2f, 0.6f);
+	@Override
+	public boolean isInside(float x, float y) {
+		
+		if (x < X || x > width || y < Y|| y > height) return false;
+		
+		if(hitboxPolygon.contains(x, y)) return true;
+		return false;
+	}
+
+	@Override
+	public void unselect() {
+		
+		current = shape;
+		
+	}
+	@Override
+	public void select() {
+		
+		current = shapeSelected;
+	}
+	
+	@Override
+	public Actor hit(float x, float y, boolean touchable) {
+		
+		return isInside(unproject(Gdx.input.getX(), Gdx.input.getY())) ? this : null;
+	}
+	final static Color shape = 		   new Color(0.2f, 0.8f, 0.2f, 0.6f);
+	final static Color shapeSelected = new Color(0.8f, 0.2f, 0.2f, 0.6f);
+	
+	Color current = shape;
+	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
 		if(!isEnded()) return;
 		
-		Sandbox.shapefill.setColor(shape);
+		Sandbox.shapefill.setColor(current);
 		
 		Util.renderPolygon(Sandbox.shapefill, points, indexes);
 		
 	}
-	public Polygon addPoint(Point p){
+	public PolygonActor addPoint(Point p){
 		
 		if(isEnded()) return this;
 		
@@ -70,7 +106,9 @@ public class Polygon extends Actor implements Parent<Point>{
 			
 			NPhysics.sandbox.addActor(new Segment(points.get(points.size() - 1), p));
 		}
+		
 		points.add(p);
+		
 		return this;
 	}
 	
@@ -93,6 +131,34 @@ public class Polygon extends Actor implements Parent<Point>{
 		indexes = (ArrayList<Integer>) Earcut.earcut(buffer);
 	}
 	
+	private void calculaeBounds() {
+		
+		X = Float.MAX_VALUE;
+		Y = Float.MAX_VALUE;
+		height = Float.MIN_VALUE;
+		width = Float.MIN_VALUE;
+		
+		for (Point p : points) {
+			
+			float px = p.getX();
+			float py = p.getY();
+			
+			if(px < X) X = px;
+			if(px > width) width = px;
+			if(py < Y) Y = py;
+			if(py > height) height = py;
+		}
+	}
+
+	private void createHitBox() {
+		calculaeBounds();
+		hitboxPolygon = new Polygon(definition.getRawVertices());
+	}
+	private void calculateHitBox() {
+		
+		calculaeBounds();
+		hitboxPolygon.setVertices(definition.getRawVertices());
+	}
 	private void createDefinition() {
 		
 		definition.vertices.clear();
@@ -103,6 +169,8 @@ public class Polygon extends Actor implements Parent<Point>{
 			
 			definition.vertices.add(new PositionVector(p.getX(), p.getY()));
 		}
+		
+		definition.init();
 	}
 	public void end() {
 		
@@ -121,7 +189,10 @@ public class Polygon extends Actor implements Parent<Point>{
 		}
 		
 		polygonlist.add(this);
+
 		createDefinition();
+		createHitBox();
+		
 	}
 
 	@Override
@@ -130,6 +201,7 @@ public class Polygon extends Actor implements Parent<Point>{
 		if(!isEnded())return;
 		triangulate();
 		createDefinition();
+		calculateHitBox();
 	}
 
 	@Override

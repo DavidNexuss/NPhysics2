@@ -2,9 +2,9 @@ package com.nsoft.nphysics.simulation.dynamic;
 
 import java.util.ArrayList;
 
-import com.nsoft.nphysics.sandbox.Polygon;
+import com.nsoft.nphysics.sandbox.PolygonActor;
 
 public class SimulationPackage {
 
-	static ArrayList<Polygon> polygons = Polygon.polygonlist;
+	static ArrayList<PolygonActor> polygons = PolygonActor.polygonlist;
 }

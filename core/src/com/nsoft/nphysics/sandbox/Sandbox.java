@@ -45,13 +45,11 @@ public class Sandbox extends GridStage{
 		
 		bitmapfont = new BitmapFont();
 		
-		init();
-		
 	}
 	
 	//------------INIT-METHODS--------------
 	
-	private void init() {
+	public void init() {
 		
 		
 		addActor(Point.lastPoint);
@@ -61,11 +59,6 @@ public class Sandbox extends GridStage{
 	
 	
 	private void initdebug() {
-		
-		
-		
-		Point A = new Point(0, 0, false);
-		Point B = new Point(300, 300, false);
 		
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
@@ -194,7 +187,7 @@ public class Sandbox extends GridStage{
 			
 			if(!super.touchDown(screenX, screenY, pointer, button)) {
 				
-				Point.selected = null;
+				SelectHandle.unselect();
 				setCenter(screenX, screenY);
 			}
 		}

@@ -1,8 +1,8 @@
 package com.nsoft.nphysics.sandbox;
-
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -15,6 +15,11 @@ import com.nsoft.nphysics.sandbox.interfaces.Position;
 
 public class Point extends Actor implements ClickIn, Position{
 
+
+	static final Color point = new Color(0.2f, 0.4f, 0.2f, 1f);
+	static final Color pointselected = new Color(0.9f, 0.8f, 0.2f, 1f);
+	static final Color tempColor = new Color(0.2f, 0.8f, 0.2f, 0.2f);
+	
 	public static int RADIUS = 5;
 	
 	public static int INPUT_RADIUS = RADIUS*3;
@@ -26,12 +31,13 @@ public class Point extends Actor implements ClickIn, Position{
 	private Parent segmentParent;
 	private Parent polygonParent;
 	
-	static Point lastPoint = new Point(Float.NaN, Float.NaN, true);
-	static Point selected;
 	static int pointCounter = 0;
+	
+	static Point lastPoint = new Point(Float.NaN, Float.NaN, true);
 	
 	public Point(float x,float y,boolean isTemp) {
 		
+		System.out.println(x + " " + y);
 		setX(x);
 		setY(y);
 		setSize(INPUT_RADIUS, INPUT_RADIUS);
@@ -39,20 +45,16 @@ public class Point extends Actor implements ClickIn, Position{
 		addInput();
 		addDragListener();
 		pointCounter ++;
-
 	}
+
+	private Color current = point;
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		if(isTemp) 
-			Sandbox.shapefill.setColor(0.2f, 0.8f, 0.2f, 0.2f);
-		else {
-			
-			if(selected == this)Sandbox.shapefill.setColor(0.9f, 0.8f, 0.2f, 1f);
-			else Sandbox.shapefill.setColor(0.2f, 0.4f, 0.2f, 1f);
-		} 
+		Sandbox.shapefill.setColor(isTemp ? tempColor: current);
+		Sandbox.shapefill.setColor(current);
 		
-		if(selected == this)Sandbox.shapefill.circle(getX(), getY(), RADIUS*1.4f);
+		if(SelectHandle.isSelected(this))Sandbox.shapefill.circle(getX(), getY(), RADIUS*1.4f);
 		else {
 			
 			if(!hit)Sandbox.shapefill.circle(getX(), getY(), RADIUS);
@@ -107,8 +109,8 @@ public class Point extends Actor implements ClickIn, Position{
 		Point dis = this;
 		addListener(new DragListener() {
 		    public void drag(InputEvent event, float x, float y, int pointer) {
-		    	selected = dis;
-		        
+		    	
+		    	if(!SelectHandle.isSelected(dis)) SelectHandle.setSelected(dis);
 		    	if (Sandbox.snapping) {
 		    		
 		    		setPosition(Sandbox.snapGrid(getX()), Sandbox.snapGrid(getY()));
@@ -149,10 +151,16 @@ public class Point extends Actor implements ClickIn, Position{
 			}
 		}
 	}
+	
+	@Override
+	public void unselect() {
+		
+		current = point;
+	}
 	@Override
 	public void select() {
-		
-		selected = this;
+
+		current = pointselected;
 		switch (GameState.current) {
 		case CREATE_SEGMENT:
 			
@@ -164,13 +172,12 @@ public class Point extends Actor implements ClickIn, Position{
 			break;
 		case CREATE_POLYGON:
 			
-			if(Polygon.temp == null) Polygon.temp = new Polygon();
+			if(PolygonActor.temp == null) PolygonActor.temp = new PolygonActor();
 			
-			Polygon.temp.addPoint(this);
+			PolygonActor.temp.addPoint(this);
 			break;
 		default:
 			
-			selected = this;
 			break;
 		}
 	}

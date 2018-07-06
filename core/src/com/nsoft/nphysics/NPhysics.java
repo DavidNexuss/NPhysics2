@@ -7,12 +7,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
+import com.vividsolutions.jts.geom.GeometryFactory;
 
 public class NPhysics extends ApplicationAdapter {
 	
+	public static GeometryFactory geometry;
 	public static Sandbox sandbox;
 	public static UIStage ui;
 	public static SimulationStage simulation;
@@ -24,10 +27,12 @@ public class NPhysics extends ApplicationAdapter {
 	@Override
 	public void create () {
 		current = this;
+		geometry = new GeometryFactory();
 		
 		UILoader.loadUI();
 		GridStage.initGridShader();
 		sandbox = new Sandbox();
+		sandbox.init();
 		simulation = new SimulationStage(sandbox.getCamera());
 		currentStage = sandbox;
 		

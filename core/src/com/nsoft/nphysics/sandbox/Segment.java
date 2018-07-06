@@ -29,7 +29,6 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 	private SimpleAxis Axis;
 	private AngleArcActor Arc;
 	
-	public static Segment selected;
 	
 	private ArrayList<Point> lst = new ArrayList<>();
 	{
@@ -279,37 +278,19 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 		return val < epsilon && val > -epsilon;
 	}
 	
-	public boolean isSelected() {return this == selected;}
+	@Override
 	public void unselect() {
 		
-		if(isSelected()) {
-			
-			Axis.hide();
-			Arc.hide();
-			hide();
-			selected = null;
-		}
+		Axis.hide();
+		Arc.hide();
+		hide();
 	}
 	@Override
 	public void select() {
 		
-		if(isSelected()) {
-			
-			unselect();
-			return;
-		}
-		if(selected != null) {
-			
-
-			selected.unselect();
-		}
-		
-
-		selected = this;
 		Axis.show();
 		Arc.show();
 		show();
-		
 		
 	}
 	

@@ -18,7 +18,6 @@ public class ArrowActor extends Actor implements ClickIn{
 	//POLYGON-TYPE 1
 	
 	public static ArrowActor debug;
-	public static ArrowActor selected;
 	
 	private Vector2 start,end;
 	private Vector2 tempModulus;
@@ -119,7 +118,7 @@ public class ArrowActor extends Actor implements ClickIn{
 				buffervertices[5][0], 
 				buffervertices[5][1]);
 		
-		if(selected == this) {
+		if(SelectHandle.isSelected(this)) {
 			
 			Sandbox.shapeline.begin(ShapeType.Line);
 			Sandbox.shapeline.setColor(Color.YELLOW);
@@ -143,31 +142,14 @@ public class ArrowActor extends Actor implements ClickIn{
 	
 	//--------------INPUT--------------------------------
 	
-	public void addInput() {
-		
-		final ArrowActor dis = this;
-		addListener(new ClickListener() {
-			
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				
-				x = Gdx.input.getX();
-				y = Gdx.input.getY();
-				Vector3 coords = getStage().getCamera().unproject(new Vector3(x, y, 0));
-				x = coords.x;
-				y = coords.y;
-				
-				boolean inSide = isInside(x, y);
-				if(inSide) { event.cancel(); selected = dis;}
-			}
-		});
-	}
+	
+	
+	//--------------SELECT-------------------
+	@Override
+	public void select() {}
 	
 	@Override
-	public void select() {
-		
-		selected = this;
-	}
+	public void unselect() {}
 	//---------------CHECK-IF-POINT-IS-INSIDE-ARROW---------------
 	
 	float sign (Vector2 p1, Vector2 p2, Vector2 p3)
