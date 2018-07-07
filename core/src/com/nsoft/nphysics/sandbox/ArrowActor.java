@@ -118,7 +118,7 @@ public class ArrowActor extends Actor implements ClickIn{
 				buffervertices[5][0], 
 				buffervertices[5][1]);
 		
-		if(SelectHandle.isSelected(this)) {
+		if(getHandler().isSelected(this)) {
 			
 			Sandbox.shapeline.begin(ShapeType.Line);
 			Sandbox.shapeline.setColor(Color.YELLOW);
@@ -150,6 +150,12 @@ public class ArrowActor extends Actor implements ClickIn{
 	
 	@Override
 	public void unselect() {}
+	
+	@Override
+	public SelectHandle getHandler() {
+		
+		return Sandbox.mainSelect;
+	}
 	//---------------CHECK-IF-POINT-IS-INSIDE-ARROW---------------
 	
 	float sign (Vector2 p1, Vector2 p2, Vector2 p3)

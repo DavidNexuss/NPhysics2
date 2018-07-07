@@ -7,13 +7,20 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.joints.MotorJointDef;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nsoft.nphysics.sandbox.AxisSupport;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 
 public class PolygonObject extends Actor{
 
@@ -30,6 +37,10 @@ public class PolygonObject extends Actor{
 	}
 	
 	final Color col = new Color(0.2f, 0.8f, 0.2f, 0.5f);
+	
+	final Vector2 t1 = new Vector2();
+	final Vector2 t2 = new Vector2();
+	final Vector2 t3 = new Vector2();
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
@@ -37,38 +48,27 @@ public class PolygonObject extends Actor{
 		
 		for (int i = 0; i < vert.length; i++) {
 			
-			float x1 = vert[i][0];
-			float y1 = vert[i][1];
-			float x2 = vert[i][2];
-			float y2 = vert[i][3];
-			float x3 = vert[i][4];
-			float y3 = vert[i][5];
+
+			Vector2 pos = b.getPosition().scl(Util.UNIT);
 			
-			x1 = Util.rotx(x1, y1, b.getAngle());
-			y1 = Util.roty(x1, y1, b.getAngle());
-			x2 = Util.rotx(x2, y2, b.getAngle());
-			y2 = Util.roty(x2, y2, b.getAngle());
-			x3 = Util.rotx(x3, y3, b.getAngle());
-			y3 = Util.roty(x3, y3, b.getAngle());
+			t1.set(vert[i][0], vert[i][1]).scl(Util.UNIT).add(pos);
+			t2.set(vert[i][2],vert[i][3]).scl(Util.UNIT).add(pos);
+			t3.set(vert[i][4], vert[i][5]).scl(Util.UNIT).add(pos);
+		
 			
-			Vector2 pos = b.getPosition();
+			t1.set(Util.rotPivot(pos, t1, b.getAngle()));
+			t2.set(Util.rotPivot(pos, t2, b.getAngle()));
+			t3.set(Util.rotPivot(pos, t3, b.getAngle()));
+
+			SimulationStage.fill.triangle(t1.x, t1.y, t2.x, t2.y, t3.x, t3.y);
 			
-			x1 += pos.x;
-			y1 += pos.y;
-			x2 += pos.x;
-			y2 += pos.y;
-			x3 += pos.x;
-			y3 += pos.y;
-			
-			
-			x1 *= Util.UNIT;
-			y1 *= Util.UNIT;
-			x2 *= Util.UNIT;
-			y2 *= Util.UNIT;
-			x3 *= Util.UNIT;
-			y3 *= Util.UNIT;
-			
-			SimulationStage.fill.triangle(x1, y1, x2, y2, x3, y3);
+			if(anchors.size() != 0) {
+				
+				for (Body body : anchors) {
+					
+					batch.draw(AxisSupport.Axis, body.getPosition().x*Util.UNIT - 16, body.getPosition().y*Util.UNIT - 16);
+				}
+			}
 		}
 	}
 	private void createObject() {
@@ -79,6 +79,7 @@ public class PolygonObject extends Actor{
 		bdef.position.set(def.getCenter(true));
 		b = SimulationStage.world.createBody(bdef);
 		createFixtures();
+		createJoints();
 	}
 	
 	private ArrayList<Fixture> createFixtures(){
@@ -101,6 +102,43 @@ public class PolygonObject extends Actor{
 		return fixtures;
 	}
 
+	private void createJoints() {
+		
+		for (ObjectChildren c : def.childrens) {
+			
+			if(c instanceof AxisSupport) {
+				
+				RevoluteJointDef def = new RevoluteJointDef();
+				def.bodyA = b;
+				def.bodyB = createAnchor(c.getX()/Util.UNIT, c.getY()/Util.UNIT);
+				def.initialize(b, def.bodyB,new Vector2(c.getX()/Util.UNIT,c.getY()/Util.UNIT));
+				anchor = def.bodyB;
+				anchors.add(anchor);
+				SimulationStage.world.createJoint(def);
+			}
+		}
+	}
+	
+	ArrayList<Body> anchors = new ArrayList<>();
+	Body anchor;
+	private Body createAnchor(float x,float y) {
+		
+		BodyDef def = new BodyDef();
+		def.position.set(x, y);
+		def.type = BodyType.StaticBody;
+		
+		FixtureDef fdef = new FixtureDef();
+		
+		PolygonShape s = new PolygonShape();
+		s.setAsBox(1, 1);
+		fdef.shape = s;
+		
+		Body b = SimulationStage.world.createBody(def);
+		b.createFixture(fdef);
+		
+		return b;
+		
+	}
 	private void initVertexBuffer() {
 		
 		vert = def.getTriangles(true, true);

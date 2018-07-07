@@ -54,7 +54,7 @@ public class Point extends Actor implements ClickIn, Position{
 		Sandbox.shapefill.setColor(isTemp ? tempColor: current);
 		Sandbox.shapefill.setColor(current);
 		
-		if(SelectHandle.isSelected(this))Sandbox.shapefill.circle(getX(), getY(), RADIUS*1.4f);
+		if(getHandler().isSelected(this))Sandbox.shapefill.circle(getX(), getY(), RADIUS*1.4f);
 		else {
 			
 			if(!hit)Sandbox.shapefill.circle(getX(), getY(), RADIUS);
@@ -110,7 +110,7 @@ public class Point extends Actor implements ClickIn, Position{
 		addListener(new DragListener() {
 		    public void drag(InputEvent event, float x, float y, int pointer) {
 		    	
-		    	if(!SelectHandle.isSelected(dis)) SelectHandle.setSelected(dis);
+		    	if(!getHandler().isSelected(dis)) getHandler().setSelected(dis);
 		    	if (Sandbox.snapping) {
 		    		
 		    		setPosition(Sandbox.snapGrid(getX()), Sandbox.snapGrid(getY()));
@@ -180,5 +180,11 @@ public class Point extends Actor implements ClickIn, Position{
 			
 			break;
 		}
+	}
+	
+	@Override
+	public SelectHandle getHandler() {
+		
+		return Sandbox.mainSelect;
 	}
 }

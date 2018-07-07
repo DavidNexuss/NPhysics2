@@ -13,28 +13,33 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.interfaces.Handler;
+import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 
 import earcut4j.Earcut;
 
-public class PolygonActor extends Actor implements Parent<Point>,ClickIn{
+public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler{
 
 	public static ArrayList<PolygonActor> polygonlist = new ArrayList<>();
-	
-	private ArrayList<Point> points = new ArrayList<>();
 	private Point initial;
-	private ArrayList<Integer> indexes = new ArrayList<Integer>();
+	private ArrayList<Point> points = new ArrayList<>();
+	private ArrayList<ObjectChildren> components = new ArrayList<>();
+	private ArrayList<Integer> indexes = new ArrayList<>();
 	private double[] buffer;
 	private boolean end = false;
-	
 	private float X,Y,width,height; //BOUNDS
 	
 	private PolygonDefinition definition;
 	private Polygon hitboxPolygon;
-	public static PolygonActor temp;
 	
+	public SelectHandle handler = new SelectHandle();  
+	@Override public SelectHandle getSelectHandleInstance() { return handler; }
+	
+	public static PolygonActor temp;
+
 	public PolygonActor() {
 		
 		setDebug(true);
@@ -67,6 +72,11 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn{
 		UIStage.contextMenu.show();
 	}
 	
+	@Override
+	public SelectHandle getHandler() {
+		
+		return Sandbox.mainSelect;
+	}
 	@Override
 	public Actor hit(float x, float y, boolean touchable) {
 		
@@ -174,6 +184,7 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn{
 		}
 		
 		definition.init();
+		definition.childrens = components;
 	}
 	public void end() {
 		
@@ -213,4 +224,9 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn{
 		return isEnded() ? points : null;
 	}
 	
+	
+	public void addComponent(ObjectChildren child) {
+		
+		components.add(child);
+	}
 }

@@ -1,5 +1,7 @@
 package com.nsoft.nphysics.sandbox;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.nsoft.nphysics.NPhysics;
 
 public enum GState {
@@ -7,7 +9,7 @@ public enum GState {
 	START("Bienvenido a NPhysics2"),
 	CREATE_POINT("Crea un punto",()->{Point.lastPoint.setVisible(false);},()->{Point.lastPoint.setVisible(true);}),
 	CREATE_SEGMENT("Crea un segmento"),
-	CREATE_AXIS("Crea un eje"),
+	CREATE_AXIS("Crea un eje",()->{AxisSupport.temp.setVisible(false);},()->{AxisSupport.temp.setVisible(true); 	AxisSupport.Axis = new Texture(Gdx.files.internal("misc/axis.png"));}),
 	CREATE_SUPPORT("Crea un soporte"),
 	CREATE_POLYGON("Crea un objeto"),
 	CREATE_SEGMENTS("Crea segmentos"),

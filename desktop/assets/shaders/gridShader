@@ -6,13 +6,14 @@ uniform float width;
 uniform float height;
 uniform float X;
 uniform float Y;
+uniform float zoom;
 uniform mat4 u_projTrans;
 
 void main()
 {
     
-    float x = mod(width + width - gl_FragCoord.x - xoffset,grid);
-    float y = mod(height + height - gl_FragCoord.y - yoffset,grid);
+    float x = mod(gl_FragCoord.x + xoffset,grid);
+    float y = mod(gl_FragCoord.y + yoffset,grid);
     
     if(int(x) == 0 || int(y) == 0){
     

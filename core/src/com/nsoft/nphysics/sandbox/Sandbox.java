@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -28,6 +29,7 @@ import com.nsoft.nphysics.GridStage;
 public class Sandbox extends GridStage{
 
 	public static boolean snapping = true;
+	public static SelectHandle mainSelect = new SelectHandle();
 	public static ShapeRenderer shapefill;
 	public static ShapeRenderer shapeline;
 	public static ShapeRenderer shapepoint;
@@ -42,6 +44,7 @@ public class Sandbox extends GridStage{
 		shapefill = new ShapeRenderer();
 		shapeline = new ShapeRenderer();
 		shapepoint = new ShapeRenderer();
+
 		
 		bitmapfont = new BitmapFont();
 		
@@ -51,9 +54,16 @@ public class Sandbox extends GridStage{
 	
 	public void init() {
 		
-		
+		initTextures();
 		addActor(Point.lastPoint);
-
+		addActor(AxisSupport.temp);
+		AxisSupport.temp.setVisible(false);
+	}
+	
+	public void initTextures() {
+		
+		AxisSupport.Axis = new Texture(Gdx.files.internal("misc/axis.png"));
+		
 	}
 	
 	
@@ -158,7 +168,7 @@ public class Sandbox extends GridStage{
 
 			if(!super.touchDragged(screenX, screenY, pointer)) {
 				
-				if(!GameState.is(GState.CREATE_POINT))dragCamera(screenX, screenY);
+				if(!(GameState.is(GState.CREATE_POINT) || GameState.is(GState.CREATE_AXIS)))dragCamera(screenX, screenY);
 
 			}
 		}
@@ -183,11 +193,18 @@ public class Sandbox extends GridStage{
 			
 			ArrowActor.unhook();
 			break;
+		case CREATE_AXIS:
+			
+			AxisSupport s = new AxisSupport((PolygonActor)mainSelect.getSelected());
+			if(snapping)s.setPosition(snapGrid(screenx),snapGrid(screeny));
+			else s.setPosition(screenx, screeny);
+			addActor(s);
+			break;
 		default:
 			
 			if(!super.touchDown(screenX, screenY, pointer, button)) {
 				
-				SelectHandle.unselect();
+				mainSelect.unselect();
 				setCenter(screenX, screenY);
 			}
 		}
@@ -207,18 +224,23 @@ public class Sandbox extends GridStage{
 			
 			ArrowActor.updateHook(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
 			break;
-
+		case CREATE_AXIS:
+			
+			if(snapping)AxisSupport.temp.setPosition(snapGrid(screenx), snapGrid(screeny));
+			else AxisSupport.temp.setPosition(screenx, screeny);
+			
 		default:
 			break;
 		}
 		return super.mouseMoved(screenX, screenY);
 	}
 	
+	public static float zoomVal = 1.2f;
 	@Override
 	public boolean scrolled(int amount) {
 		
-		if(camera.zoom == 1 && amount < 0) return true;
-		camera.zoom += amount;
+		if(camera.zoom == 0 && amount < 0) return true;
+		camera.zoom *= amount > 0 ? zoomVal : 1f/zoomVal;
 		camera.update();
 		updateMatrix();
 		return true;

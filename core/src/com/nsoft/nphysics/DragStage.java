@@ -28,8 +28,8 @@ public abstract class DragStage extends Stage{
 	}
 	public void setCenter(float screenX,float screenY) {
 		
-		centerX = screenX;
-		centerY = Gdx.graphics.getHeight() - screenY;
+		centerX = screenX*camera.zoom;
+		centerY = (Gdx.graphics.getHeight() - screenY)*camera.zoom;
 	}
 	
 	public abstract void updateMatrix();
@@ -41,7 +41,8 @@ public abstract class DragStage extends Stage{
 		
 		float screeny = Gdx.graphics.getHeight() - screenY;
 		
-		((OrthographicCamera)getCamera()).translate(centerX - screenX,centerY - screeny);
+		
+		((OrthographicCamera)getCamera()).translate(centerX - screenX*camera.zoom,centerY - screeny*camera.zoom);
 		setCenter(screenX , screenY);
 		getCamera().update();
 		updateMatrix();

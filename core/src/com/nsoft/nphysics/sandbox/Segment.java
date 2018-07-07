@@ -294,6 +294,11 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 		
 	}
 	
+	@Override
+	public SelectHandle getHandler() {
+		
+		return Sandbox.mainSelect;
+	}
 	
 	//---------------------------END-INPUT-------------------
 	

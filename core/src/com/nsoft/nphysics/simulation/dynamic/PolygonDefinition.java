@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 
 public class PolygonDefinition {
 
 	public ArrayList<PositionVector> vertices = new ArrayList<>();
+	public ArrayList<ObjectChildren> childrens;
 	public ArrayList<Integer> indexes = new ArrayList<>();
 	public BodyType type = BodyType.DynamicBody;
 	

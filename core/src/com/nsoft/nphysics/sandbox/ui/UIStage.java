@@ -40,7 +40,7 @@ public class UIStage extends Stage{
 		container.setWidth(Gdx.graphics.getWidth() - 40);
 		container.setHeight(30);
 
-		view= new ViewSelection();
+		view = new ViewSelection();
 		view.add(new ViewTab("Studio"));
 		view.add(new ViewTab("Prefab Studio"));
 		view.add(new ViewTab("Simulation",()->{
@@ -89,10 +89,18 @@ public class UIStage extends Stage{
 		contextMenu.setHeight(Gdx.graphics.getHeight() - 30);
 		contextMenu.setWidth(40);
 		contextMenu.color = new Color(0.1f, 0.1f, 0.1f, 1f);
+		
+		setContextMenuItems();
 		contextMenu.pack();
-		addActor(contextMenu);	
+		addActor(contextMenu);
+		contextMenu.hide();
 	}
 	
+	private void setContextMenuItems() {
+		
+		contextMenu.add(MenuItem.loadNewItem("axis.png", GState.CREATE_AXIS));
+		contextMenu.add(MenuItem.loadNewItem("support.png", GState.CREATE_SUPPORT));
+	}
 	private void setOptionMenuItems() {
 		
 		options.add(MenuItem.loadNewItem("start.png", GState.START));

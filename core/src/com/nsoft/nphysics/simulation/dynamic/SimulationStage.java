@@ -6,7 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -20,10 +22,15 @@ public class SimulationStage extends GridStage{
 	
 	static ShapeRenderer fill;
 	static ShapeRenderer line;
+	static Matrix4 mat;
+	static Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 	
 	public SimulationStage(Camera camera) {
 		
 		super(new ScreenViewport(camera));
+		mat = camera.combined.cpy().scale(30, 
+                30, 0);
+
 		initShapeRenderer();
 	}
 	
@@ -59,6 +66,7 @@ public class SimulationStage extends GridStage{
 		fill.begin(ShapeType.Filled);
 		fill.setProjectionMatrix(getCamera().combined);
 		world.step(Gdx.graphics.getDeltaTime(), 8, 4);
+		renderer.render(world, mat);
 		super.draw();
 		fill.end();
 	}
@@ -69,6 +77,8 @@ public class SimulationStage extends GridStage{
 		fill.setProjectionMatrix(getCamera().combined);
 		line.setProjectionMatrix(getCamera().combined);
 		getBatch().setProjectionMatrix(getCamera().combined);
+		mat = camera.combined.cpy().scale(30, 
+                30, 0);
 	}
 	
 	@Override

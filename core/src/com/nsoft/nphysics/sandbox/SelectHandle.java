@@ -1,29 +1,37 @@
 package com.nsoft.nphysics.sandbox;
 
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.interfaces.Handler;
 
 public class SelectHandle {
 
-	private static ClickIn selected;
+	private ClickIn selected;
 	
-	public static boolean isSelected(ClickIn object) {return selected == object;}
-	public static boolean hasSelection() {return selected != null;}
-	public static boolean setSelected(ClickIn newSelected) {
+	public boolean isSelected(ClickIn object) {return selected == object;}
+	public boolean hasSelection() {return selected != null;}
+	public boolean setSelected(ClickIn newSelected) {
 		
 		if(hasSelection())selected.unselect();
 		if(selected == newSelected) {
 			
-			selected = null;
+			choose(null);
 			return false;
 		}
-		selected = newSelected;
+		choose(newSelected);
 		selected.select();
 		return true;
 	};
-	public static ClickIn getSelected() {return selected;}
-	public static void unselect() {
+	public ClickIn getSelected() {return selected;}
+	
+	public void unselect() {
 		
 		if(hasSelection())selected.unselect();
-		selected = null;
+		choose(null);
+	}
+	
+	private void choose(ClickIn in) {
+		
+		if(selected instanceof Handler) ((Handler)selected).getSelectHandleInstance().unselect();
+		selected = in;
 	}
 }

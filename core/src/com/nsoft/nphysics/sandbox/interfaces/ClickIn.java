@@ -25,7 +25,7 @@ public interface ClickIn {
 				x = coords.x;
 				y = coords.y;
 				
-				if(isInside(x, y)) { event.cancel(); SelectHandle.setSelected(pointer);}
+				if(isInside(x, y)) { event.cancel(); handleClick(pointer);}
 			}
 		});
 	}
@@ -38,9 +38,12 @@ public interface ClickIn {
 	
 	public default boolean isInside(Vector3 v) {return isInside(v.x, v.y);}
 	public default boolean isInside(Vector2 v) {return isInside(v.x, v.y);}
+	public default void handleClick(ClickIn pointer) {getHandler().setSelected(pointer);}
+	
 	public boolean isInside(float x,float y);
 	public void select();
 	public void unselect();
+	public SelectHandle getHandler();
 	public boolean addListener(EventListener input);
 	public Stage getStage();
 }
