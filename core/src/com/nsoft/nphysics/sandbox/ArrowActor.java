@@ -35,6 +35,7 @@ public class ArrowActor extends Actor implements ClickIn{
 		getModulus();
 		updateVertices();
 		addInput();
+		
 	}
 	
 	public ArrowActor(Vector2 start) {

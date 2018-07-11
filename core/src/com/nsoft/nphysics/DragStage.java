@@ -11,16 +11,19 @@ import com.nsoft.nphysics.sandbox.Util;
 public abstract class DragStage extends Stage{
 
 
-	public DragStage(Viewport v) {
-		
-		super(v);
-		initOrtographicCamera();
-	}
 	float centerX;
 	float centerY;
 	
 	float offsetX;
 	float offsetY;
+
+	boolean snapping = true;
+	
+	public DragStage(Viewport v) {
+		
+		super(v);
+		initOrtographicCamera();
+	}
 	
 	public OrthographicCamera camera;
 	
@@ -40,15 +43,25 @@ public abstract class DragStage extends Stage{
 	
 	public static int snapGrid(float v) { return (int)Util.UNIT*Math.round(v/Util.UNIT); }
 	
-	public float getUnprojectX() {return getUnprojectX(false);}
-	public float getUnprojectY() {return getUnprojectY(false);}
+	public void setSnapping(boolean newSnapping) {snapping = newSnapping;}
+	public void switchSnapping() {snapping = !snapping;}
+	public boolean isSnapping() {return snapping;}
+	
+	public static int getProjectedX(boolean snap) { return snap ? snapGrid(Gdx.input.getX()) : Gdx.input.getX();}
+	public static int getProjectedY(boolean snap) { return snap ? snapGrid(Gdx.graphics.getHeight() - Gdx.input.getY()) : Gdx.graphics.getHeight() - Gdx.input.getX();}
+	
+	public int getProjectedX() { return getProjectedX(snapping);}
+	public int getProjectedY() { return getProjectedY(snapping);}
+	
+	public float getUnprojectX() {return getUnprojectX(snapping);}
+	public float getUnprojectY() {return getUnprojectY(snapping);}
 	
 	public float getUnprojectX(boolean snap) {
-		return unprojectX(snap ? snapGrid(Gdx.input.getX()) : Gdx.input.getX());
+		return snap ? snapGrid(unprojectX(Gdx.input.getX())) : unprojectX(Gdx.input.getX());
 	}
 	
 	public float getUnprojectY(boolean snap) {
-		return unprojectY(snap ? snapGrid(Gdx.input.getY()) : Gdx.input.getY());
+		return snap ? snapGrid(unprojectY(Gdx.input.getY())) : unprojectY(Gdx.input.getY());
 	}
 	
 	public float unprojectX(float x) {return camera.unproject(new Vector3(x, 0, 0)).x;}

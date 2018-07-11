@@ -27,8 +27,6 @@ import com.kotcrab.vis.ui.layout.DragPane;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.GridStage;
 public class Sandbox extends GridStage{
-
-	public static boolean snapping = true;
 	public static SelectHandle mainSelect = new SelectHandle();
 	
 	public static BitmapFont bitmapfont;
@@ -161,7 +159,7 @@ public class Sandbox extends GridStage{
 		case CREATE_POINT:
 			
 			Point.lastPoint.isTemp = false;
-			if(snapping)Point.lastPoint = new Point(snapGrid(screenx),snapGrid(screeny), true);
+			if(isSnapping())Point.lastPoint = new Point(snapGrid(screenx),snapGrid(screeny), true);
 			else Point.lastPoint = new Point(screenx,screeny, true);
 			addActor(Point.lastPoint);
 			break;
@@ -172,7 +170,7 @@ public class Sandbox extends GridStage{
 		case CREATE_AXIS:
 			
 			AxisSupport s = new AxisSupport((PolygonActor)mainSelect.getSelected());
-			if(snapping)s.setPosition(snapGrid(screenx),snapGrid(screeny));
+			if(isSnapping())s.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else s.setPosition(screenx, screeny);
 			addActor(s);
 			break;
@@ -208,7 +206,7 @@ public class Sandbox extends GridStage{
 		switch (GameState.current) {
 		case CREATE_POINT:
 			
-			if(snapping)Point.lastPoint.setPosition(snapGrid(screenx),snapGrid(screeny));
+			if(isSnapping())Point.lastPoint.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else Point.lastPoint.setPosition(screenx,screeny);
 		case HOOK_FORCE_ARROW2:
 			
@@ -216,13 +214,10 @@ public class Sandbox extends GridStage{
 			break;
 		case CREATE_AXIS:
 			
-			if(snapping)AxisSupport.temp.setPosition(snapGrid(screenx), snapGrid(screeny));
+			if(isSnapping())AxisSupport.temp.setPosition(snapGrid(screenx), snapGrid(screeny));
 			else AxisSupport.temp.setPosition(screenx, screeny);
 			return true;
 		
-		case CREATE_FORCE:
-
-			break;
 		default:
 			break;
 		}

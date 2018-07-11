@@ -113,7 +113,7 @@ public class UIStage extends Stage{
 	
 	private void loadSubMenu() {
 		
-		MenuItem grid = MenuItem.loadNewItem("grid.png", ()->{Sandbox.snapping = !Sandbox.snapping;});
+		MenuItem grid = MenuItem.loadNewItem("grid.png", ()->{NPhysics.currentStage.switchSnapping();});
 		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
 		addActor(grid);
 	}

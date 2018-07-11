@@ -112,7 +112,7 @@ public class Point extends Actor implements ClickIn, Position{
 		    public void drag(InputEvent event, float x, float y, int pointer) {
 		    	
 		    	if(!getHandler().isSelected(dis)) getHandler().setSelected(dis);
-		    	if (Sandbox.snapping) {
+		    	if (NPhysics.currentStage.isSnapping()) {
 		    		
 		    		setPosition(Sandbox.snapGrid(getX()), Sandbox.snapGrid(getY()));
 		    		moveBy(Sandbox.snapGrid(x - getWidth() / 2),Sandbox.snapGrid( y - getHeight() / 2));

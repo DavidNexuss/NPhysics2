@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.Sandbox;
@@ -30,7 +31,7 @@ public abstract class ObjectChildren extends Actor implements ClickIn{
 		    public void drag(InputEvent event, float x, float y, int pointer) {
 		    	
 		    	if(!getHandler().isSelected(dis)) getHandler().setSelected(dis);
-		    	if (Sandbox.snapping) {
+		    	if (NPhysics.currentStage.isSnapping()) {
 		    		
 		    		setPosition(Sandbox.snapGrid(getX()), Sandbox.snapGrid(getY()));
 		    		moveBy(Sandbox.snapGrid(x - getWidth() / 2),Sandbox.snapGrid( y - getHeight() / 2));

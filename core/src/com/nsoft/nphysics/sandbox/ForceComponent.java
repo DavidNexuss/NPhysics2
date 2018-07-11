@@ -3,6 +3,8 @@ package com.nsoft.nphysics.sandbox;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.kotcrab.vis.ui.widget.Draggable.DragAdapter;
+import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
@@ -48,7 +50,7 @@ public class ForceComponent extends ObjectChildren implements Handler{
 	public void act(float delta) {
 		
 		if(hook) {
-			arrow.setEnd(NPhysics.currentStage.getUnprojectX(Sandbox.snapping), NPhysics.currentStage.getUnprojectY(Sandbox.snapping));
+			arrow.setEnd(NPhysics.currentStage.getUnprojectX(), NPhysics.currentStage.getUnprojectY());
 			update();
 		}
 		super.act(delta);
