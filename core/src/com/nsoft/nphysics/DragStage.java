@@ -25,6 +25,17 @@ public abstract class DragStage extends Stage{
 		initOrtographicCamera();
 	}
 	
+	public DragStage(Viewport v,DragStage d) {
+		
+		super(v);
+		initOrtographicCamera();
+		
+		centerX = d.centerX;
+		centerY = d.centerY;
+		
+		offsetX = d.offsetX;
+		offsetY = d.offsetY;
+	}
 	public OrthographicCamera camera;
 	
 	public void initOrtographicCamera() {

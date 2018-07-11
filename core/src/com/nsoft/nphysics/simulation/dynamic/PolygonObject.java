@@ -30,7 +30,8 @@ public class PolygonObject extends Actor{
 	PolygonDefinition def;
 	AxisSupport pivot;
 	ArrayList<DynamicForce> forces = new ArrayList<>();
-	boolean usePivot = true;
+	boolean usePivot = false;
+	
 	float[][] vert;
 	float[][] buff;
 	Body b;
@@ -82,7 +83,7 @@ public class PolygonObject extends Actor{
 		
 		for (DynamicForce  d: forces) {
 			
-			d.update(b,new Vector2(pivot.getPosition()).scl(1f/Util.UNIT));
+			d.update(b,new Vector2(usePivot ? pivot.getPosition().scl(1f/Util.UNIT) : b.getPosition()));
 			b.applyForce(new Vector2(d.getPhysicalForce()).scl(10), d.getPhysicalOrigin(), true);
 		}
 	}
@@ -132,7 +133,7 @@ public class PolygonObject extends Actor{
 				SimulationStage.world.createJoint(def);
 				
 
-				if(pivot == null) { pivot = (AxisSupport)c;}
+				if(pivot == null) { pivot = (AxisSupport)c; usePivot = true;}
 				else {usePivot = false;}
 			}
 			

@@ -25,7 +25,7 @@ public class SimulationStage extends GridStage{
 	public SimulationStage(Camera camera) {
 		
 		super(new ScreenViewport(camera));
-		mat = camera.combined.cpy().scale(30, 30, 0);
+		updateMatrix();
 	}
 	
 	public void cleanAndSetUp() {
@@ -33,6 +33,7 @@ public class SimulationStage extends GridStage{
 		clear();
 		initWorld();
 		initObjects();
+		updateMatrix();
 	}
 	private void initWorld() {
 		
