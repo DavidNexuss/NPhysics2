@@ -30,21 +30,12 @@ public class Sandbox extends GridStage{
 
 	public static boolean snapping = true;
 	public static SelectHandle mainSelect = new SelectHandle();
-	public static ShapeRenderer shapefill;
-	public static ShapeRenderer shapeline;
-	public static ShapeRenderer shapepoint;
 	
 	public static BitmapFont bitmapfont;
 	
 	public Sandbox() {
 		
 		super(new ScreenViewport());
-		
-		//VARIABLE INIT:
-		shapefill = new ShapeRenderer();
-		shapeline = new ShapeRenderer();
-		shapepoint = new ShapeRenderer();
-
 		
 		bitmapfont = new BitmapFont();
 		
@@ -104,24 +95,15 @@ public class Sandbox extends GridStage{
 		
 
 		Gdx.gl.glEnable(GL20.GL_BLEND);
-	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
+	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);	
 	    
-		shapefill.begin(ShapeType.Filled);
+	    super.draw();
 		
-		super.draw();
-		
-		shapefill.end();
 		Gdx.gl.glLineWidth(1);
 		
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
-	
 
-	public static float snapGrid(float v) {
-		
-		return Util.UNIT*Math.round(v/Util.UNIT);
-	}
 	@Override
 	public void act() {
 
@@ -151,12 +133,6 @@ public class Sandbox extends GridStage{
 	}
 	//-----------------------CAMERA---------------------------
 	
-	public void updateMatrix() {
-		
-		shapefill.setProjectionMatrix(getCamera().combined);
-		shapeline.setProjectionMatrix(getCamera().combined);
-		shapepoint.setProjectionMatrix(getCamera().combined);
-	}
 	
 	//---------------------INPUT--------------------------//
 	
@@ -168,7 +144,7 @@ public class Sandbox extends GridStage{
 
 			if(!super.touchDragged(screenX, screenY, pointer)) {
 				
-				if(!(GameState.is(GState.CREATE_POINT) || GameState.is(GState.CREATE_AXIS)))dragCamera(screenX, screenY);
+				if(GameState.is(GState.START))dragCamera(screenX, screenY);
 
 			}
 		}
@@ -200,11 +176,25 @@ public class Sandbox extends GridStage{
 			else s.setPosition(screenx, screeny);
 			addActor(s);
 			break;
+		case CREATE_FORCE:
+			
+			PolygonActor current = (PolygonActor)mainSelect.getSelected();
+			if(current.handler.hasSelection()) {
+				
+				current.handler.unSelect();
+			}else {
+				
+				ForceComponent f = new ForceComponent(current, getUnproject());
+				f.getHandler().setSelected(f);
+				addActor(f);
+			}
+			
+			break;
 		default:
 			
 			if(!super.touchDown(screenX, screenY, pointer, button)) {
 				
-				mainSelect.unselect();
+				mainSelect.unSelect();
 				setCenter(screenX, screenY);
 			}
 		}
@@ -228,7 +218,11 @@ public class Sandbox extends GridStage{
 			
 			if(snapping)AxisSupport.temp.setPosition(snapGrid(screenx), snapGrid(screeny));
 			else AxisSupport.temp.setPosition(screenx, screeny);
-			
+			return true;
+		
+		case CREATE_FORCE:
+
+			break;
 		default:
 			break;
 		}

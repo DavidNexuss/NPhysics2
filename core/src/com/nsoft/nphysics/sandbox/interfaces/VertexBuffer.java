@@ -1,5 +1,6 @@
 package com.nsoft.nphysics.sandbox.interfaces;
 
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.Sandbox;
 
 public interface VertexBuffer {
@@ -30,6 +31,6 @@ public interface VertexBuffer {
 	
 	default void drawTriangle(int v1,int v2,int v3) {
 		
-		Sandbox.shapefill.triangle(getVX(v1), getVY(v1), getVX(v2), getVY(v2), getVX(v3), getVY(v3));
+		NPhysics.currentStage.shapefill.triangle(getVX(v1), getVY(v1), getVX(v2), getVY(v2), getVX(v3), getVY(v3));
 	}
 }

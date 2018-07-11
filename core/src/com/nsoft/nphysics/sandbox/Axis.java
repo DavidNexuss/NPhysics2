@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nsoft.nphysics.NPhysics;
 
 public class Axis extends Actor{
 
@@ -77,13 +78,13 @@ public class Axis extends Actor{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		Sandbox.shapeline.begin(ShapeType.Line);
+		NPhysics.currentStage.shapeline.begin(ShapeType.Line);
 		Gdx.gl.glLineWidth(3);
 		
 		for (int j = 0; j < 4; j++) {
 			
-			if(j > 1)Sandbox.shapeline.setColor(Color.RED);
-			else Sandbox.shapeline.setColor(Color.GREEN);
+			if(j > 1)NPhysics.currentStage.shapeline.setColor(Color.RED);
+			else NPhysics.currentStage.shapeline.setColor(Color.GREEN);
 			
 			float cos = (buffervertices[j][0] - point.x)/lineDistance;
 			float sin = (buffervertices[j][1] - point.y)/lineDistance;
@@ -93,7 +94,7 @@ public class Axis extends Actor{
 				
 				if(pair % 2 == 0) {
 					
-					Sandbox.shapeline.line(
+					NPhysics.currentStage.shapeline.line(
 							(i*cos) + buffervertices[j][0], 
 							(i*sin) + buffervertices[j][1], 
 							((i + lineDistance/10) * cos) + buffervertices[j][0], 
@@ -104,7 +105,7 @@ public class Axis extends Actor{
 			}
 		}
 		
-		Sandbox.shapeline.end();
+		NPhysics.currentStage.shapeline.end();
 		Sandbox.bitmapfont.draw(batch, "x", buffervertices[4][0], buffervertices[4][1]);
 		Sandbox.bitmapfont.draw(batch, "y", buffervertices[5][0], buffervertices[5][1]);
 		

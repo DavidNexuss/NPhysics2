@@ -100,6 +100,7 @@ public class UIStage extends Stage{
 		
 		contextMenu.add(MenuItem.loadNewItem("axis.png", GState.CREATE_AXIS));
 		contextMenu.add(MenuItem.loadNewItem("support.png", GState.CREATE_SUPPORT));
+		contextMenu.add(MenuItem.loadNewItem("force.png", GState.CREATE_FORCE));
 	}
 	private void setOptionMenuItems() {
 		

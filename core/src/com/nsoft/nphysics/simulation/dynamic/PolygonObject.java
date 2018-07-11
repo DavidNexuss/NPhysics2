@@ -12,11 +12,14 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MotorJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.AxisSupport;
+import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.Util;
@@ -25,6 +28,9 @@ import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 public class PolygonObject extends Actor{
 
 	PolygonDefinition def;
+	AxisSupport pivot;
+	ArrayList<DynamicForce> forces = new ArrayList<>();
+	boolean usePivot = true;
 	float[][] vert;
 	float[][] buff;
 	Body b;
@@ -44,7 +50,7 @@ public class PolygonObject extends Actor{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		SimulationStage.fill.setColor(col);
+		NPhysics.currentStage.shapefill.setColor(col);
 		
 		for (int i = 0; i < vert.length; i++) {
 			
@@ -60,7 +66,7 @@ public class PolygonObject extends Actor{
 			t2.set(Util.rotPivot(pos, t2, b.getAngle()));
 			t3.set(Util.rotPivot(pos, t3, b.getAngle()));
 
-			SimulationStage.fill.triangle(t1.x, t1.y, t2.x, t2.y, t3.x, t3.y);
+			NPhysics.currentStage.shapefill.triangle(t1.x, t1.y, t2.x, t2.y, t3.x, t3.y);
 			
 			if(anchors.size() != 0) {
 				
@@ -69,6 +75,15 @@ public class PolygonObject extends Actor{
 					batch.draw(AxisSupport.Axis, body.getPosition().x*Util.UNIT - 16, body.getPosition().y*Util.UNIT - 16);
 				}
 			}
+		}
+	}
+	
+	public void aplyForce() {
+		
+		for (DynamicForce  d: forces) {
+			
+			d.update(b,new Vector2(pivot.getPosition()).scl(1f/Util.UNIT));
+			b.applyForce(new Vector2(d.getPhysicalForce()).scl(10), d.getPhysicalOrigin(), true);
 		}
 	}
 	private void createObject() {
@@ -115,6 +130,24 @@ public class PolygonObject extends Actor{
 				anchor = def.bodyB;
 				anchors.add(anchor);
 				SimulationStage.world.createJoint(def);
+				
+
+				if(pivot == null) { pivot = (AxisSupport)c;}
+				else {usePivot = false;}
+			}
+			
+			if (c instanceof ForceComponent) {
+				
+				ForceComponent f = (ForceComponent)c;
+				Vector2 force = f.getForce().scl(1f/Util.UNIT);
+				Vector2 origin = f.getOrigin().scl(1f/Util.UNIT);
+				
+				DynamicForce d = new DynamicForce();
+				d.force = force;
+				d.origin = origin;
+				d.init();
+				
+				forces.add(d) ;
 			}
 		}
 	}

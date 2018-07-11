@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -17,9 +19,19 @@ public abstract class GridStage extends DragStage{
 	public static SpriteBatch gridBatch;
 	public static Texture nullTexture;
 	
+	public ShapeRenderer shapefill;
+	public ShapeRenderer shapeline;
+	public ShapeRenderer shapepoint;
+	
 	public GridStage(Viewport v) {
 		
 		super(v);
+
+		//VARIABLE INIT:
+		shapefill = new ShapeRenderer();
+		shapeline = new ShapeRenderer();
+		shapepoint = new ShapeRenderer();
+
 	}
 	
 	public static void initGridShader() {
@@ -56,7 +68,20 @@ public abstract class GridStage extends DragStage{
 		gridShader.setUniformf("yoffset", tmp.y);
 		gridBatch.draw(nullTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		gridBatch.end();
+		
+		shapefill.begin(ShapeType.Filled);
 		super.draw();
+		shapefill.end();
 		tmp.set(Vector3.Zero);
+	}
+	
+	@Override
+	public void updateMatrix() {
+		
+		shapefill.setProjectionMatrix(getCamera().combined);
+		shapeline.setProjectionMatrix(getCamera().combined);
+		shapepoint.setProjectionMatrix(getCamera().combined);
+		getBatch().setProjectionMatrix(getCamera().combined);
+		
 	}
 }

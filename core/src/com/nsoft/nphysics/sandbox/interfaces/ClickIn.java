@@ -36,6 +36,7 @@ public interface ClickIn {
 		return getStage().getCamera().unproject(tmp.set(x, y,0));
 	}
 	
+	public default boolean isSelected() {return getHandler().isSelected(this);}
 	public default boolean isInside(Vector3 v) {return isInside(v.x, v.y);}
 	public default boolean isInside(Vector2 v) {return isInside(v.x, v.y);}
 	public default void handleClick(ClickIn pointer) {getHandler().setSelected(pointer);}
@@ -43,6 +44,7 @@ public interface ClickIn {
 	public boolean isInside(float x,float y);
 	public void select();
 	public void unselect();
+	public default void setHandler(SelectHandle s) {}
 	public SelectHandle getHandler();
 	public boolean addListener(EventListener input);
 	public Stage getStage();

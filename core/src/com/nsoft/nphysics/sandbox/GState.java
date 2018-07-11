@@ -13,6 +13,7 @@ public enum GState {
 	CREATE_SUPPORT("Crea un soporte"),
 	CREATE_POLYGON("Crea un objeto"),
 	CREATE_SEGMENTS("Crea segmentos"),
+	CREATE_FORCE("Crea un vector de fuerza"),
 	HOOK_FORCE_ARROW("Dibuja el vector de fuerza"),
 	HOOK_FORCE_ARROW2("Dibuja el vector de fuerza"), 
 ;	

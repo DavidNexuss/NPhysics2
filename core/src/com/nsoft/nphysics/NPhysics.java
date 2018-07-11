@@ -11,23 +11,20 @@ import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
-import com.vividsolutions.jts.geom.GeometryFactory;
 
 public class NPhysics extends ApplicationAdapter {
 	
-	public static GeometryFactory geometry;
 	public static Sandbox sandbox;
 	public static UIStage ui;
 	public static SimulationStage simulation;
 	
-	public static Stage currentStage;
+	public static GridStage currentStage;
 	static NPhysics current;
 
 	
 	@Override
 	public void create () {
 		current = this;
-		geometry = new GeometryFactory();
 		
 		UILoader.loadUI();
 		GridStage.initGridShader();
@@ -54,8 +51,9 @@ public class NPhysics extends ApplicationAdapter {
 	
 	public static void switchToSimulation() {
 		
-		simulation.cleanAndSetUp();
+
 		currentStage = simulation;
+		simulation.cleanAndSetUp();
 		
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
 	}

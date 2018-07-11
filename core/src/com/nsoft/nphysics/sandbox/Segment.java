@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Showable;
@@ -117,30 +118,30 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 		
 		if(isReady()) {
 			
-			if(!hit)Sandbox.shapeline.setColor(line);
-			else Sandbox.shapeline.setColor(Cselected);
-			Sandbox.shapeline.begin(ShapeType.Line);
+			if(!hit)NPhysics.currentStage.shapeline.setColor(line);
+			else NPhysics.currentStage.shapeline.setColor(Cselected);
+			NPhysics.currentStage.shapeline.begin(ShapeType.Line);
 			Gdx.gl.glLineWidth(3 + 3*getAlpha());
-			Sandbox.shapeline.line(A.getX(), A.getY(), B.getX(), B.getY());
-			Sandbox.shapeline.end();
+			NPhysics.currentStage.shapeline.line(A.getX(), A.getY(), B.getX(), B.getY());
+			NPhysics.currentStage.shapeline.end();
 			
-			Sandbox.shapefill.setColor(0.8f, 0.2f, 0.2f, 0.3f);
+			NPhysics.currentStage.shapefill.setColor(0.8f, 0.2f, 0.2f, 0.3f);
 			
 			//RENDER HITBOX TRIANGLES
 			/*
-			Sandbox.shapefill.triangle(trianglesBuffer[0][0], trianglesBuffer[0][1], 
+			NPhysics.currentStage.shapefill.triangle(trianglesBuffer[0][0], trianglesBuffer[0][1], 
 									   trianglesBuffer[0][2], trianglesBuffer[0][3], 
 									   trianglesBuffer[0][4], trianglesBuffer[0][5]);
 			
-			Sandbox.shapefill.triangle(trianglesBuffer[1][0], trianglesBuffer[1][1], 
+			NPhysics.currentStage.shapefill.triangle(trianglesBuffer[1][0], trianglesBuffer[1][1], 
 					   				   trianglesBuffer[1][2], trianglesBuffer[1][3], 
 					   				   trianglesBuffer[1][4], trianglesBuffer[1][5]);
 			
-			Sandbox.shapefill.triangle(trianglesBuffer[2][0], trianglesBuffer[2][1], 
+			NPhysics.currentStage.shapefill.triangle(trianglesBuffer[2][0], trianglesBuffer[2][1], 
 					   				   trianglesBuffer[2][2], trianglesBuffer[2][3], 
 					   				   trianglesBuffer[2][4], trianglesBuffer[2][5]);
 			
-			Sandbox.shapefill.triangle(trianglesBuffer[3][0], trianglesBuffer[3][1], 
+			NPhysics.currentStage.shapefill.triangle(trianglesBuffer[3][0], trianglesBuffer[3][1], 
 	   				   				   trianglesBuffer[3][2], trianglesBuffer[3][3], 
 	   				   				   trianglesBuffer[3][4], trianglesBuffer[3][5]);*/
 		}

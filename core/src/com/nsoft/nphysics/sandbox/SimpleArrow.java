@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g3d.environment.AmbientCubemap;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.Pointer;
 import com.nsoft.nphysics.sandbox.interfaces.VertexBuffer;
 
@@ -23,6 +24,7 @@ public class SimpleArrow extends Actor implements VertexBuffer,Pointer{
 		this.start = start;
 		this.end = end;
 		
+		System.out.println(end + " " + start);
 		updateVertexArray();
 	}
 
@@ -60,7 +62,7 @@ public class SimpleArrow extends Actor implements VertexBuffer,Pointer{
 	@Override
 	public void updateVertexArray() {
 		
-		getModulus();
+		modulus = getModulus();
 		createVertexArray();
 		
 		Util.proj(vertices, buffervertices, start.x, start.y, modulus.angleRad());
@@ -69,15 +71,15 @@ public class SimpleArrow extends Actor implements VertexBuffer,Pointer{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		Sandbox.shapeline.begin(ShapeType.Line);
+		NPhysics.currentStage.shapeline.begin(ShapeType.Line);
 		Gdx.gl.glLineWidth(2);
-		Sandbox.shapeline.setColor(Color.BLACK);
-		Sandbox.shapeline.line(buffervertices[0][0], buffervertices[0][1], 
+		NPhysics.currentStage.shapeline.setColor(Color.BLACK);
+		NPhysics.currentStage.shapeline.line(buffervertices[0][0], buffervertices[0][1], 
 							buffervertices[1][0], buffervertices[1][1]);
-		Sandbox.shapeline.end();
+		NPhysics.currentStage.shapeline.end();
 		
-		Sandbox.shapefill.setColor(Color.BLACK);
-		Sandbox.shapefill.triangle(buffervertices[2][0], buffervertices[2][1], 
+		NPhysics.currentStage.shapeline.setColor(Color.BLACK);
+		NPhysics.currentStage.shapefill.triangle(buffervertices[2][0], buffervertices[2][1], 
 					buffervertices[3][0], buffervertices[3][1], 
 					buffervertices[4][0], buffervertices[4][1]);
 		

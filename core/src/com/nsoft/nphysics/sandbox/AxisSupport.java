@@ -42,6 +42,10 @@ public class AxisSupport extends ObjectChildren {
 	@Override public float getY() {return super.getY() + INPUT_RADIUS/2f;}
 	@Override public void setPosition(float x, float y) { super.setPosition(x- INPUT_RADIUS/2f, y - INPUT_RADIUS/2f);}
 
+	public Vector2 getPosition() {
+		
+		return new Vector2(getX(), getY());
+	}
 	@Override
 	public Actor hit(float x, float y, boolean touchable) {
 		

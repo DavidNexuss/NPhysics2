@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
@@ -51,14 +52,14 @@ public class Point extends Actor implements ClickIn, Position{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		Sandbox.shapefill.setColor(isTemp ? tempColor: current);
-		Sandbox.shapefill.setColor(current);
+		NPhysics.currentStage.shapefill.setColor(isTemp ? tempColor: current);
+		NPhysics.currentStage.shapefill.setColor(current);
 		
-		if(getHandler().isSelected(this))Sandbox.shapefill.circle(getX(), getY(), RADIUS*1.4f);
+		if(getHandler().isSelected(this))NPhysics.currentStage.shapefill.circle(getX(), getY(), RADIUS*1.4f);
 		else {
 			
-			if(!hit)Sandbox.shapefill.circle(getX(), getY(), RADIUS);
-			else Sandbox.shapefill.circle(getX(), getY(), RADIUS*1.3f);
+			if(!hit)NPhysics.currentStage.shapefill.circle(getX(), getY(), RADIUS);
+			else NPhysics.currentStage.shapefill.circle(getX(), getY(), RADIUS*1.3f);
 		}
 	}
 

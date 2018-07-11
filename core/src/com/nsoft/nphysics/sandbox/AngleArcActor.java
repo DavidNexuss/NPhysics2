@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.Showable;
 
@@ -80,9 +81,9 @@ public class AngleArcActor extends Actor implements Showable{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		Sandbox.shapefill.setColor(arcColor);
+		NPhysics.sandbox.shapefill.setColor(arcColor);
 		
-		Sandbox.shapefill.arc(center.getX(), center.getY(), radius*getAlpha()*getScaleX()/3f, 0, angle);
+		NPhysics.currentStage.shapefill.arc(center.getX(), center.getY(), radius*getAlpha()*getScaleX()/3f, 0, angle);
 		Sandbox.bitmapfont.setColor(Color.BLACK);
 		Sandbox.bitmapfont.draw(batch, "Ángulo actual" + angle, 100, 100);
 		

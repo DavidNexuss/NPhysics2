@@ -53,6 +53,6 @@ public abstract class ObjectChildren extends Actor implements ClickIn{
 	@Override
 	public SelectHandle getHandler() {
 		
-		return parent.getHandler();
+		return parent.handler;
 	}
 }

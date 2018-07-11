@@ -23,7 +23,7 @@ public class SelectHandle {
 	};
 	public ClickIn getSelected() {return selected;}
 	
-	public void unselect() {
+	public void unSelect() {
 		
 		if(hasSelection())selected.unselect();
 		choose(null);
@@ -31,7 +31,7 @@ public class SelectHandle {
 	
 	private void choose(ClickIn in) {
 		
-		if(selected instanceof Handler) ((Handler)selected).getSelectHandleInstance().unselect();
+		if(selected instanceof Handler) ((Handler)selected).getSelectHandleInstance().unSelect();
 		selected = in;
 	}
 }

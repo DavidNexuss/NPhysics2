@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 
 public class ArrowActor extends Actor implements ClickIn{
@@ -98,19 +99,20 @@ public class ArrowActor extends Actor implements ClickIn{
 	}
 	
 	//-----------------ACTOR-FUNCTIONS----------------------
+	static final Color selected = new Color(0.8f, 0.8f, 0.f, 1f);
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
 
-		Sandbox.shapefill.setColor(getColor());
-		Sandbox.shapefill.triangle(
+		NPhysics.currentStage.shapefill.setColor(isSelected() ? selected : getColor());
+		NPhysics.currentStage.shapefill.triangle(
 				buffervertices[0][0], 
 				buffervertices[0][1], 
 				buffervertices[1][0],
 				buffervertices[1][1], 
 				buffervertices[2][0], 
 				buffervertices[2][1]);
-		Sandbox.shapefill.triangle(
+		NPhysics.currentStage.shapefill.triangle(
 				buffervertices[3][0], 
 				buffervertices[3][1], 
 				buffervertices[4][0],
@@ -120,18 +122,18 @@ public class ArrowActor extends Actor implements ClickIn{
 		
 		if(getHandler().isSelected(this)) {
 			
-			Sandbox.shapeline.begin(ShapeType.Line);
-			Sandbox.shapeline.setColor(Color.YELLOW);
+			NPhysics.currentStage.shapeline.begin(ShapeType.Line);
+			NPhysics.currentStage.shapeline.setColor(Color.YELLOW);
 			Gdx.gl.glLineWidth(6);
 			
-			Sandbox.shapeline.line(buffervertices[0][0], buffervertices[0][1], buffervertices[1][0], buffervertices[1][1]);
-			Sandbox.shapeline.line(buffervertices[0][0], buffervertices[0][1], buffervertices[2][0], buffervertices[2][1]);
-			Sandbox.shapeline.line(buffervertices[1][0], buffervertices[1][1], buffervertices[3][0], buffervertices[3][1]);
-			Sandbox.shapeline.line(buffervertices[2][0], buffervertices[2][1], buffervertices[4][0], buffervertices[4][1]);
-			Sandbox.shapeline.line(buffervertices[3][0], buffervertices[3][1], buffervertices[5][0], buffervertices[5][1]);
-			Sandbox.shapeline.line(buffervertices[4][0], buffervertices[4][1], buffervertices[5][0], buffervertices[5][1]);
+			NPhysics.currentStage.shapeline.line(buffervertices[0][0], buffervertices[0][1], buffervertices[1][0], buffervertices[1][1]);
+			NPhysics.currentStage.shapeline.line(buffervertices[0][0], buffervertices[0][1], buffervertices[2][0], buffervertices[2][1]);
+			NPhysics.currentStage.shapeline.line(buffervertices[1][0], buffervertices[1][1], buffervertices[3][0], buffervertices[3][1]);
+			NPhysics.currentStage.shapeline.line(buffervertices[2][0], buffervertices[2][1], buffervertices[4][0], buffervertices[4][1]);
+			NPhysics.currentStage.shapeline.line(buffervertices[3][0], buffervertices[3][1], buffervertices[5][0], buffervertices[5][1]);
+			NPhysics.currentStage.shapeline.line(buffervertices[4][0], buffervertices[4][1], buffervertices[5][0], buffervertices[5][1]);
 			
-			Sandbox.shapeline.end();
+			NPhysics.currentStage.shapeline.end();
 		}
 	}
 	
@@ -151,10 +153,17 @@ public class ArrowActor extends Actor implements ClickIn{
 	@Override
 	public void unselect() {}
 	
+	
+	SelectHandle superHandler = Sandbox.mainSelect;
+	@Override
+	public void setHandler(SelectHandle s) {
+		
+		superHandler = s;
+	}
 	@Override
 	public SelectHandle getHandler() {
 		
-		return Sandbox.mainSelect;
+		return superHandler;
 	}
 	//---------------CHECK-IF-POINT-IS-INSIDE-ARROW---------------
 	
@@ -189,6 +198,9 @@ public class ArrowActor extends Actor implements ClickIn{
 	    
 	    return ((b1 == b2) && (b2 == b3));
 	}
+	
+	public Vector2 getEnd() {return new Vector2(end);}
+	public void setEnd(float x,float y) {end.set(x, y); updateVertices();}
 	//--------------CLASS-FUNCTIONS----------------------
 	private static ArrowActor hook;
 
@@ -214,8 +226,7 @@ public class ArrowActor extends Actor implements ClickIn{
 			
 		if(isHooking()) {
 				
-			hook.end.set(x, y);
-			hook.updateVertices();
+			hook.setEnd(x, y);
 		}
 	}	
 }

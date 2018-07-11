@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.Showable;
 import com.nsoft.nphysics.sandbox.interfaces.VertexBuffer;
@@ -97,17 +98,17 @@ public class DoubleArrow extends Actor implements VertexBuffer,Showable {
 			modulus = getModulus()*getAlpha();
 			update();
 		}
-		Sandbox.shapefill.setColor(Color.BLACK);
-		Sandbox.shapefill.triangle(bufferVertices[0][0], bufferVertices[0][1], 
+		NPhysics.currentStage.shapefill.setColor(Color.BLACK);
+		NPhysics.currentStage.shapefill.triangle(bufferVertices[0][0], bufferVertices[0][1], 
 								   bufferVertices[1][0], bufferVertices[1][1], 
 								   bufferVertices[2][0], bufferVertices[2][1]);
-		Sandbox.shapeline.begin(ShapeType.Line);
+		NPhysics.currentStage.shapeline.begin(ShapeType.Line);
 		Gdx.gl.glLineWidth(3);
-		Sandbox.shapeline.line(bufferVertices[3][0], bufferVertices[3][1], 
+		NPhysics.currentStage.shapeline.line(bufferVertices[3][0], bufferVertices[3][1], 
 							   bufferVertices[4][0], bufferVertices[4][1]);
-		Sandbox.shapeline.end();
+		NPhysics.currentStage.shapeline.end();
 		
-		Sandbox.shapefill.triangle(bufferVertices[5][0], bufferVertices[5][1], 
+		NPhysics.currentStage.shapefill.triangle(bufferVertices[5][0], bufferVertices[5][1], 
 				   				   bufferVertices[6][0], bufferVertices[6][1], 
 				   				   bufferVertices[7][0], bufferVertices[7][1]);
 		

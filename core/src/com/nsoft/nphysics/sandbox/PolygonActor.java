@@ -92,9 +92,9 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		
 		if(!isEnded()) return;
 		
-		Sandbox.shapefill.setColor(current);
+		NPhysics.currentStage.shapefill.setColor(current);
 		
-		Util.renderPolygon(Sandbox.shapefill, points, indexes);
+		Util.renderPolygon(NPhysics.currentStage.shapefill, points, indexes);
 		
 	}
 	public PolygonActor addPoint(Point p){

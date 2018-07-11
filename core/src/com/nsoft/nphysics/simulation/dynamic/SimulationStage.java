@@ -19,19 +19,13 @@ public class SimulationStage extends GridStage{
 
 	static ArrayList<PolygonObject> objects;
 	static World world;
-	
-	static ShapeRenderer fill;
-	static ShapeRenderer line;
 	static Matrix4 mat;
 	static Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 	
 	public SimulationStage(Camera camera) {
 		
 		super(new ScreenViewport(camera));
-		mat = camera.combined.cpy().scale(30, 
-                30, 0);
-
-		initShapeRenderer();
+		mat = camera.combined.cpy().scale(30, 30, 0);
 	}
 	
 	public void cleanAndSetUp() {
@@ -39,11 +33,6 @@ public class SimulationStage extends GridStage{
 		clear();
 		initWorld();
 		initObjects();
-	}
-	private void initShapeRenderer() {
-		
-		fill = new ShapeRenderer();
-		line = new ShapeRenderer();
 	}
 	private void initWorld() {
 		
@@ -60,25 +49,27 @@ public class SimulationStage extends GridStage{
 		}
 	}
 	
+	private void aplyForces() {
+		
+		for (PolygonObject polygonObject : objects) {
+			
+			polygonObject.aplyForce();
+		}
+	}
 	@Override
 	public void draw() {
 		
-		fill.begin(ShapeType.Filled);
-		fill.setProjectionMatrix(getCamera().combined);
-		world.step(Gdx.graphics.getDeltaTime(), 8, 4);
+		aplyForces();
+		world.step(Gdx.graphics.getDeltaTime(), 8, 6);
 		renderer.render(world, mat);
 		super.draw();
-		fill.end();
 	}
 
 	@Override
 	public void updateMatrix() {
 		
-		fill.setProjectionMatrix(getCamera().combined);
-		line.setProjectionMatrix(getCamera().combined);
-		getBatch().setProjectionMatrix(getCamera().combined);
-		mat = camera.combined.cpy().scale(30, 
-                30, 0);
+		super.updateMatrix();
+		mat = camera.combined.cpy().scale(30, 30, 0);
 	}
 	
 	@Override
