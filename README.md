@@ -18,9 +18,8 @@ Posteriormente puedes editar el valor de las fuerzas a mano, para ver el resulta
 
 ## Para compilar
 
-El proyecto es gestionado usando gradle. Para compilar solo hay que ejecutar:
-(En windows gradlew, en linux y mac gradle)  
+El proyecto es gestionado usando gradle. Para compilar solo hay que ejecutar:  
 
-```shell  gradle desktop:dist``` Para compilar el .jar  
-```shell  gradle html:dist``` Para compilar la app web
+```shell  gradlew desktop:dist``` Para compilar el .jar  
+```shell  gradlew html:dist``` Para compilar la app web
 
