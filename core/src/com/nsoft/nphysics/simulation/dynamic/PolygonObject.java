@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -48,6 +49,7 @@ public class PolygonObject extends Actor{
 	final Vector2 t1 = new Vector2();
 	final Vector2 t2 = new Vector2();
 	final Vector2 t3 = new Vector2();
+	final Vector2 centre = new Vector2();
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
@@ -69,12 +71,16 @@ public class PolygonObject extends Actor{
 
 			NPhysics.currentStage.shapefill.triangle(t1.x, t1.y, t2.x, t2.y, t3.x, t3.y);
 			
-			if(anchors.size() != 0) {
+		}
+		
+		NPhysics.currentStage.shapefill.setColor(Color.BLACK);
+		centre.set(b.getPosition()).add(b.getMassData().center);
+		NPhysics.currentStage.shapefill.circle(centre.x * Util.UNIT , centre.y * Util.UNIT, 3);
+		if(anchors.size() != 0) {
+			
+			for (Body body : anchors) {
 				
-				for (Body body : anchors) {
-					
-					batch.draw(AxisSupport.Axis, body.getPosition().x*Util.UNIT - 16, body.getPosition().y*Util.UNIT - 16);
-				}
+				batch.draw(AxisSupport.Axis, body.getPosition().x*Util.UNIT - 16, body.getPosition().y*Util.UNIT - 16);
 			}
 		}
 	}
@@ -84,7 +90,7 @@ public class PolygonObject extends Actor{
 		for (DynamicForce  d: forces) {
 			
 			d.update(b,new Vector2(usePivot ? pivot.getPosition().scl(1f/Util.UNIT) : b.getPosition()));
-			b.applyForce(new Vector2(d.getPhysicalForce()).scl(10), d.getPhysicalOrigin(), true);
+			
 		}
 	}
 	private void createObject() {
