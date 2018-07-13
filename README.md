@@ -20,6 +20,6 @@ Posteriormente puedes editar el valor de las fuerzas a mano, para ver el resulta
 
 El proyecto es gestionado usando gradle. Para compilar solo hay que ejecutar:  
 
-```shell  gradlew desktop:dist``` Para compilar el .jar  
-```shell  gradlew html:dist``` Para compilar la app web
+```gradlew desktop:dist``` Para compilar el .jar  
+```gradlew html:dist``` Para compilar la app web
 
