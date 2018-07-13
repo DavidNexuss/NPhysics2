@@ -288,7 +288,7 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 		hide();
 	}
 	@Override
-	public void select() {
+	public void select(int pointer) {
 		
 		if(!GameState.is(GState.START)) return;
 		Axis.show();

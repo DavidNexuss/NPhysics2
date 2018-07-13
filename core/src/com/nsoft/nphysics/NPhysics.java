@@ -39,13 +39,13 @@ public class NPhysics extends ApplicationAdapter {
 		current = this;
 		
 		UILoader.loadUI();
+		ui = new UIStage();
 		GridStage.initGridShader();
 		sandbox = new Sandbox();
 		sandbox.init();
 		simulation = new SimulationStage(sandbox.getCamera());
 		currentStage = sandbox;
 		
-		ui = new UIStage();
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
 	}
 

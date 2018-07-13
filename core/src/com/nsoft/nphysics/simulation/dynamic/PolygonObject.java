@@ -174,13 +174,20 @@ public class PolygonObject extends Actor{
 			
 			if(c instanceof AxisSupport) {
 				
+				AxisSupport s = (AxisSupport)c;
+
 				RevoluteJointDef def = new RevoluteJointDef();
-				def.bodyA = b;
 				def.bodyB = createAnchor(c.getX()/Util.UNIT, c.getY()/Util.UNIT);
 				def.initialize(b, def.bodyB,new Vector2(c.getX()/Util.UNIT,c.getY()/Util.UNIT));
+				def.enableMotor = true;
+				def.maxMotorTorque = s.torque;
+				def.motorSpeed = s.speed;
+				System.out.println(s.speed);
+				System.out.println(s.torque);
 				anchor = def.bodyB;
 				anchors.add(anchor);
 				SimulationStage.world.createJoint(def);
+			
 				
 
 				if(pivot == null) { pivot = (AxisSupport)c; usePivot = true;}

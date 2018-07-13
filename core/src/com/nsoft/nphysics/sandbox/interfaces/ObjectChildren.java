@@ -2,6 +2,7 @@ package com.nsoft.nphysics.sandbox.interfaces;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.nsoft.nphysics.NPhysics;
@@ -10,7 +11,7 @@ import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.SelectHandle;
 
-public abstract class ObjectChildren extends Actor implements ClickIn{
+public abstract class ObjectChildren extends Group implements ClickIn{
 
 	private PolygonActor parent;
 	
@@ -46,7 +47,7 @@ public abstract class ObjectChildren extends Actor implements ClickIn{
 	public abstract boolean isInside(float x, float y);
 
 	@Override
-	public abstract void select();
+	public abstract void select(int pointer);
 
 	@Override
 	public abstract void unselect();

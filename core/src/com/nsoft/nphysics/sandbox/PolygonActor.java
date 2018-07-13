@@ -66,7 +66,7 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		
 	}
 	@Override
-	public void select() {
+	public void select(int pointer) {
 		
 		current = shapeSelected;
 		UIStage.contextMenu.show();

@@ -149,7 +149,7 @@ public class ArrowActor extends Actor implements ClickIn{
 	
 	//--------------SELECT-------------------
 	@Override
-	public void select() {}
+	public void select(int pointer) {}
 	
 	@Override
 	public void unselect() {}

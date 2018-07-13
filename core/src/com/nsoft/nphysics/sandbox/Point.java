@@ -159,7 +159,7 @@ public class Point extends Actor implements ClickIn, Position{
 		current = point;
 	}
 	@Override
-	public void select() {
+	public void select(int pointer) {
 
 		current = pointselected;
 		switch (GameState.current) {

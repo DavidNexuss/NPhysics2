@@ -67,7 +67,7 @@ public class ForceComponent extends ObjectChildren implements Handler{
 	}
 
 	@Override
-	public void select() {
+	public void select(int pointer) {
 		shook();
 		arrow.getHandler().setSelected(arrow);
 	}

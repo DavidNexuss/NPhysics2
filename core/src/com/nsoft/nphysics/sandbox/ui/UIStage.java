@@ -94,7 +94,7 @@ public class UIStage extends Stage{
 		setContextMenuItems();
 		contextMenu.pack();
 		addActor(contextMenu);
-		contextMenu.hide();
+		contextMenu.setVisible(false);
 	}
 	
 	private void setContextMenuItems() {

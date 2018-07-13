@@ -9,7 +9,12 @@ public class SelectHandle {
 	
 	public boolean isSelected(ClickIn object) {return selected == object;}
 	public boolean hasSelection() {return selected != null;}
+	
 	public boolean setSelected(ClickIn newSelected) {
+		
+		return setSelected(newSelected, 0);
+	}
+	public boolean setSelected(ClickIn newSelected,int pointer) {
 		
 		if(hasSelection())selected.unselect();
 		if(selected == newSelected) {
@@ -18,7 +23,7 @@ public class SelectHandle {
 			return false;
 		}
 		choose(newSelected);
-		selected.select();
+		selected.select(pointer);
 		return true;
 	};
 	public ClickIn getSelected() {return selected;}

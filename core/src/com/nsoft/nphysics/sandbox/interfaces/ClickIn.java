@@ -13,7 +13,7 @@ public interface ClickIn {
 
 	public default void addInput() {
 		
-		ClickIn pointer = this;
+		ClickIn object = this;
 		addListener(new ClickListener() {
 			
 			@Override
@@ -25,7 +25,7 @@ public interface ClickIn {
 				x = coords.x;
 				y = coords.y;
 				
-				if(isInside(x, y)) { event.cancel(); handleClick(pointer);}
+				if(isInside(x, y)) { handleClick(object,event.getPointer()); click(event.getPointer()); event.cancel(); }
 			}
 		});
 	}
@@ -39,10 +39,11 @@ public interface ClickIn {
 	public default boolean isSelected() {return getHandler().isSelected(this);}
 	public default boolean isInside(Vector3 v) {return isInside(v.x, v.y);}
 	public default boolean isInside(Vector2 v) {return isInside(v.x, v.y);}
-	public default void handleClick(ClickIn pointer) {getHandler().setSelected(pointer);}
+	public default void handleClick(ClickIn object,int pointer) {getHandler().setSelected(object,pointer);}
 	
 	public boolean isInside(float x,float y);
-	public void select();
+	public default void click(int pointer) {}
+	public void select(int pointer);
 	public void unselect();
 	public default void setHandler(SelectHandle s) {}
 	public SelectHandle getHandler();
