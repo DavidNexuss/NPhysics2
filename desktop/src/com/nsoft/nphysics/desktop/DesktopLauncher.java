@@ -3,6 +3,7 @@ package com.nsoft.nphysics.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.ThreadCase;
 
 import org.lwjgl.input.Mouse;
 
@@ -19,6 +20,23 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height = 720;
 		config.samples = 4;
-		new LwjglApplication(new NPhysics(), config);
+		
+		new LwjglApplication(new NPhysics((task,delay)->{
+			
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					
+					try {
+						Thread.sleep(delay);
+						task.run();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}).start();
+		},true) ,config);
 	}
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
 import com.kotcrab.vis.ui.widget.VisWindow;
@@ -117,6 +118,7 @@ public class UIStage extends Stage{
 		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
 		addActor(grid);
 	}
+	
 	
 	@Override
 	public void draw() {

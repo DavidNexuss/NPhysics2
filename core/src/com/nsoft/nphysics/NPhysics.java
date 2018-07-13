@@ -14,13 +14,25 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 public class NPhysics extends ApplicationAdapter {
 	
+	public static boolean useMultiThreading;
 	public static Sandbox sandbox;
 	public static UIStage ui;
 	public static SimulationStage simulation;
-	
+	public static ThreadCase threads;
 	public static GridStage currentStage;
 	static NPhysics current;
 
+	public static ThreadCase getThreadManager(){ return threads;}
+	
+	public NPhysics() {
+		
+		this(null,false);
+	}
+	public NPhysics(ThreadCase threads,boolean useMultiThreading) {
+		
+		this.threads = threads;
+		NPhysics.useMultiThreading = useMultiThreading; 
+	}
 	
 	@Override
 	public void create () {
@@ -47,6 +59,7 @@ public class NPhysics extends ApplicationAdapter {
 		currentStage.act();
 		ui.draw();
 		ui.act();
+		ThreadManager.act(Gdx.graphics.getDeltaTime());
 	}
 	
 	public static void switchToSimulation() {
