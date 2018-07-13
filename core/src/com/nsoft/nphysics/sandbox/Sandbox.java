@@ -186,8 +186,10 @@ public class Sandbox extends GridStage{
 				f.getHandler().setSelected(f);
 				addActor(f);
 			}
+		case CREATE_FAST_POLYGON:
 			
-			break;
+			FastPolygonCreator.handleClick(isSnapping() ? snapGrid(screenx) : screenx, isSnapping() ? snapGrid(screeny) : screeny);
+			return true;
 		default:
 			
 			if(!super.touchDown(screenX, screenY, pointer, button)) {

@@ -12,6 +12,7 @@ public enum GState {
 	CREATE_AXIS("Crea un eje",()->{AxisSupport.temp.setVisible(false);},()->{AxisSupport.temp.setVisible(true); 	AxisSupport.Axis = new Texture(Gdx.files.internal("misc/axis.png"));}),
 	CREATE_SUPPORT("Crea un soporte"),
 	CREATE_POLYGON("Crea un objeto"),
+	CREATE_FAST_POLYGON("Crea un objeto"),
 	CREATE_SEGMENTS("Crea segmentos"),
 	CREATE_FORCE("Crea un vector de fuerza"),
 	HOOK_FORCE_ARROW("Dibuja el vector de fuerza"),

@@ -125,6 +125,7 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		return this;
 	}
 	
+	public ArrayList<Point> getPointList() {return points;}
 	public boolean isEnded() {return end;}
 	
 	private void createBuffer() {
