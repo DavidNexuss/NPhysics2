@@ -186,6 +186,7 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 	public Actor hit(float x, float y, boolean touchable) {
 
 		if (touchable && getTouchable() == Touchable.disabled) return null;
+		if(!GameState.is(GState.START)) return null;
 		
 		Actor p = hitChildren(x,y,touchable);
 		if(p != null) return p;
@@ -289,6 +290,7 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 	@Override
 	public void select() {
 		
+		if(!GameState.is(GState.START)) return;
 		Axis.show();
 		Arc.show();
 		show();
