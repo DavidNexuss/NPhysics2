@@ -77,11 +77,11 @@ public class PolygonObject extends Actor{
 		NPhysics.currentStage.shapefill.setColor(Color.GRAY);
 		centre.set(b.getPosition()).add(b.getMassData().center);
 		NPhysics.currentStage.shapefill.circle(centre.x * Util.UNIT , centre.y * Util.UNIT, 3);
-		if(anchors.size() != 0) {
+		if(def.childrens.size() != 0) {
 			
-			for (Body body : anchors) {
+			for (ObjectChildren c : def.childrens) {
 				
-				batch.draw(AxisSupport.Axis, body.getPosition().x*Util.UNIT - 16, body.getPosition().y*Util.UNIT - 16);
+				if(c instanceof AxisSupport) batch.draw(AxisSupport.Axis, c.getX() - 16, c.getY() - 16);
 			}
 		}
 	}
@@ -126,13 +126,27 @@ public class PolygonObject extends Actor{
 		
 
 		BodyDef bdef = new BodyDef();
-		bdef.type = def.type;
+		bdef.type = checkStatic(def.type);
 		bdef.position.set(def.getCenter(true));
 		b = SimulationStage.world.createBody(bdef);
 		createFixtures();
-		createJoints();
+		if(bdef.type == BodyType.DynamicBody)createJoints();
 	}
 	
+	private BodyType checkStatic(BodyType t) {
+		
+		if(t == BodyType.StaticBody) return BodyType.StaticBody;
+		int n = 0;
+		for (ObjectChildren c : def.childrens) {
+			
+			if(c instanceof AxisSupport) {
+				n += 1;
+				if(n > 1) return BodyType.StaticBody;
+			}
+		}
+		
+		return BodyType.DynamicBody;
+	}
 	private ArrayList<Fixture> createFixtures(){
 		
 		ArrayList<Fixture> fixtures = new ArrayList<>();
@@ -154,6 +168,7 @@ public class PolygonObject extends Actor{
 	}
 
 	private void createJoints() {
+		
 		
 		for (ObjectChildren c : def.childrens) {
 			
@@ -196,14 +211,8 @@ public class PolygonObject extends Actor{
 		def.position.set(x, y);
 		def.type = BodyType.StaticBody;
 		
-		FixtureDef fdef = new FixtureDef();
-		
-		PolygonShape s = new PolygonShape();
-		s.setAsBox(1, 1);
-		fdef.shape = s;
-		
 		Body b = SimulationStage.world.createBody(def);
-		b.createFixture(fdef);
+
 		
 		return b;
 		
