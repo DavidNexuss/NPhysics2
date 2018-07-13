@@ -28,6 +28,7 @@ import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 
 public class PolygonObject extends Actor{
 
+	public static float PHYSICAL_EPSILON = 0.01f;
 	PolygonDefinition def;
 	AxisSupport pivot;
 	ArrayList<DynamicForce> forces = new ArrayList<>();
@@ -73,7 +74,7 @@ public class PolygonObject extends Actor{
 			
 		}
 		
-		NPhysics.currentStage.shapefill.setColor(Color.BLACK);
+		NPhysics.currentStage.shapefill.setColor(Color.GRAY);
 		centre.set(b.getPosition()).add(b.getMassData().center);
 		NPhysics.currentStage.shapefill.circle(centre.x * Util.UNIT , centre.y * Util.UNIT, 3);
 		if(anchors.size() != 0) {
@@ -88,8 +89,36 @@ public class PolygonObject extends Actor{
 	public void aplyForce() {
 		
 		for (DynamicForce  d: forces) {
+
+			boolean threshold = false;
 			
-			d.update(b,new Vector2(usePivot ? pivot.getPosition().scl(1f/Util.UNIT) : b.getPosition()));
+			if (usePivot) {
+				
+				
+				
+				b.applyForce(d.getPhysicalForce(), d.getPhysicalOrigin(), true);
+				d.update(b,new Vector2(pivot.getPosition().scl(1f/Util.UNIT)),!usePivot);
+			}else {
+				
+				if(!d.isCentered) {
+
+					float l = new Vector2(d.getPhysicalOrigin()).sub(b.getPosition()).len2();
+					threshold =   l < PHYSICAL_EPSILON;
+					
+					d.isCentered = threshold;
+				}
+
+				if(d.isCentered) {
+					d.isCentered = true;
+					b.applyForceToCenter(d.getPhysicalForce(), true);
+					d.update(b, b.getPosition(), true);
+					
+				}
+				else {
+					b.applyForce(d.getPhysicalForce(), d.getPhysicalOrigin(), true);
+					d.update(b, b.getPosition(), true);
+				}
+			}
 			
 		}
 	}

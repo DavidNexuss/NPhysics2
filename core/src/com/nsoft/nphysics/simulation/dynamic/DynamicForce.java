@@ -14,6 +14,8 @@ public class DynamicForce {
 	Vector2 porigin;
 	Vector2 pforce;
 	boolean isRelative = true;
+	boolean isCentered = false;
+	
 	SimpleArrow arrow;
 	
 	Vector2 getOrigin() {
@@ -33,30 +35,44 @@ public class DynamicForce {
 	
 	Vector2 getPhysicalForce() {
 		
-		return isRelative ? pforce : force;
+		return isRelative ? new Vector2(pforce).scl(10) : force;
 	}
 	private Vector2 getStart() {
 		
-		return new Vector2(origin).scl(Util.UNIT);
+		return new Vector2(porigin).scl(Util.UNIT);
 	}
 	
 	private Vector2 getEnd() {
 		
-		return new Vector2(origin).add(force).scl(Util.UNIT);
+		return new Vector2(pforce).add(porigin).scl(Util.UNIT);
 	}
 	
 	void init() {
 		
 		arrow = new SimpleArrow(new Vector2(origin).scl(Util.UNIT), new Vector2(origin).add(force).scl(Util.UNIT));
+		porigin = origin;
+		pforce = force;
+		
 		NPhysics.currentStage.addActor(arrow);
 	}
-	void update(Body b,Vector2 pivot) {
+	void update(Body b,Vector2 pivot,boolean usingPosition) {
 		
 		if(isRelative) {
 			
+			if(isCentered) {
+				
+				porigin = b.getPosition();
+				pforce = force;
+				
+				arrow.setStart(getStart());
+				arrow.setEnd(getEnd());
+
+				arrow.updateVertexArray();
+				return;
+			}
 			porigin = Util.rotPivot(pivot, this.origin, b.getAngle());
 			pforce = Util.rot(force, b.getAngle());
-			Vector2 pend = Util.rotPivot(pivot, new Vector2(this.origin).add(this.force), b.getAngle());
+			Vector2 pend = Util.rotPivot(pivot, new Vector2(this.force).add(this.origin), b.getAngle());
 			arrow.setStart(new Vector2(porigin).scl(Util.UNIT));
 			arrow.setEnd(new Vector2(pend).scl(Util.UNIT));
 			
