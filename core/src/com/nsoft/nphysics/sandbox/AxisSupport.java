@@ -44,7 +44,6 @@ public class AxisSupport extends ObjectChildren implements Form{
 		form.setAsForm(this);
 		
 		NPhysics.ui.addActor(form);
-		setDebug(true);
 	}
 	
 	@Override

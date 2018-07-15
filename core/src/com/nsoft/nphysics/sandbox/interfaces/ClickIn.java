@@ -18,14 +18,8 @@ public interface ClickIn {
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				
-				x = Gdx.input.getX();
-				y = Gdx.input.getY();
-				Vector3 coords = unproject(x, y);
-				x = coords.x;
-				y = coords.y;
-				
-				if(isInside(x, y)) { handleClick(object,event.getPointer()); click(event.getPointer()); event.cancel(); }
+
+				if(isMouseInside()) { handleClick(object,event.getPointer()); click(event.getPointer()); event.cancel(); }
 			}
 		});
 	}
@@ -39,6 +33,10 @@ public interface ClickIn {
 	public default boolean isSelected() {return getHandler().isSelected(this);}
 	public default boolean isInside(Vector3 v) {return isInside(v.x, v.y);}
 	public default boolean isInside(Vector2 v) {return isInside(v.x, v.y);}
+	public default boolean isMouseInside() {
+		
+		return isInside(unproject(Gdx.input.getX(), Gdx.input.getY()));
+	}
 	public default void handleClick(ClickIn object,int pointer) {getHandler().setSelected(object,pointer);}
 	
 	public boolean isInside(float x,float y);

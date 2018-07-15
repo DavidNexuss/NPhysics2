@@ -38,7 +38,6 @@ public class Point extends Actor implements ClickIn, Position{
 	
 	public Point(float x,float y,boolean isTemp) {
 		
-		setDebug(true);
 		setX(x);
 		setY(y);
 		setSize(INPUT_RADIUS, INPUT_RADIUS);

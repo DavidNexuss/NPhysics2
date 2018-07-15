@@ -44,7 +44,6 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 		this.A = A;
 		this.B = B;
 		
-		//setDebug(true);
 		lst.set(0, A);
 		lst.set(1, B);
 		

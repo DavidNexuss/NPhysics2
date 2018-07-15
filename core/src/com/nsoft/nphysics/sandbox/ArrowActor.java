@@ -96,16 +96,16 @@ public class ArrowActor extends Actor implements ClickIn{
 				x2, 
 				y2 );
 		
-		setDebug(true);
 	}
 	
 	//-----------------ACTOR-FUNCTIONS----------------------
 	static final Color selected = new Color(0.8f, 0.8f, 0.f, 1f);
+	static final Color hover = new Color(0.6f, 0.6f, 0.2f, 1f);
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
 
-		NPhysics.currentStage.shapefill.setColor(isSelected() ? selected : getColor());
+		NPhysics.currentStage.shapefill.setColor(isSelected() ? selected : hit ? hover : getColor());
 		NPhysics.currentStage.shapefill.triangle(
 				buffervertices[0][0], 
 				buffervertices[0][1], 
@@ -135,6 +135,7 @@ public class ArrowActor extends Actor implements ClickIn{
 			NPhysics.currentStage.shapeline.line(buffervertices[4][0], buffervertices[4][1], buffervertices[5][0], buffervertices[5][1]);
 			
 			NPhysics.currentStage.shapeline.end();
+			Gdx.gl.glLineWidth(3);
 		}
 	}
 	
@@ -200,6 +201,13 @@ public class ArrowActor extends Actor implements ClickIn{
 	    return ((b1 == b2) && (b2 == b3));
 	}
 	
+	private boolean hit;
+	@Override
+	public Actor hit(float x, float y, boolean touchable) {
+		
+		hit = isMouseInside();
+		return hit ? this : null;
+	}
 	public Vector2 getEnd() {return new Vector2(end);}
 	public void setEnd(float x,float y) {end.set(x, y); updateVertices();}
 	//--------------CLASS-FUNCTIONS----------------------

@@ -3,20 +3,17 @@ package com.nsoft.nphysics.sandbox;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.kotcrab.vis.ui.widget.Draggable.DragAdapter;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 
-public class ForceComponent extends ObjectChildren implements Handler{
+public class ForceComponent extends ObjectChildren{
 
 	ArrowActor arrow;
 	Vector2 origin,force;
-	SelectHandle handler = new SelectHandle();
-	
-	@Override
-	public SelectHandle getSelectHandleInstance() { return handler; }
 	
 	boolean relative = false;
 	private boolean hook = false;
@@ -25,11 +22,14 @@ public class ForceComponent extends ObjectChildren implements Handler{
 		super(parent);
 		origin = start;
 		System.out.println(start);
-		arrow = new ArrowActor(start);
-		arrow.setHandler(handler);
+		
+		arrow = new ArrowActor(origin);
+		arrow.setHandler(parent.getSelectHandleInstance());
 		arrow.setColor(Color.BLACK);
+		addActor(arrow);
 	}
-
+	
+	
 	public boolean isHooking() {return hook;}
 	public void hook() {hook = true;}
 	public void unhook() {hook = false;}
@@ -59,7 +59,7 @@ public class ForceComponent extends ObjectChildren implements Handler{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		arrow.draw(batch, parentAlpha);
+		super.draw(batch, parentAlpha);
 	}
 	@Override
 	public boolean isInside(float x, float y) {
@@ -69,12 +69,10 @@ public class ForceComponent extends ObjectChildren implements Handler{
 	@Override
 	public void select(int pointer) {
 		shook();
-		arrow.getHandler().setSelected(arrow);
 	}
 
 	@Override
 	public void unselect() {
 		shook();
-		arrow.getHandler().unSelect();
 	}
 }
