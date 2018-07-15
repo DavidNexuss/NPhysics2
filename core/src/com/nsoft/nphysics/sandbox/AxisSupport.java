@@ -37,8 +37,8 @@ public class AxisSupport extends ObjectChildren implements Form{
 		b = new SpriteBatch();
 		
 		form = DynamicWindow.createDefaultWindowStructure("Axis Configuration",400,200);
-		form.addOption(Option.createOptionNumber("Maximum torque (N-m)"));
-		form.addOption(Option.createOptionNumber("Motor speed (rad/s)"));
+		form.addOption(Option.createOptionNumber("torque","Maximum torque (N-m)"));
+		form.addOption(Option.createOptionNumber("speed","Motor speed (rad/s)"));
 		
 		form.setVisible(false);
 		form.setAsForm(this);
@@ -106,8 +106,8 @@ public class AxisSupport extends ObjectChildren implements Form{
 	@Override
 	public void updateValuesFromForm() {
 		
-		torque = form.getOption("Maximum torque (N-m)").getValue();
-		speed = form.getOption("Motor speed (rad/s)").getValue();
+		torque = form.getOption("torque").getValue();
+		speed = form.getOption("speed").getValue();
 	}
 	
 }

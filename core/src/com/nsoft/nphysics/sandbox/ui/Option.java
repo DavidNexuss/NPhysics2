@@ -53,22 +53,22 @@ public class Option extends VisTable{
 
 	}
 	
-	public static Option initEmtyOption(String name) {
+	public static Option initEmtyOption(String name,String definition) {
 		
 		Option o = new Option(name);
-		o.add(new Label(name + ":", VisUI.getSkin())).expand().align(Align.left);
+		o.add(new Label(definition + ":", VisUI.getSkin())).expand().align(Align.left);
 		return o;
 	}
-	public static Option createOptionNumber(String name) {
+	public static Option createOptionNumber(String name,String definition) {
 		
-		Option o = initEmtyOption(name);
+		Option o = initEmtyOption(name,definition);
 		o.addNumberInput().expand().fill();
 		return o;
 	}
 	
-	public static Option createOptionSlider(String name,float min,float max,float step) {
+	public static Option createOptionSlider(String name,String definition,float min,float max,float step) {
 		
-		Option o = initEmtyOption(name);
+		Option o = initEmtyOption(name,definition);
 		o.addSliderInput(min, max, step).expand().fill();
 		o.add(o.l).padLeft(10f);
 		return o;
