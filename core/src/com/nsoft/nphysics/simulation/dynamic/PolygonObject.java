@@ -23,6 +23,7 @@ import com.nsoft.nphysics.sandbox.AxisSupport;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PositionVector;
+import com.nsoft.nphysics.sandbox.SimpleArrow;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 
@@ -30,6 +31,7 @@ public class PolygonObject extends Actor{
 
 	public static float PHYSICAL_EPSILON = 0.01f;
 	PolygonDefinition def;
+	SimpleArrow gravityArrow;
 	AxisSupport pivot;
 	ArrayList<DynamicForce> forces = new ArrayList<>();
 	boolean usePivot = false;
@@ -43,6 +45,10 @@ public class PolygonObject extends Actor{
 		this.def = def;
 		initVertexBuffer();
 		createObject();
+		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
+		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / 10f);
+		gravityArrow = new SimpleArrow(center, force.add(center));
+
 	}
 	
 	final Color col = new Color(0.2f, 0.8f, 0.2f, 0.5f);
@@ -81,9 +87,19 @@ public class PolygonObject extends Actor{
 			
 			for (ObjectChildren c : def.childrens) {
 				
-				if(c instanceof AxisSupport) batch.draw(AxisSupport.Axis, c.getX() - 16, c.getY() - 16);
+				if(c instanceof AxisSupport) {
+					c.draw(batch, parentAlpha);
+				}
 			}
 		}
+		
+		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
+		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / 10f * b.getMass());
+		gravityArrow.setStart(center);
+		gravityArrow.setEnd(force.add(center));
+		gravityArrow.updateVertexArray();
+		
+		gravityArrow.draw(batch, parentAlpha);
 	}
 	
 	public void aplyForce() {
@@ -182,8 +198,6 @@ public class PolygonObject extends Actor{
 				def.enableMotor = true;
 				def.maxMotorTorque = s.torque;
 				def.motorSpeed = s.speed;
-				System.out.println(s.speed);
-				System.out.println(s.torque);
 				anchor = def.bodyB;
 				anchors.add(anchor);
 				SimulationStage.world.createJoint(def);

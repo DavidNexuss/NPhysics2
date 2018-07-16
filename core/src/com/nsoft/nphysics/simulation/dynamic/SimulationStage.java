@@ -28,6 +28,7 @@ public class SimulationStage extends GridStage{
 
 	static ArrayList<PolygonObject> objects;
 	Body centre;
+	static Vector2 gravity = new Vector2(0, -9.8f);
 	static World world;
 	static Matrix4 mat;
 	static Box2DDebugRenderer renderer = new Box2DDebugRenderer();
@@ -47,7 +48,7 @@ public class SimulationStage extends GridStage{
 	}
 	private void initWorld() {
 		
-		world = new World(new Vector2(0, -9.8f), true);
+		world = new World(gravity, true);
 	}
 	private void initObjects() {
 		
