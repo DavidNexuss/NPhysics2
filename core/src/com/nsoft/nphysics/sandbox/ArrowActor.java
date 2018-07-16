@@ -70,9 +70,9 @@ public class ArrowActor extends Actor implements ClickIn{
 	public float getAngle() {return getModulus().angle();}
 	
 	public void updateVertices() {
-		
-		createVerticesArray();
+
 		getModulus();
+		createVerticesArray();
 		float angle = tempModulus.angleRad();
 		
 		for (int i = 0; i < 6; i++) {
@@ -150,7 +150,9 @@ public class ArrowActor extends Actor implements ClickIn{
 	
 	//--------------SELECT-------------------
 	@Override
-	public void select(int pointer) {}
+	public void select(int pointer) {
+		
+	}
 	
 	@Override
 	public void unselect() {}
@@ -210,6 +212,9 @@ public class ArrowActor extends Actor implements ClickIn{
 	}
 	public Vector2 getEnd() {return new Vector2(end);}
 	public void setEnd(float x,float y) {end.set(x, y); updateVertices();}
+	public Vector2 getStart() {return new Vector2(start);}
+	public void setStart(float x,float y) {start.set(x,y); updateVertices();}
+	
 	//--------------CLASS-FUNCTIONS----------------------
 	private static ArrowActor hook;
 

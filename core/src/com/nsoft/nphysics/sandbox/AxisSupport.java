@@ -26,24 +26,23 @@ public class AxisSupport extends ObjectChildren implements Form{
 	public static AxisSupport temp = new AxisSupport(null);
 	public static SpriteBatch b;
 	
-	public DynamicWindow form;
 	public float torque;
 	public float speed;
+	
 	public AxisSupport(PolygonActor parent) {
 		
 		super(parent);
+		initBasicForm();
 		setSize(32, 32);
 		addInput();
 		b = new SpriteBatch();
+
+
+		getForm().addSeparator();
+		getForm().addOption(Option.createOptionNumber("torque","Maximum torque (N-m)"));
+		getForm().addOption(Option.createOptionNumber("speed","Motor speed (rad/s)"));
+
 		
-		form = DynamicWindow.createDefaultWindowStructure("Axis Configuration",400,200);
-		form.addOption(Option.createOptionNumber("torque","Maximum torque (N-m)"));
-		form.addOption(Option.createOptionNumber("speed","Motor speed (rad/s)"));
-		
-		form.setVisible(false);
-		form.setAsForm(this);
-		
-		NPhysics.ui.addActor(form);
 	}
 	
 	@Override
@@ -56,8 +55,8 @@ public class AxisSupport extends ObjectChildren implements Form{
 		b.end();
 
 	}
-	@Override public void setX(float x) { super.setX(x - INPUT_RADIUS/2f);}
-	@Override public void setY(float y) { super.setY(y - INPUT_RADIUS/2f);}
+	@Override public void setX(float x) { super.setX(x - INPUT_RADIUS/2f); }
+	@Override public void setY(float y) { super.setY(y - INPUT_RADIUS/2f); }
 	@Override public float getX() {return super.getX() + INPUT_RADIUS/2f;}
 	@Override public float getY() {return super.getY() + INPUT_RADIUS/2f;}
 	@Override public void setPosition(float x, float y) { super.setPosition(x- INPUT_RADIUS/2f, y - INPUT_RADIUS/2f);}
@@ -83,9 +82,8 @@ public class AxisSupport extends ObjectChildren implements Form{
 	@Override
 	public void click(int pointer) {
 		
-		form.setPosition(Gdx.graphics.getWidth() - form.getWidth() - 80, Gdx.graphics.getHeight() - form.getHeight() - 80);
-		DynamicWindow.showWindow(form);
-		System.out.println(pointer);
+		getForm().setPosition(Gdx.graphics.getWidth() - getForm().getWidth() - 80, Gdx.graphics.getHeight() - getForm().getHeight() - 80);
+		DynamicWindow.showWindow(getForm());
 	}
 	@Override
 	public void select(int pointer) {
@@ -98,16 +96,12 @@ public class AxisSupport extends ObjectChildren implements Form{
 	}
 	
 	//--------------------------FORM--------------------
-	
-	public DynamicWindow getForm() {
-		return form;
-	}
-	
 	@Override
 	public void updateValuesFromForm() {
 		
-		torque = form.getOption("torque").getValue();
-		speed = form.getOption("speed").getValue();
+		super.updateValuesFromForm();
+		torque = getForm().getOption("torque").getValue();
+		speed = getForm().getOption("speed").getValue();
 	}
 	
 }

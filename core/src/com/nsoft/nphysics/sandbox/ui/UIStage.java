@@ -28,7 +28,7 @@ public class UIStage extends Stage{
 		
 		super(new ScreenViewport());
 		shapefill = new ShapeRenderer();
-		
+		FontManager.init();
 		setStateMenu();
 		loadViewMenu();
 	}

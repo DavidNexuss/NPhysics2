@@ -198,7 +198,7 @@ public class PolygonObject extends Actor{
 				
 				ForceComponent f = (ForceComponent)c;
 				Vector2 force = f.getForce().scl(1f/Util.UNIT);
-				Vector2 origin = f.getOrigin().scl(1f/Util.UNIT);
+				Vector2 origin = f.getPosition().scl(1f/Util.UNIT);
 				
 				DynamicForce d = new DynamicForce();
 				d.force = force;

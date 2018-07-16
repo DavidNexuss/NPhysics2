@@ -10,11 +10,15 @@ import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.SelectHandle;
+import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
+import com.nsoft.nphysics.sandbox.ui.Option;
 
-public abstract class ObjectChildren extends Group implements ClickIn{
+public abstract class ObjectChildren extends Group implements ClickIn,Form{
 
 	private PolygonActor parent;
-	
+
+	DynamicWindow form;
 	public ObjectChildren(PolygonActor parent) {
 		
 		if(parent == null) return;
@@ -24,6 +28,45 @@ public abstract class ObjectChildren extends Group implements ClickIn{
 		addDragListener();
 	}
 	
+	public void initBasicForm() {
+		
+		form = DynamicWindow.createDefaultWindowStructure("Configure Force Vector", 400, 400);
+		
+		form.addText("origin", "Set origin vector");
+		form.addOption(Option.createOptionNumber("originx", "Origin in x").setValue(getX() / Util.UNIT));
+		form.addOption(Option.createOptionNumber("originy", "Origin in y").setValue(getY() / Util.UNIT));
+		form.setAsForm(this);
+		form.setVisible(false);
+		
+		NPhysics.ui.addActor(form);
+	}
+	
+	public DynamicWindow getForm() {
+		
+		return form;
+	}
+	
+	@Override
+	public void setX(float x) {
+		
+		super.setX(x);
+		form.getOption("originx").setValue(getX() / Util.UNIT);
+		
+	}
+	
+	@Override
+	public void setY(float y) {
+
+		super.setY(y);
+		form.getOption("originy").setValue(getY() / Util.UNIT);
+	}
+	
+	@Override
+	public void setPosition(float x, float y) {
+		super.setPosition(x, y);
+		form.getOption("originx").setValue(getX() / Util.UNIT);
+		form.getOption("originy").setValue(getY() / Util.UNIT);
+	}
 	public PolygonActor getPolygon() {return parent;}
 	private void addDragListener() {
 		
@@ -57,4 +100,12 @@ public abstract class ObjectChildren extends Group implements ClickIn{
 		
 		return parent.handler;
 	}
+	
+	@Override
+	public void updateValuesFromForm() {
+		
+		setX(form.getOption("originx").getValue() * Util.UNIT);
+		setY(form.getOption("originy").getValue() * Util.UNIT);
+	}
+	
 }

@@ -2,13 +2,18 @@ package com.nsoft.nphysics.sandbox.ui;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.kotcrab.vis.ui.widget.VisLabel;
+import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisWindow;
 import com.nsoft.nphysics.ThreadManager;
@@ -16,14 +21,16 @@ import com.nsoft.nphysics.sandbox.interfaces.Form;
 
 public class DynamicWindow extends VisWindow{
 
-	Table content;
+	VisTable content;
 	HashMap<String, Option> options = new HashMap<>();
+	HashMap<String, VisLabel> texts = new HashMap<>();
 	Form form;
 	
 	public DynamicWindow(String title) {
 		super(title);
-		
-		content = new Table();
+		getTitleLabel().setStyle(new LabelStyle(FontManager.title, Color.WHITE));
+		getTitleTable().pad(5);
+		content = new VisTable();
 	}
 	
 	public void setAsForm(Form superior) {
@@ -40,6 +47,21 @@ public class DynamicWindow extends VisWindow{
 		content.row();
 		return cell;
 	}
+	
+	public Cell<VisLabel> addText(String name,String text) {
+		
+		VisLabel l = new VisLabel(text);
+		l.setStyle(new LabelStyle(FontManager.subtitle, Color.WHITE));
+		texts.put(name, l);
+		Cell<VisLabel> cell = content.add(l).expand().fillX();
+		cell.row();
+		return cell;
+	}
+	
+	public void addSeparator() {
+		
+		content.addSeparator();
+	}
 	public static DynamicWindow createDefaultWindowStructure(String name) {
 		
 		return createDefaultWindowStructure(name, 0, 0);
@@ -50,7 +72,7 @@ public class DynamicWindow extends VisWindow{
 		if(!(width == 0 && height == 0))d.setSize(width, height);
 		
 		Table t = new Table();
-		t.pad(15f);
+		t.pad(5f);
 		t.add(d.content).expand().fill();
 		t.row();
 		
