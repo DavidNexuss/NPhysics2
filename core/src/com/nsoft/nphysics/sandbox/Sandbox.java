@@ -177,14 +177,15 @@ public class Sandbox extends GridStage{
 		case CREATE_FORCE:
 			
 			PolygonActor current = (PolygonActor)mainSelect.getSelected();
-			if(current.handler.hasSelection()) {
-				
-				current.handler.unSelect();
+			if(ForceComponent.temp != null) {
+				ForceComponent.temp.unhook();
+				ForceComponent.temp = null;
+				break;
 			}else {
 				
-				ForceComponent f = new ForceComponent(current, getUnproject());
-				f.getHandler().setSelected(f);
-				addActor(f);
+				ForceComponent.temp = new ForceComponent(current, getUnproject());
+				ForceComponent.temp.hook();
+				addActor(ForceComponent.temp);
 			}
 			break;
 		case CREATE_FAST_POLYGON:

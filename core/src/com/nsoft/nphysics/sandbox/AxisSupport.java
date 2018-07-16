@@ -32,11 +32,11 @@ public class AxisSupport extends ObjectChildren implements Form{
 	public AxisSupport(PolygonActor parent) {
 		
 		super(parent);
-		initBasicForm();
+		initBasicForm("Configure Axis Support");
+		getForm().setSize(400, 300);
 		setSize(32, 32);
 		addInput();
 		b = new SpriteBatch();
-
 
 		getForm().addSeparator();
 		getForm().addOption(Option.createOptionNumber("torque","Maximum torque (N-m)"));
@@ -85,15 +85,14 @@ public class AxisSupport extends ObjectChildren implements Form{
 		getForm().setPosition(Gdx.graphics.getWidth() - getForm().getWidth() - 80, Gdx.graphics.getHeight() - getForm().getHeight() - 80);
 		DynamicWindow.showWindow(getForm());
 	}
-	@Override
-	public void select(int pointer) {
-		
-	}
 
 	@Override
-	public void unselect() {
-		
+	public void select(int pointer) {
+	
+		super.select(pointer);
 	}
+	@Override
+	public void unselect() {}
 	
 	//--------------------------FORM--------------------
 	@Override

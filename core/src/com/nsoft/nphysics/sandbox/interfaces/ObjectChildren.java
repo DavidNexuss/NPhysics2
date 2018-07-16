@@ -19,6 +19,7 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form{
 	private PolygonActor parent;
 
 	DynamicWindow form;
+	
 	public ObjectChildren(PolygonActor parent) {
 		
 		if(parent == null) return;
@@ -28,9 +29,9 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form{
 		addDragListener();
 	}
 	
-	public void initBasicForm() {
+	public void initBasicForm(String windowName) {
 		
-		form = DynamicWindow.createDefaultWindowStructure("Configure Force Vector", 400, 400);
+		form = DynamicWindow.createDefaultWindowStructure(windowName, 400, 400);
 		
 		form.addText("origin", "Set origin vector");
 		form.addOption(Option.createOptionNumber("originx", "Origin in x").setValue(getX() / Util.UNIT));
@@ -90,7 +91,10 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form{
 	public abstract boolean isInside(float x, float y);
 
 	@Override
-	public abstract void select(int pointer);
+	public void select(int pointer) {
+		
+		getPolygon().getHandler().setSelected(getPolygon());
+	}
 
 	@Override
 	public abstract void unselect();

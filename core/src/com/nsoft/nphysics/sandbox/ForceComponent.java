@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.kotcrab.vis.ui.widget.Draggable.DragAdapter;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
@@ -21,21 +22,23 @@ public class ForceComponent extends ObjectChildren implements Form{
 	
 	boolean relative = false;
 	private boolean hook = false;
+	static ForceComponent temp;
+	
 	public ForceComponent(PolygonActor parent,Vector2 start) {
 		
 		super(parent);
 
-		initBasicForm();
+		addInput();
+		initBasicForm("ConfigureForceVector");
 		setPosition(start.x, start.y);
 		
-		System.out.println(start);
+		ClickIn pointer = this;
 		
 		arrow = new ArrowActor(start) {
 			
 			@Override
-			public void select(int pointer) {
-				
-				showWindow();
+			public boolean isSelected() {
+				return pointer.isSelected();
 			}
 		};
 		arrow.setHandler(parent.getSelectHandleInstance());
@@ -91,16 +94,17 @@ public class ForceComponent extends ObjectChildren implements Form{
 	public boolean isInside(float x, float y) {
 		return arrow.isInside(x, y);
 	}
-
 	
 	@Override
 	public void select(int pointer) {
-		shook();
+		
+		super.select(pointer);
+		showWindow();
 	}
 
 	@Override
 	public void unselect() {
-		shook();
+	
 	}
 
 	private void showWindow() {
@@ -117,6 +121,11 @@ public class ForceComponent extends ObjectChildren implements Form{
 		super.updateValuesFromForm();
 		
 		arrow.setStart(getPosition().x, getPosition().y);
+		
+		float forcex = getForm().getOption("forcex").getValue() * Util.UNIT;
+		float forcey = getForm().getOption("forcey").getValue() * Util.UNIT;
+		
+		arrow.setEnd(getPosition().x + forcex, getPosition().y + forcey);
 		update();
 		
 	}

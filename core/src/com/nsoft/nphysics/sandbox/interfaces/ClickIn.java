@@ -37,6 +37,7 @@ public interface ClickIn {
 		
 		return isInside(unproject(Gdx.input.getX(), Gdx.input.getY()));
 	}
+	
 	public default void handleClick(ClickIn object,int pointer) {getHandler().setSelected(object,pointer);}
 	
 	public boolean isInside(float x,float y);
@@ -44,6 +45,7 @@ public interface ClickIn {
 	public void select(int pointer);
 	public void unselect();
 	public default void setHandler(SelectHandle s) {}
+	
 	public SelectHandle getHandler();
 	public boolean addListener(EventListener input);
 	public Stage getStage();

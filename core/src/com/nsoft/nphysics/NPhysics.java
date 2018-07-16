@@ -30,7 +30,7 @@ public class NPhysics extends ApplicationAdapter {
 	}
 	public NPhysics(ThreadCase threads,boolean useMultiThreading) {
 		
-		this.threads = threads;
+		NPhysics.threads = threads;
 		NPhysics.useMultiThreading = useMultiThreading; 
 	}
 	
@@ -67,7 +67,12 @@ public class NPhysics extends ApplicationAdapter {
 
 		currentStage = simulation;
 		simulation.cleanAndSetUp();
+		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
+	}
+	
+	public static void switchToSandbox() {
 		
+		currentStage = sandbox;
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
 	}
 	@Override
