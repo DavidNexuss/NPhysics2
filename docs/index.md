@@ -37,6 +37,9 @@ This is a baccalaureate research project, the purpose of this is to create a dyn
         - Aplicació de forces predefinides
         - Aplicació de moments predefinits
         - Aplicació de joints
+6. Desenvolupament de la calculadora d'estàtica
+    - Integració de forces predefinides
+    - Integració de moments predefinits
     
 
 # Introducció
