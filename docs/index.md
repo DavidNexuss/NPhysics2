@@ -43,3 +43,11 @@ This is a baccalaureate research project, the purpose of this is to create a dyn
 
 Com ja he explicat al abstract el objectiu d'aquest treball es desenvolupar un programa que permeti resoldre problemes d'estàtica i comprovar els resultats en un simulador de dinàmica amb una interfície senzilla d'utilitzar. La meva motivació per emprendre aquest projecte sorgeix en part de l'emoció de crear un programa robust de codi lliure que permeti fer simulacions de dinàmica i per l'altra part per poder crear una ferramenta amb propòsits educatius que serveixi per apropar la mecànica a tota perona interessada.
 
+Amb els ja adquirits coneixements de C++ i Java estic motivat per fer aquest gran projecte.
+
+Per tant, els objectius del programa són:
+
+- La interacció de l'usuari amb el simulador de dinàmica
+
+- La possibilitat de resoldre problemes de estàtica i poder comprovar la solució al simulador 
+
