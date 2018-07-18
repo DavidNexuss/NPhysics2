@@ -17,6 +17,7 @@ import com.nsoft.nphysics.sandbox.ui.Option;
 
 public class ForceComponent extends ObjectChildren implements Form{
 
+	static enum Type{WORLD,TRANS,REL}
 	ArrowActor arrow;
 	Vector2 force;
 	
@@ -31,7 +32,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		addInput();
 		initBasicForm("ConfigureForceVector");
 		setPosition(start.x, start.y);
-		
+		setDrag(false);
 		ClickIn pointer = this;
 		
 		arrow = new ArrowActor(start) {
@@ -41,7 +42,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 				return pointer.isSelected();
 			}
 		};
-		arrow.setHandler(parent.getSelectHandleInstance());
+		arrow.setHandler(null);
 		arrow.setColor(Color.BLACK);
 		addActor(arrow);
 		
@@ -94,7 +95,6 @@ public class ForceComponent extends ObjectChildren implements Form{
 	public boolean isInside(float x, float y) {
 		return arrow.isInside(x, y);
 	}
-	
 	//------------------------getForm()---------------------------
 
 	@Override

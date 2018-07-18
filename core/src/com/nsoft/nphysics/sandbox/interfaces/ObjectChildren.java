@@ -70,13 +70,13 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 		form.getOption("originy").setValue(getY() / Util.UNIT);
 	}
 	public PolygonActor getPolygon() {return parent;}
+	
 	private void addDragListener() {
 		
-		ObjectChildren dis = this;
 		addListener(new DragListener() {
 		    public void drag(InputEvent event, float x, float y, int pointer) {
 		    	
-		    	if(!getHandler().isSelected(dis)) getHandler().setSelected(dis);
+		    	if(!drag) return;
 		    	if (NPhysics.currentStage.isSnapping()) {
 		    		
 		    		setPosition(Sandbox.snapGrid(getX()), Sandbox.snapGrid(getY()));
@@ -84,17 +84,23 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 				}else {
 					moveBy(x - getWidth() / 2, y - getHeight() / 2);
 				}
+		    	
 		    }
 		});
 	}
 
+	private boolean drag = true;
+	public void setDrag(boolean newDrag) {drag = newDrag;}
+	public void updateOnDrag(float x,float y) {}
 	@Override
 	public abstract boolean isInside(float x, float y);
 
 	@Override
 	public void select(int pointer) {
 		
-		getPolygon().getHandler().setSelected(getPolygon(),0,true);
+		if(!getPolygon().isSelected()) {
+			getPolygon().getHandler().setSelected(getPolygon());
+		}
 		showWindow();
 	}
 

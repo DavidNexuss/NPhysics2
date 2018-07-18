@@ -121,7 +121,7 @@ public class ArrowActor extends Actor implements ClickIn{
 				buffervertices[5][0], 
 				buffervertices[5][1]);
 		
-		if(getHandler().isSelected(this)) {
+		if(isSelected()) {
 			
 			NPhysics.currentStage.shapeline.begin(ShapeType.Line);
 			NPhysics.currentStage.shapeline.setColor(Color.YELLOW);
@@ -214,7 +214,18 @@ public class ArrowActor extends Actor implements ClickIn{
 	public void setEnd(float x,float y) {end.set(x, y); updateVertices();}
 	public Vector2 getStart() {return new Vector2(start);}
 	public void setStart(float x,float y) {start.set(x,y); updateVertices();}
+
+	public void setStart(Vector2 v) {
+		
+		start.set(v);
+		updateVertices();
+	}
 	
+	public void setEnd(Vector2 v) {
+		
+		end.set(v);
+		updateVertices();
+	}
 	//--------------CLASS-FUNCTIONS----------------------
 	private static ArrowActor hook;
 

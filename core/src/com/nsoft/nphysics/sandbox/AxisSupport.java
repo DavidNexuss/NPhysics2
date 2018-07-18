@@ -78,13 +78,6 @@ public class AxisSupport extends ObjectChildren implements Form{
 		return len2 < INPUT_RADIUS*INPUT_RADIUS;
 		
 	}
-
-	@Override
-	public void click(int pointer) {
-		
-		getForm().setPosition(Gdx.graphics.getWidth() - getForm().getWidth() - 80, Gdx.graphics.getHeight() - getForm().getHeight() - 80);
-
-	}
 	
 	//--------------------------FORM--------------------
 	@Override
