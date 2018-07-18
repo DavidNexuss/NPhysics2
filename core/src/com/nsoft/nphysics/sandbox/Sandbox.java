@@ -3,6 +3,7 @@ package com.nsoft.nphysics.sandbox;
 import static com.nsoft.nphysics.sandbox.Util.*;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -21,13 +22,21 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.GridStage;
-public class Sandbox extends GridStage{
+import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.interfaces.Handler;
+import com.nsoft.nphysics.sandbox.interfaces.Removeable;
+public class Sandbox extends GridStage implements Handler{
 	public static SelectHandle mainSelect = new SelectHandle();
+	
+	@Override 
+	public SelectHandle getSelectHandleInstance() { return mainSelect; }
 	
 	public static BitmapFont bitmapfont;
 	
@@ -229,6 +238,7 @@ public class Sandbox extends GridStage{
 	}
 	
 	public static float zoomVal = 1.2f;
+	
 	@Override
 	public boolean scrolled(int amount) {
 		
@@ -237,5 +247,41 @@ public class Sandbox extends GridStage{
 		camera.update();
 		updateMatrix();
 		return true;
+	}
+	
+	//---------------------KEYBOARD-INPUT-------------------
+	
+	@Override
+	public boolean keyDown(int keyCode) {
+		
+		switch (keyCode) {
+		case Keys.FORWARD_DEL:
+			
+			ClickIn in  = getSelectedChild();
+			System.out.println(in);
+			if(in instanceof Removeable) {
+				
+				((Removeable)in).remove();
+			}
+			break;
+
+		default:
+			break;
+		}
+		return super.keyDown(keyCode);
+	}
+	
+	public ClickIn getSelectedChild() {
+		
+		return getSelectedChild(getSelectHandleInstance().getSelected());
+	}
+	public ClickIn getSelectedChild(ClickIn in) {
+		
+		if(in instanceof Handler) {
+			
+			ClickIn child =getSelectedChild(((Handler)in).getSelectHandleInstance().getSelected());
+			if(child == null) return in;
+			return child;
+		}else return in;
 	}
 }

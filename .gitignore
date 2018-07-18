@@ -1,5 +1,6 @@
 ## NPhysics
 /resources/icons/
+/docs/.vscode/
 ## Java
 
 *.class

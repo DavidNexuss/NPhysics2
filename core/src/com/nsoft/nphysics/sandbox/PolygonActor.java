@@ -16,16 +16,18 @@ import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
+import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 
 import earcut4j.Earcut;
 
-public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler{
+public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler,Removeable{
 
 	public static ArrayList<PolygonActor> polygonlist = new ArrayList<>();
 	private Point initial;
 	private ArrayList<Point> points = new ArrayList<>();
+	private ArrayList<Segment> segments = new ArrayList<>();
 	private ArrayList<ObjectChildren> components = new ArrayList<>();
 	private ArrayList<Integer> indexes = new ArrayList<>();
 	private double[] buffer;
@@ -110,14 +112,19 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		
 		if(p == initial && points.size() > 1) {
 			
-			NPhysics.sandbox.addActor(new Segment(points.get(points.size() - 1), p));
+			Segment c = new Segment(points.get(points.size() - 1),p);
+			segments.add(c);
+			NPhysics.sandbox.addActor(c);
+			
 			end(); 
 			return this;
 		}
 		
 		if(points.size() != 0) {
 			
-			NPhysics.sandbox.addActor(new Segment(points.get(points.size() - 1), p));
+			Segment c = new Segment(points.get(points.size() - 1), p);
+			segments.add(c);
+			NPhysics.sandbox.addActor(c);
 		}
 		
 		points.add(p);
@@ -229,5 +236,24 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 	public void addComponent(ObjectChildren child) {
 		
 		components.add(child);
+	}
+	
+	public void removeComponent(ObjectChildren child) {
+		
+		components.remove(child);
+	}
+	
+	@Override
+	public boolean remove() {
+		
+		polygonlist.remove(this);
+		for (Point p : points) {
+			p.remove();
+		}
+		
+		for (Segment s : segments) {
+			s.remove();
+		}
+		return super.remove();
 	}
 }

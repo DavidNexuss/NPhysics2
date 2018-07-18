@@ -95,25 +95,6 @@ public class ForceComponent extends ObjectChildren implements Form{
 		return arrow.isInside(x, y);
 	}
 	
-	@Override
-	public void select(int pointer) {
-		
-		super.select(pointer);
-		showWindow();
-	}
-
-	@Override
-	public void unselect() {
-	
-	}
-
-	private void showWindow() {
-		
-		getForm().setPosition(Gdx.graphics.getWidth() - getForm().getWidth() - 80, Gdx.graphics.getHeight() - getForm().getHeight() - 80);
-		updateValuesToForm();
-		DynamicWindow.showWindow(getForm());
-		
-	}
 	//------------------------getForm()---------------------------
 
 	@Override
@@ -130,7 +111,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		
 	}
 	
-	private void updateValuesToForm() {
+	public void updateValuesToForm() {
 		
 		getForm().getOption("forcex").setValue(force.x / Util.UNIT);
 		getForm().getOption("forcey").setValue(force.y / Util.UNIT);

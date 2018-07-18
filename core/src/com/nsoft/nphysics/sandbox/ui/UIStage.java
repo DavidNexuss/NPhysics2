@@ -43,7 +43,6 @@ public class UIStage extends Stage{
 
 		view = new ViewSelection();
 		view.add(new ViewTab("Studio"));
-		view.add(new ViewTab("Prefab Studio"));
 		view.add(new ViewTab("Simulation",()->{
 			
 			NPhysics.switchToSimulation();

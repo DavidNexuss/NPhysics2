@@ -16,27 +16,41 @@ public class SelectHandle {
 	}
 	public boolean setSelected(ClickIn newSelected,int pointer) {
 		
-		if(hasSelection())selected.unselect();
-		if(selected == newSelected) {
+		return setSelected(newSelected, pointer, false);
+	};
+	
+	public boolean setSelected(ClickIn newSelected,int pointer,boolean force) {
+		
+		if(!force) {
 			
-			choose(null);
-			return false;
+			if(hasSelection())selected.unselect();
+			if(selected == newSelected) {
+				
+				choose(null);
+				return false;
+			}
 		}
+		
 		choose(newSelected);
 		selected.select(pointer);
 		return true;
-	};
+	}
 	public ClickIn getSelected() {return selected;}
 	
 	public void unSelect() {
 		
-		if(hasSelection())selected.unselect();
+		if(hasSelection()) {
+			selected.unselect();
+		}
 		choose(null);
 	}
 	
 	private void choose(ClickIn in) {
 		
-		if(selected instanceof Handler) ((Handler)selected).getSelectHandleInstance().unSelect();
+		
+		if(selected instanceof Handler) 
+			((Handler)selected).getSelectHandleInstance().unSelect();
+		
 		selected = in;
 	}
 }

@@ -83,16 +83,8 @@ public class AxisSupport extends ObjectChildren implements Form{
 	public void click(int pointer) {
 		
 		getForm().setPosition(Gdx.graphics.getWidth() - getForm().getWidth() - 80, Gdx.graphics.getHeight() - getForm().getHeight() - 80);
-		DynamicWindow.showWindow(getForm());
-	}
 
-	@Override
-	public void select(int pointer) {
-	
-		super.select(pointer);
 	}
-	@Override
-	public void unselect() {}
 	
 	//--------------------------FORM--------------------
 	@Override

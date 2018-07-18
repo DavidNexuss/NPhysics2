@@ -1,5 +1,6 @@
 package com.nsoft.nphysics.sandbox.interfaces;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -14,7 +15,7 @@ import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.Option;
 
-public abstract class ObjectChildren extends Group implements ClickIn,Form{
+public abstract class ObjectChildren extends Group implements ClickIn,Form,Removeable{
 
 	private PolygonActor parent;
 
@@ -93,12 +94,23 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form{
 	@Override
 	public void select(int pointer) {
 		
-		getPolygon().getHandler().setSelected(getPolygon());
+		getPolygon().getHandler().setSelected(getPolygon(),0,true);
+		showWindow();
 	}
 
 	@Override
-	public abstract void unselect();
+	public void unselect() {
+		
+		DynamicWindow.hideWindow(form);
+	};
 
+	private void showWindow() {
+		
+		getForm().setPosition(Gdx.graphics.getWidth() - getForm().getWidth() - 80, Gdx.graphics.getHeight() - getForm().getHeight() - 80);
+		updateValuesToForm();
+		DynamicWindow.showWindow(getForm());
+		
+	}
 	@Override
 	public SelectHandle getHandler() {
 		
@@ -112,4 +124,12 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form{
 		setY(form.getOption("originy").getValue() * Util.UNIT);
 	}
 	
+	public void updateValuesToForm() {}
+	@Override
+	public boolean remove() {
+		
+		DynamicWindow.hideWindow(form);
+		parent.removeComponent(this);
+		return super.remove();
+	}
 }
