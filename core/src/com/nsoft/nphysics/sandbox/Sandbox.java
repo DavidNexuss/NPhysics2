@@ -258,7 +258,6 @@ public class Sandbox extends GridStage implements Handler{
 		case Keys.FORWARD_DEL:
 			
 			ClickIn in  = getSelectedChild();
-			System.out.println(in);
 			if(in instanceof Removeable) {
 				
 				((Removeable)in).remove();

@@ -13,8 +13,9 @@ import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
+import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 
-public class Point extends Actor implements ClickIn, Position{
+public class Point extends Actor implements ClickIn, Position,Removeable{
 
 
 	static final Color point = new Color(0.2f, 0.4f, 0.2f, 1f);
@@ -186,5 +187,13 @@ public class Point extends Actor implements ClickIn, Position{
 	public SelectHandle getHandler() {
 		
 		return Sandbox.mainSelect;
+	}
+	
+	@Override
+	public boolean remove() {
+		
+		if(hasPolygonParent()) return false;
+		if(hasSegmentParent()) return false;
+		return super.remove();
 	}
 }
