@@ -17,10 +17,11 @@ import com.nsoft.nphysics.sandbox.ui.Option;
 
 public class ForceComponent extends ObjectChildren implements Form{
 
-	static enum Type{WORLD,TRANS,REL}
+	public static enum Type{WORLD,TRANS,REL}
+	
 	ArrowActor arrow;
 	Vector2 force;
-	
+	Type type = Type.WORLD;
 	boolean relative = false;
 	private boolean hook = false;
 	static ForceComponent temp;
@@ -76,6 +77,12 @@ public class ForceComponent extends ObjectChildren implements Form{
 	}
 	
 	public Vector2 getForce() {return new Vector2(force);}
+	
+	public Type getType() {
+		
+		return type;
+	}
+
 	@Override
 	public void act(float delta) {
 		
@@ -106,10 +113,16 @@ public class ForceComponent extends ObjectChildren implements Form{
 		float forcex = getForm().getOption("forcex").getValue() * Util.UNIT;
 		float forcey = getForm().getOption("forcey").getValue() * Util.UNIT;
 		
+		int a = (int) getForm().getOption("type").getValue();
+		
+		if(a == 0) type = Type.WORLD; else
+		if(a == 1) type = Type.TRANS; else
+		if(a == 2) type = Type.REL;
 		arrow.setEnd(getPosition().x + forcex, getPosition().y + forcey);
 		update();
 		
 	}
+	
 	
 	public void updateValuesToForm() {
 		

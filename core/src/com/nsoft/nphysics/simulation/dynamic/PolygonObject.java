@@ -103,16 +103,15 @@ public class PolygonObject extends Actor{
 	}
 	
 	public void aplyForce() {
-		
+		 if(b.getType() == BodyType.StaticBody) return;
 		for (DynamicForce  d: forces) {
 
 			boolean threshold = false;
 			
 			if (usePivot) {
 				
-				
-				
 				b.applyForce(d.getPhysicalForce(), d.getPhysicalOrigin(), true);
+				System.out.println(d.type);
 				d.update(b,new Vector2(pivot.getPosition().scl(1f/Util.UNIT)),!usePivot);
 			}else {
 				
@@ -217,7 +216,7 @@ public class PolygonObject extends Actor{
 				DynamicForce d = new DynamicForce();
 				d.force = force;
 				d.origin = origin;
-				d.init();
+				d.init(((ForceComponent) c).getType());
 				
 				forces.add(d) ;
 			}
