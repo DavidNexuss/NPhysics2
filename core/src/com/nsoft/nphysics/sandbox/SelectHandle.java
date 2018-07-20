@@ -1,6 +1,7 @@
 package com.nsoft.nphysics.sandbox;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
@@ -8,23 +9,20 @@ import com.nsoft.nphysics.sandbox.ui.UIStage;
 
 public class SelectHandle {
 
-	private ArrayList<ClickIn> selecteds = new ArrayList<>();
+	private Stack<ClickIn> selecteds = new Stack<>();
+
 	private boolean multiSelection = false;
 	
-	public ClickIn getFirstSelected() {
+	public ClickIn getLastSelected() {
 		
-		return hasSelection() ? selecteds.get(0) : null;
+		return hasSelection() ? selecteds.lastElement() : null;
+	}
+
+	public boolean isLastSelected(ClickIn c) {
+		
+		return hasSelection() ? getLastSelected() == c : false;
 	}
 	
-	public void setFirstSelected(ClickIn c) {
-		
-		selecteds.add(0, c);
-	}
-	
-	public boolean isFirstSelected(ClickIn c) {
-		
-		return hasSelection() ? selecteds.get(0) == c : false;
-	}
 	public boolean isSelected(ClickIn object) {
 		return selecteds.contains(object);
 	}
@@ -59,23 +57,23 @@ public class SelectHandle {
 		}
 		if(!force) {
 			
-			if(hasSelection())getFirstSelected().unselect();
-			if(isFirstSelected(newSelected)) {
+			if(hasSelection())getLastSelected().unselect();
+			if(isSelected(newSelected)) {
 				
-				unSelectFirst();
+				unSelectLast();
 				return false;
 			}
 		}
 		
 		choose(newSelected,0);
-		getFirstSelected().select(pointer);
+		getLastSelected().select(pointer);
 		return true;
 	}
-	public ArrayList<ClickIn> getSelecteds() {return selecteds;}
+	public Stack<ClickIn> getSelecteds() {return selecteds;}
 	
 	public void cleanArray() {
 		
-		ArrayList<ClickIn> clean = new ArrayList<>();
+		Stack<ClickIn> clean = new Stack<>();
 		
 		for (ClickIn clickIn : selecteds) {
 			
@@ -93,9 +91,9 @@ public class SelectHandle {
 		
 		cleanArray();
 	}
-	public void unSelectFirst() {
+	public void unSelectLast() {
 		
-		unSelect(0);
+		unSelect(getLastSelected());
 		cleanArray();
 	}
 	

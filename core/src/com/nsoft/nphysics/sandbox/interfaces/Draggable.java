@@ -1,6 +1,7 @@
 package com.nsoft.nphysics.sandbox.interfaces;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.SelectHandle;
@@ -14,7 +15,7 @@ public interface Draggable {
 		if(pool) {
 			
 			
-			ArrayList<ClickIn> list = getHandler().getSelecteds();
+			Stack<ClickIn> list = getHandler().getSelecteds();
 			
 			for (ClickIn clickIn : list) {
 				

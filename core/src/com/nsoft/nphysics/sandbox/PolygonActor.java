@@ -94,7 +94,7 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		
 		if(!isEnded()) return;
 		
-		NPhysics.currentStage.shapefill.setColor(isFirstSelected() ? shapeSelected : current);
+		NPhysics.currentStage.shapefill.setColor(isLastSelected() ? shapeSelected : current);
 		
 		Util.renderPolygon(NPhysics.currentStage.shapefill, points, indexes);
 		

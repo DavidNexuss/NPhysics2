@@ -196,7 +196,7 @@ public class Sandbox extends GridStage implements Handler{
 			break;
 		case CREATE_AXIS:
 			
-			AxisSupport s = new AxisSupport((PolygonActor)mainSelect.getFirstSelected());
+			AxisSupport s = new AxisSupport((PolygonActor)mainSelect.getLastSelected());
 			if(isSnapping())s.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else s.setPosition(screenx, screeny);
 			addActor(s);
@@ -211,7 +211,7 @@ public class Sandbox extends GridStage implements Handler{
 			
 		case CREATE_FORCE:
 			
-			PolygonActor current = (PolygonActor)mainSelect.getFirstSelected();
+			PolygonActor current = (PolygonActor)mainSelect.getLastSelected();
 			if(ForceComponent.temp != null) {
 				ForceComponent.temp.unhook();
 				ForceComponent.temp = null;
@@ -317,13 +317,13 @@ public class Sandbox extends GridStage implements Handler{
 	}
 	public ClickIn getSelectedChild() {
 		
-		return getSelectedChild(getSelectHandleInstance().getFirstSelected());
+		return getSelectedChild(getSelectHandleInstance().getLastSelected());
 	}
 	public ClickIn getSelectedChild(ClickIn in) {
 		
 		if(in instanceof Handler) {
 			
-			ClickIn child =getSelectedChild(((Handler)in).getSelectHandleInstance().getFirstSelected());
+			ClickIn child =getSelectedChild(((Handler)in).getSelectHandleInstance().getLastSelected());
 			if(child == null) return in;
 			return child;
 		}else return in;
