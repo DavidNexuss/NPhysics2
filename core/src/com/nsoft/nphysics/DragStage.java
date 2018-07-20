@@ -94,4 +94,16 @@ public abstract class DragStage extends Stage{
 	
 	public void setUp() {}
 	public void clean() {}
+	
+	public static float zoomVal = 1.2f;
+	
+	@Override
+	public boolean scrolled(int amount) {
+		
+		if(camera.zoom == 0 && amount < 0) return true;
+		camera.zoom *= amount > 0 ? zoomVal : 1f/zoomVal;
+		camera.update();
+		updateMatrix();
+		return true;
+	}
 }

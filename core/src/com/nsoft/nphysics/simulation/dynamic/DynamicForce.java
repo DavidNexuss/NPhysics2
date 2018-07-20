@@ -60,6 +60,7 @@ public class DynamicForce {
 	}
 	void update(Body b,Vector2 pivot,boolean usingPosition) {
 		
+		
 		if(type == Type.WORLD) {
 			
 			arrow.setStart(getStart());

@@ -8,9 +8,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.kotcrab.vis.ui.widget.VisLabel;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.GameState;
@@ -18,8 +21,9 @@ import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.SelectHandle;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.ui.FontManager;
 
-public class ArrowActor extends Actor implements ClickIn{
+public class ArrowActor extends Group implements ClickIn{
 
 	//POLYGON-TYPE 1
 	
@@ -31,7 +35,6 @@ public class ArrowActor extends Actor implements ClickIn{
 	private float[][] vertices = new float[6][2];
 	private float[][] buffervertices = new float[6][2];
 	
-	
 	public ArrowActor(Vector2 start,Vector2 end) {
 			
 		this.start = start;
@@ -40,7 +43,7 @@ public class ArrowActor extends Actor implements ClickIn{
 		getModulus();
 		updateVertices();
 		addInput();
-		
+	
 	}
 	
 	public ArrowActor(Vector2 start) {
@@ -101,6 +104,7 @@ public class ArrowActor extends Actor implements ClickIn{
 				x2, 
 				y2 );
 		
+		
 	}
 	
 	//-----------------ACTOR-FUNCTIONS----------------------
@@ -142,6 +146,8 @@ public class ArrowActor extends Actor implements ClickIn{
 			NPhysics.currentStage.shapeline.end();
 			Gdx.gl.glLineWidth(3);
 		}
+		
+		super.draw(batch, parentAlpha);
 	}
 	
 	@Override
@@ -220,17 +226,9 @@ public class ArrowActor extends Actor implements ClickIn{
 	public Vector2 getStart() {return new Vector2(start);}
 	public void setStart(float x,float y) {start.set(x,y); updateVertices();}
 
-	public void setStart(Vector2 v) {
-		
-		start.set(v);
-		updateVertices();
-	}
+	public void setStart(Vector2 v) {setStart(v.x, v.y);}
 	
-	public void setEnd(Vector2 v) {
-		
-		end.set(v);
-		updateVertices();
-	}
+	public void setEnd(Vector2 v) {setEnd(v.x, v.y);}
 	//--------------CLASS-FUNCTIONS----------------------
 	private static ArrowActor hook;
 

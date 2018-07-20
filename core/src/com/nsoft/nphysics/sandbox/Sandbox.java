@@ -267,18 +267,6 @@ public class Sandbox extends GridStage implements Handler{
 		return super.mouseMoved(screenX, screenY);
 	}
 	
-	public static float zoomVal = 1.2f;
-	
-	@Override
-	public boolean scrolled(int amount) {
-		
-		if(camera.zoom == 0 && amount < 0) return true;
-		camera.zoom *= amount > 0 ? zoomVal : 1f/zoomVal;
-		camera.update();
-		updateMatrix();
-		return true;
-	}
-	
 	//---------------------KEYBOARD-INPUT-------------------
 	
 	public static boolean SHIFT = false;

@@ -5,6 +5,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.kotcrab.vis.ui.VisUI;
+import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.Draggable.DragAdapter;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
@@ -14,6 +18,7 @@ import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
+import com.nsoft.nphysics.sandbox.ui.FontManager;
 import com.nsoft.nphysics.sandbox.ui.Option;
 
 public class ForceComponent extends ObjectChildren implements Form{
@@ -25,6 +30,9 @@ public class ForceComponent extends ObjectChildren implements Form{
 	Type type = Type.WORLD;
 	boolean relative = false;
 	private boolean hook = false;
+	private Label label;
+	private static LabelStyle style;
+	
 	static ForceComponent temp;
 	
 	public ForceComponent(PolygonActor parent,Vector2 start) {
@@ -60,6 +68,14 @@ public class ForceComponent extends ObjectChildren implements Form{
 		getForm().addText("type", "Set force vector type");
 		getForm().addOption(Option.createOptionTypeSlider("type", "Vector type", "World","Translation relative","Relative"));
 		
+
+		label = new Label("F", VisUI.getSkin());
+		label.setStyle(new LabelStyle(label.getStyle()));
+		label.getStyle().fontColor.set(1, 0, 0, 1);
+		label.getStyle().font = FontManager.title;
+		
+		label.setPosition(40, 40);
+		addActor(label);
 	}
 	
 	
