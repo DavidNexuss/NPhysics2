@@ -68,7 +68,7 @@ public class DynamicForce {
 		
 		if(type == Type.TRANS) {
 			
-			porigin = b.getPosition();
+			porigin = new Vector2(diff).add(b.getPosition());
 			pforce = force;
 			
 			arrow.setStart(getStart());
