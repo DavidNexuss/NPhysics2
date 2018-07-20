@@ -46,8 +46,15 @@ public class SelectHandle {
 		
 		if(Sandbox.SHIFT) {
 			
-			choose(newSelected, selecteds.size());
-			newSelected.select(pointer);
+			if(isSelected(newSelected)) {
+				
+				choose(null, selecteds.indexOf(newSelected));
+				newSelected.unselect();
+			}else {
+				
+				choose(newSelected, selecteds.size());
+				newSelected.select(pointer);
+			}
 			return true;
 		}
 		if(!force) {
@@ -94,6 +101,7 @@ public class SelectHandle {
 	
 	public void unSelect(int index) {
 		
+		if(selecteds.get(index) == null) return;
 		if(hasSelection()) {
 			getSelecteds().get(index).unselect();
 		}

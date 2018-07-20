@@ -30,6 +30,7 @@ import com.kotcrab.vis.ui.layout.DragPane;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
+import com.nsoft.nphysics.sandbox.drawables.SimpleAxis;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
@@ -37,8 +38,9 @@ import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 public class Sandbox extends GridStage implements Handler{
-	public static SelectHandle mainSelect = new SelectHandle();
 	
+	public static SelectHandle mainSelect = new SelectHandle();
+	public static SimpleAxis axis;
 	@Override 
 	public SelectHandle getSelectHandleInstance() { return mainSelect; }
 	
@@ -62,6 +64,7 @@ public class Sandbox extends GridStage implements Handler{
 		addActor(AxisSupport.temp);
 		AxisSupport.temp.setVisible(false);
 		DoubleAxisComponent.tmp.setVisible(false);
+		
 	}
 	
 	public void initTextures() {
@@ -80,7 +83,6 @@ public class Sandbox extends GridStage implements Handler{
 	@Override
 	public void clean() {
 		
-		DoubleAxisComponent.hit();
 	}
 	private void initdebug() {
 		
@@ -293,7 +295,6 @@ public class Sandbox extends GridStage implements Handler{
 			}
 			return true;
 		case Keys.SHIFT_LEFT:
-			mainSelect.unSelect();
 			SHIFT = true;
 			return true;
 		default:
@@ -306,7 +307,9 @@ public class Sandbox extends GridStage implements Handler{
 		
 		switch (keyCode) {
 		case Keys.SHIFT_LEFT:
+			mainSelect.cleanArray();
 			SHIFT = false;
+			
 			return true;
 		default:
 			return super.keyUp(keyCode);

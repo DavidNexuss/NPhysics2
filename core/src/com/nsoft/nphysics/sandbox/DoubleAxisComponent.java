@@ -21,27 +21,18 @@ public class DoubleAxisComponent extends Actor implements RawJoint{
 	
 	private static ArrayList<DoubleAxisComponent> axis = new ArrayList<>();
 	
-	PolygonActor A,B;
+	public PolygonActor A,B;
 	Body bA,bB;
 	
-	boolean temp;
+	public boolean temp;
 	public DoubleAxisComponent(boolean temp) {
 		
 		this.temp = temp;
-		if(!temp) axis.add(this);
-	}
-	
-	public static void hit() {
-		
-		for (DoubleAxisComponent doubleAxisComponent : axis) {
+		if(!temp) {
 			
-			for (PolygonActor p : PolygonActor.polygonlist) {
-				
-				if(p.isInside(doubleAxisComponent.getPosition())) {
-					
-					System.out.println("true");
-				}
-			}
+			A = (PolygonActor) Sandbox.mainSelect.getSelecteds().get(0);
+			B = (PolygonActor) Sandbox.mainSelect.getSelecteds().get(1);
+			axis.add(this);
 		}
 	}
 	

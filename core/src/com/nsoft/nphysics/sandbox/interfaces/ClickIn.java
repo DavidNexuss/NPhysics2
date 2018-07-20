@@ -31,6 +31,7 @@ public interface ClickIn {
 	}
 	
 	public default boolean isSelected() {return getHandler().isSelected(this);}
+	public default boolean isFirstSelected() { return getHandler().isFirstSelected(this);}
 	public default boolean isInside(Vector3 v) {return isInside(v.x, v.y);}
 	public default boolean isInside(Vector2 v) {return isInside(v.x, v.y);}
 	public default boolean isMouseInside() {

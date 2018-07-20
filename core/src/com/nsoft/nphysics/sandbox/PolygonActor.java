@@ -70,7 +70,7 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 	@Override
 	public void select(int pointer) {
 		
-		current = shapeSelected;
+		current = mightSelected;
 		UIStage.contextMenu.show();
 	}
 	
@@ -86,7 +86,7 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 	}
 	final static Color shape = 		   new Color(0.2f, 0.8f, 0.2f, 0.6f);
 	final static Color shapeSelected = new Color(0.8f, 0.2f, 0.2f, 0.6f);
-	
+	final static Color mightSelected = new Color(0.8f,0.5f,0.2f,0.6f);
 	Color current = shape;
 	
 	@Override
@@ -94,7 +94,7 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		
 		if(!isEnded()) return;
 		
-		NPhysics.currentStage.shapefill.setColor(current);
+		NPhysics.currentStage.shapefill.setColor(isFirstSelected() ? shapeSelected : current);
 		
 		Util.renderPolygon(NPhysics.currentStage.shapefill, points, indexes);
 		

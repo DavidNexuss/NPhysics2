@@ -1,6 +1,7 @@
 package com.nsoft.nphysics.simulation.dynamic;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -17,16 +18,20 @@ import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
+import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
 import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
 public class SimulationStage extends GridStage{
 
 	static ArrayList<PolygonObject> objects;
+	static HashMap<PolygonActor, PolygonObject> objectsMap;
 	Body centre;
 	static Vector2 gravity = new Vector2(0, -9.8f);
 	static World world;
@@ -45,6 +50,7 @@ public class SimulationStage extends GridStage{
 		clear();
 		initWorld();
 		initObjects();
+		initRawJoints();
 		updateMatrix();
 	}
 	private void initWorld() {
@@ -54,10 +60,12 @@ public class SimulationStage extends GridStage{
 	private void initObjects() {
 		
 		objects = new ArrayList<>();
+		objectsMap = new HashMap<>();
 		for (PolygonActor d: SimulationPackage.polygons)  {
 			
 			PolygonObject o = new PolygonObject(d.getDefinition());
 			objects.add(o);
+			objectsMap.put(d, o);
 			addActor(o);
 		}
 		
@@ -69,7 +77,17 @@ public class SimulationStage extends GridStage{
 	
 	private void initRawJoints() {
 		
-		
+		for (RawJoint joint : SimulationPackage.rawJoints) {
+			
+			if (joint instanceof DoubleAxisComponent) {
+				
+				DoubleAxisComponent d = (DoubleAxisComponent) joint;
+				if(d.temp) continue;
+				RevoluteJointDef def = new RevoluteJointDef();
+				def.initialize(objectsMap.get(d.A).b,objectsMap.get(d.B).b, new Vector2(d.getPosition()).scl(1f/Util.UNIT));
+				world.createJoint(def);
+			}
+		}
 	}
 	private void aplyForces() {
 		
