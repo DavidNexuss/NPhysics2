@@ -29,9 +29,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.GridStage;
+import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
+import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
+import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
+import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 public class Sandbox extends GridStage implements Handler{
 	public static SelectHandle mainSelect = new SelectHandle();
 	
@@ -54,8 +58,10 @@ public class Sandbox extends GridStage implements Handler{
 		
 		initTextures();
 		addActor(Point.lastPoint);
+		addActor(DoubleAxisComponent.tmp);
 		addActor(AxisSupport.temp);
 		AxisSupport.temp.setVisible(false);
+		DoubleAxisComponent.tmp.setVisible(false);
 	}
 	
 	public void initTextures() {
@@ -64,8 +70,18 @@ public class Sandbox extends GridStage implements Handler{
 		
 	}
 	
+	@Override
+	public void addActor(Actor actor) {
+		
+		if(actor instanceof RawJoint) SimulationPackage.rawJoints.add((RawJoint)actor);
+		super.addActor(actor);
+	}
 	
-	
+	@Override
+	public void clean() {
+		
+		DoubleAxisComponent.hit();
+	}
 	private void initdebug() {
 		
 		/*GameState.set(State.HOOK_FORCE_ARROW);
@@ -178,14 +194,22 @@ public class Sandbox extends GridStage implements Handler{
 			break;
 		case CREATE_AXIS:
 			
-			AxisSupport s = new AxisSupport((PolygonActor)mainSelect.getSelected());
+			AxisSupport s = new AxisSupport((PolygonActor)mainSelect.getFirstSelected());
 			if(isSnapping())s.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else s.setPosition(screenx, screeny);
 			addActor(s);
 			break;
+		case CREATE_DOUBLE_AXIS:
+			
+			DoubleAxisComponent d = new DoubleAxisComponent(false);
+			if(isSnapping())d.setPosition(snapGrid(screenx),snapGrid(screeny));
+			else d.setPosition(screenx, screeny);
+			addActor(d);
+			break;
+			
 		case CREATE_FORCE:
 			
-			PolygonActor current = (PolygonActor)mainSelect.getSelected();
+			PolygonActor current = (PolygonActor)mainSelect.getFirstSelected();
 			if(ForceComponent.temp != null) {
 				ForceComponent.temp.unhook();
 				ForceComponent.temp = null;
@@ -230,7 +254,11 @@ public class Sandbox extends GridStage implements Handler{
 			if(isSnapping())AxisSupport.temp.setPosition(snapGrid(screenx), snapGrid(screeny));
 			else AxisSupport.temp.setPosition(screenx, screeny);
 			return true;
-		
+		case CREATE_DOUBLE_AXIS:
+			if(isSnapping())DoubleAxisComponent.tmp.setPosition(snapGrid(screenx), snapGrid(screeny));
+			else DoubleAxisComponent.tmp.setPosition(screenx, screeny);
+			return true;
+			
 		default:
 			break;
 		}
@@ -251,6 +279,7 @@ public class Sandbox extends GridStage implements Handler{
 	
 	//---------------------KEYBOARD-INPUT-------------------
 	
+	static boolean SHIFT = false;
 	@Override
 	public boolean keyDown(int keyCode) {
 		
@@ -262,23 +291,36 @@ public class Sandbox extends GridStage implements Handler{
 				
 				((Removeable)in).remove();
 			}
-			break;
-
+			return true;
+		case Keys.SHIFT_LEFT:
+			mainSelect.unSelect();
+			SHIFT = true;
+			return true;
 		default:
-			break;
+			return super.keyDown(keyCode);
 		}
-		return super.keyDown(keyCode);
 	}
 	
+	@Override
+	public boolean keyUp(int keyCode) {
+		
+		switch (keyCode) {
+		case Keys.SHIFT_LEFT:
+			SHIFT = false;
+			return true;
+		default:
+			return super.keyUp(keyCode);
+		}
+	}
 	public ClickIn getSelectedChild() {
 		
-		return getSelectedChild(getSelectHandleInstance().getSelected());
+		return getSelectedChild(getSelectHandleInstance().getFirstSelected());
 	}
 	public ClickIn getSelectedChild(ClickIn in) {
 		
 		if(in instanceof Handler) {
 			
-			ClickIn child =getSelectedChild(((Handler)in).getSelectHandleInstance().getSelected());
+			ClickIn child =getSelectedChild(((Handler)in).getSelectHandleInstance().getFirstSelected());
 			if(child == null) return in;
 			return child;
 		}else return in;

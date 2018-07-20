@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.drawables.AngleArcActor;
+import com.nsoft.nphysics.sandbox.drawables.SimpleAxis;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Showable;
@@ -163,7 +165,7 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 	//----------------------------INPUT----------------------
 	
 	private static Vector2 temp = new Vector2();
-	boolean hit;
+	public boolean hit;
 	
 	private final float[][] trianglesBuffer = new float[4][6];
 	

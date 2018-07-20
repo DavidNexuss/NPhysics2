@@ -1,4 +1,4 @@
-package com.nsoft.nphysics.sandbox;
+package com.nsoft.nphysics.sandbox.drawables;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.ForceComponent.Type;
-import com.nsoft.nphysics.sandbox.SimpleArrow;
+import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.Util;
 
 public class DynamicForce {

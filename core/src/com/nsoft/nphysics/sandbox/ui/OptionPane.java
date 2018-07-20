@@ -51,14 +51,20 @@ public class OptionPane extends VisTable implements Showable {
 	
 	@Override
 	public void show() {
-		Showable.super.show();
-		setVisible(true);
+		
+		if(!isVisible()) {
+			Showable.super.show();
+			setVisible(true);
+		}
 	}
 	
 	@Override
 	public void hide() {
-		Showable.super.hide();
-		ThreadManager.createTask(()->{setVisible(false);}, getFadeDuration());
+		
+		if(isVisible()) {
+			Showable.super.hide();
+			ThreadManager.createTask(()->{setVisible(false);}, getFadeDuration());
+		}
 	}
 	
 	@Override

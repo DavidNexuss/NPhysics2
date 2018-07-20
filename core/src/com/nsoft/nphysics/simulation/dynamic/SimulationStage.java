@@ -39,7 +39,8 @@ public class SimulationStage extends GridStage{
 		updateMatrix();
 	}
 	
-	public void cleanAndSetUp() {
+	@Override
+	public void setUp(){
 		
 		clear();
 		initWorld();
@@ -66,6 +67,10 @@ public class SimulationStage extends GridStage{
 		this.centre = world.createBody(centre);
 	}
 	
+	private void initRawJoints() {
+		
+		
+	}
 	private void aplyForces() {
 		
 		for (PolygonObject polygonObject : objects) {

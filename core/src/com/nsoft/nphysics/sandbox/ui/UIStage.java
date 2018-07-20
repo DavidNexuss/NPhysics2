@@ -20,6 +20,7 @@ public class UIStage extends Stage{
 
 	static OptionPane options;
 	public static OptionPane contextMenu;
+	public static OptionPane doubleContextMenu;
 	static ViewSelection view;
 	static ShapeRenderer shapefill;
 	static Table container;
@@ -66,6 +67,7 @@ public class UIStage extends Stage{
 		
 		loadOptionMenu();
 		loadContextMenu();
+		loadDoubleContextMenu();
 		loadSubMenu();
 	}
 	
@@ -96,6 +98,20 @@ public class UIStage extends Stage{
 		contextMenu.setVisible(false);
 	}
 	
+	private void loadDoubleContextMenu() {
+		
+		doubleContextMenu = new OptionPane();
+
+		doubleContextMenu.setPosition(80, 0);
+		doubleContextMenu.setHeight(Gdx.graphics.getHeight() - 30);
+		doubleContextMenu.setWidth(40);
+		doubleContextMenu.color = new Color(0, 0, 0, 1f);
+		
+		setDoubleContextMenuItems();
+		doubleContextMenu.pack();
+		addActor(doubleContextMenu);
+		doubleContextMenu.setVisible(false);
+	}
 	private void setContextMenuItems() {
 		
 		contextMenu.add(MenuItem.loadNewItem("axis.png", GState.CREATE_AXIS));
@@ -111,6 +127,10 @@ public class UIStage extends Stage{
 		options.add(MenuItem.loadNewItem("shape.png", GState.CREATE_FAST_POLYGON));
 	}
 	
+	private void setDoubleContextMenuItems() {
+		
+		doubleContextMenu.add(MenuItem.loadNewItem("axis.png", GState.CREATE_DOUBLE_AXIS));
+	}
 	private void loadSubMenu() {
 		
 		MenuItem grid = MenuItem.loadNewItem("grid.png", ()->{NPhysics.currentStage.switchSnapping();});

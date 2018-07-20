@@ -41,9 +41,14 @@ public class NPhysics extends ApplicationAdapter {
 		UILoader.loadUI();
 		ui = new UIStage();
 		GridStage.initGridShader();
+		
 		sandbox = new Sandbox();
+		sandbox.setBackgroundColor(0.8f, 0.9f, 1f, 1f);
 		sandbox.init();
+		
 		simulation = new SimulationStage(sandbox.getCamera());
+		simulation.setBackgroundColor(0, 0, 0, 1);
+		
 		currentStage = sandbox;
 		
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
@@ -52,7 +57,7 @@ public class NPhysics extends ApplicationAdapter {
 	boolean first = true;
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 0.7f);
+		Gdx.gl.glClearColor(currentStage.getBackgroundColor().r,currentStage.getBackgroundColor().g,currentStage.getBackgroundColor().b,currentStage.getBackgroundColor().a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		if(first) { System.out.println(first = false);}
 		currentStage.draw();
@@ -64,15 +69,17 @@ public class NPhysics extends ApplicationAdapter {
 	
 	public static void switchToSimulation() {
 		
-
 		currentStage = simulation;
-		simulation.cleanAndSetUp();
+		sandbox.clean();
+		simulation.setUp();
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
 	}
 	
 	public static void switchToSandbox() {
 		
 		currentStage = sandbox;
+		simulation.clean();
+		sandbox.setUp();
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
 	}
 	@Override

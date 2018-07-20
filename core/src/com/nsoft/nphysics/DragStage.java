@@ -90,4 +90,7 @@ public abstract class DragStage extends Stage{
 		offsetX = screenX;
 		offsetY = screeny;
 	}
+	
+	public void setUp() {}
+	public void clean() {}
 }

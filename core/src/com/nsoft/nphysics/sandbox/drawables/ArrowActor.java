@@ -1,4 +1,4 @@
-package com.nsoft.nphysics.sandbox;
+package com.nsoft.nphysics.sandbox.drawables;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,6 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.GState;
+import com.nsoft.nphysics.sandbox.GameState;
+import com.nsoft.nphysics.sandbox.Sandbox;
+import com.nsoft.nphysics.sandbox.SelectHandle;
+import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 
 public class ArrowActor extends Actor implements ClickIn{

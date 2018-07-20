@@ -1,4 +1,4 @@
-package com.nsoft.nphysics.sandbox;
+package com.nsoft.nphysics.sandbox.drawables;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Pointer;
 import com.nsoft.nphysics.sandbox.interfaces.VertexBuffer;
 
@@ -73,12 +74,12 @@ public class SimpleArrow extends Actor implements VertexBuffer,Pointer{
 		
 		NPhysics.currentStage.shapeline.begin(ShapeType.Line);
 		Gdx.gl.glLineWidth(2);
-		NPhysics.currentStage.shapeline.setColor(Color.BLACK);
+		NPhysics.currentStage.shapeline.setColor(NPhysics.currentStage.getInvertedBackColor());
 		NPhysics.currentStage.shapeline.line(buffervertices[0][0], buffervertices[0][1], 
 							buffervertices[1][0], buffervertices[1][1]);
 		NPhysics.currentStage.shapeline.end();
 		
-		NPhysics.currentStage.shapeline.setColor(Color.BLACK);
+		NPhysics.currentStage.shapeline.setColor(NPhysics.currentStage.getInvertedBackColor());
 		NPhysics.currentStage.shapefill.triangle(buffervertices[2][0], buffervertices[2][1], 
 					buffervertices[3][0], buffervertices[3][1], 
 					buffervertices[4][0], buffervertices[4][1]);

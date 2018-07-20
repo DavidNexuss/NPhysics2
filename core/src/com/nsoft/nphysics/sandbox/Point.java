@@ -11,11 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.interfaces.Draggable;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 
-public class Point extends Actor implements ClickIn, Position,Removeable{
+public class Point extends Actor implements ClickIn, Position,Removeable, Draggable{
 
 
 	static final Color point = new Color(0.2f, 0.4f, 0.2f, 1f);
@@ -105,24 +106,33 @@ public class Point extends Actor implements ClickIn, Position,Removeable{
 		return len2 < INPUT_RADIUS*INPUT_RADIUS;
 	}
 
-	private void addDragListener() {
+	public void addDragListener() {
 		
 		Point dis = this;
 		addListener(new DragListener() {
 		    public void drag(InputEvent event, float x, float y, int pointer) {
 		    	
-		    	if(!getHandler().isSelected(dis)) getHandler().setSelected(dis);
-		    	if (NPhysics.currentStage.isSnapping()) {
-		    		
-		    		setPosition(Sandbox.snapGrid(getX()), Sandbox.snapGrid(getY()));
-		    		moveBy(Sandbox.snapGrid(x - getWidth() / 2),Sandbox.snapGrid( y - getHeight() / 2));
-				}else {
-					moveBy(x - getWidth() / 2, y - getHeight() / 2);
-				}
-		    	
-		        updatePosition();
+		    	doDrag(true,x,y);
 		    }
 		});
+	}
+	
+	@Override
+	public void doDrag(boolean pool,float x,float y) {
+		
+	//	if(!getHandler().isSelected(this)) getHandler().setSelected(this);
+    	
+    	if (NPhysics.currentStage.isSnapping()) {
+    		
+    		setPosition(Sandbox.snapGrid(getX()), Sandbox.snapGrid(getY()));
+    		moveBy(Sandbox.snapGrid(x - getWidth() / 2),Sandbox.snapGrid( y - getHeight() / 2));
+		}else {
+			moveBy(x - getWidth() / 2, y - getHeight() / 2);
+		}
+    	
+        updatePosition();
+        Draggable.super.doDrag(pool, x, y);
+		
 	}
 	//------------SEGMENT-CREATION--------------------------
 	

@@ -1,4 +1,4 @@
-package com.nsoft.nphysics.sandbox;
+package com.nsoft.nphysics.sandbox.drawables;
 
 import java.text.DecimalFormat;
 
@@ -19,6 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.Sandbox;
+import com.nsoft.nphysics.sandbox.Segment;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.Showable;
 

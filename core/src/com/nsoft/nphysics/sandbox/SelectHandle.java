@@ -1,14 +1,37 @@
 package com.nsoft.nphysics.sandbox;
 
+import java.util.ArrayList;
+
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
+import com.nsoft.nphysics.sandbox.ui.UIStage;
 
 public class SelectHandle {
 
-	private ClickIn selected;
+	private ArrayList<ClickIn> selecteds = new ArrayList<>();
+	private boolean multiSelection = false;
 	
-	public boolean isSelected(ClickIn object) {return selected == object;}
-	public boolean hasSelection() {return selected != null;}
+	public ClickIn getFirstSelected() {
+		
+		return hasSelection() ? selecteds.get(0) : null;
+	}
+	
+	public void setFirstSelected(ClickIn c) {
+		
+		selecteds.add(0, c);
+	}
+	
+	public boolean isFirstSelected(ClickIn c) {
+		
+		return hasSelection() ? selecteds.get(0) == c : false;
+	}
+	public boolean isSelected(ClickIn object) {
+		return selecteds.contains(object);
+	}
+	public boolean hasSelection() {
+		
+		return selecteds.size() != 0;
+	}
 	
 	public boolean setSelected(ClickIn newSelected) {
 		
@@ -21,36 +44,85 @@ public class SelectHandle {
 	
 	public boolean setSelected(ClickIn newSelected,int pointer,boolean force) {
 		
+		if(Sandbox.SHIFT) {
+			
+			choose(newSelected, selecteds.size());
+			newSelected.select(pointer);
+			return true;
+		}
 		if(!force) {
 			
-			if(hasSelection())selected.unselect();
-			if(selected == newSelected) {
+			if(hasSelection())getFirstSelected().unselect();
+			if(isFirstSelected(newSelected)) {
 				
-				choose(null);
+				unSelectFirst();
 				return false;
 			}
 		}
 		
-		choose(newSelected);
-		selected.select(pointer);
+		choose(newSelected,0);
+		getFirstSelected().select(pointer);
 		return true;
 	}
-	public ClickIn getSelected() {return selected;}
+	public ArrayList<ClickIn> getSelecteds() {return selecteds;}
 	
+	public void cleanArray() {
+		
+		ArrayList<ClickIn> clean = new ArrayList<>();
+		
+		for (ClickIn clickIn : selecteds) {
+			
+			if(clickIn != null)clean.add(clickIn);
+		}
+		
+		selecteds = clean;
+	}
 	public void unSelect() {
 		
-		if(hasSelection()) {
-			selected.unselect();
+		for (int i = 0; i < selecteds.size(); i++) {
+			
+			unSelect(i);
 		}
-		choose(null);
+		
+		cleanArray();
+	}
+	public void unSelectFirst() {
+		
+		unSelect(0);
+		cleanArray();
 	}
 	
-	private void choose(ClickIn in) {
+	public void unSelect(int index) {
 		
+		if(hasSelection()) {
+			getSelecteds().get(index).unselect();
+		}
+		choose(null,index);
+	}
+	private void choose(ClickIn in,int index) {
 		
-		if(selected instanceof Handler) 
-			((Handler)selected).getSelectHandleInstance().unSelect();
+		if(!hasSelection() || index >= getSelecteds().size()) {
+			
+			selecteds.add(in);
+			checkSelectedsState();
+			return;
+		}
+		if(getSelecteds().get(index) instanceof Handler) 
+			((Handler)getSelecteds().get(index)).getSelectHandleInstance().unSelect();
 		
-		selected = in;
+		getSelecteds().set(index, in);
+		checkSelectedsState();
+	}
+	
+	private void checkSelectedsState() {
+		
+		updateDoubleContextMenu();
+	}
+	
+	private void updateDoubleContextMenu() {
+		
+		if(selecteds.size() == 2 && selecteds.get(0) instanceof PolygonActor && selecteds.get(1) instanceof PolygonActor)
+			UIStage.doubleContextMenu.show();
+		else UIStage.doubleContextMenu.hide();
 	}
 }
