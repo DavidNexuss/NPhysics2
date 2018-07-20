@@ -99,6 +99,10 @@ public class SelectHandle {
 		cleanArray();
 	}
 	
+	public void unSelect(ClickIn in) {
+		
+		unSelect(selecteds.indexOf(in));
+	}
 	public void unSelect(int index) {
 		
 		if(selecteds.get(index) == null) return;

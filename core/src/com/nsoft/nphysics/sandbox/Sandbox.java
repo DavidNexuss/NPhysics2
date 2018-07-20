@@ -281,7 +281,7 @@ public class Sandbox extends GridStage implements Handler{
 	
 	//---------------------KEYBOARD-INPUT-------------------
 	
-	static boolean SHIFT = false;
+	public static boolean SHIFT = false;
 	@Override
 	public boolean keyDown(int keyCode) {
 		

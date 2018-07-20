@@ -120,7 +120,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	@Override
 	public void doDrag(boolean pool,float x,float y) {
 		
-	//	if(!getHandler().isSelected(this)) getHandler().setSelected(this);
+		if(!getHandler().isSelected(this)) getHandler().setSelected(this);
     	
     	if (NPhysics.currentStage.isSnapping()) {
     		

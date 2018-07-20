@@ -183,9 +183,12 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 		
 		return null;
 	}
+	
+	boolean stop = true;
 	@Override
 	public Actor hit(float x, float y, boolean touchable) {
 
+		if(stop) return null;
 		if (touchable && getTouchable() == Touchable.disabled) return null;
 		if(!GameState.is(GState.START)) return null;
 		
@@ -265,6 +268,7 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 	
 	public boolean isInside(float x, float y,float epsilon) {
 		
+		if(stop) return false;
 		Actor hit = hitChildren(x - A.getX(), y - A.getY(), true);
 		if (hit != null) {
 			return false;
