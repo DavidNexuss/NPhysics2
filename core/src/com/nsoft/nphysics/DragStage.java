@@ -51,6 +51,7 @@ public abstract class DragStage extends Stage{
 	public abstract void updateMatrix();
 	
 	public Vector2 getUnproject() {return new Vector2(getUnprojectX(),getUnprojectY());}
+	public Vector2 getUnproject(boolean snap) {return new Vector2(getUnprojectX(snap),getUnprojectY(snap));}
 	
 	public static int snapGrid(float v) { return (int)Util.UNIT*Math.round(v/Util.UNIT); }
 	

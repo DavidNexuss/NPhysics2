@@ -11,8 +11,12 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.interfaces.Draggable;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
@@ -22,7 +26,7 @@ import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 
 import earcut4j.Earcut;
 
-public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler,Removeable{
+public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler,Removeable,Draggable{
 
 	public static ArrayList<PolygonActor> polygonlist = new ArrayList<>();
 	private Point initial;
@@ -46,6 +50,7 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		
 		setDebug(true);
 		addInput();
+		addDragListener();
 		definition = new PolygonDefinition();
 	}
 	
@@ -83,6 +88,72 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 	public Actor hit(float x, float y, boolean touchable) {
 		
 		return isInside(unproject(Gdx.input.getX(), Gdx.input.getY())) ? this : null;
+	}
+	
+	final Vector2 origin = new Vector2(0, 0);
+	final Vector2 start = new Vector2(0, 0);
+	@Override
+	public void addDragListener() {
+
+
+		ClickIn Pointer = this;
+		DragListener d = new DragListener() {
+		    public void drag(InputEvent event, float x, float y, int pointer) {
+		    	
+		    	doDrag(true,x,y,event);
+		    }
+		    
+		    @Override
+		    public void dragStart(InputEvent event, float x, float y, int pointer) {
+		    	
+		    	start.set(NPhysics.currentStage.getUnproject(false));
+		    	origin.set(NPhysics.currentStage.getUnproject(false));
+		    	if(!isSelected()) getHandler().setSelected(Pointer);
+				
+		    	sumx = 0;
+		    	sumy = 0;
+		    	
+		    	for (Point p : points) {
+					
+		    		p.originx = p.getX();
+		    		p.originy = p.getY();
+				}
+		    	
+		    }
+		    
+		    @Override
+		    public void dragStop(InputEvent event, float x, float y, int pointer) {
+		    	
+		    	updatePosition(0, 0, null);
+		    }
+		};
+		
+		d.setTapSquareSize(1);
+		addListener(d);
+	}
+	
+	float sumx = 0;
+	float sumy = 0;
+	@Override
+	public void doDrag(boolean pool, float x, float y,InputEvent event) {
+		
+		Vector2 v2 = new Vector2(NPhysics.currentStage.getUnproject(false)).sub(start);
+		for (Point p : points) {
+
+			if (NPhysics.currentStage.isSnapping()) {
+				
+				p.setPosition(DragStage.snapGrid(p.originx + sumx),DragStage.snapGrid(p.originy + sumy));
+				
+			}else p.moveBy(v2.x, v2.y);
+			
+		}
+		
+		start.set(NPhysics.currentStage.getUnproject(false));
+		
+
+		sumx = start.x - origin.x;
+		sumy = start.y - origin.y;
+
 	}
 	final static Color shape = 		   new Color(0.2f, 0.8f, 0.2f, 0.6f);
 	final static Color shapeSelected = new Color(0.8f, 0.2f, 0.2f, 0.6f);

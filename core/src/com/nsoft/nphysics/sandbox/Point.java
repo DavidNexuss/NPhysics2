@@ -38,6 +38,8 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	
 	static Point lastPoint = new Point(Float.NaN, Float.NaN, true);
 	
+	float originx,originy; //USED IN POLYGONACTOR DRAG ONLY
+	
 	public Point(float x,float y,boolean isTemp) {
 		
 		setX(x);
@@ -105,20 +107,9 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		float len2 = new Vector2(x - getX(), y - getY()).len2();
 		return len2 < INPUT_RADIUS*INPUT_RADIUS;
 	}
-
-	public void addDragListener() {
-		
-		Point dis = this;
-		addListener(new DragListener() {
-		    public void drag(InputEvent event, float x, float y, int pointer) {
-		    	
-		    	doDrag(true,x,y);
-		    }
-		});
-	}
 	
 	@Override
-	public void doDrag(boolean pool,float x,float y) {
+	public void doDrag(boolean pool,float x,float y,InputEvent event) {
 		
 		if(!getHandler().isSelected(this)) getHandler().setSelected(this);
     	
@@ -131,7 +122,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		}
     	
         updatePosition();
-        Draggable.super.doDrag(pool, x, y);
+        Draggable.super.doDrag(pool, x, y,event);
 		
 	}
 	//------------SEGMENT-CREATION--------------------------

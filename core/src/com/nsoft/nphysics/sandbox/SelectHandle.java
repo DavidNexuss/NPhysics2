@@ -57,7 +57,7 @@ public class SelectHandle {
 		}
 		if(!force) {
 			
-			if(hasSelection())getLastSelected().unselect();
+			if(hasSelection() && getLastSelected() != null)getLastSelected().unselect();
 			if(isSelected(newSelected)) {
 				
 				unSelectLast();
@@ -65,7 +65,7 @@ public class SelectHandle {
 			}
 		}
 		
-		choose(newSelected,0);
+		choose(newSelected,selecteds.size() -1);
 		getLastSelected().select(pointer);
 		return true;
 	}
@@ -99,6 +99,7 @@ public class SelectHandle {
 	
 	public void unSelect(ClickIn in) {
 		
+		if(in == null)return;
 		unSelect(selecteds.indexOf(in));
 	}
 	public void unSelect(int index) {
