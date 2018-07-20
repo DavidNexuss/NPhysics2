@@ -14,6 +14,7 @@ public class DynamicForce {
 	Vector2 origin;
 	Vector2 force;
 	Vector2 porigin;
+	Vector2 diff;
 	Vector2 pforce;
 	ForceComponent.Type type;
 	boolean isCentered = false;
@@ -77,9 +78,9 @@ public class DynamicForce {
 		
 		if(type == Type.REL) {
 			
-			porigin = Util.rotPivot(pivot, this.origin, b.getAngle());
+			porigin = Util.rotPivot(pivot, new Vector2(diff).add(b.getPosition()), b.getAngle());
 			pforce = Util.rot(force, b.getAngle());
-			Vector2 pend = Util.rotPivot(pivot, new Vector2(this.force).add(this.origin), b.getAngle());
+			Vector2 pend = Util.rotPivot(pivot, new Vector2(this.force).add(new Vector2(diff).add(b.getPosition())), b.getAngle());
 			arrow.setStart(new Vector2(porigin).scl(Util.UNIT));
 			arrow.setEnd(new Vector2(pend).scl(Util.UNIT));
 

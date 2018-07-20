@@ -219,6 +219,7 @@ public class PolygonObject extends Actor{
 				DynamicForce d = new DynamicForce();
 				d.force = force;
 				d.origin = origin;
+				d.diff = new Vector2(origin).sub(b.getPosition());
 				d.init(((ForceComponent) c).getType());
 				
 				forces.add(d) ;
