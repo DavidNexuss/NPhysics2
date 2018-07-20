@@ -28,7 +28,6 @@ import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
-import com.vividsolutions.jts.math.MathUtil;
 
 public class PolygonObject extends Actor{
 
