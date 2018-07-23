@@ -113,7 +113,7 @@ public class PolygonObject extends Actor{
 			if (usePivot) {
 				
 				b.applyForce(d.getPhysicalForce(), d.getPhysicalOrigin(), true);
-				d.update(b,new Vector2(pivot.getPosition().scl(1f/Util.UNIT)),false);
+				d.update(b,b.getPosition(),false);
 			}else {
 				
 				if(!d.isCentered) {
