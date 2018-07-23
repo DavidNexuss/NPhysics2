@@ -1,6 +1,8 @@
 package com.nsoft.nphysics.simulation.dynamic;
 
 import java.util.ArrayList;
+
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.Util;
@@ -89,7 +91,7 @@ public class PolygonDefinition {
 		return getCenter(PhysValue).x;
 	}
 	public PositionVector getCenter(boolean PhysValue) {
-		
+	/*	
 		float sumx = 0;
 		float sumy = 0;
 		
@@ -104,7 +106,41 @@ public class PolygonDefinition {
 			sumx /= Util.UNIT;
 			sumy /= Util.UNIT;
 		}
-		return new PositionVector(sumx/vertices.size(), sumy/vertices.size());
+		return new PositionVector(sumx/vertices.size(), sumy/vertices.size());*/
+		
+		return compute2DPolygonCentroid(PhysValue);
+	}
+	
+	public PositionVector compute2DPolygonCentroid(boolean physValue)
+	{
+		PositionVector centroid = new PositionVector(new Vector2());
+	    
+		double signedArea = 0.0;
+	    double x0 = 0.0; // Current vertex X
+	    double y0 = 0.0; // Current vertex Y
+	    double x1 = 0.0; // Next vertex X
+	    double y1 = 0.0; // Next vertex Y
+	    double a = 0.0;  // Partial signed area
+
+	    // For all vertices
+	  
+	    for (int i = 0 ; i < vertices.size(); i++)
+	    {
+	        x0 = vertices.get(i).x;
+	        y0 = vertices.get(i).y;
+	        x1 = vertices.get((i + 1) % vertices.size()).x;
+	        y1 = vertices.get((i + 1) % vertices.size()).y;
+	        a = x0*y1 - x1*y0;
+	        signedArea += a;
+	        centroid.x += (x0 + x1)*a;
+	        centroid.y += (y0 + y1)*a;
+	    }
+
+	    signedArea *= 0.5;
+	    centroid.x /= (6.0*signedArea);
+	    centroid.y /= (6.0*signedArea);
+
+	    return physValue ? (PositionVector) centroid.scl(1f/Util.UNIT) : centroid;
 	}
 	public float getY(int index) {
 		
