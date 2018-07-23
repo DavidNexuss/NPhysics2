@@ -1,5 +1,6 @@
 package com.nsoft.nphysics.sandbox.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -19,6 +20,7 @@ public class Option extends VisTable{
 	VisSlider slider;
 	Label l;
 	Form form;
+	private boolean ready = true;
 	
 	String[] args;
 	public Option(String name) {
@@ -27,6 +29,7 @@ public class Option extends VisTable{
 		setName(name);
 	}
 	
+	public boolean isReady() {return ready;}
 	@Override
 	public void act(float delta) {
 		
@@ -106,12 +109,39 @@ public class Option extends VisTable{
 					
 					getForm().updateValuesFromForm();
 				}
+				
+				if(!isMessageNumber()) {
+					
+					textfield.setColor(Color.RED);
+					ready = false;
+				}else {
+					
+					textfield.setColor(Color.WHITE);
+					ready = true;
+				}
 			
 			}
 		});
 		return add(textfield);
 
-	}	
+	}
+	
+	private boolean isNumber(char c) {
+		
+		return c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9' || c == '0' || c == '.'; 
+	}
+	
+	private boolean isMessageNumber() {
+		
+		if(textfield.getText().length() == 0) return false;
+		for (int i = 0; i < textfield.getText().length(); i++) {
+			
+			char c = textfield.getText().charAt(i);
+			if(!isNumber(c)) return false;
+		}
+		
+		return true;
+	}
 	public static Option initEmtyOption(String name,String definition) {
 		
 		Option o = new Option(name);

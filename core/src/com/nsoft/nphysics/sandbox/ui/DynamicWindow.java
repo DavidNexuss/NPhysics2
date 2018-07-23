@@ -1,6 +1,8 @@
 package com.nsoft.nphysics.sandbox.ui;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
@@ -115,6 +117,10 @@ public class DynamicWindow extends VisWindow{
 	
 	public static void hideWindow(DynamicWindow w) {
 		
+		for (Entry<String, Option> option: w.options.entrySet()) {
+			
+			if(!option.getValue().isReady()) return;
+		}
 		w.addAction(Actions.fadeOut(0.5f,Interpolation.exp5)); 
 		if(w.isAForm())w.form.updateValuesFromForm();
 		ThreadManager.createTask(()->{ w.setVisible(false);}, 0.5f);
