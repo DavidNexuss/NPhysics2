@@ -6,18 +6,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.interfaces.Position;
 
 public abstract class DragStage extends Stage{
 
-
-	float centerX;
-	float centerY;
+	private Position axisPosition = new PositionVector(Vector2.Zero);
 	
-	float offsetX;
-	float offsetY;
+	private float centerX;
+	private float centerY;
+	
+	private float offsetX;
+	private float offsetY;
 
-	boolean snapping = true;
+	private boolean snapping = true;
 	
 	public DragStage(Viewport v) {
 		
@@ -35,6 +38,19 @@ public abstract class DragStage extends Stage{
 		
 		offsetX = d.offsetX;
 		offsetY = d.offsetY;
+	}
+	
+	public void setAxisPosition(Position p) {axisPosition = p;}
+	public Position getAxisPosition() {return axisPosition;}
+	
+	public Vector2 worldToRelative(Vector2 v) {
+		
+		return v.sub(axisPosition.getVector());
+	}
+	
+	public Vector2 relativeToWorld(Vector2 v) {
+		
+		return v.add(axisPosition.getVector());
 	}
 	public OrthographicCamera camera;
 	

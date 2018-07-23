@@ -51,23 +51,25 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	@Override
 	public void setX(float x) {
 		
-		super.setX(x);
-		form.getOption("originx").setValue(getX() / Util.UNIT);
+		super.setX(x + NPhysics.currentStage.getAxisPosition().getX());
+		form.getOption("originx").setValue(getX() / Util.UNIT - NPhysics.currentStage.getAxisPosition().getX() / Util.UNIT);
+		
 		
 	}
 	
 	@Override
 	public void setY(float y) {
 
-		super.setY(y);
-		form.getOption("originy").setValue(getY() / Util.UNIT);
+		super.setY(y + NPhysics.currentStage.getAxisPosition().getY());
+		form.getOption("originy").setValue(getY() / Util.UNIT - NPhysics.currentStage.getAxisPosition().getY() / Util.UNIT);
+		
 	}
 	
 	@Override
 	public void setPosition(float x, float y) {
 		super.setPosition(x, y);
-		form.getOption("originx").setValue(getX() / Util.UNIT);
-		form.getOption("originy").setValue(getY() / Util.UNIT);
+		form.getOption("originx").setValue(getX() / Util.UNIT - NPhysics.currentStage.getAxisPosition().getX() / Util.UNIT);
+		form.getOption("originy").setValue(getY() / Util.UNIT - NPhysics.currentStage.getAxisPosition().getY() / Util.UNIT);
 	}
 	public PolygonActor getPolygon() {return parent;}
 	
@@ -129,8 +131,9 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 		setX(form.getOption("originx").getValue() * Util.UNIT);
 		setY(form.getOption("originy").getValue() * Util.UNIT);
 	}
-	
+	@Override
 	public void updateValuesToForm() {}
+	
 	@Override
 	public boolean remove() {
 		

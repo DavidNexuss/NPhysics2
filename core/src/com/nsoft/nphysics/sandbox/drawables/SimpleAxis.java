@@ -9,13 +9,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.Showable;
 
 public class SimpleAxis extends Actor implements Showable{
 
 	static float MAX = 400;
-	Position center;
+	private Position center;
 	float angle;
 	
 	public SimpleAxis(Position p) {
@@ -23,6 +24,9 @@ public class SimpleAxis extends Actor implements Showable{
 		center = p;
 		setAlpha(0);
 	}
+	
+	public Position getCenter() {return new PositionVector(center.getVector());}
+	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		

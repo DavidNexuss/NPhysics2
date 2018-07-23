@@ -29,9 +29,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.GridStage;
+import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
 import com.nsoft.nphysics.sandbox.drawables.SimpleAxis;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
@@ -41,6 +43,7 @@ public class Sandbox extends GridStage implements Handler{
 	
 	public static SelectHandle mainSelect = new SelectHandle();
 	public static SimpleAxis axis;
+	
 	@Override 
 	public SelectHandle getSelectHandleInstance() { return mainSelect; }
 	
@@ -64,6 +67,10 @@ public class Sandbox extends GridStage implements Handler{
 		addActor(AxisSupport.temp);
 		AxisSupport.temp.setVisible(false);
 		DoubleAxisComponent.tmp.setVisible(false);
+		axis = new SimpleAxis(new PositionVector(Vector2.Zero));
+		axis.show();
+		setAxisPosition(axis.getCenter());
+		addActor(axis);
 		
 	}
 	
@@ -284,6 +291,25 @@ public class Sandbox extends GridStage implements Handler{
 			return true;
 		case Keys.SHIFT_LEFT:
 			SHIFT = true;
+			return true;
+		case Keys.A:
+			axis.hide();
+			final SimpleAxis temp = axis;
+			ThreadManager.createTask(()->{temp.addAction(Actions.removeActor());}, temp.getFadeDuration());
+			
+			axis = new SimpleAxis(new PositionVector(getUnproject()));
+			axis.show();
+			setAxisPosition(axis.getCenter());
+			addActor(axis);
+			
+			for (Actor a : getActors()) {
+				
+				if(a instanceof Form) {
+					
+					a.setPosition(a.getX(), a.getY());
+					((Form)a).updateValuesToForm();
+				}
+			}
 			return true;
 		default:
 			return super.keyDown(keyCode);

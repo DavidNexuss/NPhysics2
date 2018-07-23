@@ -6,4 +6,5 @@ public interface Form {
 
 	public DynamicWindow getForm();
 	public void updateValuesFromForm();
+	public void updateValuesToForm();
 }
