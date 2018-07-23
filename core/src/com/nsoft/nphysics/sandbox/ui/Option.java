@@ -1,5 +1,6 @@
 package com.nsoft.nphysics.sandbox.ui;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -9,12 +10,15 @@ import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisSlider;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextField;
+import com.kotcrab.vis.ui.widget.VisTextField.TextFieldListener;
+import com.nsoft.nphysics.sandbox.interfaces.Form;
 
 public class Option extends VisTable{
 
 	VisTextField textfield;
 	VisSlider slider;
 	Label l;
+	Form form;
 	
 	String[] args;
 	public Option(String name) {
@@ -47,6 +51,9 @@ public class Option extends VisTable{
 		
 		throw new IllegalStateException();
 	}
+	
+	public void setForm(Form f) {form = f;}
+	public Form getForm() {return form;}
 	
 	public Option setValue(float val) {
 		
@@ -89,6 +96,19 @@ public class Option extends VisTable{
 	public Cell<Widget> addNumberInput(){
 		
 		textfield = new VisTextField("0.0");
+		textfield.setFocusTraversal(false);
+		textfield.setTextFieldListener(new TextFieldListener() {
+			
+			@Override
+			public void keyTyped(VisTextField textField, char c) {
+				
+				if(c == '\r') {
+					
+					getForm().updateValuesFromForm();
+				}
+			
+			}
+		});
 		return add(textfield);
 
 	}	

@@ -20,6 +20,7 @@ import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
 import com.nsoft.nphysics.sandbox.ui.Option;
+import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 public class ForceComponent extends ObjectChildren implements Form{
 
@@ -127,8 +128,8 @@ public class ForceComponent extends ObjectChildren implements Form{
 		
 		arrow.setStart(getPosition().x, getPosition().y);
 		
-		float forcex = getForm().getOption("forcex").getValue() * Util.UNIT;
-		float forcey = getForm().getOption("forcey").getValue() * Util.UNIT;
+		float forcex = getForm().getOption("forcex").getValue() * Util.UNIT /SimulationStage.ForceMultiplier;
+		float forcey = getForm().getOption("forcey").getValue() * Util.UNIT /SimulationStage.ForceMultiplier;
 		
 		int a = (int) getForm().getOption("type").getValue();
 		
@@ -143,8 +144,8 @@ public class ForceComponent extends ObjectChildren implements Form{
 	
 	public void updateValuesToForm() {
 		
-		getForm().getOption("forcex").setValue(force.x / Util.UNIT);
-		getForm().getOption("forcey").setValue(force.y / Util.UNIT);
+		getForm().getOption("forcex").setValue(force.x / Util.UNIT * SimulationStage.ForceMultiplier);
+		getForm().getOption("forcey").setValue(force.y / Util.UNIT * SimulationStage.ForceMultiplier);
 		
 		getForm().getOption("forcemod").setValue(force.len() / Util.UNIT);
 		getForm().getOption("forceangle").setValue(force.angle());

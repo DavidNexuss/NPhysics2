@@ -30,6 +30,7 @@ import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
 public class SimulationStage extends GridStage{
 
+	public static final float ForceMultiplier = 10f;
 	static ArrayList<PolygonObject> objects;
 	static HashMap<PolygonActor, PolygonObject> objectsMap;
 	Body centre;

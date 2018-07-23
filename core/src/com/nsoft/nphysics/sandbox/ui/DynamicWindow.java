@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -42,6 +44,7 @@ public class DynamicWindow extends VisWindow{
 	
 	public Cell<Option> addOption(Option p) {
 		
+		p.setForm(form);
 		options.put(p.getName(), p);
 		Cell<Option> cell = content.add(p).expand().fillX();
 		content.row();
@@ -93,6 +96,15 @@ public class DynamicWindow extends VisWindow{
 		table_text.add().expand();
 		t.add(table_text).fill();
 		d.add(t).expand().fill();
+		
+		d.addListener(new InputListener() {
+			
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchDown(event, x, y, pointer, button);
+				return true;
+			}
+		});
 		return d;
 	}
 	public static void showWindow(DynamicWindow w) {
@@ -107,4 +119,6 @@ public class DynamicWindow extends VisWindow{
 		if(w.isAForm())w.form.updateValuesFromForm();
 		ThreadManager.createTask(()->{ w.setVisible(false);}, 0.5f);
 	}
+	
+
 }
