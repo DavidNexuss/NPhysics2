@@ -1,6 +1,7 @@
 package com.nsoft.nphysics;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -120,6 +121,20 @@ public abstract class DragStage extends Stage{
 		camera.zoom *= amount > 0 ? zoomVal : 1f/zoomVal;
 		camera.update();
 		updateMatrix();
+		return true;
+	}
+	
+	@Override
+	public boolean keyDown(int keyCode) {
+		
+		switch (keyCode) {
+		case Keys.ESCAPE:
+
+			System.exit(0);
+		default:
+			break;
+		}
+		
 		return true;
 	}
 }

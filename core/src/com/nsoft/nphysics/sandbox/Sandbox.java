@@ -294,6 +294,7 @@ public class Sandbox extends GridStage implements Handler{
 	@Override
 	public boolean keyDown(int keyCode) {
 		
+		super.keyDown(keyCode);
 		switch (keyCode) {
 		case Keys.FORWARD_DEL:
 			
