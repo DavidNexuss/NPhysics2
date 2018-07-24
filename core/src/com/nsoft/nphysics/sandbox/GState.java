@@ -11,6 +11,7 @@ public enum GState {
 	CREATE_SEGMENT("Crea un segmento"),
 	CREATE_AXIS("Crea un eje",()->{AxisSupport.temp.setVisible(false);},()->{AxisSupport.temp.setVisible(true);}),
 	CREATE_DOUBLE_AXIS("Crea un eje doble",()->{DoubleAxisComponent.tmp.setVisible(false);},()->{DoubleAxisComponent.tmp.setVisible(true);}),
+	CREATE_PRISMATIC("Crea una junta prismatica",()->{PrismaticComponent.temp.setVisible(false);},()->{PrismaticComponent.temp.setVisible(true);}),
 	CREATE_SUPPORT("Crea un soporte"),
 	CREATE_POLYGON("Crea un objeto"),
 	CREATE_FAST_POLYGON("Crea un objeto"),

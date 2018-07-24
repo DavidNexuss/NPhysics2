@@ -33,7 +33,7 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	public void initBasicForm(String windowName) {
 		
 		form = DynamicWindow.createDefaultWindowStructure(windowName, 400, 400);
-		
+		form.setAsForm(this);
 		form.addText("origin", "Set origin vector");
 		form.addOption(Option.createOptionNumber("originx", "Origin in x").setValue(getX() / Util.UNIT));
 		form.addOption(Option.createOptionNumber("originy", "Origin in y").setValue(getY() / Util.UNIT));

@@ -65,8 +65,12 @@ public class Sandbox extends GridStage implements Handler{
 		addActor(Point.lastPoint);
 		addActor(DoubleAxisComponent.tmp);
 		addActor(AxisSupport.temp);
+		addActor(PrismaticComponent.temp);
+		
 		AxisSupport.temp.setVisible(false);
 		DoubleAxisComponent.tmp.setVisible(false);
+		PrismaticComponent.temp.setVisible(false);
+		
 		axis = new SimpleAxis(new PositionVector(Vector2.Zero));
 		axis.show();
 		setAxisPosition(axis.getCenter());
@@ -77,6 +81,7 @@ public class Sandbox extends GridStage implements Handler{
 	public void initTextures() {
 		
 		AxisSupport.Axis = new Texture(Gdx.files.internal("misc/axis.png"));
+		PrismaticComponent.Axis = new Texture(Gdx.files.internal("misc/rollaxis.png"));
 		
 	}
 	
@@ -215,7 +220,13 @@ public class Sandbox extends GridStage implements Handler{
 			else d.setPosition(screenx, screeny);
 			addActor(d);
 			break;
+		case CREATE_PRISMATIC:
 			
+			PrismaticComponent c = new PrismaticComponent((PolygonActor)mainSelect.getLastSelected());
+			if(isSnapping())c.setPosition(snapGrid(screenx),snapGrid(screeny));
+			else c.setPosition(screenx, screeny);
+			addActor(c);
+			break;
 		case CREATE_FORCE:
 			
 			PolygonActor current = (PolygonActor)mainSelect.getLastSelected();
@@ -267,7 +278,10 @@ public class Sandbox extends GridStage implements Handler{
 			if(isSnapping())DoubleAxisComponent.tmp.setPosition(snapGrid(screenx), snapGrid(screeny));
 			else DoubleAxisComponent.tmp.setPosition(screenx, screeny);
 			return true;
-			
+		case CREATE_PRISMATIC:
+			if(isSnapping())PrismaticComponent.temp.setPosition(snapGrid(screenx), snapGrid(screeny));
+			else PrismaticComponent.temp.setPosition(screenx, screeny);
+			return true;
 		default:
 			break;
 		}

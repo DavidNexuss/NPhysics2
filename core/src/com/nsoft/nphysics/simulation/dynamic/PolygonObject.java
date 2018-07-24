@@ -25,6 +25,7 @@ import com.nsoft.nphysics.sandbox.AxisSupport;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PositionVector;
+import com.nsoft.nphysics.sandbox.PrismaticComponent;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
@@ -207,7 +208,15 @@ public class PolygonObject extends Actor{
 				if(pivot == null) { pivot = (AxisSupport)c; usePivot = true;}
 				else {usePivot = false;}
 			}
-			
+
+			if (c instanceof PrismaticComponent) {
+				
+				PrismaticComponent p = (PrismaticComponent)c;
+				PrismaticJointDef def = new PrismaticJointDef();
+				Vector2 anchor = new Vector2(c.getX()/Util.UNIT, c.getY()/Util.UNIT);
+				def.initialize(b, createAnchor(anchor.x,anchor.y), anchor, new Vector2(1,0).rotate(p.getAngle()));
+				SimulationStage.world.createJoint(def);
+			}
 			if (c instanceof ForceComponent) {
 				
 				ForceComponent f = (ForceComponent)c;
@@ -222,6 +231,7 @@ public class PolygonObject extends Actor{
 				
 				forces.add(d) ;
 			}
+			
 		}
 		
 	}
