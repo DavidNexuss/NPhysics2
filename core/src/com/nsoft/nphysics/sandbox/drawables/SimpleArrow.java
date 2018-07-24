@@ -19,6 +19,7 @@ public class SimpleArrow extends Actor implements VertexBuffer,Pointer{
 	
 	Vector2 start,end;
 	private Vector2 modulus;
+	public Color color;
 	
 	public SimpleArrow(Vector2 start,Vector2 end) {
 		
@@ -74,12 +75,12 @@ public class SimpleArrow extends Actor implements VertexBuffer,Pointer{
 		
 		NPhysics.currentStage.shapeline.begin(ShapeType.Line);
 		Gdx.gl.glLineWidth(2);
-		NPhysics.currentStage.shapeline.setColor(NPhysics.currentStage.getInvertedBackColor());
+		NPhysics.currentStage.shapeline.setColor(color == null ? NPhysics.currentStage.getInvertedBackColor() : color);
 		NPhysics.currentStage.shapeline.line(buffervertices[0][0], buffervertices[0][1], 
 							buffervertices[1][0], buffervertices[1][1]);
 		NPhysics.currentStage.shapeline.end();
 		
-		NPhysics.currentStage.shapeline.setColor(NPhysics.currentStage.getInvertedBackColor());
+		NPhysics.currentStage.shapeline.setColor(color == null ? NPhysics.currentStage.getInvertedBackColor() : color);
 		NPhysics.currentStage.shapefill.triangle(buffervertices[2][0], buffervertices[2][1], 
 					buffervertices[3][0], buffervertices[3][1], 
 					buffervertices[4][0], buffervertices[4][1]);

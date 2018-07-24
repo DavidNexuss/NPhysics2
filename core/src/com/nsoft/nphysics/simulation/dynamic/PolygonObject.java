@@ -35,9 +35,12 @@ public class PolygonObject extends Actor{
 	public static float PHYSICAL_EPSILON = 0.01f;
 	PolygonDefinition def;
 	SimpleArrow gravityArrow;
+	SimpleArrow velocityArrow;
 	AxisSupport pivot;
 	ArrayList<DynamicForce> forces = new ArrayList<>();
 	boolean usePivot = false;
+	boolean reactY = false;
+	boolean reactX = false;
 	
 	float[][] vert;
 	float[][] buff;
@@ -51,6 +54,9 @@ public class PolygonObject extends Actor{
 		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
 		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / 10f);
 		gravityArrow = new SimpleArrow(center, force.add(center));
+		velocityArrow = new SimpleArrow(center, new Vector2(b.getLinearVelocity()).add(center));
+		gravityArrow.color = Color.BLUE;
+		velocityArrow.color = Color.CYAN;
 
 	}
 	
@@ -97,12 +103,25 @@ public class PolygonObject extends Actor{
 		}
 		
 		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
-		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / 10f * b.getMass());
-		gravityArrow.setStart(center);
-		gravityArrow.setEnd(force.add(center));
-		gravityArrow.updateVertexArray();
+		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass());
 		
-		gravityArrow.draw(batch, parentAlpha);
+		if(!reactY) {
+			
+			gravityArrow.setStart(center);
+			gravityArrow.setEnd(force.add(center));
+			gravityArrow.updateVertexArray();
+			
+			gravityArrow.draw(batch, parentAlpha);
+		}
+		
+		if(!(reactX && reactY)) {
+			
+			velocityArrow.setStart(center);
+			velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass())).add(center));
+			velocityArrow.updateVertexArray();
+			
+			velocityArrow.draw(batch, parentAlpha);
+		}
 	}
 	
 	public void aplyForce() {
@@ -203,7 +222,11 @@ public class PolygonObject extends Actor{
 				anchors.add(anchor);
 				SimulationStage.world.createJoint(def);
 			
-				
+				if(def.bodyB.getPosition().epsilonEquals(def.bodyA.getPosition(), PHYSICAL_EPSILON)) {
+					
+					reactX = true;
+					reactY = true;
+				}
 
 				if(pivot == null) { pivot = (AxisSupport)c; usePivot = true;}
 				else {usePivot = false;}
@@ -216,6 +239,9 @@ public class PolygonObject extends Actor{
 				Vector2 anchor = new Vector2(c.getX()/Util.UNIT, c.getY()/Util.UNIT);
 				def.initialize(b, createAnchor(anchor.x,anchor.y), anchor, new Vector2(1,0).rotate(p.getAngle()));
 				SimulationStage.world.createJoint(def);
+				
+				if(p.getAngle() == 0 || p.getAngle() == 180) reactY = true;
+				if(p.getAngle() == 90 || p.getAngle() == 270) reactX = true;
 			}
 			if (c instanceof ForceComponent) {
 				

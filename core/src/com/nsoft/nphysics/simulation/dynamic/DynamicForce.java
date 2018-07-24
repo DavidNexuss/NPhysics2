@@ -1,5 +1,6 @@
 package com.nsoft.nphysics.simulation.dynamic;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -53,6 +54,7 @@ public class DynamicForce {
 	void init(Type t) {
 		
 		arrow = new SimpleArrow(new Vector2(origin).scl(Util.UNIT), new Vector2(origin).add(force).scl(Util.UNIT));
+		arrow.color = Color.RED;
 		porigin = origin;
 		pforce = force;
 		type = t;
