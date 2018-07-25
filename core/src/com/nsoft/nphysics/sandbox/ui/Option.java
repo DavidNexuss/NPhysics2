@@ -1,13 +1,21 @@
 package com.nsoft.nphysics.sandbox.ui;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
+import com.kotcrab.vis.ui.widget.VisCheckBox;
+import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisSlider;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextField;
@@ -19,8 +27,10 @@ public class Option extends VisTable{
 
 	VisTextField textfield;
 	VisSlider slider;
-	Label l;
+	VisCheckBox checkbox; private boolean lastCheck = false;
+	private Label l;
 	Form form;
+	private boolean enable = true;
 	private boolean ready = true;
 	
 	String[] args;
@@ -31,6 +41,28 @@ public class Option extends VisTable{
 	}
 	
 	public boolean isReady() {return ready;}
+	
+	public void setEnable(boolean newEnable) {
+		
+		enable = newEnable;
+		enableComponent(textfield, newEnable);
+		enableComponent(slider, newEnable);
+		enableComponent(checkbox, newEnable);
+	}
+	
+	private void enableComponent(Actor a,boolean enable) {
+		
+		if(a == null)return;
+		if(enable) {
+			
+			a.setColor(Color.WHITE);
+			a.setTouchable(Touchable.enabled);
+		}else {
+			
+			a.setColor(Color.GRAY);
+			a.setTouchable(Touchable.disabled);
+		}
+	}
 	@Override
 	public void act(float delta) {
 		
@@ -39,19 +71,24 @@ public class Option extends VisTable{
 			if(args == null)l.setText(slider.getValue() + "");
 			else l.setText(args[(int)slider.getValue()]);
 		}
+		
+		if(checkbox != null) {
+			
+			if(lastCheck != checkbox.isChecked()) {
+				
+				lastCheck = checkbox.isChecked();
+				getForm().updateValuesFromForm();
+			}
+		}
 		super.act(delta);
 	}
 	public float getValue() {
 		
-		if(textfield != null) {
-			
-			return Float.parseFloat(textfield.getText() == "" ? "0" : textfield.getText());
-		}
+		if(textfield != null) return Float.parseFloat(textfield.getText() == "" ? "0" : textfield.getText());
 		
-		if(slider != null) {
-			
-			return slider.getValue();
-		}
+		if(slider != null) return slider.getValue();
+		
+		if(checkbox != null) return checkbox.isChecked() ? 1 : 0;
 		
 		throw new IllegalStateException();
 	}
@@ -73,7 +110,19 @@ public class Option extends VisTable{
 			slider.setValue(val);
 			return this;
 		}
+		
+		if(checkbox != null) {
+			
+			checkbox.setChecked(val == 1);
+			return this;
+		}
 		throw new IllegalStateException();
+	}
+	
+	public Cell<VisCheckBox> addCheckBoxInput(String text){
+		
+		checkbox = new VisCheckBox(text);
+		return add(checkbox);
 	}
 	public Cell<Table> addSliderInput(float min, float max,float step){
 		
@@ -143,10 +192,52 @@ public class Option extends VisTable{
 		
 		return true;
 	}
+	static GlyphLayout layout;
+	static BitmapFont current;
+	private static String capable(float dimensions,String text) {
+		
+		layout = new GlyphLayout(current, text);
+		
+		String[] parts = text.split(" ");
+		if(parts.length == 1) return parts[0];
+		
+		ArrayList<String> lines = new ArrayList<>();
+		lines.add(parts[0]);
+		int c = 0;
+		
+		for (int i = 1; i < parts.length; i++) {
+			
+			if(new GlyphLayout(current, lines.get(c) + " " + parts[i]).width > dimensions) {
+				
+				lines.add(parts[i]);
+				c++;
+			}else {
+				
+				lines.set(c, lines.get(c) + " " + parts[i]);
+			}
+		}
+		
+		String fstring = "";
+		for (String string : lines) {
+			
+			fstring += string != lines.get(lines.size() - 1) ? string + "\n" : string;
+		}
+		
+		return fstring;
+	}
 	public static Option initEmtyOption(String name) {
 		
 		Option o = new Option(name);
-		o.add(new Label(Dictionary.get(name) + ":", VisUI.getSkin())).expand().fill().uniform();
+		String label = Dictionary.get(name);
+		current = new Label("",VisUI.getSkin()).getStyle().font;
+		o.add(new Label(capable(200, label) + ":", VisUI.getSkin())).expand().fill().uniform();
+		return o;
+	}
+	
+	public static Option createCheckBoxOption(String name) {
+		
+		Option o = initEmtyOption(name);
+		o.addCheckBoxInput("").expand().fill().uniform();
 		return o;
 	}
 	public static Option createOptionNumber(String name) {

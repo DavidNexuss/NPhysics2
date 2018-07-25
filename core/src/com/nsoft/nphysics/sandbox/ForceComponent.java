@@ -58,7 +58,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		arrow.setColor(Color.BLACK);
 		addActor(arrow);
 		
-		getForm().setSize(400, 450);
+		getForm().setSize(450, 500);
 		getForm().addSeparator();
 		getForm().addText("force", Dictionary.get("force"));
 		getForm().addOption(Option.createOptionNumber("forcex"));
@@ -67,10 +67,10 @@ public class ForceComponent extends ObjectChildren implements Form{
 		getForm().addOption(Option.createOptionNumber("forcemod"));
 		getForm().addOption(Option.createOptionNumber("forceangle"));
 		getForm().addSeparator();
+		getForm().addOption(Option.createCheckBoxOption("fvar"));
 		getForm().addText("ftypeset", Dictionary.get("ftypeset"));
 		getForm().addOption(Option.createOptionTypeSlider("ftype", Dictionary.get("fworld"),Dictionary.get("ftrelative"),Dictionary.get("frelative")));
 		
-
 		label = new Label("F", VisUI.getSkin());
 		label.setStyle(new LabelStyle(label.getStyle()));
 		label.getStyle().fontColor.set(1, 0, 0, 1);

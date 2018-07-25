@@ -69,6 +69,11 @@ ftype:{
 	ESP: "Tipo de vector"
 	CAT: "Tipus de vector"
 }
+fvar:{
+	ENG: "Set this force as an unknown"
+	ESP: "Establece esta fuerza como una incógnita"
+	CAT: "Estableix aquesta força com una incògnita"
+}
 fworld:{
 	ENG: "World"
 	ESP: "Mundial"
@@ -87,7 +92,7 @@ frelative:{
 torque:{
 	ENG: "Maximum torque (N-m)"
 	ESP: "Máximo momento (N-m)"
-	CAT: "Máxim parell (N-m)"
+	CAT: "Màxim parell (N-m)"
 }
 mspeed:{
 	ENG: "Motor speed (rad/s)"
