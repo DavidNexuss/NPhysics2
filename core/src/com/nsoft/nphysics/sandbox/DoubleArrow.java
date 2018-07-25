@@ -26,9 +26,13 @@ public class DoubleArrow extends Actor implements VertexBuffer,Showable {
 		
 		update();
 		setAlpha(0);
-		show();
+		setVisible(false);
 	}
-	
+	public void setPositionA(Position A) {setPositionA(A, true);}
+	public void setPositionB(Position B) {setPositionA(B, true);}
+	public void setPosition(Position A,Position B) {setPositionA(A,false); setPositionB(B,false); update();}
+	public void setPositionA(Position A,boolean update) {this.A = A; if(update)update();}
+	public void setPositionB(Position B,boolean update) {this.B = B; if(update)update();}
 	//----------------UPDATE-------------------
 	
 	public void update() {
@@ -93,11 +97,11 @@ public class DoubleArrow extends Actor implements VertexBuffer,Showable {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		if(getAlpha() != 1 || getAlpha() != 0) {
+		
 			
-			modulus = getModulus()*getAlpha();
-			update();
-		}
+		modulus = getModulus()*getAlpha();
+		update();
+		
 		NPhysics.currentStage.shapefill.setColor(Color.BLACK);
 		NPhysics.currentStage.shapefill.triangle(bufferVertices[0][0], bufferVertices[0][1], 
 								   bufferVertices[1][0], bufferVertices[1][1], 

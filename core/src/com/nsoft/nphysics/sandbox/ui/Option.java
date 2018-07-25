@@ -12,6 +12,7 @@ import com.kotcrab.vis.ui.widget.VisSlider;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextField;
 import com.kotcrab.vis.ui.widget.VisTextField.TextFieldListener;
+import com.nsoft.nphysics.Dictionary;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 
 public class Option extends VisTable{
@@ -142,29 +143,29 @@ public class Option extends VisTable{
 		
 		return true;
 	}
-	public static Option initEmtyOption(String name,String definition) {
+	public static Option initEmtyOption(String name) {
 		
 		Option o = new Option(name);
-		o.add(new Label(definition + ":", VisUI.getSkin())).expand().fill().uniform();
+		o.add(new Label(Dictionary.get(name) + ":", VisUI.getSkin())).expand().fill().uniform();
 		return o;
 	}
-	public static Option createOptionNumber(String name,String definition) {
+	public static Option createOptionNumber(String name) {
 		
-		Option o = initEmtyOption(name,definition);
+		Option o = initEmtyOption(name);
 		o.addNumberInput().expand().fill().uniform();
 		return o;
 	}
 	
-	public static Option createOptionSlider(String name,String definition,float min,float max,float step) {
+	public static Option createOptionSlider(String name,float min,float max,float step) {
 		
-		Option o = initEmtyOption(name,definition);
+		Option o = initEmtyOption(name);
 		o.addSliderInput(min, max, step).expand().fill().uniform();
 		return o;
 	}
 	
-	public static Option createOptionTypeSlider(String name,String definition,String ... args) {
+	public static Option createOptionTypeSlider(String name,String ... args) {
 		
-		Option o = initEmtyOption(name, definition);
+		Option o = initEmtyOption(name);
 		o.addSliderTypeInput(args).expand().fill().uniform();
 		return o;
 	}

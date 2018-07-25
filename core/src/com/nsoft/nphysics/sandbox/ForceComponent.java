@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.Draggable.DragAdapter;
+import com.nsoft.nphysics.Dictionary;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
@@ -41,7 +42,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		super(parent);
 
 		addInput();
-		initBasicForm("ConfigureForceVector");
+		initBasicForm("Wforce");
 		setPosition(start.x, start.y);
 		setDrag(false);
 		ClickIn pointer = this;
@@ -59,15 +60,15 @@ public class ForceComponent extends ObjectChildren implements Form{
 		
 		getForm().setSize(400, 450);
 		getForm().addSeparator();
-		getForm().addText("force", "Set force vector");
-		getForm().addOption(Option.createOptionNumber("forcex", "Force in x"));
-		getForm().addOption(Option.createOptionNumber("forcey", "Force in y"));
+		getForm().addText("force", Dictionary.get("force"));
+		getForm().addOption(Option.createOptionNumber("forcex"));
+		getForm().addOption(Option.createOptionNumber("forcey"));
 		getForm().addSeparator();
-		getForm().addOption(Option.createOptionNumber("forcemod", "Force modulus"));
-		getForm().addOption(Option.createOptionNumber("forceangle", "Force angle"));
+		getForm().addOption(Option.createOptionNumber("forcemod"));
+		getForm().addOption(Option.createOptionNumber("forceangle"));
 		getForm().addSeparator();
-		getForm().addText("type", "Set force vector type");
-		getForm().addOption(Option.createOptionTypeSlider("type", "Vector type", "World","Translation relative","Relative"));
+		getForm().addText("ftypeset", Dictionary.get("ftypeset"));
+		getForm().addOption(Option.createOptionTypeSlider("ftype", Dictionary.get("fworld"),Dictionary.get("ftrelative"),Dictionary.get("frelative")));
 		
 
 		label = new Label("F", VisUI.getSkin());
@@ -131,7 +132,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		float forcex = getForm().getOption("forcex").getValue() * Util.UNIT /SimulationStage.ForceMultiplier;
 		float forcey = getForm().getOption("forcey").getValue() * Util.UNIT /SimulationStage.ForceMultiplier;
 		
-		int a = (int) getForm().getOption("type").getValue();
+		int a = (int) getForm().getOption("ftype").getValue();
 		
 		if(a == 0) type = Type.WORLD; else
 		if(a == 1) type = Type.TRANS; else

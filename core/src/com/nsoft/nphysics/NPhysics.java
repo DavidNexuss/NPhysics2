@@ -38,6 +38,7 @@ public class NPhysics extends ApplicationAdapter {
 	public void create () {
 		current = this;
 		
+		Dictionary.init();
 		UILoader.loadUI();
 		ui = new UIStage();
 		GridStage.initGridShader();

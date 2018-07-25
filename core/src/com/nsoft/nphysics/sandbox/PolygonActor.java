@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.nsoft.nphysics.DragStage;
@@ -26,7 +27,7 @@ import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 
 import earcut4j.Earcut;
 
-public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler,Removeable,Draggable{
+public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler,Removeable,Draggable{
 
 	public static ArrayList<PolygonActor> polygonlist = new ArrayList<>();
 	private Point initial;
@@ -42,6 +43,11 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 	private Polygon hitboxPolygon;
 	
 	public SelectHandle handler = new SelectHandle();  
+	
+	private DoubleArrow xaxis;
+	private DoubleArrow yaxis;
+	private static float axisMargin = 20;
+	
 	@Override public SelectHandle getSelectHandleInstance() { return handler; }
 	
 	public static PolygonActor temp;
@@ -70,6 +76,8 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		
 		current = shape;
 		UIStage.contextMenu.hide();
+	//	xaxis.hide();
+	//	yaxis.hide();
 		
 	}
 	@Override
@@ -77,6 +85,8 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		
 		current = mightSelected;
 		UIStage.contextMenu.show();
+	//	xaxis.show();
+	//	yaxis.show();
 	}
 	
 	@Override
@@ -169,6 +179,8 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		
 		Util.renderPolygon(NPhysics.currentStage.shapefill, points, indexes);
 		
+		super.draw(batch, parentAlpha);
+		
 	}
 	public PolygonActor addPoint(Point p){
 		
@@ -250,6 +262,8 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		
 		calculaeBounds();
 		hitboxPolygon.setVertices(definition.getRawVertices());
+		xaxis.setPosition(new PositionVector(X,Y - axisMargin), new PositionVector(width,Y - axisMargin));
+		yaxis.setPosition(new PositionVector(X - axisMargin,Y), new PositionVector(X - axisMargin,height));
 	}
 	private void createDefinition() {
 		
@@ -286,6 +300,11 @@ public class PolygonActor extends Actor implements Parent<Point>,ClickIn,Handler
 		createDefinition();
 		createHitBox();
 		
+		xaxis = new DoubleArrow(new PositionVector(X,Y - axisMargin), new PositionVector(width,Y - axisMargin));
+		yaxis = new DoubleArrow(new PositionVector(X - axisMargin,Y), new PositionVector(X - axisMargin,height));
+		
+		addActor(xaxis);
+		addActor(yaxis);
 	}
 
 	@Override

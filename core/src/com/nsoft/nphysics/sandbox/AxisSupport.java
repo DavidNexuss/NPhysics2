@@ -32,15 +32,15 @@ public class AxisSupport extends ObjectChildren implements Form{
 	public AxisSupport(PolygonActor parent) {
 		
 		super(parent);
-		initBasicForm("Configure Axis Support");
+		initBasicForm("Waxis");
 		getForm().setSize(400, 300);
 		setSize(32, 32);
 		addInput();
 		b = new SpriteBatch();
 
 		getForm().addSeparator();
-		getForm().addOption(Option.createOptionNumber("torque","Maximum torque (N-m)"));
-		getForm().addOption(Option.createOptionNumber("speed","Motor speed (rad/s)"));
+		getForm().addOption(Option.createOptionNumber("torque"));
+		getForm().addOption(Option.createOptionNumber("mspeed"));
 
 		
 	}
@@ -85,7 +85,7 @@ public class AxisSupport extends ObjectChildren implements Form{
 		
 		super.updateValuesFromForm();
 		torque = getForm().getOption("torque").getValue();
-		speed = getForm().getOption("speed").getValue();
+		speed = getForm().getOption("mspeed").getValue();
 	}
 	
 }

@@ -1,0 +1,82 @@
+{
+Wforce:{
+	ENG: "Configure force vector"
+	ESP: "Configurar vector de fuerza"
+}
+Waxis:{
+	ENG: "Configure axis support"
+	ESP: "Configurar soporte de eje"
+}
+Wprismatic:{
+	ENG: "Configure prismatic support"
+	ESP: "Configurar soporte prismático"
+}
+closewindow:{
+	ENG: "Close"
+	ESP: "Cerrar"
+}
+origin:{
+	ENG: "Set origin vector"
+	ESP: "Establecer vector origen"
+}
+originx:{
+	ENG: "Origin in x"
+	ESP: "Origen en x"
+}
+originy: {
+	ENG: "Origin in y"
+	ESP: "Origen en y"
+}
+force:{
+	ENG: "Set force vector"
+	ESP: "Establecer vector de fuerza"
+}
+forcex:{
+	ENG: "Force in x"
+	ESP: "Fuerza en x"
+}
+forcey:{
+	ENG: "Force in y"
+	ESP: "Fuerza en y"
+}
+forcemod:{
+	ENG: "Force modulus"
+	ESP: "Módulo de la fuerza"
+}
+forceangle:{
+	ENG: "Force angle"
+	ESP: "Ángulo de la fuerza"
+}
+ftypeset:{
+	ENG: "Set vector force type"
+	ESP: "Establece el tipo de vector de fuerza"
+}
+ftype:{
+	ENG: "Vector type"
+	ESP: "Tipo de vector"
+}
+fworld:{
+	ENG: "World"
+	ESP: "Mundial"
+}
+ftrelative:{
+	ENG: "Translation relative"
+	ESP: "Relativa en translación"
+}
+frelative:{
+	ENG: "Relative"
+	ESP: "Relativa"
+}
+torque:{
+	ENG: "Maximum torque (N-m)"
+	ESP: "Máximo momento (N-m)"
+}
+mspeed:{
+	ENG: "Motor speed (rad/s)"
+	ESP: "Velocidad del motor (rad/s)"
+}
+pangle:{
+	ENG: "Prismatic angle"
+	ESP: "Ángulo prismático"
+}
+}

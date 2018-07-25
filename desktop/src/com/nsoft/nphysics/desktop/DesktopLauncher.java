@@ -4,6 +4,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.ThreadCase;
+import com.nsoft.nphysics.sandbox.PrismaticComponent;
 
 import java.awt.Toolkit;
 
@@ -14,16 +15,24 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class DesktopLauncher {
+	
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.useGL30 = true;
 		config.vSyncEnabled = true;
 		config.foregroundFPS = 60;
-		
-		config.width = Toolkit.getDefaultToolkit().getScreenSize().width;
-		config.height = Toolkit.getDefaultToolkit().getScreenSize().height;
-		config.fullscreen = true;
-		config.samples = 4;
+
+		if(arg.length != 0 && arg[0].equals("window")) {
+
+			config.width = 1280;
+			config.height = 720;
+			config.samples = 4;
+		}else {
+			
+			config.width = Toolkit.getDefaultToolkit().getScreenSize().width;
+			config.height = Toolkit.getDefaultToolkit().getScreenSize().height;
+			config.fullscreen = true;
+		}
 		
 		new LwjglApplication(new NPhysics((task,delay)->{
 			
@@ -41,6 +50,6 @@ public class DesktopLauncher {
 					}
 				}
 			}).start();
-		},true) ,config);
+		},true) ,config);	
 	}
 }

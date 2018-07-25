@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import com.nsoft.nphysics.Dictionary;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PolygonActor;
@@ -32,11 +33,11 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	
 	public void initBasicForm(String windowName) {
 		
-		form = DynamicWindow.createDefaultWindowStructure(windowName, 400, 400);
+		form = DynamicWindow.createDefaultWindowStructure(Dictionary.get(windowName), 400, 400);
 		form.setAsForm(this);
-		form.addText("origin", "Set origin vector");
-		form.addOption(Option.createOptionNumber("originx", "Origin in x").setValue(getX() / Util.UNIT));
-		form.addOption(Option.createOptionNumber("originy", "Origin in y").setValue(getY() / Util.UNIT));
+		form.addText("origin", Dictionary.get("origin"));
+		form.addOption(Option.createOptionNumber("originx").setValue(getX() / Util.UNIT));
+		form.addOption(Option.createOptionNumber("originy").setValue(getY() / Util.UNIT));
 		form.setAsForm(this);
 		form.setVisible(false);
 		
@@ -87,6 +88,12 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 					moveBy(x - getWidth() / 2, y - getHeight() / 2);
 				}
 		    	
+		    }
+		    
+		    @Override
+		    public void dragStart(InputEvent event, float x, float y, int pointer) {
+		    	
+		    	if(!getPolygon().isSelected())getPolygon().getHandler().setSelected(getPolygon());
 		    }
 		});
 	}

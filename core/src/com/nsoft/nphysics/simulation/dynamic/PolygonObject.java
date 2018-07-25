@@ -238,6 +238,7 @@ public class PolygonObject extends Actor{
 				PrismaticJointDef def = new PrismaticJointDef();
 				Vector2 anchor = new Vector2(c.getX()/Util.UNIT, c.getY()/Util.UNIT);
 				def.initialize(b, createAnchor(anchor.x,anchor.y), anchor, new Vector2(1,0).rotate(p.getAngle()));
+				def.enableMotor = true;
 				SimulationStage.world.createJoint(def);
 				
 				if(p.getAngle() == 0 || p.getAngle() == 180) reactY = true;

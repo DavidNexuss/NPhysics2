@@ -27,15 +27,15 @@ public class PrismaticComponent extends ObjectChildren{
 	public PrismaticComponent(PolygonActor parent) {
 		
 		super(parent);
-		initBasicForm("Configure Axis Support");
+		initBasicForm("Wprismatic");
 		getForm().setSize(400, 300);
 		setSize(32, 32);
 		addInput();
 		b = new SpriteBatch();
 
 		getForm().addSeparator();
-		getForm().addOption(Option.createOptionNumber("angle","Prismatic angle"));
-		getForm().getOption("angle").setValue(angle);
+		getForm().addOption(Option.createOptionNumber("pangle"));
+		getForm().getOption("pangle").setValue(angle);
 	}
 
 	@Override
@@ -86,6 +86,6 @@ public class PrismaticComponent extends ObjectChildren{
 	@Override
 	public void updateValuesFromForm() {
 		super.updateValuesFromForm();
-		angle = getForm().getOption("angle").getValue();
+		angle = getForm().getOption("pangle").getValue();
 	}
 }
