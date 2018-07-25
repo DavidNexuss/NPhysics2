@@ -2,81 +2,101 @@
 Wforce:{
 	ENG: "Configure force vector"
 	ESP: "Configurar vector de fuerza"
+	CAT: "Configurar el vector de força"
 }
 Waxis:{
 	ENG: "Configure axis support"
 	ESP: "Configurar soporte de eje"
+	CAT: "Configurar soport de eix"
 }
 Wprismatic:{
 	ENG: "Configure prismatic support"
 	ESP: "Configurar soporte prismático"
+	CAT: "Configurar soport prismàtic"
 }
 closewindow:{
 	ENG: "Close"
 	ESP: "Cerrar"
+	CAT: "Tancar"
 }
 origin:{
 	ENG: "Set origin vector"
 	ESP: "Establecer vector origen"
+	CAT: "Establir vector origen"
 }
 originx:{
 	ENG: "Origin in x"
 	ESP: "Origen en x"
+	CAT: "Origen en x"
 }
 originy: {
 	ENG: "Origin in y"
 	ESP: "Origen en y"
+	CAT: "Origen en y"
 }
 force:{
 	ENG: "Set force vector"
 	ESP: "Establecer vector de fuerza"
+	CAT: "Estableix vector de força"
 }
 forcex:{
 	ENG: "Force in x"
 	ESP: "Fuerza en x"
+	CAT: "Força en x"
 }
 forcey:{
 	ENG: "Force in y"
 	ESP: "Fuerza en y"
+	CAT: "Força en y"
 }
 forcemod:{
 	ENG: "Force modulus"
 	ESP: "Módulo de la fuerza"
+	CAT: "Módul de la força"
 }
 forceangle:{
 	ENG: "Force angle"
-	ESP: "Ángulo de la fuerza"
+	ESP: "Angulo de la fuerza"
+	CAT: "Angle de la força"
 }
 ftypeset:{
 	ENG: "Set vector force type"
 	ESP: "Establece el tipo de vector de fuerza"
+	CAT: "Estableix el tipus de vector de força"
 }
 ftype:{
 	ENG: "Vector type"
 	ESP: "Tipo de vector"
+	CAT: "Tipus de vector"
 }
 fworld:{
 	ENG: "World"
 	ESP: "Mundial"
+	CAT: "Mundial"
 }
 ftrelative:{
 	ENG: "Translation relative"
 	ESP: "Relativa en translación"
+	CAT: "Relativa en translació"
 }
 frelative:{
 	ENG: "Relative"
 	ESP: "Relativa"
+	CAT: "Relativa"
 }
 torque:{
 	ENG: "Maximum torque (N-m)"
 	ESP: "Máximo momento (N-m)"
+	CAT: "Máxim parell (N-m)"
 }
 mspeed:{
 	ENG: "Motor speed (rad/s)"
 	ESP: "Velocidad del motor (rad/s)"
+	CAT: "Velocitat del motor (rad/s)"
 }
 pangle:{
 	ENG: "Prismatic angle"
-	ESP: "Ángulo prismático"
+	ESP: "Angulo prismático"
+	CAT: "Angle prismàtic"
 }
 }

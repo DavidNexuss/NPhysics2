@@ -11,8 +11,8 @@ import com.badlogic.gdx.utils.Json.Serializable;
 
 public class Dictionary implements Serializable{
 
-	public static enum Languages{ESP,ENG}
-	private static Languages currentLanguage = Languages.ENG;
+	public static enum Languages{ESP,ENG,CAT}
+	private static Languages currentLanguage = Languages.CAT;
 	private static String languagepath = "dic.json";
 	private static Json json;
 	
