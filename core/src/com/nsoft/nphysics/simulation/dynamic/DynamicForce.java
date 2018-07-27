@@ -54,7 +54,7 @@ public class DynamicForce {
 	void init(Type t) {
 		
 		arrow = new SimpleArrow(new Vector2(origin).scl(Util.UNIT), new Vector2(origin).add(force).scl(Util.UNIT));
-		arrow.color = Color.RED;
+		arrow.setColor(Color.RED);
 		porigin = origin;
 		pforce = force;
 		type = t;

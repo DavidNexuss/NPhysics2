@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Draggable;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
@@ -24,6 +25,7 @@ import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
+import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 import earcut4j.Earcut;
 
@@ -44,6 +46,8 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	
 	public SelectHandle handler = new SelectHandle();  
 	
+	private Vector2 polygonMassCenter = new Vector2();
+	private SimpleArrow gravityArrow;
 	private DoubleArrow xaxis;
 	private DoubleArrow yaxis;
 	private static float axisMargin = 20;
@@ -54,7 +58,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 
 	public PolygonActor() {
 		
-		setDebug(true);
+		setDebug(true, true);
 		addInput();
 		addDragListener();
 		definition = new PolygonDefinition();
@@ -154,7 +158,10 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 				
 				p.setPosition(DragStage.snapGrid(p.originx + sumx),DragStage.snapGrid(p.originy + sumy));
 				
-			}else p.moveBy(v2.x, v2.y);
+			}else {
+				p.moveBy(v2.x, v2.y);
+				updatePosition(0, 0, null);
+			}
 			
 		}
 		
@@ -178,6 +185,9 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		NPhysics.currentStage.shapefill.setColor(isLastSelected() ? shapeSelected : current);
 		
 		Util.renderPolygon(NPhysics.currentStage.shapefill, points, indexes);
+		
+		NPhysics.currentStage.shapefill.setColor(Color.GRAY);
+		NPhysics.currentStage.shapefill.circle(polygonMassCenter.x, polygonMassCenter.y, 5);
 		
 		super.draw(batch, parentAlpha);
 		
@@ -278,6 +288,27 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		definition.init();
 		definition.childrens = components;
+		
+		polygonMassCenter.set(definition.getCenter(false));
+		
+		
+	}
+	
+	private void createArrow() {
+		
+		if(gravityArrow == null) {
+			
+			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
+			gravityArrow = new SimpleArrow(start, new Vector2(start).add(0,hitboxPolygon.area() * Util.UNIT * -9.8f / SimulationStage.ForceMultiplier / (30*30)));
+			addActor(gravityArrow);
+			gravityArrow.setColor(Color.BLUE);
+		}else {
+			
+			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
+			gravityArrow.setStart(start);
+			gravityArrow.setEnd(new Vector2(start).add(0,hitboxPolygon.area() * Util.UNIT * -9.8f / SimulationStage.ForceMultiplier / (30*30)));
+			gravityArrow.updateVertexArray();
+		}
 	}
 	public void end() {
 		
@@ -297,9 +328,10 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		polygonlist.add(this);
 
+
 		createDefinition();
 		createHitBox();
-		
+		createArrow();
 		xaxis = new DoubleArrow(new PositionVector(X,Y - axisMargin), new PositionVector(width,Y - axisMargin));
 		yaxis = new DoubleArrow(new PositionVector(X - axisMargin,Y), new PositionVector(X - axisMargin,height));
 		
@@ -312,8 +344,10 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		if(!isEnded())return;
 		triangulate();
+
 		createDefinition();
 		calculateHitBox();
+		createArrow();
 	}
 
 	@Override
@@ -346,4 +380,6 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		}
 		return super.remove();
 	}
+	
+	public Vector2 getPosition() {return new Vector2(getX(), getY());}
 }

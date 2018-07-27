@@ -55,8 +55,8 @@ public class PolygonObject extends Actor{
 		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / 10f);
 		gravityArrow = new SimpleArrow(center, force.add(center));
 		velocityArrow = new SimpleArrow(center, new Vector2(b.getLinearVelocity()).add(center));
-		gravityArrow.color = Color.BLUE;
-		velocityArrow.color = Color.CYAN;
+		gravityArrow.setColor(Color.BLUE);
+		velocityArrow.setColor(Color.CYAN);
 
 	}
 	
