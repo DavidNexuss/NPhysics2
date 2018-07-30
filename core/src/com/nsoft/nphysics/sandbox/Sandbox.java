@@ -40,7 +40,6 @@ import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
-import com.vividsolutions.jts.index.bintree.Key;
 public class Sandbox extends GridStage implements Handler{
 	
 	public static SelectHandle mainSelect = new SelectHandle();
