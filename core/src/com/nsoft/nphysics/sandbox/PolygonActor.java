@@ -201,7 +201,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		if(hookRotation && useAxis) {
 			
 			NPhysics.currentStage.shapefill.setColor(arcColor);
-			NPhysics.currentStage.shapefill.arc(NPhysics.currentStage.getAxisPosition().getX(), NPhysics.currentStage.getAxisPosition().getY(), 100, 0, (line.getDiff().angleRad() - angle)*MathUtils.radDeg);
+			NPhysics.currentStage.shapefill.arc(NPhysics.currentStage.getAxisPosition().getX(), NPhysics.currentStage.getAxisPosition().getY(), 100, 0, (line.getDiff().angleRad())*MathUtils.radDeg);
 			
 		}
 		super.draw(batch, parentAlpha);
@@ -388,7 +388,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		if(hookRotation) {
 			
-			rotateVertices(tempCenter, line.getDiff().angleRad() - angle);
+			rotateVertices(tempCenter, Math.round((line.getDiff().angleRad() - angle)* MathUtils.radDeg / 5)*5  * MathUtils.degRad);
 			if(!isSelected()) hookRotation(false,useAxis);
 		}
 		super.act(delta);
