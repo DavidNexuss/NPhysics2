@@ -31,6 +31,7 @@ import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
+import com.nsoft.nphysics.sandbox.drawables.DiscontLine;
 import com.nsoft.nphysics.sandbox.drawables.SimpleAxis;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
@@ -75,6 +76,10 @@ public class Sandbox extends GridStage implements Handler{
 		axis.show();
 		setAxisPosition(axis.getCenter());
 		addActor(axis);
+		
+		DiscontLine l = new DiscontLine(new Vector2(300,300), new Vector2(300,300));
+		l.hook(true);
+		addActor(l);
 		
 	}
 	
