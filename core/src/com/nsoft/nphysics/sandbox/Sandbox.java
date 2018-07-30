@@ -40,6 +40,7 @@ import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
+import com.vividsolutions.jts.index.bintree.Key;
 public class Sandbox extends GridStage implements Handler{
 	
 	public static SelectHandle mainSelect = new SelectHandle();
@@ -76,10 +77,6 @@ public class Sandbox extends GridStage implements Handler{
 		axis.show();
 		setAxisPosition(axis.getCenter());
 		addActor(axis);
-		
-		DiscontLine l = new DiscontLine(new Vector2(300,300), new Vector2(300,300));
-		l.hook(true);
-		addActor(l);
 		
 	}
 	
@@ -312,11 +309,27 @@ public class Sandbox extends GridStage implements Handler{
 				}
 			}
 			return true;
+		case Keys.R:
+			
+			actrotate(false);
+			return true;
+		case Keys.S:
+			actrotate(true);
+			return true;
 		default:
 			return super.keyDown(keyCode);
 		}
 	}
 	
+	private void actrotate(boolean useAxis) {
+		
+		setSnapping(false);
+		if(mainSelect.getLastSelected() instanceof PolygonActor) {
+			
+			PolygonActor a = (PolygonActor)mainSelect.getLastSelected();
+			a.hookRotation(!a.hookRotation,useAxis);
+		}
+	}
 	@Override
 	public boolean keyUp(int keyCode) {
 		

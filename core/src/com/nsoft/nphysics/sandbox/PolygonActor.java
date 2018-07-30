@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.drawables.DiscontLine;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Draggable;
@@ -50,6 +51,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	private SimpleArrow gravityArrow;
 	private DoubleArrow xaxis;
 	private DoubleArrow yaxis;
+	private DiscontLine line;
 	private static float axisMargin = 20;
 	
 	@Override public SelectHandle getSelectHandleInstance() { return handler; }
@@ -62,6 +64,9 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		addInput();
 		addDragListener();
 		definition = new PolygonDefinition();
+		line = new DiscontLine(new Vector2(), new Vector2());
+		line.setVisible(false);
+		addActor(line);
 	}
 	
 	public PolygonDefinition getDefinition() {return definition;}
@@ -339,6 +344,56 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		addActor(yaxis);
 	}
 
+	boolean hookRotation;
+	private float angle;
+	private boolean useAxis;
+	public void hookRotation(boolean hook,boolean useAxisAsPivot) {
+		
+		if(!isEnded()) throw new IllegalStateException("");
+		hookRotation = hook;
+		if(hookRotation) {
+			tempCenter.set(useAxisAsPivot ? NPhysics.currentStage.getAxisPosition().getVector() : definition.getCenter(false));
+			line.setPositionA(new Vector2(tempCenter).sub(getPosition()));
+			line.hook(hookRotation);
+			line.setOffset(getPosition());
+			line.setVisible(true);
+			
+			for (Point p : points) {
+				
+				p.initial = new Vector2(p.getVector());
+			}
+			
+			line.act(Gdx.graphics.getDeltaTime());
+		}else {
+			
+			line.setVisible(false);
+			angle = line.getDiff().angleRad();
+		}
+	}
+	
+	Vector2 tempCenter = new Vector2();
+	@Override
+	public void act(float delta) {
+		
+		if(hookRotation) {
+			
+			rotateVertices(tempCenter, line.getDiff().angleRad() - angle);
+			if(!isSelected()) hookRotation(false,useAxis);
+		}
+		super.act(delta);
+	}
+	public void rotateVertices(Vector2 pivot,float angleRad){
+		
+		for (Point p : points) {
+			
+			Vector2 pos = p.initial;
+			Vector2 npos = Util.rotPivot(pivot, pos, angleRad);
+			p.setPosition(npos.x, npos.y,false);
+		}
+		
+		updatePosition();
+	}
+	
 	@Override
 	public void updatePosition(float x, float y, Point p) {
 		
@@ -348,6 +403,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		createDefinition();
 		calculateHitBox();
 		createArrow();
+		if(p != null) angle = 0 ;
 	}
 
 	@Override

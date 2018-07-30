@@ -40,6 +40,8 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	
 	float originx,originy; //USED IN POLYGONACTOR DRAG ONLY
 	
+	public Vector2 initial;
+	
 	public Point(float x,float y,boolean isTemp) {
 		
 		setX(x);
@@ -80,7 +82,8 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	@Override public void setY(float y) { super.setY(y - INPUT_RADIUS/2f); updatePosition();}
 	@Override public float getX() {return super.getX() + INPUT_RADIUS/2f;}
 	@Override public float getY() {return super.getY() + INPUT_RADIUS/2f;}
-	@Override public void setPosition(float x, float y) { super.setPosition(x- INPUT_RADIUS/2f, y - INPUT_RADIUS/2f); updatePosition(); }
+	@Override public void setPosition(float x,float y) { setPosition(x, y, true);}
+	public void setPosition(float x, float y,boolean update) { super.setPosition(x- INPUT_RADIUS/2f, y - INPUT_RADIUS/2f); if(update)updatePosition(); }
 	
 	//----------------------INPUT----------------------
 	

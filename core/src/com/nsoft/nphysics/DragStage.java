@@ -23,6 +23,7 @@ public abstract class DragStage extends Stage{
 
 	private boolean snapping = true;
 	
+	public float RotationRadAngle = 0;
 	public DragStage(Viewport v) {
 		
 		super(v);

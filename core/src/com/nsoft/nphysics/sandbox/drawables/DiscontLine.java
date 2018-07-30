@@ -13,6 +13,7 @@ import com.nsoft.nphysics.sandbox.interfaces.Position;
 public class DiscontLine extends Actor{
 
 	private Vector2 A,B;
+	private Vector2 Offset = new Vector2();
 	private Color color = Color.BLACK;
 	private boolean hook;
 	
@@ -23,15 +24,19 @@ public class DiscontLine extends Actor{
 	
 	public void setPositionA(Vector2 A) {this.A = A;}
 	public void setPositionB(Vector2 B) {this.B = B;}
-	
+	public void setOffset(Vector2 offset) {Offset = offset;}
 	public void hook(boolean hook) {this.hook = hook;}
 	
+	public Vector2 getDiff() {
+		
+		return new Vector2(B).sub(A);
+	}
 	@Override
 	public void act(float delta) {
 		
 		if(hook) {
 			
-			B.set(NPhysics.currentStage.getUnproject(false));
+			B.set(NPhysics.currentStage.getUnproject(false).sub(Offset));
 		}
 		super.act(delta);
 	}
