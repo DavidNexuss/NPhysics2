@@ -29,8 +29,6 @@ import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
-import com.vividsolutions.jts.math.MathUtil;
-
 import earcut4j.Earcut;
 
 public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler,Removeable,Draggable{
