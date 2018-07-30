@@ -7,15 +7,13 @@ import static com.nsoft.nphysics.simulation.dsl.Force.*;
 public class MainTest {
 
 	static DSL test;
-	public void runTest() {
+	public static void runTest() {
 		
 		Solid a = new Solid(new Vector2(20, 20));
 		
 		
-		a.extraForces.add(force(0, 0, NULL, NULL));
-		a.extraForces.add(force(pol(5, 45),0,NULL).setAngleDegrees(-90));
-		a.extraForces.add(force(pol(10, 45),0,-40));
-		
+		a.extraForces.add(force(30, 20, NULL, NULL));
+		a.extraForces.add(force(10, 20, 0, NULL));
 		test = new DSL(a);
 		test.solve();
 		

@@ -32,6 +32,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 	Type type = Type.WORLD;
 	boolean relative = false;
 	private boolean hook = false;
+	private boolean var;
 	private Label label;
 	private static LabelStyle style;
 	
@@ -126,6 +127,8 @@ public class ForceComponent extends ObjectChildren implements Form{
 	@Override
 	public void updateValuesFromForm() {
 		super.updateValuesFromForm();
+		
+		var = getForm().getOption("fvar").getValue() == 1;
 		
 		arrow.setStart(getPosition().x, getPosition().y);
 		

@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
+import com.nsoft.nphysics.simulation.dsl.MainTest;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 public class NPhysics extends ApplicationAdapter {
@@ -32,6 +33,8 @@ public class NPhysics extends ApplicationAdapter {
 		
 		NPhysics.threads = threads;
 		NPhysics.useMultiThreading = useMultiThreading; 
+
+		MainTest.runTest();
 	}
 	
 	@Override

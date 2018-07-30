@@ -84,7 +84,10 @@ public class Option extends VisTable{
 	}
 	public float getValue() {
 		
-		if(textfield != null) return Float.parseFloat(textfield.getText() == "" ? "0" : textfield.getText());
+		if(textfield != null) {
+			
+			return isNull(textfield.getText()) ? Float.MAX_VALUE : Float.parseFloat(textfield.getText() == "" ? "0" : textfield.getText());
+		}
 		
 		if(slider != null) return slider.getValue();
 		
@@ -160,6 +163,12 @@ public class Option extends VisTable{
 					getForm().updateValuesFromForm();
 				}
 				
+				if(isNull(textfield.getText())) {
+					
+					textfield.setColor(Color.YELLOW);
+					ready = true;
+					return;
+				}
 				if(!isMessageNumber()) {
 					
 					textfield.setColor(Color.RED);
@@ -176,6 +185,10 @@ public class Option extends VisTable{
 
 	}
 	
+	private boolean isNull(String n) {
+		
+		return n.equals("NULL");
+	}
 	private boolean isNumber(char c) {
 		
 		return c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9' || c == '0' || c == '.'; 
