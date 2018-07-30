@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.drawables.AngleArcActor;
 import com.nsoft.nphysics.sandbox.drawables.DiscontLine;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
@@ -27,6 +29,7 @@ import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
+import com.vividsolutions.jts.math.MathUtil;
 
 import earcut4j.Earcut;
 
@@ -52,6 +55,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	private DoubleArrow xaxis;
 	private DoubleArrow yaxis;
 	private DiscontLine line;
+	private AngleArcActor arc;
 	private static float axisMargin = 20;
 	
 	@Override public SelectHandle getSelectHandleInstance() { return handler; }
@@ -180,6 +184,8 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	final static Color shape = 		   new Color(0.2f, 0.8f, 0.2f, 0.6f);
 	final static Color shapeSelected = new Color(0.8f, 0.2f, 0.2f, 0.6f);
 	final static Color mightSelected = new Color(0.8f,0.5f,0.2f,0.6f);
+	final static Color arcColor = new Color(0.5f, 0.5f, 0.9f, 0.4f);
+	
 	Color current = shape;
 	
 	@Override
@@ -194,6 +200,12 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		NPhysics.currentStage.shapefill.setColor(Color.GRAY);
 		NPhysics.currentStage.shapefill.circle(polygonMassCenter.x, polygonMassCenter.y, 5);
 		
+		if(hookRotation && useAxis) {
+			
+			NPhysics.currentStage.shapefill.setColor(arcColor);
+			NPhysics.currentStage.shapefill.arc(NPhysics.currentStage.getAxisPosition().getX(), NPhysics.currentStage.getAxisPosition().getY(), 100, 0, (line.getDiff().angleRad() - angle)*MathUtils.radDeg);
+			
+		}
 		super.draw(batch, parentAlpha);
 		
 	}
@@ -351,6 +363,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		if(!isEnded()) throw new IllegalStateException("");
 		hookRotation = hook;
+		useAxis = useAxisAsPivot;
 		if(hookRotation) {
 			tempCenter.set(useAxisAsPivot ? NPhysics.currentStage.getAxisPosition().getVector() : definition.getCenter(false));
 			line.setPositionA(new Vector2(tempCenter).sub(getPosition()));
