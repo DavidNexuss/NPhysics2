@@ -372,6 +372,8 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		polygonlist.remove(this);
 		for (Point p : points) {
+			p.setPolygonParent(null);
+			p.setSegmentParent(null);
 			p.remove();
 		}
 		
