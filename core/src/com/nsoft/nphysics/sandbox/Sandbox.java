@@ -322,12 +322,14 @@ public class Sandbox extends GridStage implements Handler{
 	
 	private void actrotate(boolean useAxis) {
 		
+		boolean snap = isSnapping();
 		setSnapping(false);
 		if(mainSelect.getLastSelected() instanceof PolygonActor) {
 			
 			PolygonActor a = (PolygonActor)mainSelect.getLastSelected();
 			a.hookRotation(!a.hookRotation,useAxis);
 		}
+		setSnapping(snap);
 	}
 	@Override
 	public boolean keyUp(int keyCode) {

@@ -25,6 +25,7 @@ public class DoubleAxisComponent extends Actor implements RawJoint{
 	Body bA,bB;
 	
 	public boolean temp;
+	
 	public DoubleAxisComponent(boolean temp) {
 		
 		this.temp = temp;

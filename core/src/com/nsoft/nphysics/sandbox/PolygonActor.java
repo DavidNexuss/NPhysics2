@@ -329,7 +329,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		for (Point point : points) {
 			
-			point.setPolygonParent(this);
+			point.setObjectParent(this);
 		}
 		
 		triangulate();
@@ -439,8 +439,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		polygonlist.remove(this);
 		for (Point p : points) {
-			p.setPolygonParent(null);
-			p.setSegmentParent(null);
+			p.setObjectParent(null);
 			p.remove();
 		}
 		

@@ -31,8 +31,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	
 	boolean isTemp;
 	
-	private Parent segmentParent;
-	private Parent polygonParent;
+	private Parent objParent;
 	
 	static int pointCounter = 0;
 	
@@ -68,13 +67,11 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		}
 	}
 
-	public Parent getPolygonParent() {return polygonParent;}
-	public boolean hasPolygonParent() { return polygonParent != null;}
-	public void setPolygonParent(Parent newParent) {polygonParent = newParent;}
-	
-	public Parent getSegmentParent() {return segmentParent;}
-	public boolean hasSegmentParent() { return segmentParent != null;}
-	public void setSegmentParent(Parent newParent) {segmentParent = newParent;}
+	public Parent getObjectParent() {return objParent;}
+	public boolean hasObjectParent() {return hasObjectParent(Parent.class);}
+	public boolean hasObjectParent(Class<?> clas) { return objParent != null && clas.isInstance(objParent);}
+	public void setObjectParent(Parent newParent) {objParent = newParent;}
+
 	
 	public boolean isTemp() {return isTemp;}
 	
@@ -98,10 +95,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	
 	public void updatePosition() {
 		
-		if(hasPolygonParent())
-			polygonParent.updatePosition(getX(), getY(), this);
-		if(hasSegmentParent())
-			segmentParent.updatePosition(getX(), getY(), this);
+		if(hasObjectParent())objParent.updatePosition(getX(),getY(),this);
 	}
 
 	@Override
@@ -140,7 +134,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		else { 
 			
 			B = this;
-			if(hasSegmentParent() && getSegmentParent().getChildList().contains(B) && getSegmentParent().getChildList().contains(A)) return;
+			if(hasObjectParent(Segment.class) && getObjectParent().getChildList().contains(B) && getObjectParent().getChildList().contains(A)) return;
 			
 			Segment seg = new Segment(A, B);
 			getStage().addActor(seg);
@@ -196,8 +190,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	@Override
 	public boolean remove() {
 		
-		if(hasPolygonParent()) return false;
-		if(hasSegmentParent()) return false;
+		if(hasObjectParent()) return false;
 		return super.remove();
 	}
 }

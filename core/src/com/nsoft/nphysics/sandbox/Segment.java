@@ -49,8 +49,8 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 		lst.set(0, A);
 		lst.set(1, B);
 		
-		A.setSegmentParent(this);
-		B.setSegmentParent(this);
+		A.setObjectParent(this);
+		B.setObjectParent(this);
 		
 		Arc = new AngleArcActor(A,this);
 		addActor(Arc);
