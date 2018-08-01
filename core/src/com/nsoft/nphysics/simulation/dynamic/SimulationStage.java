@@ -19,12 +19,14 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
 import com.nsoft.nphysics.sandbox.PolygonActor;
+import com.nsoft.nphysics.sandbox.RopeComponent;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
@@ -86,6 +88,21 @@ public class SimulationStage extends GridStage{
 				if(d.temp) continue;
 				RevoluteJointDef def = new RevoluteJointDef();
 				def.initialize(objectsMap.get(d.A).b,objectsMap.get(d.B).b, new Vector2(d.getPosition()).scl(1f/Util.UNIT));
+				world.createJoint(def);
+			}
+			
+			if(joint instanceof RopeComponent) {
+				
+				RopeComponent c = (RopeComponent)joint;
+				RopeJointDef def = new RopeJointDef();
+				def.bodyA = objectsMap.get(c.getPolygonA()).b;
+				def.bodyB = objectsMap.get(c.getPolygonB()).b;
+				
+				def.maxLength = c.getRopeVector().len() / Util.UNIT;
+				
+				def.localAnchorA.set(new Vector2(c.getAnchorA().getVector()).scl(1f/Util.UNIT).sub(def.bodyA.getPosition()));
+				def.localAnchorB.set(new Vector2(c.getAnchorB().getVector()).scl(1f/Util.UNIT).sub(def.bodyB.getPosition()));
+				
 				world.createJoint(def);
 			}
 		}

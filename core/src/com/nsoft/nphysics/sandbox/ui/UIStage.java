@@ -131,6 +131,7 @@ public class UIStage extends Stage{
 	private void setDoubleContextMenuItems() {
 		
 		doubleContextMenu.add(MenuItem.loadNewItem("axis.png", GState.CREATE_DOUBLE_AXIS));
+		doubleContextMenu.add(MenuItem.loadNewItem("segment.png", GState.CREATE_ROPE));
 	}
 	private void loadSubMenu() {
 		

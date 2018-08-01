@@ -227,6 +227,19 @@ public class Sandbox extends GridStage implements Handler{
 			
 			FastPolygonCreator.handleClick(isSnapping() ? snapGrid(screenx) : screenx, isSnapping() ? snapGrid(screeny) : screeny);
 			return true;
+		case CREATE_ROPE:
+			
+			if(RopeComponent.temp == null) {
+				
+				RopeComponent.temp = new RopeComponent();
+				RopeComponent.temp.addAnchor(Point.getPoint(screenx, screeny));
+				addActor(RopeComponent.temp);
+			}else {
+				
+				RopeComponent.temp.addAnchor(Point.getPoint(screenx, screeny));
+				RopeComponent.temp = null;
+			}
+			return true;
 		default:
 			
 			if(!super.touchDown(screenX, screenY, pointer, button)) {

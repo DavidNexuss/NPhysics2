@@ -11,18 +11,8 @@ public class FastPolygonCreator {
 		
 		if(temp == null || temp.isEnded()) create();
 		
-		Point p = new Point(x, y, false);
-		for (Point a : temp.getPointList()) {
-			
-			if(Math.abs(a.getX() - x) < Point.INPUT_RADIUS && Math.abs(a.getY() - y) < Point.INPUT_RADIUS) {
-				
-				p = a;
-				break;
-			}
-		}
-		
-		NPhysics.currentStage.addActor(p);
-		
+		Point p = Point.getPoint(x, y);
+
 		temp.addPoint(p);
 		if(temp.isEnded()) NPhysics.currentStage.addActor(temp);
 	}

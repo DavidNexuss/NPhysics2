@@ -22,6 +22,8 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	static final Color point = new Color(0.2f, 0.4f, 0.2f, 1f);
 	static final Color pointselected = new Color(0.9f, 0.8f, 0.2f, 1f);
 	static final Color tempColor = new Color(0.2f, 0.8f, 0.2f, 0.2f);
+
+	public static ArrayList<Point> allpoints = new ArrayList<>();
 	
 	public static int RADIUS = 5;
 	
@@ -41,6 +43,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	
 	public Vector2 initial;
 	
+	
 	public Point(float x,float y,boolean isTemp) {
 		
 		setX(x);
@@ -50,8 +53,33 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		addInput();
 		addDragListener();
 		pointCounter ++;
+		allpoints.add(this);
 	}
 
+	public static Point getPoint(float x,float y) {
+		
+		Point p = isThereAPoint(x, y);
+		if(p == null) {
+			
+			p = new Point(x, y, false);
+			NPhysics.currentStage.addActor(p);
+		}
+		
+		return p;
+	}
+	public static Point isThereAPoint(float x,float y) {
+		
+		for (Point a : allpoints) {
+			
+			if(Math.abs(a.getX() - x) < Point.INPUT_RADIUS && Math.abs(a.getY() - y) < Point.INPUT_RADIUS) {
+				
+				return a;
+			}
+		}
+		
+		return null;
+		
+	}
 	private Color current = point;
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
