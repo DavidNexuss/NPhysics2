@@ -314,14 +314,14 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		if(gravityArrow == null) {
 			
 			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
-			gravityArrow = new SimpleArrow(start, new Vector2(start).add(0,hitboxPolygon.area() * Util.UNIT * -9.8f / SimulationStage.ForceMultiplier / (30*30)));
+			gravityArrow = new SimpleArrow(start, new Vector2(start).add(0,-Math.abs(hitboxPolygon.area() * Util.UNIT * 9.8f / SimulationStage.ForceMultiplier / (30*30))));
 			addActor(gravityArrow);
 			gravityArrow.setColor(Color.BLUE);
 		}else {
 			
 			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
 			gravityArrow.setStart(start);
-			gravityArrow.setEnd(new Vector2(start).add(0,hitboxPolygon.area() * Util.UNIT * -9.8f / SimulationStage.ForceMultiplier / (30*30)));
+			gravityArrow.setEnd(new Vector2(start).add(0,-Math.abs(hitboxPolygon.area() * Util.UNIT * 9.8f / SimulationStage.ForceMultiplier / (30*30))));
 			gravityArrow.updateVertexArray();
 		}
 	}
