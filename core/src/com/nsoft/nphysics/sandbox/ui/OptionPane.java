@@ -17,19 +17,23 @@ import com.nsoft.nphysics.sandbox.interfaces.Showable;
 
 public class OptionPane extends VisTable implements Showable {
 
-	Color color = new Color(0.2f, 0.2f, 0.2f, 1f);
+	static final Color initial = new Color(0.4f, 0.4f, 0.4f, 1f);
+	public OptionPane() {
+		
+		setColor(initial);
+	}
 	@Override
 	public void pack() {
 		
-		generateBackground();
+		setBackground(generateBackground(this));
 		super.pack();
 	}
-	public void generateBackground() {
+	public static TextureRegionDrawable generateBackground(Table t) {
 	
-		Pixmap a = new Pixmap((int)getWidth(), (int)getHeight(), Pixmap.Format.RGB888);
-		a.setColor(color);
+		Pixmap a = new Pixmap((int)t.getWidth(), (int)t.getHeight(), Pixmap.Format.RGB888);
+		a.setColor(t.getColor());
 		a.fillRectangle(0, 0, a.getWidth(), a.getHeight());
-		setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(a))));
+		return new TextureRegionDrawable(new TextureRegion(new Texture(a)));
 	}
 	
 	@Override

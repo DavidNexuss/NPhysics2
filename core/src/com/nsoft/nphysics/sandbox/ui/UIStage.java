@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
+import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisWindow;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.UILoader;
@@ -19,6 +21,8 @@ import com.nsoft.nphysics.sandbox.Sandbox;
 public class UIStage extends Stage{
 
 	static OptionPane options;
+	static VisLabel operation;
+	static Table back;
 	public static OptionPane contextMenu;
 	public static OptionPane doubleContextMenu;
 	static ViewSelection view;
@@ -32,8 +36,28 @@ public class UIStage extends Stage{
 		FontManager.init();
 		setStateMenu();
 		loadViewMenu();
+		
+		back = new Table();
+		back.setPosition(0, 0);
+		back.setSize(Gdx.graphics.getWidth(), 40);
+		back.pad(10);
+		back.setColor(new Color(1, 1, 1, 0.7f));
+		back.setBackground(OptionPane.generateBackground(back));
+		back.pack();
+		
+		operation = new VisLabel();
+		operation.setStyle(new LabelStyle(FontManager.title, Color.WHITE));
+		operation.setColor(Color.BLACK);
+		
+		back.add(operation).fill().expand();
+		
+		addActor(back);
 	}
 	
+	public static void setOperationText(String op) {
+		
+		operation.setText(op);
+	}
 	private void loadViewMenu() {
 		
 		container = new Table(UILoader.skin);
@@ -90,7 +114,7 @@ public class UIStage extends Stage{
 		contextMenu.setPosition(40, 0);
 		contextMenu.setHeight(Gdx.graphics.getHeight() - 30);
 		contextMenu.setWidth(40);
-		contextMenu.color = new Color(0.1f, 0.1f, 0.1f, 1f);
+		contextMenu.setColor(new Color(0.2f, 0.2f, 0.2f, 1));
 		
 		setContextMenuItems();
 		contextMenu.pack();
@@ -105,7 +129,7 @@ public class UIStage extends Stage{
 		doubleContextMenu.setPosition(80, 0);
 		doubleContextMenu.setHeight(Gdx.graphics.getHeight() - 30);
 		doubleContextMenu.setWidth(40);
-		doubleContextMenu.color = new Color(0, 0, 0, 1f);
+		doubleContextMenu.setColor(Color.BLACK);
 		
 		setDoubleContextMenuItems();
 		doubleContextMenu.pack();
