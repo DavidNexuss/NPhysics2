@@ -37,16 +37,18 @@ public class RopeComponent extends Actor implements RawJoint, Parent<Point>{
 		return true;
 	}
 	public void setAnchorAPoint(Point A) {
-		if(anchorA != null) anchorA.setObjectParent(null);
+		if(anchorA != null) anchorA.removeObjectParent(this);
 		anchorA = A;
 		anchorA.setObjectParent(this);
+		System.out.println("Anchor A: " + A);
 		end();
 	}
 	
 	public void setAnchorBPoint(Point B) {
-		if(anchorB != null) anchorB.setObjectParent(null);
+		if(anchorB != null) anchorB.removeObjectParent(this);
 		anchorB = B;
 		anchorB.setObjectParent(this);
+		System.out.println("Anchor B: " + B);
 		end();
 	}
 

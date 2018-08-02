@@ -19,6 +19,10 @@ import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 public class Point extends Actor implements ClickIn, Position,Removeable, Draggable{
 
 
+	public interface ParentCall{
+		
+		public void run(Parent<Point> p);
+	}
 	static final Color point = new Color(0.2f, 0.4f, 0.2f, 1f);
 	static final Color pointselected = new Color(0.9f, 0.8f, 0.2f, 1f);
 	static final Color tempColor = new Color(0.2f, 0.8f, 0.2f, 0.2f);
@@ -33,7 +37,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	
 	boolean isTemp;
 	
-	private Parent objParent;
+	private ArrayList<Parent<Point>> objectsParent = new ArrayList<>();
 	
 	static int pointCounter = 0;
 	
@@ -95,11 +99,60 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		}
 	}
 
-	public Parent getObjectParent() {return objParent;}
+	public Parent getObjectParent() {return getObjectParent(0);}
+	public Parent getObjectParent(int index) {return objectsParent.get(index);}
+	
+	public ArrayList<Parent<Point>> getObjectParentList(Class<?> clas){
+		
+		ArrayList<Parent<Point>> parent = new ArrayList<>();
+		
+		for (Parent<Point> p : objectsParent) {
+			
+			if(clas.isInstance(p)) parent.add(p);
+		}
+		return parent;
+	}
 	public boolean hasObjectParent() {return hasObjectParent(Parent.class);}
-	public boolean hasObjectParent(Class<?> clas) { return objParent != null && clas.isInstance(objParent);}
-	public void setObjectParent(Parent newParent) {objParent = newParent;}
+	public boolean hasObjectParent(Class<?> clas) { 
+		
+		if(objectsParent.isEmpty()) return false;
+		
+		for (Parent p : objectsParent) {
+			
+			if(clas.isInstance(p)) return true;
+		}
+		
+		return false;
+	}
+	
+	public void removeObjectParent(Parent oldParent) {
+		
+		int v = -1;
+		for (int i = 0; i < objectsParent.size(); i++) {
+			if(oldParent == objectsParent.get(i)) {
+				
+				if(v != -1) throw new IllegalStateException();
+				v = i;
+				break;
+			}
+		}
+		
+		if(v != -1) objectsParent.remove(v);
+	}
+	
+	public void setObjectParent(Parent newParent) {addObjectParent(newParent);}
+	public void addObjectParent(Parent newParent) {
 
+		if(!objectsParent.contains(newParent)) objectsParent.add(newParent);
+	}
+
+	public void forEveryParent(ParentCall call) {
+		
+		for (Parent<Point> p : objectsParent) {
+			
+			call.run(p);
+		}
+	}
 	
 	public boolean isTemp() {return isTemp;}
 	
@@ -123,7 +176,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	
 	public void updatePosition() {
 		
-		if(hasObjectParent())objParent.updatePosition(getX(),getY(),this);
+		if(hasObjectParent())forEveryParent((p)->{p.updatePosition(getX(), getY(), this);});
 	}
 
 	@Override
@@ -220,5 +273,11 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		
 		if(hasObjectParent()) return false;
 		return super.remove();
+	}
+	
+	@Override
+	public String toString() {
+
+		return "Point: " + getVector().toString();
 	}
 }

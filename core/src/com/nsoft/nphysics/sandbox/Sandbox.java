@@ -2,6 +2,8 @@ package com.nsoft.nphysics.sandbox;
 
 import static com.nsoft.nphysics.sandbox.Util.*;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -36,6 +38,7 @@ import com.nsoft.nphysics.sandbox.drawables.SimpleAxis;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
+import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
@@ -232,11 +235,21 @@ public class Sandbox extends GridStage implements Handler{
 			if(RopeComponent.temp == null) {
 				
 				RopeComponent.temp = new RopeComponent();
-				RopeComponent.temp.addAnchor(Point.getPoint(screenx, screeny));
+				Point p = Point.getPoint(screenx, screeny);
+				ArrayList<Parent<Point>> parents = p.getObjectParentList(PolygonActor.class);
+				
+				if(parents.get(0) == RopeComponent.temp.getPolygonA()) RopeComponent.temp.setAnchorAPoint(p);
+				if(parents.get(0) == RopeComponent.temp.getPolygonB()) RopeComponent.temp.setAnchorBPoint(p);
+				
 				addActor(RopeComponent.temp);
 			}else {
 				
-				RopeComponent.temp.addAnchor(Point.getPoint(screenx, screeny));
+				Point p = Point.getPoint(screenx, screeny);
+				ArrayList<Parent<Point>> parents = p.getObjectParentList(PolygonActor.class);
+				
+				if(parents.get(0) == RopeComponent.temp.getPolygonA()) RopeComponent.temp.setAnchorAPoint(p);
+				if(parents.get(0) == RopeComponent.temp.getPolygonB()) RopeComponent.temp.setAnchorBPoint(p);
+				
 				RopeComponent.temp = null;
 			}
 			return true;
