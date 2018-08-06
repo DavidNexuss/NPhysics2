@@ -1,6 +1,7 @@
 package com.nsoft.nphysics.simulation.dsl;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 
 public class Util {
 
@@ -28,5 +29,13 @@ public class Util {
 			buffer[i][0] = rotx(vertices[i][0], vertices[i][1], anglerad) + xoffset;
 			buffer[i][1] = roty(vertices[i][0], vertices[i][1], anglerad) + yoffset;
 		}
+	}
+	
+	public static Force getProjectedForce(Force a,float degrees) {
+		
+		Vector2 position = a.getPositionVector().rotate(degrees);
+		Vector2 force = a.getForceVector().rotate(degrees);
+		
+		return new Force(position, force);
 	}
 }

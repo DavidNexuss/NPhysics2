@@ -1,23 +1,26 @@
 package com.nsoft.nphysics.simulation.dsl;
 
 import com.badlogic.gdx.math.Vector2;
-import static com.nsoft.nphysics.simulation.dsl.Core.*;
 
-import static com.nsoft.nphysics.simulation.dsl.Force.*;
 public class MainTest {
 
-	static DSL test;
+	public static boolean DEBUG = true;
 	public static void runTest() {
 		
-		Solid a = new Solid(new Vector2(20, 20));
+		Force a = new Force(0, 0, Force.NULL, Force.NULL);
+		Force g = new Force();
+		g.setPolarPosition(5, 60);
+		g.setForce(0, -98f);
 		
+		Force f = new Force();
+		f.setPolarPosition(10, 60);
+		f.setForce(0, Force.NULL);
 		
-		a.extraForces.add(force(30, 20, NULL, NULL));
-		a.extraForces.add(force(10, 20, 0, NULL));
-		test = new DSL(a);
-		test.solve();
-		
-		test.checkSum();
+		DSL d = new DSL();
+		d.addForce(a);
+		d.addForce(g);
+		d.addForce(f);
+		d.solve();
 		
 	}
 }
