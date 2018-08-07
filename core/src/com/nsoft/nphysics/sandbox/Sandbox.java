@@ -302,7 +302,20 @@ public class Sandbox extends GridStage implements Handler{
 	@Override
 	public boolean keyDown(int keyCode) {
 		
-		super.keyDown(keyCode);
+		if(super.keyDown(keyCode)) return true;
+		for (Actor p: getActors()) {
+			
+			if(p instanceof PolygonActor) {
+				
+				PolygonActor P = (PolygonActor)p;
+				if(P.isSelected()) {
+					if(P.keyDown(keyCode)) {
+						
+						return true;
+					}
+				}
+			}
+		}
 		switch (keyCode) {
 		case Keys.FORWARD_DEL:
 			

@@ -132,10 +132,11 @@ public abstract class DragStage extends Stage{
 		case Keys.ESCAPE:
 
 			Gdx.app.exit();
+			return true;
 		default:
-			break;
+			
+			return super.keyDown(keyCode);
+			
 		}
-		
-		return true;
 	}
 }

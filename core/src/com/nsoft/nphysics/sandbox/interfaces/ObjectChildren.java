@@ -110,7 +110,7 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 		if(!getPolygon().isSelected()) {
 			getPolygon().getHandler().setSelected(getPolygon());
 		}
-		showWindow();
+		showForm();
 	}
 
 	@Override
@@ -119,13 +119,7 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 		DynamicWindow.hideWindow(form);
 	};
 
-	private void showWindow() {
-		
-		getForm().setPosition(Gdx.graphics.getWidth() - getForm().getWidth() - 80, Gdx.graphics.getHeight() - getForm().getHeight() - 80);
-		updateValuesToForm();
-		DynamicWindow.showWindow(getForm());
-		
-	}
+	
 	@Override
 	public SelectHandle getHandler() {
 		

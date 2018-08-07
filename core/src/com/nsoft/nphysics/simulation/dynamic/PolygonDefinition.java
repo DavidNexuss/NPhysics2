@@ -13,8 +13,8 @@ public class PolygonDefinition {
 	public ArrayList<PositionVector> vertices = new ArrayList<>();
 	public ArrayList<ObjectChildren> childrens;
 	public ArrayList<Integer> indexes = new ArrayList<>();
-	public BodyType type = BodyType.DynamicBody;
 	
+	public BodyType type = BodyType.DynamicBody;
 	public float density = 1f;
 	public float friction;
 	public float restitution;

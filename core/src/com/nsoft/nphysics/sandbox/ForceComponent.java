@@ -9,6 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisLabel;
+import com.kotcrab.vis.ui.widget.VisTable;
+import com.kotcrab.vis.ui.widget.VisTextArea;
+import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.Draggable.DragAdapter;
 import com.nsoft.nphysics.Dictionary;
 import com.nsoft.nphysics.DragStage;
@@ -71,7 +74,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		getForm().addOption(Option.createCheckBoxOption("fvar"));
 		getForm().addText("ftypeset", Dictionary.get("ftypeset"));
 		getForm().addOption(Option.createOptionTypeSlider("ftype", Dictionary.get("fworld"),Dictionary.get("ftrelative"),Dictionary.get("frelative")));
-		
+	
 		label = new Label("F", VisUI.getSkin());
 		label.setStyle(new LabelStyle(label.getStyle()));
 		label.getStyle().fontColor.set(1, 0, 0, 1);
@@ -83,6 +86,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 	
 	
 	public boolean isHooking() {return hook;}
+	public boolean isVariable() {return var;}
 	public void hook() {hook = true;}
 	public void unhook() {hook = false;}
 	public void shook() {hook = !hook;}
@@ -129,6 +133,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		super.updateValuesFromForm();
 		
 		var = getForm().getOption("fvar").getValue() == 1;
+		getPolygon().updateForceVariableCount();
 		
 		arrow.setStart(getPosition().x, getPosition().y);
 		

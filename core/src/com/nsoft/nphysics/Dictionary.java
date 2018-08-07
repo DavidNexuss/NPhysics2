@@ -55,11 +55,12 @@ public class Dictionary implements Serializable{
 	
 	public static String get(String key) {
 		
-		return dictionary.keys.get(key).get();
+		return get(key, currentLanguage);
 	}
 	public static String get(String key,Languages l) {
 		
-		return dictionary.keys.get(key).get(l);
+		return dictionary.keys.containsKey(key) ? dictionary.keys.get(key).isMapped(l) ? dictionary.keys.get(key).get(l) : key + "_" + l.name()
+				: key;
 	}
 	
 	public static class LanguageEntry implements Serializable{
@@ -74,9 +75,15 @@ public class Dictionary implements Serializable{
 				keys.put(val.l, val.s);
 			}
 		}
+		
 		public String get() {
 			
 			return get(currentLanguage);
+		}
+		
+		public boolean isMapped(Languages l) {
+			
+			return keys.containsKey(l);
 		}
 		public String get(Languages l) {
 			

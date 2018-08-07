@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -11,10 +12,19 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
+import com.badlogic.gdx.utils.Align;
+import com.kotcrab.vis.ui.widget.VisLabel;
+import com.kotcrab.vis.ui.widget.VisTable;
+import com.kotcrab.vis.ui.widget.VisTextArea;
+import com.kotcrab.vis.ui.widget.VisTextButton;
+import com.nsoft.nphysics.Dictionary;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.drawables.AngleArcActor;
@@ -22,16 +32,21 @@ import com.nsoft.nphysics.sandbox.drawables.DiscontLine;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Draggable;
+import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
+import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
+import com.nsoft.nphysics.sandbox.ui.FontManager;
+import com.nsoft.nphysics.sandbox.ui.Option;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
+import com.nsoft.nphysics.simulation.dsl.Force;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 import earcut4j.Earcut;
 
-public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler,Removeable,Draggable{
+public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler,Removeable,Draggable,Form{
 
 	public static ArrayList<PolygonActor> polygonlist = new ArrayList<>();
 	private Point initial;
@@ -54,7 +69,14 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	private DoubleArrow yaxis;
 	private DiscontLine line;
 	private AngleArcActor arc;
+	
+	private DynamicWindow form;
 	private static float axisMargin = 20;
+	
+	private int forceVariableCount;
+	private String forceVariableCount_str = "0";
+	
+	private float physMass;
 	
 	@Override public SelectHandle getSelectHandleInstance() { return handler; }
 	
@@ -63,16 +85,85 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	public PolygonActor() {
 		
 		setDebug(true, true);
+		definition = new PolygonDefinition();
+		initForm();
 		addInput();
 		addDragListener();
-		definition = new PolygonDefinition();
 		line = new DiscontLine(new Vector2(), new Vector2());
 		line.setVisible(false);
 		addActor(line);
 	}
-	
+
+	public boolean keyDown(int keycode){
+		
+		if(keycode == Keys.Q) {
+			
+			if(!form.isVisible()) showForm();
+			return true;
+		}
+		
+		return false;
+	}
+
+	private void initForm() {
+		
+		form = DynamicWindow.createDefaultWindowStructure("polygon");
+		form.setSize(450, 450);
+		form.setAsForm(this);
+		form.addText("polygon_opt", Dictionary.get("polygon_opt"));
+		form.addSeparator();
+		form.addText("polygon_phys_opt", Dictionary.get("polygon_phys_opt"));
+		form.addOption(Option.createOptionTypeSlider("polygon_phys_state", Dictionary.get("phys_DYNAMIC"),Dictionary.get("phys_KINEMATIC"),Dictionary.get("phys_STATIC")));
+		
+		form.addOption(Option.createOptionNumber("polygon_phys_mass"));
+		
+		form.addOption(Option.createOptionNumber("polygon_phys_density"));
+		form.addOption(Option.createOptionNumber("polygon_phys_friction"));
+		form.addOption(Option.createOptionNumber("polygon_phys_restitution"));
+		
+		form.getOption("polygon_phys_density").setValue(definition.density);
+		form.getOption("polygon_phys_friction").setValue(definition.friction);
+		form.getOption("polygon_phys_restitution").setValue(definition.restitution);
+		
+		
+		VisTable solve_dsl = new VisTable();
+		VisLabel dsl_t = new VisLabel(Dictionary.get("dsl_unknowns"));
+		dsl_t.setStyle(new LabelStyle(FontManager.subtitle, Color.WHITE));
+		VisLabel dsl_n = new VisLabel() {
+			
+			@Override
+			public void act(float delta) {
+				
+				setText(forceVariableCount_str);
+				super.act(delta);
+			}
+		};
+		VisTextButton dsl_b= new VisTextButton(Dictionary.get("dsl_solve"));
+		
+		solve_dsl.add(dsl_t).expand().align(Align.left);
+		solve_dsl.add(dsl_n).prefWidth(50).width(50);
+		solve_dsl.add(dsl_b).fillX().expand().padLeft(15);
+		
+		solve_dsl.pad(5);
+		form.addRawTable(solve_dsl);
+		
+		form.setVisible(false);
+		NPhysics.ui.addActor(form);
+	}
 	public PolygonDefinition getDefinition() {return definition;}
 	
+	public void updateForceVariableCount() {
+		forceVariableCount = 0;
+		for (ObjectChildren f : components) {
+			
+			if(f instanceof ForceComponent) {
+				
+				forceVariableCount += ((ForceComponent) f).isVariable() ? 1 : 0;
+			}
+		}
+		
+		forceVariableCount_str = forceVariableCount + "";
+	}
 	@Override
 	public boolean isInside(float x, float y) {
 		
@@ -289,6 +380,15 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		hitboxPolygon.setVertices(definition.getRawVertices());
 		xaxis.setPosition(new PositionVector(X,Y - axisMargin), new PositionVector(width,Y - axisMargin));
 		yaxis.setPosition(new PositionVector(X - axisMargin,Y), new PositionVector(X - axisMargin,height));
+		
+		calculateMass();
+		
+	}
+	
+	private void calculateMass() {
+		
+		physMass = definition.density * hitboxPolygon.area() / (30*30);
+		form.getOption("polygon_phys_mass").setValue(physMass);
 	}
 	private void createDefinition() {
 		
@@ -305,7 +405,6 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		definition.childrens = components;
 		
 		polygonMassCenter.set(definition.getCenter(false));
-		
 		
 	}
 	
@@ -352,6 +451,9 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		addActor(xaxis);
 		addActor(yaxis);
+		
+
+		calculateMass();
 	}
 
 	boolean hookRotation;
@@ -450,4 +552,39 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	}
 	
 	public Vector2 getPosition() {return new Vector2(getX(), getY());}
+
+	@Override
+	public DynamicWindow getForm() {
+		return form;
+	}
+
+	@Override
+	public void updateValuesFromForm() {
+		
+		definition.density = form.getOption("polygon_phys_density").getValue();
+		definition.friction = form.getOption("polygon_phys_friction").getValue();
+		definition.restitution = form.getOption("polygon_phys_restitution").getValue();
+		
+		switch ((int)form.getOption("polygon_phys_state").getValue()) {
+		case 2:
+			definition.type = BodyType.StaticBody;
+			break;
+		case 1:
+			definition.type = BodyType.KinematicBody;
+			break;
+		case 0:
+			definition.type = BodyType.DynamicBody;
+			break;
+		default:
+			throw new IllegalStateException();
+		}
+		
+		calculateMass();
+	}
+
+	@Override
+	public void updateValuesToForm() {
+		
+		
+	}
 }

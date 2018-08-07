@@ -45,6 +45,13 @@ public class DynamicWindow extends VisWindow{
 	public boolean isAForm() {return form != null;}
 	public Option getOption(String name) {return options.get(name);}
 	
+	public Cell<VisTable> addRawTable(VisTable t){
+		
+		Cell<VisTable> cell = content.add(t).expand().fillX();
+		cell.row();
+		return cell;
+		
+	}
 	public Cell<Option> addOption(Option p) {
 		
 		p.setForm(form);
