@@ -15,6 +15,17 @@ import com.nsoft.nphysics.sandbox.interfaces.Position;
 public class Util {
 
 	
+	public static <T> boolean isInstance(Class<T> clas,Object p) {
+		try {
+			
+			T a = (T)p;
+			return true;
+		} catch (ClassCastException  e) {
+			
+			return false;
+		}
+	}
+	
 	public static int UNIT = 30;
 	
 	/*

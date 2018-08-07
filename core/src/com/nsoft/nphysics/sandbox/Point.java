@@ -119,11 +119,12 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		
 		for (Parent p : objectsParent) {
 			
-			if(clas.isInstance(p)) return true;
+			if(Util.isInstance(clas, p)) return true;
 		}
 		
 		return false;
 	}
+	
 	
 	public void removeObjectParent(Parent oldParent) {
 		
