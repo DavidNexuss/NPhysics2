@@ -4,11 +4,17 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Force implements Say{
 	
+	static enum Variable{
+		
+		NONE,X,Y,MOD,ANGLE;
+	}
 	public static final float NULL = Float.MAX_VALUE;
 	private Vector2 force;
 	private Vector2 position;
 	
 	private boolean knowX,knowY;
+	
+	private Variable var = Variable.NONE;
 	
 	public Force() {
 		
@@ -42,7 +48,7 @@ public class Force implements Say{
 			
 	}
 
-	public void setKnowX(boolean newKnowX) {knowY = newKnowX;}
+	public void setKnowX(boolean newKnowX) {knowX = newKnowX;}
 	public void setKnowY(boolean newKnowY) {knowY = newKnowY;}
 	
 	public boolean isXKnown() {return knowX;}
@@ -83,6 +89,10 @@ public class Force implements Say{
 		force.setLength(mod);
 		force.setAngle(degrees);
 	}
+	
+	public void setVariable(Variable nvar) {var = nvar;}
+	public Variable getVariableType() {return var;}
+	
 	public Vector2 getForceVector() {
 		
 		return new Vector2(knowX ? force.x : Float.NaN,knowY ? force.y : Float.NaN);

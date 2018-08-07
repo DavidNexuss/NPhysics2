@@ -1,6 +1,7 @@
 package com.nsoft.nphysics.simulation.dsl;
 
 import com.badlogic.gdx.math.Vector2;
+import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 
 public class MainTest {
 
@@ -15,6 +16,7 @@ public class MainTest {
 		Force f = new Force();
 		f.setPolarPosition(10, 60);
 		f.setForce(0, Force.NULL);
+		f.setVariable(Variable.Y);
 		
 		DSL d = new DSL();
 		d.addForce(a);

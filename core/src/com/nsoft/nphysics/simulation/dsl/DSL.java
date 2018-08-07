@@ -2,7 +2,9 @@ package com.nsoft.nphysics.simulation.dsl;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 
 public class DSL implements Say{
 
@@ -75,7 +77,7 @@ public class DSL implements Say{
 		}
 		say(unknown + " unknown variables, having " + unknown/2 + " unknown forces");
 		
-		if(unknown == 3 && unknownY == 2) {
+		if(unknown == 3 && (unknownY == 2 || unknownX == 2)) {
 			
 			float sum = 0;
 			
@@ -93,16 +95,31 @@ public class DSL implements Say{
 			
 			for (Force force : unknowns) {
 				
-				if(force.isXKnown() && !force.isYKnown()) u = force;
+				if(force.isXKnown() && !force.isYKnown() || !force.isXKnown() && force.isYKnown()) u = force;
 			}
 			
-			float angle = new Vector2(u.getPositionVector()).sub(lastAxis.getPositionVector()).angle();
-			Force prj = Util.getProjectedForce(u, -angle);
-			float tempy = sum / (prj.getPositionVector().x - lastAxis.getPositionVector().x);
-			prj.setForce(0, tempy);
-			prj = Util.getProjectedForce(prj, angle);
-			u.setForce(prj.getForceVector().x, prj.getForceVector().y);
-			say(u);
+				
+				float angle = new Vector2(u.getPositionVector()).sub(lastAxis.getPositionVector()).angle();
+				Force prj = Util.getProjectedForce(u, -angle);
+				float tempy = sum / (prj.getPositionVector().x - lastAxis.getPositionVector().x);
+				
+				if(u.getVariableType() == Variable.X) {
+					
+					prj.setForce((float) -(tempy / Math.tan(angle * MathUtils.degRad)), tempy);
+					
+				}else if (u.getVariableType() == Variable.Y) {
+					
+					prj.setForce((float) (tempy * Math.tan(angle * MathUtils.degRad)), tempy);
+					
+				}else throw new IllegalStateException();
+				
+				
+				
+				say(prj);
+				prj = Util.getProjectedForce(prj, angle);
+				u.setForce(prj.getForceVector().x, prj.getForceVector().y);
+				say(u);
+			
 		}
 	}
 }
