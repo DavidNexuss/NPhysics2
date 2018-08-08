@@ -30,9 +30,12 @@ public class Option extends VisTable{
 	VisCheckBox checkbox; private boolean lastCheck = false;
 	private Label l;
 	Form form;
+	
 	private boolean enable = true;
 	private boolean ready = true;
+	private boolean nullValaue = false;
 	
+	public boolean canCopy = true;
 	String[] args;
 	public Option(String name) {
 		
@@ -40,6 +43,7 @@ public class Option extends VisTable{
 		setName(name);
 	}
 	
+	public boolean isNull() {return nullValaue;}
 	public boolean isReady() {return ready;}
 	
 	public void setEnable(boolean newEnable) {
@@ -166,9 +170,11 @@ public class Option extends VisTable{
 				if(isNull(textfield.getText())) {
 					
 					textfield.setColor(Color.YELLOW);
+					nullValaue = true;
 					ready = true;
 					return;
-				}
+				}else nullValaue = false;
+				
 				if(!isMessageNumber()) {
 					
 					textfield.setColor(Color.RED);
@@ -185,6 +191,23 @@ public class Option extends VisTable{
 
 	}
 	
+	public void setNull(boolean nullv) {
+		
+		if(textfield != null) {
+			
+			if (nullv) {
+				
+				textfield.setColor(Color.YELLOW);
+				textfield.setText("NULL");
+			}else {
+				
+				textfield.setColor(Color.WHITE);
+				textfield.setText("0.0");
+			}
+		}
+		
+		nullValaue = nullv;
+	}
 	private boolean isNull(String n) {
 		
 		return n.equals("NULL");

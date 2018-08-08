@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Force implements Say{
 	
-	static enum Variable{
+	public static enum Variable{
 		
 		NONE,X,Y,MOD,ANGLE;
 	}

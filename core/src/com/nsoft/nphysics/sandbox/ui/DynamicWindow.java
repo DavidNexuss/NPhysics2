@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -16,16 +18,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.kotcrab.vis.ui.widget.VisImageButton;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisWindow;
 import com.nsoft.nphysics.Dictionary;
 import com.nsoft.nphysics.ThreadManager;
+import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 
 public class DynamicWindow extends VisWindow{
 
+	private static DynamicWindow copyBuffer;
+	
 	VisTable content;
 	HashMap<String, Option> options = new HashMap<>();
 	HashMap<String, VisLabel> texts = new HashMap<>();
@@ -42,6 +48,27 @@ public class DynamicWindow extends VisWindow{
 		form = superior;
 	}
 	
+	public void paste() {
+		
+		System.out.println("paste");
+		if(copyBuffer == null) return;
+		if(copyBuffer == this) return;
+		if(copyBuffer.form.getClass() == form.getClass()) {
+			
+			for (Entry<String, Option> option: copyBuffer.options.entrySet()) {
+				
+				if(option.getValue().canCopy)options.get(option.getKey()).setValue(option.getValue().getValue());
+			}
+			
+			form.updateValuesFromForm();
+		}else throw new IllegalStateException();
+	}
+	public void copy() {
+		
+
+		System.out.println("copy");
+		copyBuffer = this;
+	}
 	public boolean isAForm() {return form != null;}
 	public Option getOption(String name) {return options.get(name);}
 	
@@ -101,9 +128,36 @@ public class DynamicWindow extends VisWindow{
 			}
 		});
 		
-		table_text.add().expand();
-		table_text.add(text).expand().fill();
-		table_text.add().expand();
+		VisTable copypaste = new VisTable();
+		
+		VisImageButton copy = new VisImageButton(Util.getDrawable(new Texture(Gdx.files.internal("menu/copy.png"))));
+		
+		copy.addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				
+				d.copy();
+			}
+		});
+		
+		VisImageButton paste = new VisImageButton(Util.getDrawable(new Texture(Gdx.files.internal("menu/paste.png"))));
+		
+		paste.addListener(new ClickListener(){
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				
+				d.paste();
+			}
+		});
+
+		copypaste.add(copy).pad(5);
+		copypaste.add(paste).pad(5);
+		
+		table_text.add().expand().fill();
+		table_text.add(text).expand().fillX();
+		table_text.add(copypaste).expand().fill();
 		t.add(table_text).fill();
 		d.add(t).expand().fill();
 		

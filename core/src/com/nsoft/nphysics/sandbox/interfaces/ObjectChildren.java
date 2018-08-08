@@ -38,6 +38,9 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 		form.addText("origin", Dictionary.get("origin"));
 		form.addOption(Option.createOptionNumber("originx").setValue(getX() / Util.UNIT));
 		form.addOption(Option.createOptionNumber("originy").setValue(getY() / Util.UNIT));
+		
+		form.getOption("originx").canCopy = false;
+		form.getOption("originy").canCopy = false;
 		form.setAsForm(this);
 		form.setVisible(false);
 		

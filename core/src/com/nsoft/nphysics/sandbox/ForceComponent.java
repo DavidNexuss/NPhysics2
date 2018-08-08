@@ -24,6 +24,7 @@ import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
 import com.nsoft.nphysics.sandbox.ui.Option;
+import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 public class ForceComponent extends ObjectChildren implements Form{
@@ -38,6 +39,8 @@ public class ForceComponent extends ObjectChildren implements Form{
 	private boolean var;
 	private Label label;
 	private static LabelStyle style;
+	
+	private Variable variable;
 	
 	static ForceComponent temp;
 	
@@ -137,8 +140,24 @@ public class ForceComponent extends ObjectChildren implements Form{
 		
 		arrow.setStart(getPosition().x, getPosition().y);
 		
-		float forcex = getForm().getOption("forcex").getValue() * Util.UNIT /SimulationStage.ForceMultiplier;
-		float forcey = getForm().getOption("forcey").getValue() * Util.UNIT /SimulationStage.ForceMultiplier;
+		float forcex;
+		float forcey;
+		
+		variable = variable.NONE;
+		arrow.setColor(Color.BLACK);
+		if(getForm().getOption("forcex").isNull()) {
+			
+			variable = Variable.X;
+			arrow.setColor(Color.RED);
+			forcex = 50;
+		}else forcex = getForm().getOption("forcex").getValue() * Util.UNIT /SimulationStage.ForceMultiplier;
+		
+		if(getForm().getOption("forcey").isNull()) {
+			
+			variable = Variable.Y;
+			arrow.setColor(Color.RED);
+			forcey = 50;
+		}else forcey = getForm().getOption("forcey").getValue() * Util.UNIT /SimulationStage.ForceMultiplier;
 		
 		int a = (int) getForm().getOption("ftype").getValue();
 		
@@ -148,16 +167,35 @@ public class ForceComponent extends ObjectChildren implements Form{
 		arrow.setEnd(getPosition().x + forcex, getPosition().y + forcey);
 		update();
 		
+		checknullValues();
 	}
 	
 	
 	public void updateValuesToForm() {
 		
-		getForm().getOption("forcex").setValue(force.x / Util.UNIT * SimulationStage.ForceMultiplier);
-		getForm().getOption("forcey").setValue(force.y / Util.UNIT * SimulationStage.ForceMultiplier);
+		if(!getForm().getOption("forcex").isNull())getForm().getOption("forcex").setValue(force.x / Util.UNIT * SimulationStage.ForceMultiplier);
+		if(!getForm().getOption("forcey").isNull())getForm().getOption("forcey").setValue(force.y / Util.UNIT * SimulationStage.ForceMultiplier);
 		
-		getForm().getOption("forcemod").setValue(force.len() / Util.UNIT);
-		getForm().getOption("forceangle").setValue(force.angle());
+		checknullValues();
+		
+	}
+	
+	private void checknullValues() {
+		
+		if(variable == Variable.X || variable == Variable.Y) {
+			
+
+			getForm().getOption("forcemod").setEnable(false);
+			getForm().getOption("forceangle").setEnable(false);
+		}
+		else {
+		
+			getForm().getOption("forcemod").setEnable(true);
+			getForm().getOption("forceangle").setEnable(true);
+			getForm().getOption("forcemod").setValue(force.len() / Util.UNIT);
+			getForm().getOption("forceangle").setValue(force.angle());
+			
+		}
 	}
 	
 }
