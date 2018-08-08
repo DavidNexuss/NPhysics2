@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.kotcrab.vis.ui.VisUI;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 
 public class Util {
@@ -115,5 +119,41 @@ public class Util {
 	public static Drawable getDrawable(Texture t) {
 		
 		return new TextureRegionDrawable(new TextureRegion(t));
+	}
+	
+	static GlyphLayout layout;
+	static BitmapFont current = new Label("",VisUI.getSkin()).getStyle().font;
+	
+	public static BitmapFont getNormalFont() {return current;}
+	public static String capable(float dimensions,String text) {
+		
+		layout = new GlyphLayout(current, text);
+		
+		String[] parts = text.split(" ");
+		if(parts.length == 1) return parts[0];
+		
+		ArrayList<String> lines = new ArrayList<>();
+		lines.add(parts[0]);
+		int c = 0;
+		
+		for (int i = 1; i < parts.length; i++) {
+			
+			if(new GlyphLayout(current, lines.get(c) + " " + parts[i]).width > dimensions) {
+				
+				lines.add(parts[i]);
+				c++;
+			}else {
+				
+				lines.set(c, lines.get(c) + " " + parts[i]);
+			}
+		}
+		
+		String fstring = "";
+		for (String string : lines) {
+			
+			fstring += string != lines.get(lines.size() - 1) ? string + "\n" : string;
+		}
+		
+		return fstring;
 	}
 }

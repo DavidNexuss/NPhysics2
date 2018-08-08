@@ -46,6 +46,8 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 public class Sandbox extends GridStage implements Handler{
 	
 	public static SelectHandle mainSelect = new SelectHandle();
+	public static ArrayList<ForceComponent> unknownForcesList = new ArrayList<ForceComponent>();
+	
 	public static SimpleAxis axis;
 	
 	@Override 
@@ -63,6 +65,11 @@ public class Sandbox extends GridStage implements Handler{
 	
 	//------------INIT-METHODS--------------
 	
+	@Override
+	public boolean isReady() {
+		
+		return true;
+	}
 	public void init() {
 		
 		initTextures();
@@ -152,6 +159,11 @@ public class Sandbox extends GridStage implements Handler{
 		
 		shapeline.end();
 
+	}
+	
+	public void solveDSLs() {
+		
+		
 	}
 	//-----------------------CAMERA---------------------------
 	

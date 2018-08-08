@@ -161,6 +161,8 @@ public class ForceComponent extends ObjectChildren implements Form{
 		
 		int a = (int) getForm().getOption("ftype").getValue();
 		
+		if(variable != Variable.NONE) getForm().getOption("fvar").setValue(1);
+		
 		if(a == 0) type = Type.WORLD; else
 		if(a == 1) type = Type.TRANS; else
 		if(a == 2) type = Type.REL;

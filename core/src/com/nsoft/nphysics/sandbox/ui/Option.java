@@ -21,6 +21,7 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextField;
 import com.kotcrab.vis.ui.widget.VisTextField.TextFieldListener;
 import com.nsoft.nphysics.Dictionary;
+import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 
 public class Option extends VisTable{
@@ -228,45 +229,12 @@ public class Option extends VisTable{
 		
 		return true;
 	}
-	static GlyphLayout layout;
-	static BitmapFont current;
-	private static String capable(float dimensions,String text) {
-		
-		layout = new GlyphLayout(current, text);
-		
-		String[] parts = text.split(" ");
-		if(parts.length == 1) return parts[0];
-		
-		ArrayList<String> lines = new ArrayList<>();
-		lines.add(parts[0]);
-		int c = 0;
-		
-		for (int i = 1; i < parts.length; i++) {
-			
-			if(new GlyphLayout(current, lines.get(c) + " " + parts[i]).width > dimensions) {
-				
-				lines.add(parts[i]);
-				c++;
-			}else {
-				
-				lines.set(c, lines.get(c) + " " + parts[i]);
-			}
-		}
-		
-		String fstring = "";
-		for (String string : lines) {
-			
-			fstring += string != lines.get(lines.size() - 1) ? string + "\n" : string;
-		}
-		
-		return fstring;
-	}
+	
 	public static Option initEmtyOption(String name) {
 		
 		Option o = new Option(name);
 		String label = Dictionary.get(name);
-		current = new Label("",VisUI.getSkin()).getStyle().font;
-		o.add(new Label(capable(200, label) + ":", VisUI.getSkin())).expand().fill().uniform();
+		o.add(new Label(Util.capable(200, label) + ":", VisUI.getSkin())).expand().fill().uniform();
 		return o;
 	}
 	

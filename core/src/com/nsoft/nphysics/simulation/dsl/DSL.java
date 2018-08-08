@@ -84,7 +84,7 @@ public class DSL implements Say{
 			for (Force force : active) {
 				
 				float angle = new Vector2(force.getPositionVector()).sub(lastAxis.getPositionVector()).angle();
-				Force prj = Util.getProjectedForce(force, -angle);
+				Force prj = UtilDSL.getProjectedForce(force, -angle);
 				sum += new Vector2(prj.getPositionVector()).sub(lastAxis.getPositionVector()).x * prj.getForceVector().y;
 				System.out.println(sum);
 			}
@@ -100,7 +100,7 @@ public class DSL implements Say{
 			
 				
 				float angle = new Vector2(u.getPositionVector()).sub(lastAxis.getPositionVector()).angle();
-				Force prj = Util.getProjectedForce(u, -angle);
+				Force prj = UtilDSL.getProjectedForce(u, -angle);
 				float tempy = sum / (prj.getPositionVector().x - lastAxis.getPositionVector().x);
 				
 				if(u.getVariableType() == Variable.X) {
@@ -116,7 +116,7 @@ public class DSL implements Say{
 				
 				
 				say(prj);
-				prj = Util.getProjectedForce(prj, angle);
+				prj = UtilDSL.getProjectedForce(prj, angle);
 				u.setForce(prj.getForceVector().x, prj.getForceVector().y);
 				say(u);
 			

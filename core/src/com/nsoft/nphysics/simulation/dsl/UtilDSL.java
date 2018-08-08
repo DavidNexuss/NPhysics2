@@ -3,7 +3,7 @@ package com.nsoft.nphysics.simulation.dsl;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
-public class Util {
+public class UtilDSL {
 
 	
 	public static int UNIT = 10;

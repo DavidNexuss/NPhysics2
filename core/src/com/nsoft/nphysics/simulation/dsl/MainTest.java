@@ -10,12 +10,12 @@ public class MainTest {
 		
 		Force a = new Force(0, 0, Force.NULL, Force.NULL);
 		Force g = new Force();
-		g.setPolarPosition(5, 60);
-		g.setForce(0, -98f);
+		g.setPosition(3.5f, 1.5f);
+		g.setForce(0, -205f);
 		
 		Force f = new Force();
-		f.setPolarPosition(10, 60);
-		f.setForce(0, Force.NULL);
+		f.setPosition(1, 3);
+		f.setForce(Force.NULL,20);
 		f.setVariable(Variable.Y);
 		
 		DSL d = new DSL();

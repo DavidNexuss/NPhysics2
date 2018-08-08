@@ -112,7 +112,7 @@ public abstract class DragStage extends Stage{
 	
 	public void setUp() {}
 	public void clean() {}
-	
+	public boolean isReady() {return true;}
 	public static float zoomVal = 1.2f;
 	
 	@Override

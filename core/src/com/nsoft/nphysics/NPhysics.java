@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.Sandbox;
+import com.nsoft.nphysics.sandbox.ui.AlertWindow;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dsl.MainTest;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
@@ -73,6 +74,11 @@ public class NPhysics extends ApplicationAdapter {
 	
 	public static void switchToSimulation() {
 		
+		if(!currentStage.isReady()) {
+			
+			AlertWindow.throwNewAlert(Dictionary.get("simulation-switch-error-title"), Dictionary.get("simulation-switch-error-msg"));
+			return;
+		}
 		currentStage = simulation;
 		sandbox.clean();
 		simulation.setUp();
