@@ -25,7 +25,7 @@ public class UIStage extends Stage{
 	static Table back;
 	public static OptionPane contextMenu;
 	public static OptionPane doubleContextMenu;
-	static ViewSelection view;
+	public static ViewSelection view;
 	static ShapeRenderer shapefill;
 	static Table container;
 	

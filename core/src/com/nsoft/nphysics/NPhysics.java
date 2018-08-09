@@ -101,7 +101,7 @@ public class NPhysics extends ApplicationAdapter {
 	@Override
 	public void resize(int width, int height) {
 		
-		sandbox.getViewport().update(width, height);
+		sandbox.updateViewport(width, height);
 		ui.getViewport().update(width, height);
 	}
 }

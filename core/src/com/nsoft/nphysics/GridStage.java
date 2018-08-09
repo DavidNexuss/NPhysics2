@@ -70,18 +70,16 @@ public abstract class GridStage extends DragStage{
 	public void draw() {
 		
 		gridBatch.begin();
-		camera.unproject(tmp);
+		camera.project(tmp);
 		gridShader.setUniformf("grid", UNIT/camera.zoom);
 		gridShader.setUniformf("width", Gdx.graphics.getWidth());
 		gridShader.setUniformf("height", Gdx.graphics.getHeight());
-		gridShader.setUniformf("yoffset", camera.position.y/camera.zoom);
-		gridShader.setUniformf("xoffset", camera.position.x/camera.zoom);
+		gridShader.setUniformf("xoffset", tmp.x);
+		gridShader.setUniformf("yoffset", tmp.y);
 		gridShader.setUniformf("zoom",camera.zoom);
 		gridShader.setUniformf("X", Gdx.input.getX());
 		gridShader.setUniformf("Y", Gdx.graphics.getHeight() - Gdx.input.getY());
 		
-		gridShader.setUniformf("xoffset", tmp.x);
-		gridShader.setUniformf("yoffset", tmp.y);
 		gridBatch.draw(nullTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		gridBatch.end();
 		

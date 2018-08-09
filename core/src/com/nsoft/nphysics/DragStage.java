@@ -115,6 +115,12 @@ public abstract class DragStage extends Stage{
 	public boolean isReady() {return true;}
 	public static float zoomVal = 1.2f;
 	
+	public void updateViewport(int width,int height) {
+		
+		getViewport().update(width, height);
+		getCamera().update();
+		updateMatrix();
+	}
 	@Override
 	public boolean scrolled(int amount) {
 		

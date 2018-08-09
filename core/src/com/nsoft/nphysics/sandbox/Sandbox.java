@@ -27,6 +27,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
 import com.nsoft.nphysics.DragStage;
@@ -68,7 +69,7 @@ public class Sandbox extends GridStage implements Handler{
 	@Override
 	public boolean isReady() {
 		
-		return true;
+		return false;
 	}
 	public void init() {
 		
@@ -106,6 +107,12 @@ public class Sandbox extends GridStage implements Handler{
 	@Override
 	public void clean() {
 		
+	}
+	
+	@Override
+	public void setUp() {
+		// TODO Auto-generated method stub
+		System.out.println("SETPU");
 	}
 	private void initdebug() {
 		

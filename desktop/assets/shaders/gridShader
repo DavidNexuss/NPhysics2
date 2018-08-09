@@ -12,8 +12,8 @@ uniform mat4 u_projTrans;
 void main()
 {
     
-    float x = mod(gl_FragCoord.x + xoffset,grid);
-    float y = mod(gl_FragCoord.y + yoffset,grid);
+    float x = mod(gl_FragCoord.x - xoffset,grid);
+    float y = mod(gl_FragCoord.y - yoffset,grid);
     
     if(int(x) == 0 || int(y) == 0){
     
