@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Json.Serializable;
 
-public class Dictionary implements Serializable{
+public class Dictionary implements Serializable,Say{
 
 	public static enum Languages{ESP,ENG,CAT}
 	private static Languages currentLanguage = Languages.CAT;
@@ -59,8 +59,22 @@ public class Dictionary implements Serializable{
 	}
 	public static String get(String key,Languages l) {
 		
-		return dictionary.keys.containsKey(key) ? dictionary.keys.get(key).isMapped(l) ? dictionary.keys.get(key).get(l) : key + "_" + l.name()
-				: key;
+		if(dictionary.keys.containsKey(key)) {
+			
+			if(dictionary.keys.get(key).isMapped(l)) {
+				
+				return dictionary.keys.get(key).get(l);
+				
+			}else {
+				
+				dictionary.say(key + "_" + l.name() + "  NOT MAPPED");
+				return key + "_" + l.name();
+			}
+		}else {
+			
+			dictionary.say(key + "  NOT MAPPED");
+			return key;
+		}
 	}
 	
 	public static class LanguageEntry implements Serializable{
