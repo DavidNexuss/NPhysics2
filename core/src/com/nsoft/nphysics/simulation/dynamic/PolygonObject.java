@@ -105,23 +105,27 @@ public class PolygonObject extends Actor{
 		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
 		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass());
 		
-		if(!reactY) {
+		if(def.type != BodyType.StaticBody) {
 			
-			gravityArrow.setStart(center);
-			gravityArrow.setEnd(force.add(center));
-			gravityArrow.updateVertexArray();
+			if(!reactY) {
+				
+				gravityArrow.setStart(center);
+				gravityArrow.setEnd(force.add(center));
+				gravityArrow.updateVertexArray();
+				
+				gravityArrow.draw(batch, parentAlpha);
+			}
 			
-			gravityArrow.draw(batch, parentAlpha);
+			if(!(reactX && reactY)) {
+				
+				velocityArrow.setStart(center);
+				velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass())).add(center));
+				velocityArrow.updateVertexArray();
+				
+				velocityArrow.draw(batch, parentAlpha);
+			}
 		}
 		
-		if(!(reactX && reactY)) {
-			
-			velocityArrow.setStart(center);
-			velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass())).add(center));
-			velocityArrow.updateVertexArray();
-			
-			velocityArrow.draw(batch, parentAlpha);
-		}
 	}
 	
 	public void aplyForce() {
@@ -164,9 +168,10 @@ public class PolygonObject extends Actor{
 		BodyDef bdef = new BodyDef();
 		bdef.type = checkStatic(def.type);
 		bdef.position.set(def.getCenter(true));
+		bdef.linearVelocity.set(def.linearVelocity);
 		b = SimulationStage.world.createBody(bdef);
 		createFixtures();
-		if(bdef.type == BodyType.DynamicBody)createJoints();
+		if(bdef.type != BodyType.StaticBody)createJoints();
 	}
 	
 	private BodyType checkStatic(BodyType t) {
@@ -181,7 +186,7 @@ public class PolygonObject extends Actor{
 			}
 		}
 		
-		return BodyType.DynamicBody;
+		return t;
 	}
 	private ArrayList<Fixture> createFixtures(){
 		

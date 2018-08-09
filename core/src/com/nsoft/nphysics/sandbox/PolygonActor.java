@@ -107,14 +107,13 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 
 	private void initForm() {
 		
-		form = DynamicWindow.createDefaultWindowStructure("polygon");
+		form = DynamicWindow.createDefaultWindowStructure("Wpolygon");
 		form.setSize(450, 450);
 		form.setAsForm(this);
-		form.addText("polygon_opt", Dictionary.get("polygon_opt"));
-		form.addSeparator();
-		form.addText("polygon_phys_opt", Dictionary.get("polygon_phys_opt"));
-		form.addOption(Option.createOptionTypeSlider("polygon_phys_state", Dictionary.get("phys_DYNAMIC"),Dictionary.get("phys_KINEMATIC"),Dictionary.get("phys_STATIC")));
 		
+		form.addOption(Option.createOptionTypeSlider("polygon_phys_state", Dictionary.get("phys_DYNAMIC"),Dictionary.get("phys_KINEMATIC"),Dictionary.get("phys_STATIC")));
+		form.addOption(Option.createOptionNumber("polygon_lvel_x"));
+		form.addOption(Option.createOptionNumber("polygon_lvel_y"));
 		form.addOption(Option.createOptionNumber("polygon_phys_mass"));
 		
 		form.addOption(Option.createOptionNumber("polygon_phys_density"));
@@ -578,6 +577,9 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		default:
 			throw new IllegalStateException();
 		}
+		
+		definition.linearVelocity.set(form.getOption("polygon_lvel_x").getValue(), 
+									  form.getOption("polygon_lvel_y").getValue());
 		
 		calculateMass();
 	}

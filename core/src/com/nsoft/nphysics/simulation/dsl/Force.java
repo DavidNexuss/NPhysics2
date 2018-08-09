@@ -1,6 +1,7 @@
 package com.nsoft.nphysics.simulation.dsl;
 
 import com.badlogic.gdx.math.Vector2;
+import com.nsoft.nphysics.Say;
 
 public class Force implements Say{
 	

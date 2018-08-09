@@ -21,6 +21,8 @@ public class PolygonDefinition {
 	
 	private float[] rawVertices;
 	
+	public final Vector2 linearVelocity = new Vector2();
+	
 	public void init() {
 		
 		dupeRawVertices();

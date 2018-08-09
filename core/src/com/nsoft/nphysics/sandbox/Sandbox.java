@@ -69,7 +69,7 @@ public class Sandbox extends GridStage implements Handler{
 	@Override
 	public boolean isReady() {
 		
-		return false;
+		return true;
 	}
 	public void init() {
 		
