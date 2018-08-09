@@ -11,8 +11,10 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -36,6 +38,8 @@ public class DynamicWindow extends VisWindow{
 	HashMap<String, Option> options = new HashMap<>();
 	HashMap<String, VisLabel> texts = new HashMap<>();
 	Form form;
+	VisImageButton copy;
+	VisImageButton paste;
 	
 	public DynamicWindow(String title) {
 		super(title);
@@ -50,7 +54,6 @@ public class DynamicWindow extends VisWindow{
 	
 	public void paste() {
 		
-		System.out.println("paste");
 		if(copyBuffer == null) return;
 		if(copyBuffer == this) return;
 		if(copyBuffer.form.getClass() == form.getClass()) {
@@ -64,10 +67,10 @@ public class DynamicWindow extends VisWindow{
 		}else throw new IllegalStateException();
 	}
 	public void copy() {
-		
-
-		System.out.println("copy");
+	
+		if(copyBuffer != null) paste.setDisabled(false);
 		copyBuffer = this;
+		paste.setDisabled(true);
 	}
 	public boolean isAForm() {return form != null;}
 	public Option getOption(String name) {return options.get(name);}
@@ -130,9 +133,9 @@ public class DynamicWindow extends VisWindow{
 		
 		VisTable copypaste = new VisTable();
 		
-		VisImageButton copy = new VisImageButton(Util.getDrawable(new Texture(Gdx.files.internal("menu/copy.png"))));
+		d.copy = new VisImageButton(Util.getDrawable(new Texture(Gdx.files.internal("menu/copy.png"))));
 		
-		copy.addListener(new ClickListener() {
+		d.copy.addListener(new ClickListener() {
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -141,9 +144,26 @@ public class DynamicWindow extends VisWindow{
 			}
 		});
 		
-		VisImageButton paste = new VisImageButton(Util.getDrawable(new Texture(Gdx.files.internal("menu/paste.png"))));
 		
-		paste.addListener(new ClickListener(){
+		d.paste = new VisImageButton(Util.getDrawable(new Texture(Gdx.files.internal("menu/paste.png")))) {
+			
+			@Override
+			public void setDisabled(boolean disabled) {
+				
+				if(disabled) {
+					
+					setColor(1, 0.2f, .2f, 1);
+					setTouchable(Touchable.disabled);
+				}else {
+					
+					setColor(Color.WHITE);
+					setTouchable(Touchable.enabled);
+				}
+				super.setDisabled(disabled);
+			}
+		};
+		
+		d.paste.addListener(new ClickListener(){
 			
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -152,8 +172,8 @@ public class DynamicWindow extends VisWindow{
 			}
 		});
 
-		copypaste.add(copy).pad(5);
-		copypaste.add(paste).pad(5);
+		copypaste.add(d.copy).pad(5);
+		copypaste.add(d.paste).pad(5);
 		
 		table_text.add().expand().fill();
 		table_text.add(text).expand().fillX();
@@ -173,6 +193,12 @@ public class DynamicWindow extends VisWindow{
 	}
 	public static void showWindow(DynamicWindow w) {
 	
+		if(copyBuffer != null) {
+
+			if(w.form.getClass() == copyBuffer.form.getClass() && w != copyBuffer) 
+				w.paste.setDisabled(false);
+			else w.paste.setDisabled(true);
+		}
 		w.setVisible(true);
 		w.addAction(Actions.fadeIn(0.5f,Interpolation.exp5)); 	
 	}
