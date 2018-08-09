@@ -14,6 +14,11 @@ Wprismatic:{
 	ESP: "Configurar soporte prismático"
 	CAT: "Configurar soport prismàtic"
 }
+Wpolygon:{
+	ENG: "Configure object properties"
+	ESP: "Configurar propiedades del objeto"
+	CAT: "Configurar propietats de l'objecte"
+}
 closewindow:{
 	ENG: "Close"
 	ESP: "Cerrar"
@@ -103,5 +108,55 @@ pangle:{
 	ENG: "Prismatic angle"
 	ESP: "Angulo prismático"
 	CAT: "Angle prismàtic"
+}
+phys_DYNAMIC:{
+	ENG: "Dynamic"
+	ESP: "Dinámico"
+	CAT: "Dinàmic"
+}
+phys_KINEMATIC:{
+	ENG: "Kinematic"
+	ESP: "Kinemático"
+	CAT: "Kinemàtic"
+}
+phys_STATIC:{
+	ENG: "Static"
+	ESP: "Estático"
+	CAT: "Estàtic"
+}
+polygon_phys_state:{
+	ENG: "State"
+	ESP: "Estado"
+	CAT: "Estat"
+}
+polygon_phys_mass:{
+	ENG: "Mass"
+	ESP: "Masa"
+	CAT: "Massa"
+}
+polygon_phys_density:{
+	ENG: "Density"
+	ESP: "Densidad"
+	CAT: "Densitat"
+}
+polygon_phys_friction:{
+	ENG: "Friction"
+	ESP: "Fricción"
+	CAT: "Fricció"
+}
+polygon_phys_restitution:{
+	ENG: "Restitution"
+	ESP: "Rebote"
+	CAT: "Rebot"
+}
+dsl_unknowns:{
+	ENG: "Unknown forces"
+	ESP: "Fuerzas desconocidas"
+	CAT: "Forces desconegudes"
+}
+dsl_solve:{
+	ENG: "Solve"
+	ESP: "Solucionar"
+	CAT: "Solucionar"
 }
 }
