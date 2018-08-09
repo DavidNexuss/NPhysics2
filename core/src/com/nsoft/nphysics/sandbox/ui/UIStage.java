@@ -28,7 +28,7 @@ public class UIStage extends Stage{
 	public static ViewSelection view;
 	static ShapeRenderer shapefill;
 	static Table container;
-	
+	static MenuItem grid;
 	public UIStage() {
 		
 		super(new ScreenViewport());
@@ -52,6 +52,9 @@ public class UIStage extends Stage{
 		back.add(operation).fill().expand();
 		
 		addActor(back);
+		
+
+		loadSubMenu();
 	}
 	
 	public static void setOperationText(String op) {
@@ -92,7 +95,6 @@ public class UIStage extends Stage{
 		loadOptionMenu();
 		loadContextMenu();
 		loadDoubleContextMenu();
-		loadSubMenu();
 	}
 	
 	private void loadOptionMenu() {
@@ -159,7 +161,7 @@ public class UIStage extends Stage{
 	}
 	private void loadSubMenu() {
 		
-		MenuItem grid = MenuItem.loadNewItem("grid.png", ()->{NPhysics.currentStage.switchSnapping();});
+		grid = MenuItem.loadNewItem("grid.png", ()->{NPhysics.currentStage.switchSnapping();});
 		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
 		addActor(grid);
 	}
@@ -184,7 +186,6 @@ public class UIStage extends Stage{
 	
 	public void updateUILayout() {
 		
-		System.out.println(Gdx.graphics.getWidth());
 		getViewport().setScreenSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		getViewport().setWorldSize(0,  0);
 		getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -206,5 +207,8 @@ public class UIStage extends Stage{
 		
 		back.setPosition(0, 0);
 		back.setSize(Gdx.graphics.getWidth(), 40);
+		
+		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
+		
 	}
 }
