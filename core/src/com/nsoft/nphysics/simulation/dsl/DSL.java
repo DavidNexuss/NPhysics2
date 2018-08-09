@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 
 public class DSL implements Say{
