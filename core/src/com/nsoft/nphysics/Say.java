@@ -1,9 +1,10 @@
-package com.nsoft.nphysics.simulation.dsl;
+package com.nsoft.nphysics;
 
 public interface Say {
 
-	public default void say(Object s) {
+	public default String say(Object s) {
 		
 		System.out.println(getClass().getSimpleName() + "#" + hashCode() + ": " + s);
+		return s.toString();
 	}
 }
