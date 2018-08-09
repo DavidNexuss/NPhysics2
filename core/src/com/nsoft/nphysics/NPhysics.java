@@ -70,6 +70,7 @@ public class NPhysics extends ApplicationAdapter {
 		ui.draw();
 		ui.act();
 		ThreadManager.act(Gdx.graphics.getDeltaTime());
+		
 	}
 	
 	public static void switchToSimulation() {
@@ -102,6 +103,6 @@ public class NPhysics extends ApplicationAdapter {
 	public void resize(int width, int height) {
 		
 		sandbox.updateViewport(width, height);
-		ui.getViewport().update(width, height);
+		ui.updateUILayout();
 	}
 }

@@ -176,5 +176,35 @@ public class UIStage extends Stage{
 	}
 	
 	
+	private void updateMatrix() {
+		
+		shapefill.setProjectionMatrix(getCamera().combined);
+		getBatch().setProjectionMatrix(getCamera().combined);
+	}
 	
+	public void updateUILayout() {
+		
+		System.out.println(Gdx.graphics.getWidth());
+		getViewport().setScreenSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		getViewport().setWorldSize(0,  0);
+		getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		getCamera().position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
+		getCamera().update();
+		updateMatrix();
+		container.setPosition(40, Gdx.graphics.getHeight()- 30);
+		container.setWidth(Gdx.graphics.getWidth() - 40);
+		container.setHeight(30);
+		
+		options.setPosition(0, 0);
+		options.setHeight(Gdx.graphics.getHeight());
+		options.setWidth(40);
+		
+		contextMenu.setPosition(40, 0);
+		contextMenu.setHeight(Gdx.graphics.getHeight() - 30);
+		contextMenu.setWidth(40);
+		contextMenu.setColor(new Color(0.2f, 0.2f, 0.2f, 1));
+		
+		back.setPosition(0, 0);
+		back.setSize(Gdx.graphics.getWidth(), 40);
+	}
 }
