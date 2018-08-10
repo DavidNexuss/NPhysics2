@@ -23,7 +23,8 @@ public class NPhysics extends ApplicationAdapter {
 	public static ThreadCase threads;
 	public static GridStage currentStage;
 	static NPhysics current;
-
+	public static SpecificOSFunctions functions = new DefaultOSFunctions();
+	
 	public static ThreadCase getThreadManager(){ return threads;}
 	
 	public NPhysics() {

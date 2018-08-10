@@ -1,7 +1,5 @@
 package com.nsoft.nphysics.sandbox.ui;
 
-import java.awt.Toolkit;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -76,8 +74,7 @@ public class AlertWindow extends VisWindow{
 		NPhysics.ui.addActor(w);
 		w.addAction(Actions.fadeIn(0.3f,Interpolation.exp10));
 		
-		final Runnable runnable =
-			     (Runnable) Toolkit.getDefaultToolkit().getDesktopProperty("win.sound.exclamation");
-			if (runnable != null) runnable.run();
+		NPhysics.functions.playSound("win.sound.exclamation");
+		
 	}
 }

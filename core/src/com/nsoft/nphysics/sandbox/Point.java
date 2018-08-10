@@ -112,7 +112,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		}
 		return parent;
 	}
-	public boolean hasObjectParent() {return hasObjectParent(Parent.class);}
+	public boolean hasObjectParent() {return !objectsParent.isEmpty();}
 	public boolean hasObjectParent(Class<?> clas) { 
 		
 		if(objectsParent.isEmpty()) return false;

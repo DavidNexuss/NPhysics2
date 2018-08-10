@@ -35,6 +35,7 @@ public class SimulationStage extends GridStage{
 	public static final float ForceMultiplier = 10f;
 	static ArrayList<PolygonObject> objects;
 	static HashMap<PolygonActor, PolygonObject> objectsMap;
+	static HashMap<Body, PolygonObject> bodiesMap;
 	Body centre;
 	static Vector2 gravity = new Vector2(0, -9.8f);
 	static World world;
@@ -156,7 +157,7 @@ public class SimulationStage extends GridStage{
 		hit = null;
 		world.QueryAABB(callback, tmp.x - 0.1f, tmp.y - 0.1f, tmp.x + 0.1f, tmp.y + 0.1f);
 		
-		if(hit != null) {
+		if(hit != null && hit.getType() == BodyType.DynamicBody) {
 			
 			MouseJointDef def = new MouseJointDef();
 			def.bodyA = centre;

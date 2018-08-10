@@ -34,6 +34,7 @@ public class DesktopLauncher {
 			config.fullscreen = true;
 		}
 		
+		NPhysics.functions = new SpecificWindowsFunctions();
 		new LwjglApplication(new NPhysics((task,delay)->{
 			
 			new Thread(new Runnable() {
