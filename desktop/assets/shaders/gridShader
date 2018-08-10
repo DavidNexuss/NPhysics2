@@ -2,11 +2,10 @@ uniform float u_texture;
 uniform float grid;
 uniform float xoffset;
 uniform float yoffset;
-uniform float width;
-uniform float height;
 uniform float X;
 uniform float Y;
-uniform float zoom;
+uniform float PX;
+uniform float PY;
 uniform mat4 u_projTrans;
 
 void main()
@@ -16,10 +15,16 @@ void main()
     float y = mod(gl_FragCoord.y - yoffset,grid);
     
     if(int(x) == 0 || int(y) == 0){
-    
-		float d = (X - gl_FragCoord.x)*(X - gl_FragCoord.x) + (Y - gl_FragCoord.y)*(Y - gl_FragCoord.y);
+  
+		if(int(gl_FragCoord.x) == int(PX) || int(gl_FragCoord.y) == int(PY)){
 		
-    	gl_FragColor = vec4(0.4 + 1000.0/d,0.4,0.4,1.0);
+			gl_FragColor = vec4(1,0,0,1.0);
+		}else{
+			float d = (X - gl_FragCoord.x)*(X - gl_FragCoord.x) + (Y - gl_FragCoord.y)*(Y - gl_FragCoord.y);
+			gl_FragColor = vec4(0.4 + 1000.0/d,0.4,0.4,1.0);
+		
+		}
+    	
     }else{
     
     	gl_FragColor = vec4(0.0,0.0,0.0,0.0);
