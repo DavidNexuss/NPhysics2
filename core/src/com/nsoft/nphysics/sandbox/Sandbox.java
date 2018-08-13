@@ -373,6 +373,13 @@ public class Sandbox extends GridStage implements Handler{
 		case Keys.S:
 			actrotate(true);
 			return true;
+		case Keys.C:
+			
+			if(mainSelect.getLastSelected() instanceof PolygonActor) {
+				
+				addActor(((PolygonActor)mainSelect.getLastSelected()).createCopy(new Vector2(getUnproject())));
+			}
+			return true;
 		default:
 			return super.keyDown(keyCode);
 		}

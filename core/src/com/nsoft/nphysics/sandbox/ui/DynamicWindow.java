@@ -72,6 +72,33 @@ public class DynamicWindow extends VisWindow{
 		copyBuffer = this;
 		paste.setDisabled(true);
 	}
+	
+	public void overrideBuffer() {
+		
+		copyBuffer = this;
+	}
+	public void clearBuffer() {
+		
+		copyBuffer = null;
+	}
+	
+	public static void dumpConfiguration(Form from,Form to) {
+		
+		dumpConfiguration(from.getForm(), to.getForm());
+	}
+	
+	public static void dumpConfiguration(DynamicWindow from,DynamicWindow to) {
+		
+		if(from.form.getClass() == to.form.getClass()) {
+			
+			for (Entry<String, Option> option: from.options.entrySet()) {
+				
+				if(option.getValue().canCopy)to.options.get(option.getKey()).setValue(option.getValue().getValue());
+			}
+			
+			to.form.updateValuesFromForm();
+		}
+	}
 	public boolean isAForm() {return form != null;}
 	public Option getOption(String name) {return options.get(name);}
 	

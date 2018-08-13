@@ -94,6 +94,28 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		addActor(line);
 	}
 
+	public PolygonActor createCopy(Vector2 offset) {
+		
+		PolygonActor newpolygon = new PolygonActor();
+		Vector2 center = definition.getCenter(false);
+		
+		Point first = null;
+		for (Point p : points) {
+			
+			Point pi = new Point(p.getX() - center.x + offset.x, p.getY() - center.y + offset.y, false);
+			if(first == null) {
+				
+				first = pi;
+			}
+			newpolygon.addPoint(pi);
+		}
+		
+		newpolygon.addPoint(first);
+		
+		DynamicWindow.dumpConfiguration(this, newpolygon);
+		
+		return newpolygon;
+	}
 	public boolean keyDown(int keycode){
 		
 		if(keycode == Keys.Q) {
