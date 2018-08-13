@@ -102,18 +102,15 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	public Parent getObjectParent() {return getObjectParent(0);}
 	public Parent getObjectParent(int index) {return objectsParent.get(index);}
 	
-	public <T> ArrayList<Parent<Point>> getObjectParentList(Class<T> clas){
+	public ArrayList<Parent<Point>> getObjectParentList(Class<?> clas){
 		
 		ArrayList<Parent<Point>> parent = new ArrayList<>();
 		
 		for (Parent<Point> p : objectsParent) {
 			
-			try {
+			if(p.getClass() == clas) {
 				
-				T a = (T)p; 
 				parent.add(p);
-			} catch (ClassCastException e) {
-				
 			}
 		}
 		return parent;
