@@ -384,10 +384,20 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 	}
 	
+	public float getArea(boolean m2) {
+		
+		if(m2) return hitboxPolygon.area() / (30*30);
+		else return hitboxPolygon.area();
+	}
 	private void calculateMass() {
 		
-		physMass = definition.density * hitboxPolygon.area() / (30*30);
+		physMass = definition.density * getArea(true);
 		form.getOption("polygon_phys_mass").setValue(physMass);
+	}
+	private void calculateDensity() {
+		
+		definition.density = physMass / getArea(true);
+		form.getOption("polygon_phys_density").setValue(definition.density);
 	}
 	private void createDefinition() {
 		
@@ -560,7 +570,20 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	@Override
 	public void updateValuesFromForm() {
 		
-		definition.density = form.getOption("polygon_phys_density").getValue();
+		float newDensity = form.getOption("polygon_phys_density").getValue();
+		
+		float newMass = form.getOption("polygon_phys_mass").getValue();
+		
+		if( definition.density != newDensity) {
+			
+			definition.density = newDensity;
+			calculateMass();
+		
+		}else if(physMass != newMass) {
+			
+			physMass = newMass;
+			calculateDensity();
+		}
 		definition.friction = form.getOption("polygon_phys_friction").getValue();
 		definition.restitution = form.getOption("polygon_phys_restitution").getValue();
 		
@@ -581,7 +604,6 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		definition.linearVelocity.set(form.getOption("polygon_lvel_x").getValue(), 
 									  form.getOption("polygon_lvel_y").getValue());
 		
-		calculateMass();
 	}
 
 	@Override
