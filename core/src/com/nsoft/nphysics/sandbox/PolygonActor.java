@@ -108,6 +108,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 				first = pi;
 			}
 			newpolygon.addPoint(pi);
+			NPhysics.currentStage.addActor(pi);
 		}
 		
 		newpolygon.addPoint(first);
