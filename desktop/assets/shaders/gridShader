@@ -10,24 +10,26 @@ uniform mat4 u_projTrans;
 
 void main()
 {
-    
-    float x = mod(gl_FragCoord.x - xoffset,grid);
-    float y = mod(gl_FragCoord.y - yoffset,grid);
-    
-    if(int(x) == 0 || int(y) == 0){
-  
-		if(int(gl_FragCoord.x) == int(PX) || int(gl_FragCoord.y) == int(PY)){
+ 
+	int ix = int(gl_FragCoord.x) - int(PX);
+	int iy = int(gl_FragCoord.y) - int(PY);
 		
-			gl_FragColor = vec4(1,0,0,1.0);
-		}else{
+	if((ix > -2 && ix < 2)|| (iy > -2 && iy < 2)){
+		gl_FragColor = vec4(1,0,0,1.0);
+		
+	}else {
+	   
+		float x = mod(gl_FragCoord.x - xoffset,grid);
+		float y = mod(gl_FragCoord.y - yoffset,grid);
+    
+		if((x > -1.0 && x < 1.0) || (y > -1.0 && y < 1.0)){
 			float d = (X - gl_FragCoord.x)*(X - gl_FragCoord.x) + (Y - gl_FragCoord.y)*(Y - gl_FragCoord.y);
-			gl_FragColor = vec4(0.4 + 1000.0/d,0.4,0.4,1.0);
-		
-		}
-    	
-    }else{
+			gl_FragColor = vec4(0.4 + 1000.0/d,0.4,0.4,1.0);	
+		}else{
     
-    	gl_FragColor = vec4(0.0,0.0,0.0,0.0);
-    }
+			gl_FragColor = vec4(0.0,0.0,0.0,0.0);
+		}
+	}
+    
     // Output to screen
 }
