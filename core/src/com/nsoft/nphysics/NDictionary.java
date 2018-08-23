@@ -8,20 +8,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Json.Serializable;
-
-public class Dictionary implements Serializable,Say{
+/**
+ * Clase encarregada de l'emmagatzament de les traduccions de totes les paraules clau del programa
+ * escrites al document dic.json
+ * @author David
+ */
+public class NDictionary implements Serializable,Say{
 
 	public static enum Languages{ESP,ENG,CAT}
 	private static Languages currentLanguage = Languages.CAT;
 	private static String languagepath = "dic.json";
 	private static Json json;
 	
-	private static Dictionary dictionary;
+	private static NDictionary dictionary;
 	private HashMap<String, LanguageEntry> keys = new HashMap<>();
 	
 	public static void init() {
 		json = new Json();
-		dictionary = json.fromJson(Dictionary.class, Gdx.files.internal(languagepath).readString());
+		dictionary = json.fromJson(NDictionary.class, Gdx.files.internal(languagepath).readString());
 	}
 	
 	private void readEntries(Json json,JsonValue jsonData) {

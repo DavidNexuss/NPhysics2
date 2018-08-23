@@ -13,7 +13,11 @@ import com.nsoft.nphysics.sandbox.ui.AlertWindow;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dsl.MainTest;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
-
+/**
+ * Clase principal del programa
+ * @author David
+ *
+ */
 public class NPhysics extends ApplicationAdapter {
 	
 	public static boolean useMultiThreading;
@@ -38,12 +42,14 @@ public class NPhysics extends ApplicationAdapter {
 
 		MainTest.runTest();
 	}
-	
+	/**
+	 * Inicialitza el programa
+	 */
 	@Override
 	public void create () {
 		current = this;
 		
-		Dictionary.init();
+		NDictionary.init();
 		UILoader.loadUI();
 		ui = new UIStage();
 		GridStage.initGridShader();
@@ -61,24 +67,40 @@ public class NPhysics extends ApplicationAdapter {
 	}
 
 	boolean first = true;
+	
+	/**
+	 * Bucle de renderització
+	 */
 	@Override
 	public void render () {
+		
+		
+		//Limpia el buffer de la imatge atraves de OpenGL
 		Gdx.gl.glClearColor(currentStage.getBackgroundColor().r,currentStage.getBackgroundColor().g,currentStage.getBackgroundColor().b,currentStage.getBackgroundColor().a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		
 		if(first) { System.out.println(first = false);}
-		currentStage.draw();
+		
+		//Executa els bucles lògics de l'actual fase i la interfas, i executa draw calls.
+		currentStage.draw(); 
 		currentStage.act();
-		ui.draw();
-		ui.act();
+		ui.draw(); 			
+		ui.act();			
+		
+		//Executa els subprocessos en espera (En cas de incompatibilitat amb Multi-threading)
 		ThreadManager.act(Gdx.graphics.getDeltaTime());
 		
 	}
 	
+	/**
+	 * Cambia a la simulació
+	 */
 	public static void switchToSimulation() {
 		
 		if(!currentStage.isReady()) {
 			
-			AlertWindow.throwNewAlert(Dictionary.get("simulation-switch-error-title"), Dictionary.get("simulation-switch-error-msg"));
+			AlertWindow.throwNewAlert(NDictionary.get("simulation-switch-error-title"), NDictionary.get("simulation-switch-error-msg"));
 			return;
 		}
 		currentStage = simulation;
@@ -87,6 +109,9 @@ public class NPhysics extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
 	}
 	
+	/**
+	 * Cambia al sandbox
+	 */
 	public static void switchToSandbox() {
 		
 		currentStage = sandbox;
@@ -94,16 +119,23 @@ public class NPhysics extends ApplicationAdapter {
 		sandbox.setUp();
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
 	}
+	
+	/**
+	 * Allibera memòria, aquesta funció es crida al tancament del programa
+	 */
 	@Override
 	public void dispose () {
 		sandbox.dispose();
 		ui.dispose();
 	}
 	
+	/**
+	 * Actualitza els viewports, funció cridada al cambi de tamany de la finestra
+	 */
 	@Override
 	public void resize(int width, int height) {
 		
-		sandbox.updateViewport(width, height);
+		currentStage.updateViewport(width, height);
 		ui.updateUILayout();
 	}
 }

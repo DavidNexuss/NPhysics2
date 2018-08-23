@@ -1,5 +1,7 @@
 package com.nsoft.nphysics.sandbox;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -13,7 +15,7 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextArea;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.Draggable.DragAdapter;
-import com.nsoft.nphysics.Dictionary;
+import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
@@ -30,24 +32,24 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 public class ForceComponent extends ObjectChildren implements Form{
 
 	public static enum Type{WORLD,TRANS,REL}
-	
+	public static ArrayList<ForceComponent> list = new ArrayList<>();
 	ArrowActor arrow;
 	Vector2 force;
 	Type type = Type.WORLD;
 	boolean relative = false;
 	private boolean hook = false;
-	private boolean var;
+	private  boolean var;
 	private Label label;
 	private static LabelStyle style;
 	
-	private Variable variable;
+	public Variable variable;
 	
 	static ForceComponent temp;
 	
 	public ForceComponent(PolygonActor parent,Vector2 start) {
 		
 		super(parent);
-
+		list.add(this);
 		addInput();
 		initBasicForm("Wforce");
 		setPosition(start.x, start.y);
@@ -67,7 +69,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		
 		getForm().setSize(450, 500);
 		getForm().addSeparator();
-		getForm().addText("force", Dictionary.get("force"));
+		getForm().addText("force", NDictionary.get("force"));
 		getForm().addOption(Option.createOptionNumber("forcex"));
 		getForm().addOption(Option.createOptionNumber("forcey"));
 		getForm().addSeparator();
@@ -75,8 +77,8 @@ public class ForceComponent extends ObjectChildren implements Form{
 		getForm().addOption(Option.createOptionNumber("forceangle"));
 		getForm().addSeparator();
 		getForm().addOption(Option.createCheckBoxOption("fvar"));
-		getForm().addText("ftypeset", Dictionary.get("ftypeset"));
-		getForm().addOption(Option.createOptionTypeSlider("ftype", Dictionary.get("fworld"),Dictionary.get("ftrelative"),Dictionary.get("frelative")));
+		getForm().addText("ftypeset", NDictionary.get("ftypeset"));
+		getForm().addOption(Option.createOptionTypeSlider("ftype", NDictionary.get("fworld"),NDictionary.get("ftrelative"),NDictionary.get("frelative")));
 	
 		label = new Label("F", VisUI.getSkin());
 		label.setStyle(new LabelStyle(label.getStyle()));
@@ -104,7 +106,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 	}
 	
 	public Vector2 getForce() {return new Vector2(force);}
-	
+	public void setForce(Vector2 f) { force.set(f);}
 	public Type getType() {
 		
 		return type;

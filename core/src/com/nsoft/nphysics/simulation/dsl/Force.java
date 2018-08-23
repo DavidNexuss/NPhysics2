@@ -2,6 +2,7 @@ package com.nsoft.nphysics.simulation.dsl;
 
 import com.badlogic.gdx.math.Vector2;
 import com.nsoft.nphysics.Say;
+import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 
 public class Force implements Say{
 	
@@ -10,12 +11,19 @@ public class Force implements Say{
 		NONE,X,Y,MOD,ANGLE;
 	}
 	public static final float NULL = Float.MAX_VALUE;
+	
+	public static final Vector2 NULL_V = new Vector2(NULL, NULL);
+	public static final Vector2 NULL_VX = new Vector2(NULL,0);
+	public static final Vector2 NULL_VY = new Vector2(0,NULL);
+	
 	private Vector2 force;
 	private Vector2 position;
 	
 	private boolean knowX,knowY;
 	
-	private Variable var = Variable.NONE;
+	public Variable var = Variable.NONE;
+	
+	public ObjectChildren parent;
 	
 	public Force() {
 		
@@ -49,6 +57,7 @@ public class Force implements Say{
 			
 	}
 
+	public Force setParent(ObjectChildren p) {parent = p; return this;}
 	public void setKnowX(boolean newKnowX) {knowX = newKnowX;}
 	public void setKnowY(boolean newKnowY) {knowY = newKnowY;}
 	

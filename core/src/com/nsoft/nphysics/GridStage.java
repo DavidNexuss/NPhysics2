@@ -14,7 +14,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public abstract class GridStage extends DragStage{
+/**
+ * Fase que implementa DragStage, defineix una fase amb cuadricula
+ * @author David
+ */
+public class GridStage extends DragStage{
 
 	public static ShaderProgram gridShader;
 	public static SpriteBatch gridBatch;
@@ -81,8 +85,8 @@ public abstract class GridStage extends DragStage{
 		gridShader.setUniformf("yoffset", tmp.y);
 		gridShader.setUniformf("X", Gdx.input.getX());
 		gridShader.setUniformf("Y", Gdx.graphics.getHeight() - Gdx.input.getY());
-		gridShader.setUniformf("PX",mousecoord.x);
-		gridShader.setUniformf("PY", mousecoord.y);
+		gridShader.setUniformf("PX",(int)mousecoord.x);
+		gridShader.setUniformf("PY", (int)mousecoord.y);
 		gridBatch.draw(nullTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		gridBatch.end();
 		

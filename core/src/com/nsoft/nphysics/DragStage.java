@@ -11,6 +11,11 @@ import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 
+/**
+ * clase abstracta que defineix funcions i valors amb la utilitat de poder crear una fase amb
+ * la capacitat de moure la camara lliurement
+ * @author David
+ */
 public abstract class DragStage extends Stage{
 
 	private Position axisPosition = new PositionVector(Vector2.Zero);
@@ -97,6 +102,10 @@ public abstract class DragStage extends Stage{
 	public float unprojectX(float x) {return camera.unproject(new Vector3(x, 0, 0)).x;}
 	public float unprojectY(float y) {return camera.unproject(new Vector3(0, y, 0)).y;}
 	
+	public float getZoom() {
+		
+		return camera.zoom;
+	}
 	public void dragCamera(float screenX,float screenY) {
 		
 		float screeny = Gdx.graphics.getHeight() - screenY;

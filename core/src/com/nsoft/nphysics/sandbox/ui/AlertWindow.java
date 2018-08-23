@@ -12,7 +12,7 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisWindow;
-import com.nsoft.nphysics.Dictionary;
+import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.Util;
@@ -52,7 +52,7 @@ public class AlertWindow extends VisWindow{
 		main.row();
 		
 		VisTable closeT = new VisTable();
-		VisTextButton closeB = new VisTextButton(Dictionary.get("closewindow"));	
+		VisTextButton closeB = new VisTextButton(NDictionary.get("closewindow"));	
 		
 		closeB.addListener(new ClickListener() {
 			

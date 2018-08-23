@@ -46,8 +46,10 @@ public class PolygonObject extends Actor{
 	float[][] buff;
 	Body b;
 	
-	public PolygonObject(PolygonDefinition def) {
+	World owner;
+	public PolygonObject(PolygonDefinition def,World owner) {
 		
+		this.owner = owner;
 		this.def = def;
 		initVertexBuffer();
 		createObject();
@@ -169,7 +171,7 @@ public class PolygonObject extends Actor{
 		bdef.type = checkStatic(def.type);
 		bdef.position.set(def.getCenter(true));
 		bdef.linearVelocity.set(def.linearVelocity);
-		b = SimulationStage.world.createBody(bdef);
+		b = owner.createBody(bdef);
 		createFixtures();
 		if(bdef.type != BodyType.StaticBody)createJoints();
 	}
@@ -225,7 +227,7 @@ public class PolygonObject extends Actor{
 				def.motorSpeed = s.speed;
 				anchor = def.bodyB;
 				anchors.add(anchor);
-				SimulationStage.world.createJoint(def);
+				owner.createJoint(def);
 			
 				if(def.bodyB.getPosition().epsilonEquals(def.bodyA.getPosition(), PHYSICAL_EPSILON)) {
 					
@@ -244,7 +246,7 @@ public class PolygonObject extends Actor{
 				Vector2 anchor = new Vector2(c.getX()/Util.UNIT, c.getY()/Util.UNIT);
 				def.initialize(b, createAnchor(anchor.x,anchor.y), anchor, new Vector2(1,0).rotate(p.getAngle()));
 				def.enableMotor = true;
-				SimulationStage.world.createJoint(def);
+				owner.createJoint(def);
 				
 				if(p.getAngle() == 0 || p.getAngle() == 180) reactY = true;
 				if(p.getAngle() == 90 || p.getAngle() == 270) reactX = true;
@@ -252,6 +254,7 @@ public class PolygonObject extends Actor{
 			if (c instanceof ForceComponent) {
 				
 				ForceComponent f = (ForceComponent)c;
+				if(f.isVariable()) return ;
 				Vector2 force = f.getForce().scl(1f/Util.UNIT);
 				Vector2 origin = f.getPosition().scl(1f/Util.UNIT);
 				
@@ -276,7 +279,7 @@ public class PolygonObject extends Actor{
 		def.position.set(x, y);
 		def.type = BodyType.StaticBody;
 		
-		Body b = SimulationStage.world.createBody(def);
+		Body b = owner.createBody(def);
 
 		
 		return b;

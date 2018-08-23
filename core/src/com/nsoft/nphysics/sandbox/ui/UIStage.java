@@ -2,9 +2,15 @@ package com.nsoft.nphysics.sandbox.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -20,6 +26,10 @@ import com.nsoft.nphysics.sandbox.Sandbox;
 
 public class UIStage extends Stage{
 
+	static ShaderProgram backSP;
+	static Texture nullTexture;
+	static SpriteBatch backBatch;
+	
 	static OptionPane options;
 	static VisLabel operation;
 	static Table back;
@@ -29,9 +39,13 @@ public class UIStage extends Stage{
 	static ShapeRenderer shapefill;
 	static Table container;
 	static MenuItem grid;
+	
+	
 	public UIStage() {
 		
 		super(new ScreenViewport());
+		
+		initBackGroundShader();
 		shapefill = new ShapeRenderer();
 		FontManager.init();
 		setStateMenu();
@@ -57,6 +71,21 @@ public class UIStage extends Stage{
 		loadSubMenu();
 	}
 	
+	public static void initBackGroundShader() {
+		
+		 String vertexShader = Gdx.files.internal("shaders/vertexShader").readString();
+	     String fragmentShader = Gdx.files.internal("shaders/backShader").readString();
+	     
+	     backSP = new ShaderProgram(vertexShader, fragmentShader);
+	     backSP.pedantic = false;
+	     System.out.println("Shader compiler log: " + backSP.getLog());
+	     
+	     Pixmap p = new  Pixmap(1, 1, Format.RGB565);
+	     nullTexture = new Texture(p);
+	     backBatch = new SpriteBatch();
+	     backBatch.setShader(backSP);
+	}
+
 	public static void setOperationText(String op) {
 		
 		operation.setText(op);
@@ -174,6 +203,13 @@ public class UIStage extends Stage{
 		shapefill.setColor(0.1f, 0.1f, 0.1f, 1f);
 		shapefill.rect(container.getX(), container.getY(), container.getWidth(), container.getHeight());
 		shapefill.end();
+		
+		/*backBatch.begin();
+		backSP.setUniformf("W",Gdx.graphics.getWidth());
+		backSP.setUniformf("H", Gdx.graphics.getHeight());
+		backSP.setUniformf("G", 1f);
+		backBatch.draw(nullTexture, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		backBatch.end();*/
 		super.draw();
 	}
 	

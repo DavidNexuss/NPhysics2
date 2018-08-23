@@ -25,7 +25,7 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisWindow;
-import com.nsoft.nphysics.Dictionary;
+import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
@@ -147,7 +147,7 @@ public class DynamicWindow extends VisWindow{
 		t.row();
 		
 		Table table_text = new Table();
-		VisTextButton text = new VisTextButton(Dictionary.get("closewindow"));
+		VisTextButton text = new VisTextButton(NDictionary.get("closewindow"));
 
 		text.addListener(new ClickListener() {
 			

@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
-import com.nsoft.nphysics.Dictionary;
+import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PolygonActor;
@@ -33,9 +33,9 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	
 	public void initBasicForm(String windowName) {
 		
-		form = DynamicWindow.createDefaultWindowStructure(Dictionary.get(windowName), 400, 400);
+		form = DynamicWindow.createDefaultWindowStructure(NDictionary.get(windowName), 400, 400);
 		form.setAsForm(this);
-		form.addText("origin", Dictionary.get("origin"));
+		form.addText("origin", NDictionary.get("origin"));
 		form.addOption(Option.createOptionNumber("originx").setValue(getX() / Util.UNIT));
 		form.addOption(Option.createOptionNumber("originy").setValue(getY() / Util.UNIT));
 		
@@ -69,6 +69,12 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 		
 	}
 	
+	public Vector2 getRelativePosition(boolean physValue) {
+		
+		Vector2 s = new Vector2(getX() - getPolygon().getDefinition().getCenter(false).getX(),getY() - getPolygon().getDefinition().getCenter(false).getY());
+		return physValue ? s.scl(1f/Util.UNIT) : s;
+		
+	}
 	@Override
 	public void setPosition(float x, float y) {
 		super.setPosition(x, y);

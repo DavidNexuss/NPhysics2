@@ -11,5 +11,6 @@
     
 	<add-linker name="xsiframe"/>	
 	<set-configuration-property name="devModeRedirectEnabled" value="true"/>
-	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>	
+	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
+	<extend-configuration-property name="gdx.reflect.include" value="com.nsoft.nphysics.NDictionary" />	
 </module>

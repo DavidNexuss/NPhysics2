@@ -67,7 +67,7 @@ public class SimulationStage extends GridStage{
 		objectsMap = new HashMap<>();
 		for (PolygonActor d: SimulationPackage.polygons)  {
 			
-			PolygonObject o = new PolygonObject(d.getDefinition());
+			PolygonObject o = new PolygonObject(d.getDefinition(),world);
 			objects.add(o);
 			objectsMap.put(d, o);
 			addActor(o);

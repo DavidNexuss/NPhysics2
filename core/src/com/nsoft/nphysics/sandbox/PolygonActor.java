@@ -24,7 +24,7 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextArea;
 import com.kotcrab.vis.ui.widget.VisTextButton;
-import com.nsoft.nphysics.Dictionary;
+import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.drawables.AngleArcActor;
@@ -134,7 +134,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		form.setSize(450, 450);
 		form.setAsForm(this);
 		
-		form.addOption(Option.createOptionTypeSlider("polygon_phys_state", Dictionary.get("phys_DYNAMIC"),Dictionary.get("phys_KINEMATIC"),Dictionary.get("phys_STATIC")));
+		form.addOption(Option.createOptionTypeSlider("polygon_phys_state", NDictionary.get("phys_DYNAMIC"),NDictionary.get("phys_KINEMATIC"),NDictionary.get("phys_STATIC")));
 		form.addOption(Option.createOptionNumber("polygon_lvel_x"));
 		form.addOption(Option.createOptionNumber("polygon_lvel_y"));
 		form.addOption(Option.createOptionNumber("polygon_phys_mass"));
@@ -149,7 +149,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		
 		VisTable solve_dsl = new VisTable();
-		VisLabel dsl_t = new VisLabel(Dictionary.get("dsl_unknowns"));
+		VisLabel dsl_t = new VisLabel(NDictionary.get("dsl_unknowns"));
 		dsl_t.setStyle(new LabelStyle(FontManager.subtitle, Color.WHITE));
 		VisLabel dsl_n = new VisLabel() {
 			
@@ -160,7 +160,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 				super.act(delta);
 			}
 		};
-		VisTextButton dsl_b= new VisTextButton(Dictionary.get("dsl_solve"));
+		VisTextButton dsl_b= new VisTextButton(NDictionary.get("dsl_solve"));
 		
 		solve_dsl.add(dsl_t).expand().align(Align.left);
 		solve_dsl.add(dsl_n).prefWidth(50).width(50);
@@ -412,15 +412,17 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		if(m2) return hitboxPolygon.area() / (30*30);
 		else return hitboxPolygon.area();
 	}
-	private void calculateMass() {
+	public float calculateMass() {
 		
 		physMass = definition.density * getArea(true);
 		form.getOption("polygon_phys_mass").setValue(physMass);
+		return physMass;
 	}
-	private void calculateDensity() {
+	public float calculateDensity() {
 		
 		definition.density = physMass / getArea(true);
 		form.getOption("polygon_phys_density").setValue(definition.density);
+		return definition.density;
 	}
 	private void createDefinition() {
 		
@@ -568,6 +570,10 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		components.remove(child);
 	}
 	
+	public ArrayList<ObjectChildren> getObjectChildrenList(){
+		
+		return components;
+	}
 	@Override
 	public boolean remove() {
 		

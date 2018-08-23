@@ -20,7 +20,7 @@ import com.kotcrab.vis.ui.widget.VisSlider;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextField;
 import com.kotcrab.vis.ui.widget.VisTextField.TextFieldListener;
-import com.nsoft.nphysics.Dictionary;
+import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 
@@ -233,7 +233,7 @@ public class Option extends VisTable{
 	public static Option initEmtyOption(String name) {
 		
 		Option o = new Option(name);
-		String label = Dictionary.get(name);
+		String label = NDictionary.get(name);
 		o.add(new Label(Util.capable(200, label) + ":", VisUI.getSkin())).expand().fill().uniform();
 		return o;
 	}

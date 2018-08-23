@@ -42,8 +42,10 @@ import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
+import com.nsoft.nphysics.simulation.dsl.Builder;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
+import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 public class Sandbox extends GridStage implements Handler{
 	
 	public static SelectHandle mainSelect = new SelectHandle();
@@ -381,6 +383,14 @@ public class Sandbox extends GridStage implements Handler{
 				addActor(((PolygonActor)mainSelect.getLastSelected()).createCopy(new Vector2(getUnproject())));
 			}
 			return true;
+		case Keys.P:
+			
+			SolveJob l = new SolveJob(ForceComponent.list.get(0));
+			System.out.println(l.start());
+			return true;
+		case Keys.O:
+			
+			Builder.solve((PolygonActor)mainSelect.getLastSelected());
 		default:
 			return super.keyDown(keyCode);
 		}
