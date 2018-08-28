@@ -51,6 +51,6 @@ public class DesktopLauncher {
 					}
 				}
 			}).start();
-		},true) ,config);	
+		},false) ,config);	
 	}
 }

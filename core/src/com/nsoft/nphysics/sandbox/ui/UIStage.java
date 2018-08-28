@@ -25,6 +25,8 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisWindow;
 import com.kotcrab.vis.ui.widget.color.ColorPicker;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.ThreadManager;
+import com.nsoft.nphysics.ThreadManager.Task;
 import com.nsoft.nphysics.UILoader;
 import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.Sandbox;
@@ -220,15 +222,25 @@ public class UIStage extends Stage{
 		addActor(grid);
 	}
 	
+	private Task t = Task.createEmpty();
+	
+	public boolean canSwitch() {return t.isComplete();}
 	public void hideStaticMenu() {
 		
-		backgroundAnimation.addAction(Actions.fadeOut(0.8f, Interpolation.exp5));
-		menu.hide();
+		if(t.isComplete()) {
+			backgroundAnimation.addAction(Actions.fadeOut(0.8f, Interpolation.exp5));
+			menu.hide();
+			t = ThreadManager.createTimer(1f);
+		}
 	}
 	public void showStaticMenu() {
 		
-		backgroundAnimation.addAction(Actions.fadeIn(0.8f, Interpolation.exp5));
-		menu.show();
+		if(t.isComplete()) {
+			
+			backgroundAnimation.addAction(Actions.fadeIn(0.8f, Interpolation.exp5));
+			menu.show();
+			t = ThreadManager.createTimer(1f);
+		}
 	}
 	
 	@Override

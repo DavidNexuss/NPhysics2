@@ -97,10 +97,13 @@ public class NPhysics extends ApplicationAdapter {
 	
 	public static void switchMenu() {
 		
-		menu = !menu;
-		
-		if(menu) ui.showStaticMenu();
-		else ui.hideStaticMenu();
+		if(ui.canSwitch()) {
+			
+			menu = !menu;
+			
+			if(menu) ui.showStaticMenu();
+			else ui.hideStaticMenu();
+		}
 	}
 	/**
 	 * Cambia a la simulació

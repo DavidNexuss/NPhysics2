@@ -8,36 +8,65 @@ import com.badlogic.gdx.Application.ApplicationType;
 
 public class ThreadManager {
 	
+	public static ArrayList<Task> stackTasks = new ArrayList<>();
 	public static ArrayList<Task> tasks = new ArrayList<>();
 	
-	public static void createTask(Runnable r,float delay) {
+	public static Runnable empty = ()->{};
+	
+	public static Task createTimer(float delay) {
+		
+		Task t = new Task(empty, delay);
+		flowTask(t);
+		
+		return t;
+		
+	}
+	public static Task createTask(Runnable r,float delay) {
+		
+		Task t = new Task(r, delay);
+		tasks.add(t);
+		
+		flowTask(t);
+		return t;
+	}
+	
+	private static void flowTask(Task t) {
 		
 		if(Gdx.app.getType() == ApplicationType.Desktop && NPhysics.useMultiThreading) {
 			
-			NPhysics.getThreadManager().startThread(r, (long)(delay*1000));
+			NPhysics.getThreadManager().startThread(()->{
+				
+				t.task.run();
+				t.shouldRun = false;
+			}, (long)(t.delay*1000));
 		}else {
 			
-			tasks.add(new Task(r,delay));
+			stackTasks.add(t);
 		}
 	}
-	
+	private static ArrayList<Task> buffer = new ArrayList<>();
 	public static void act(float delta) {
 		
-		for (Task task : tasks) {
+		for (Task task : stackTasks) {
 			
-			if(!task.shouldRun) continue;
+			if(task.isComplete()) continue;
 			
 			if(task.sum < task.delay) {
 				task.sum += delta;
+				buffer.add(task);
 			}else {
 				
 				task.task.run();
 				task.shouldRun = false;
 			}
 		}
+		
+		stackTasks.clear();
+		stackTasks.addAll(buffer);
+		buffer.clear();
 	}
 	
-	static class Task{
+	public static class Task{
 		
 		Runnable task;
 		float delay;
@@ -46,6 +75,18 @@ public class ThreadManager {
 		public Task(Runnable task, float delay) {
 			this.task = task;
 			this.delay = delay;
+		}
+		
+		public boolean isComplete() {
+			
+			return !shouldRun;
+		}
+		
+		public static Task createEmpty() {
+			
+			Task t = new Task(null, 0);
+			t.shouldRun = false;
+			return t;
 		}
 	}
 }
