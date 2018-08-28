@@ -148,6 +148,10 @@ public abstract class DragStage extends Stage{
 
 			Gdx.app.exit();
 			return true;
+		case Keys.F1:
+			
+			NPhysics.switchMenu();
+			return true;
 		default:
 			
 			return super.keyDown(keyCode);

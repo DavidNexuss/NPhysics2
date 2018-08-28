@@ -28,6 +28,8 @@ public class NPhysics extends ApplicationAdapter {
 	public static GridStage currentStage;
 	static NPhysics current;
 	public static SpecificOSFunctions functions = new DefaultOSFunctions();
+	public static boolean menu = false;
+	
 	
 	public static ThreadCase getThreadManager(){ return threads;}
 	
@@ -93,6 +95,13 @@ public class NPhysics extends ApplicationAdapter {
 		
 	}
 	
+	public static void switchMenu() {
+		
+		menu = !menu;
+		
+		if(menu) ui.showStaticMenu();
+		else ui.hideStaticMenu();
+	}
 	/**
 	 * Cambia a la simulació
 	 */

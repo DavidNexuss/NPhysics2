@@ -76,17 +76,23 @@ public class GridStage extends DragStage{
 		
 		gridBatch.begin();
 		camera.project(tmp);
-		mousecoord.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-		camera.unproject(mousecoord);
-		mousecoord.set(snapGrid(mousecoord.x), snapGrid(mousecoord.y), 0);
+		
+		if(!NPhysics.menu) {
+			
+			mousecoord.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(mousecoord);
+			mousecoord.set(snapGrid(mousecoord.x), snapGrid(mousecoord.y), 0);
+		}
+		gridShader.setUniformf("PX",(int)mousecoord.x);
+		gridShader.setUniformf("PY", (int)mousecoord.y);
+		
+		
 		camera.project(mousecoord);
 		gridShader.setUniformf("grid", UNIT/camera.zoom);
 		gridShader.setUniformf("xoffset", tmp.x);
 		gridShader.setUniformf("yoffset", tmp.y);
 		gridShader.setUniformf("X", Gdx.input.getX());
 		gridShader.setUniformf("Y", Gdx.graphics.getHeight() - Gdx.input.getY());
-		gridShader.setUniformf("PX",(int)mousecoord.x);
-		gridShader.setUniformf("PY", (int)mousecoord.y);
 		gridBatch.draw(nullTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		gridBatch.end();
 		

@@ -10,8 +10,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -19,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisWindow;
+import com.kotcrab.vis.ui.widget.color.ColorPicker;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.UILoader;
 import com.nsoft.nphysics.sandbox.GState;
@@ -40,6 +45,9 @@ public class UIStage extends Stage{
 	static Table container;
 	static MenuItem grid;
 	
+	static Actor backgroundAnimation;
+	
+	public static StaticMenu menu;
 	
 	public UIStage() {
 		
@@ -69,8 +77,25 @@ public class UIStage extends Stage{
 		
 
 		loadSubMenu();
+		
+		backgroundAnimation = new Actor();
+		addActor(backgroundAnimation);
+		backgroundAnimation.setColor(0,0,0,0);
+		
+		initstaticMenu();
+		
 	}
 	
+	private void initstaticMenu() {
+		
+		menu = new StaticMenu();
+		
+		FixedWindow test = FixedWindow.createFixedWindow("Test", 100, 100, 300, 100, null);
+		test.addOption(Option.createOptionNumber("TEST"));
+		
+		menu.addWindow(test);
+		addActor(test);
+	}
 	public static void initBackGroundShader() {
 		
 		 String vertexShader = Gdx.files.internal("shaders/vertexShader").readString();
@@ -195,6 +220,16 @@ public class UIStage extends Stage{
 		addActor(grid);
 	}
 	
+	public void hideStaticMenu() {
+		
+		backgroundAnimation.addAction(Actions.fadeOut(0.8f, Interpolation.exp5));
+		menu.hide();
+	}
+	public void showStaticMenu() {
+		
+		backgroundAnimation.addAction(Actions.fadeIn(0.8f, Interpolation.exp5));
+		menu.show();
+	}
 	
 	@Override
 	public void draw() {
@@ -204,12 +239,12 @@ public class UIStage extends Stage{
 		shapefill.rect(container.getX(), container.getY(), container.getWidth(), container.getHeight());
 		shapefill.end();
 		
-		/*backBatch.begin();
+		backBatch.begin();
 		backSP.setUniformf("W",Gdx.graphics.getWidth());
 		backSP.setUniformf("H", Gdx.graphics.getHeight());
-		backSP.setUniformf("G", 1f);
+		backSP.setUniformf("G", backgroundAnimation.getColor().a);
 		backBatch.draw(nullTexture, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-		backBatch.end();*/
+		backBatch.end();
 		super.draw();
 	}
 	
