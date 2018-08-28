@@ -1,11 +1,6 @@
 uniform float time;
-uniform float W;
-uniform float H;
-uniform float G;
+uniform float A;
 void main(void)
 {
-    vec2 position = (gl_FragCoord.xy / vec2(W,H));
-	
-	gl_FragColor = vec4(0.0,0.0,0.0,G - 0.7);
-
+	gl_FragColor = vec4(0.0,0.0,0.0,A);
 }

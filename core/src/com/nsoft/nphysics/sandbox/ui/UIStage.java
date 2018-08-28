@@ -252,9 +252,7 @@ public class UIStage extends Stage{
 		shapefill.end();
 		
 		backBatch.begin();
-		backSP.setUniformf("W",Gdx.graphics.getWidth());
-		backSP.setUniformf("H", Gdx.graphics.getHeight());
-		backSP.setUniformf("G", backgroundAnimation.getColor().a);
+		backSP.setUniformf("A",backgroundAnimation.getColor().a / 2f);
 		backBatch.draw(nullTexture, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		backBatch.end();
 		super.draw();
