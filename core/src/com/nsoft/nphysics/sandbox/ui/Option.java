@@ -23,12 +23,15 @@ import com.kotcrab.vis.ui.widget.VisTextField.TextFieldListener;
 import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
+import com.nsoft.nphysics.sandbox.interfaces.UIOptionComponent;
 
 public class Option extends VisTable{
 
 	VisTextField textfield;
 	VisSlider slider;
-	VisCheckBox checkbox; private boolean lastCheck = false;
+	VisCheckBox checkbox; 
+	UIOptionComponent<Float, ?> option;
+	private boolean lastCheck = false;
 	private Label l;
 	Form form;
 	
@@ -98,6 +101,7 @@ public class Option extends VisTable{
 		
 		if(checkbox != null) return checkbox.isChecked() ? 1 : 0;
 		
+		if(option != null) return option.getValue();
 		throw new IllegalStateException();
 	}
 	
@@ -124,7 +128,12 @@ public class Option extends VisTable{
 			checkbox.setChecked(val == 1);
 			return this;
 		}
-		throw new IllegalStateException();
+
+		if(option != null) {
+			
+			option.setValue(val);
+		}
+		return this;
 	}
 	
 	public Cell<VisCheckBox> addCheckBoxInput(String text){
@@ -154,41 +163,11 @@ public class Option extends VisTable{
 		
 		return add(t);
 	}
-	public Cell<Widget> addNumberInput(){
+	public Cell<Actor> addNumberInput(){
 		
-		textfield = new VisTextField("0.0");
-		textfield.setFocusTraversal(false);
-		textfield.setTextFieldListener(new TextFieldListener() {
-			
-			@Override
-			public void keyTyped(VisTextField textField, char c) {
-				
-				if(c == '\r') {
-					
-					getForm().updateValuesFromForm();
-				}
-				
-				if(isNull(textfield.getText())) {
-					
-					textfield.setColor(Color.YELLOW);
-					nullValaue = true;
-					ready = true;
-					return;
-				}else nullValaue = false;
-				
-				if(!isMessageNumber()) {
-					
-					textfield.setColor(Color.RED);
-					ready = false;
-				}else {
-					
-					textfield.setColor(Color.WHITE);
-					ready = true;
-				}
-			
-			}
-		});
-		return add(textfield);
+		option = new UIOptionNumber(this);
+		VisTextField a = (VisTextField)option.getComponent();
+		return add(option.getCell());
 
 	}
 	
@@ -262,6 +241,13 @@ public class Option extends VisTable{
 		
 		Option o = initEmtyOption(name);
 		o.addSliderTypeInput(args).expand().fill().uniform();
+		return o;
+	}
+	
+	public static Option createOptionColorSelector(String name) {
+		
+		Option o = initEmtyOption(name);
+		
 		return o;
 	}
 }

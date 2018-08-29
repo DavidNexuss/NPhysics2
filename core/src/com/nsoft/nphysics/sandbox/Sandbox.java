@@ -94,6 +94,7 @@ public class Sandbox extends GridStage implements Handler{
 	
 	public void initTextures() {
 		
+		Gdx.files.internal("misc/axis.png");
 		AxisSupport.Axis = new Texture(Gdx.files.internal("misc/axis.png"));
 		PrismaticComponent.Axis = new Texture(Gdx.files.internal("misc/rollaxis.png"));
 		

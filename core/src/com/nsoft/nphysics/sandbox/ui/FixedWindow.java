@@ -2,9 +2,11 @@ package com.nsoft.nphysics.sandbox.ui;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisWindow;
 import com.nsoft.nphysics.ThreadManager;
@@ -19,6 +21,9 @@ public class FixedWindow extends VisWindow implements Showable{
 	
 	public FixedWindow(String title,Form form) {
 		super(title);
+		
+		getTitleLabel().setStyle(new LabelStyle(FontManager.title, Color.WHITE));
+		getTitleTable().pad(5);
 		
 		add(content).expand().fill();
 		dragging = false;
