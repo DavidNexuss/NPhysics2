@@ -23,21 +23,17 @@ import com.kotcrab.vis.ui.widget.VisTextField.TextFieldListener;
 import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
-import com.nsoft.nphysics.sandbox.interfaces.UIOptionComponent;
+import com.nsoft.nphysics.sandbox.ui.option.UIOptionCheckBox;
+import com.nsoft.nphysics.sandbox.ui.option.UIOptionComponent;
+import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
+import com.nsoft.nphysics.sandbox.ui.option.UIOptionSlider;
 
 public class Option extends VisTable{
 
-	VisTextField textfield;
-	VisSlider slider;
-	VisCheckBox checkbox; 
 	UIOptionComponent<Float, ?> option;
 	private boolean lastCheck = false;
 	private Label l;
 	Form form;
-	
-	private boolean enable = true;
-	private boolean ready = true;
-	private boolean nullValaue = false;
 	
 	public boolean canCopy = true;
 	String[] args;
@@ -47,62 +43,22 @@ public class Option extends VisTable{
 		setName(name);
 	}
 	
-	public boolean isNull() {return nullValaue;}
-	public boolean isReady() {return ready;}
+	public boolean isNull() {return option.isNull();}
+	public boolean isReady() {return option.isReady();}
 	
 	public void setEnable(boolean newEnable) {
 		
-		enable = newEnable;
-		enableComponent(textfield, newEnable);
-		enableComponent(slider, newEnable);
-		enableComponent(checkbox, newEnable);
-	}
-	
-	private void enableComponent(Actor a,boolean enable) {
-		
-		if(a == null)return;
-		if(enable) {
-			
-			a.setColor(Color.WHITE);
-			a.setTouchable(Touchable.enabled);
-		}else {
-			
-			a.setColor(Color.GRAY);
-			a.setTouchable(Touchable.disabled);
-		}
+		option.enableComponent(newEnable);
 	}
 	@Override
 	public void act(float delta) {
 		
-		if(slider != null) {
-			
-			if(args == null)l.setText(slider.getValue() + "");
-			else l.setText(args[(int)slider.getValue()]);
-		}
-		
-		if(checkbox != null) {
-			
-			if(lastCheck != checkbox.isChecked()) {
-				
-				lastCheck = checkbox.isChecked();
-				getForm().updateValuesFromForm();
-			}
-		}
+		option.act();
 		super.act(delta);
 	}
 	public float getValue() {
-		
-		if(textfield != null) {
-			
-			return isNull(textfield.getText()) ? Float.MAX_VALUE : Float.parseFloat(textfield.getText() == "" ? "0" : textfield.getText());
-		}
-		
-		if(slider != null) return slider.getValue();
-		
-		if(checkbox != null) return checkbox.isChecked() ? 1 : 0;
-		
-		if(option != null) return option.getValue();
-		throw new IllegalStateException();
+
+		return option.getValue();
 	}
 	
 	public void setForm(Form f) {form = f;}
@@ -110,104 +66,31 @@ public class Option extends VisTable{
 	
 	public Option setValue(float val) {
 		
-
-		if(textfield != null) {
-			
-			textfield.setText(val + "");
-			return this;
-		}
-		
-		if(slider != null) {
-			
-			slider.setValue(val);
-			return this;
-		}
-		
-		if(checkbox != null) {
-			
-			checkbox.setChecked(val == 1);
-			return this;
-		}
-
-		if(option != null) {
-			
-			option.setValue(val);
-		}
+		option.setValue(val);
 		return this;
 	}
 	
-	public Cell<VisCheckBox> addCheckBoxInput(String text){
+	public Cell<VisTable> addCheckBoxInput(String text){
 		
-		checkbox = new VisCheckBox(text);
-		return add(checkbox);
+		option = new UIOptionCheckBox(this);
+		return add(option.getCell()).expand().fill();
 	}
-	public Cell<Table> addSliderInput(float min, float max,float step){
+	public Cell<VisTable> addSliderInput(float min, float max,float step){
 		
-		VisTable t = new VisTable();
-		
-		slider = new VisSlider(min, max, step, false);
-		l = new Label("", VisUI.getSkin());
-		t.add(slider).expand().fill();
-		t.add(l).expand().fill();
-		
-		return add(t);
+		option = new UIOptionSlider(this, min, max, step);
+		return add(option.getCell()).expand().fill();
 	}
-	public Cell<Table> addSliderTypeInput(String ... strings){
-		
-		VisTable t = new VisTable();
-		this.args = strings;
-		slider = new VisSlider(0, strings.length - 1,1, false);
-		l = new Label("", VisUI.getSkin());
-		t.add(slider).expand().fill().row();
-		t.add(l).expand().fill().row();
-		
-		return add(t);
+	public Cell<VisTable> addSliderTypeInput(String ... strings){
+		option = new UIOptionSlider(this, strings);
+		return add(option.getCell()).expand().fill();
 	}
-	public Cell<Actor> addNumberInput(){
+	public Cell<VisTable> addNumberInput(){
 		
 		option = new UIOptionNumber(this);
-		VisTextField a = (VisTextField)option.getComponent();
-		return add(option.getCell());
+		return add(option.getCell()).expand().fill();
 
 	}
 	
-	public void setNull(boolean nullv) {
-		
-		if(textfield != null) {
-			
-			if (nullv) {
-				
-				textfield.setColor(Color.YELLOW);
-				textfield.setText("NULL");
-			}else {
-				
-				textfield.setColor(Color.WHITE);
-				textfield.setText("0.0");
-			}
-		}
-		
-		nullValaue = nullv;
-	}
-	private boolean isNull(String n) {
-		
-		return n.equals("NULL");
-	}
-	private boolean isNumber(char c) {
-		
-		return c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9' || c == '0' || c == '.' || c == '-'; 
-	}
-	
-	private boolean isMessageNumber() {
-		
-		if(textfield.getText().length() == 0) return false;
-		for (int i = 0; i < textfield.getText().length(); i++) {
-			
-			char c = textfield.getText().charAt(i);
-			if(!isNumber(c)) return false;
-		}
-		
-		return true;
-	}
 	
 	public static Option initEmtyOption(String name) {
 		
