@@ -26,6 +26,7 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisWindow;
 import com.nsoft.nphysics.NDictionary;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
@@ -142,6 +143,15 @@ public class DynamicWindow extends VisWindow{
 	private void updateSize() {
 		
 		setSize(main.getPrefWidth() + 20, main.getPrefHeight() + 70);
+	}
+	
+	@Override
+	public Actor hit(float x, float y, boolean touchable) {
+		
+		Actor hit = super.hit(x, y, touchable);
+		if(hit != null) NPhysics.currentStage.setFocus(false);
+		else NPhysics.currentStage.setFocus(true);
+		return hit;
 	}
 	public static DynamicWindow createDefaultWindowStructure(String name) {
 		

@@ -27,6 +27,8 @@ public class GridStage extends DragStage{
 	private final Color backColor = new Color(1, 1, 1, 1);
 	private final Color invertbackColor = new Color(1,1,1,1);
 	
+	private boolean focus = true;
+	
 	public ShapeRenderer shapefill;	
 	public ShapeRenderer shapeline;
 	public ShapeRenderer shapepoint;
@@ -77,7 +79,7 @@ public class GridStage extends DragStage{
 		gridBatch.begin();
 		camera.project(tmp);
 		
-		if(!NPhysics.menu) {
+		if(!NPhysics.menu && hasFocus()) {
 			
 			mousecoord.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(mousecoord);
@@ -109,5 +111,12 @@ public class GridStage extends DragStage{
 		shapepoint.setProjectionMatrix(getCamera().combined);
 		getBatch().setProjectionMatrix(getCamera().combined);
 		
+	}
+	
+	public boolean hasFocus() {
+		return focus;
+	}
+	public void setFocus(boolean newFocus) {
+		focus = newFocus;
 	}
 }
