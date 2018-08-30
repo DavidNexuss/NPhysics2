@@ -14,7 +14,7 @@ void main()
 	int ix = int(gl_FragCoord.x) - int(PX);
 	int iy = int(gl_FragCoord.y) - int(PY);
 		
-	if((ix > -2 && ix < 2)|| (iy > -2 && iy < 2)){
+	if((ix > -1 && ix < 2)|| (iy > -1 && iy < 2)){
 		gl_FragColor = vec4(1,0,0,1.0);
 		
 	}else {

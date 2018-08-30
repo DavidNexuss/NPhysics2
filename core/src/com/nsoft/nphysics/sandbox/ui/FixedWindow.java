@@ -37,13 +37,18 @@ public class FixedWindow extends VisWindow implements Showable{
 		options.put(p.getName(), p);
 		Cell<Option> cell = content.add(p).expand().fillX();
 		content.row();
+		updateSize();
 		return cell;
 	}
 	
-	public static FixedWindow createFixedWindow(String name,float x,float y,float w,float h,Form form) {
+	private void updateSize() {
+		
+		setSize(content.getPrefWidth() + 20, content.getPrefHeight() + 40);
+	}
+	public static FixedWindow createFixedWindow(String name,float x,float y,Form form) {
 		
 		FixedWindow f = new FixedWindow(name,form);
-		f.setBounds(x, y, w, h);
+		f.setPosition(x, y);
 		return f;
 	}
 	

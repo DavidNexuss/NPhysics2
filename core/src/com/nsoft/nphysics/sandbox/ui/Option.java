@@ -30,7 +30,7 @@ import com.nsoft.nphysics.sandbox.ui.option.UIOptionSlider;
 
 public class Option extends VisTable{
 
-	UIOptionComponent<Float, ?> option;
+	UIOptionComponent<?, ?> option;
 	private boolean lastCheck = false;
 	private Label l;
 	Form form;
@@ -56,17 +56,28 @@ public class Option extends VisTable{
 		option.act();
 		super.act(delta);
 	}
+	public <T> T getValue(Class<T> clas) {
+		
+		return (T)option.getValue();
+	}
 	public float getValue() {
 
-		return option.getValue();
+		return getValue(Float.class);
 	}
 	
 	public void setForm(Form f) {form = f;}
 	public Form getForm() {return form;}
 	
-	public Option setValue(float val) {
+	public <T> Option setValue(T val) {
 		
-		option.setValue(val);
+		UIOptionComponent<T, ?> a = (UIOptionComponent<T, ?>)option;
+		a.setValue(val);
+		return this;
+	}
+	public Option setValueAsFloat(float val) {
+		
+		UIOptionComponent<Float, ?> a = (UIOptionComponent<Float, ?>)option;
+		a.setValue(val);
 		return this;
 	}
 	

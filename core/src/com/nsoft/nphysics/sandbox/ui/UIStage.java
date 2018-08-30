@@ -92,7 +92,8 @@ public class UIStage extends Stage{
 		
 		menu = new StaticMenu();
 		
-		FixedWindow test = FixedWindow.createFixedWindow("Test", 100, 100, 300, 100, null);
+		FixedWindow test = new FixedWindow("TEST", null);
+		test.setPosition(20, 40);
 		test.addOption(Option.createOptionNumber("TEST"));
 		
 		menu.addWindow(test);
