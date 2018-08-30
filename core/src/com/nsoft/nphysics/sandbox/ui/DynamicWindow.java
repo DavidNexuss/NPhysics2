@@ -35,6 +35,7 @@ public class DynamicWindow extends VisWindow{
 	private static DynamicWindow copyBuffer;
 	
 	VisTable content;
+	private VisTable main;
 	HashMap<String, Option> options = new HashMap<>();
 	HashMap<String, VisLabel> texts = new HashMap<>();
 	Form form;
@@ -106,6 +107,7 @@ public class DynamicWindow extends VisWindow{
 		
 		Cell<VisTable> cell = content.add(t).expand().fillX();
 		cell.row();
+		updateSize();
 		return cell;
 		
 	}
@@ -115,6 +117,8 @@ public class DynamicWindow extends VisWindow{
 		options.put(p.getName(), p);
 		Cell<Option> cell = content.add(p).expand().fillX();
 		content.row();
+		updateSize();
+		
 		return cell;
 	}
 	
@@ -125,23 +129,25 @@ public class DynamicWindow extends VisWindow{
 		texts.put(name, l);
 		Cell<VisLabel> cell = content.add(l).expand().fillX();
 		cell.row();
+		updateSize();
 		return cell;
 	}
 	
 	public void addSeparator() {
 		
 		content.addSeparator();
+		updateSize();
+	}
+	
+	private void updateSize() {
+		
+		setSize(main.getPrefWidth() + 20, main.getPrefHeight() + 70);
 	}
 	public static DynamicWindow createDefaultWindowStructure(String name) {
 		
-		return createDefaultWindowStructure(name, 0, 0);
-	}
-	public static DynamicWindow createDefaultWindowStructure(String name,float width,float height) {
-		
 		final DynamicWindow d = new DynamicWindow(name);
-		if(!(width == 0 && height == 0))d.setSize(width, height);
 		
-		Table t = new Table();
+		VisTable t = new VisTable();
 		t.pad(5f);
 		t.add(d.content).expand().fill();
 		t.row();
@@ -207,7 +213,7 @@ public class DynamicWindow extends VisWindow{
 		table_text.add(copypaste).expand().fill();
 		t.add(table_text).fill();
 		d.add(t).expand().fill();
-		
+		d.main = t;
 		d.addListener(new InputListener() {
 			
 			@Override
