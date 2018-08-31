@@ -26,6 +26,7 @@ import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
 import com.nsoft.nphysics.sandbox.ui.Option;
+import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
@@ -70,15 +71,15 @@ public class ForceComponent extends ObjectChildren implements Form{
 		getForm().setSize(450, 500);
 		getForm().addSeparator();
 		getForm().addText("force", NDictionary.get("force"));
-		getForm().addOption(Option.createOptionNumber("forcex"));
-		getForm().addOption(Option.createOptionNumber("forcey"));
+		getForm().addOption(Options.createOptionNumber("forcex"));
+		getForm().addOption(Options.createOptionNumber("forcey"));
 		getForm().addSeparator();
-		getForm().addOption(Option.createOptionNumber("forcemod"));
-		getForm().addOption(Option.createOptionNumber("forceangle"));
+		getForm().addOption(Options.createOptionNumber("forcemod"));
+		getForm().addOption(Options.createOptionNumber("forceangle"));
 		getForm().addSeparator();
-		getForm().addOption(Option.createCheckBoxOption("fvar"));
+		getForm().addOption(Options.createCheckBoxOption("fvar"));
 		getForm().addText("ftypeset", NDictionary.get("ftypeset"));
-		getForm().addOption(Option.createOptionTypeSlider("ftype", NDictionary.get("fworld"),NDictionary.get("ftrelative"),NDictionary.get("frelative")));
+		getForm().addOption(Options.createOptionTypeSlider("ftype", NDictionary.get("fworld"),NDictionary.get("ftrelative"),NDictionary.get("frelative")));
 	
 		label = new Label("F", VisUI.getSkin());
 		label.setStyle(new LabelStyle(label.getStyle()));

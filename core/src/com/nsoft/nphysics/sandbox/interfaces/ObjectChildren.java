@@ -15,6 +15,7 @@ import com.nsoft.nphysics.sandbox.SelectHandle;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.Option;
+import com.nsoft.nphysics.sandbox.ui.option.Options;
 
 public abstract class ObjectChildren extends Group implements ClickIn,Form,Removeable{
 
@@ -36,8 +37,8 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 		form = DynamicWindow.createDefaultWindowStructure(NDictionary.get(windowName));
 		form.setAsForm(this);
 		form.addText("origin", NDictionary.get("origin"));
-		form.addOption(Option.createOptionNumber("originx").setValue(getX() / Util.UNIT));
-		form.addOption(Option.createOptionNumber("originy").setValue(getY() / Util.UNIT));
+		form.addOption(Options.createOptionNumber("originx").setValue(getX() / Util.UNIT));
+		form.addOption(Options.createOptionNumber("originy").setValue(getY() / Util.UNIT));
 		
 		form.getOption("originx").canCopy = false;
 		form.getOption("originy").canCopy = false;

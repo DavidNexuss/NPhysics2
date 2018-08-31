@@ -24,41 +24,51 @@ import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionCheckBox;
+import com.nsoft.nphysics.sandbox.ui.option.UIOptionColorPicker;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionComponent;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionSlider;
 
 public class Option extends VisTable{
 
-	UIOptionComponent<?, ?> option;
+	UIOptionComponent<?, ?> component;
 	private boolean lastCheck = false;
 	private Label l;
 	Form form;
 	
 	public boolean canCopy = true;
 	String[] args;
-	public Option(String name) {
+	public Option(String name,UIOptionComponent<?, ?> component) {
 		
 		pad(5);
 		setName(name);
+		
+		String label = NDictionary.get(name);
+		add(new Label(Util.capable(200, label) + ":", VisUI.getSkin())).expand().fill().uniform();
+		
+		component.setMaster(this);
+		component.init();
+		add(component.getCell()).expand().fill().uniform();
+		
+		this.component = component;
 	}
 	
-	public boolean isNull() {return option.isNull();}
-	public boolean isReady() {return option.isReady();}
+	public boolean isNull() {return component.isNull();}
+	public boolean isReady() {return component.isReady();}
 	
 	public void setEnable(boolean newEnable) {
 		
-		option.enableComponent(newEnable);
+		component.enableComponent(newEnable);
 	}
 	@Override
 	public void act(float delta) {
 		
-		option.act();
+		component.act();
 		super.act(delta);
 	}
 	public <T> T getValue(Class<T> clas) {
 		
-		return (T)option.getValue();
+		return (T)component.getValue();
 	}
 	public float getValue() {
 
@@ -70,78 +80,15 @@ public class Option extends VisTable{
 	
 	public <T> Option setValue(T val) {
 		
-		UIOptionComponent<T, ?> a = (UIOptionComponent<T, ?>)option;
+		UIOptionComponent<T, ?> a = (UIOptionComponent<T, ?>)component;
 		a.setValue(val);
 		return this;
 	}
 	public Option setValueAsFloat(float val) {
 		
-		UIOptionComponent<Float, ?> a = (UIOptionComponent<Float, ?>)option;
+		UIOptionComponent<Float, ?> a = (UIOptionComponent<Float, ?>)component;
 		a.setValue(val);
 		return this;
 	}
 	
-	public Cell<VisTable> addCheckBoxInput(String text){
-		
-		option = new UIOptionCheckBox(this);
-		return add(option.getCell()).expand().fill();
-	}
-	public Cell<VisTable> addSliderInput(float min, float max,float step){
-		
-		option = new UIOptionSlider(this, min, max, step);
-		return add(option.getCell()).expand().fill();
-	}
-	public Cell<VisTable> addSliderTypeInput(String ... strings){
-		option = new UIOptionSlider(this, strings);
-		return add(option.getCell()).expand().fill();
-	}
-	public Cell<VisTable> addNumberInput(){
-		
-		option = new UIOptionNumber(this);
-		return add(option.getCell()).expand().fill();
-
-	}
-	
-	
-	public static Option initEmtyOption(String name) {
-		
-		Option o = new Option(name);
-		String label = NDictionary.get(name);
-		o.add(new Label(Util.capable(200, label) + ":", VisUI.getSkin())).expand().fill().uniform();
-		return o;
-	}
-	
-	public static Option createCheckBoxOption(String name) {
-		
-		Option o = initEmtyOption(name);
-		o.addCheckBoxInput("").expand().fill().uniform();
-		return o;
-	}
-	public static Option createOptionNumber(String name) {
-		
-		Option o = initEmtyOption(name);
-		o.addNumberInput().expand().fill().uniform();
-		return o;
-	}
-	
-	public static Option createOptionSlider(String name,float min,float max,float step) {
-		
-		Option o = initEmtyOption(name);
-		o.addSliderInput(min, max, step).expand().fill().uniform();
-		return o;
-	}
-	
-	public static Option createOptionTypeSlider(String name,String ... args) {
-		
-		Option o = initEmtyOption(name);
-		o.addSliderTypeInput(args).expand().fill().uniform();
-		return o;
-	}
-	
-	public static Option createOptionColorSelector(String name) {
-		
-		Option o = initEmtyOption(name);
-		
-		return o;
-	}
 }

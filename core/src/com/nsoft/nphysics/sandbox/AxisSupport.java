@@ -15,6 +15,7 @@ import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.Option;
+import com.nsoft.nphysics.sandbox.ui.option.Options;
 
 public class AxisSupport extends ObjectChildren implements Form{
 
@@ -39,8 +40,8 @@ public class AxisSupport extends ObjectChildren implements Form{
 		b = new SpriteBatch();
 
 		getForm().addSeparator();
-		getForm().addOption(Option.createOptionNumber("torque"));
-		getForm().addOption(Option.createOptionNumber("mspeed"));
+		getForm().addOption(Options.createOptionNumber("torque"));
+		getForm().addOption(Options.createOptionNumber("mspeed"));
 
 		
 	}

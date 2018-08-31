@@ -41,6 +41,7 @@ import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
 import com.nsoft.nphysics.sandbox.ui.Option;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
+import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dsl.Force;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
@@ -134,14 +135,14 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		form.setSize(450, 450);
 		form.setAsForm(this);
 		
-		form.addOption(Option.createOptionTypeSlider("polygon_phys_state", NDictionary.get("phys_DYNAMIC"),NDictionary.get("phys_KINEMATIC"),NDictionary.get("phys_STATIC")));
-		form.addOption(Option.createOptionNumber("polygon_lvel_x"));
-		form.addOption(Option.createOptionNumber("polygon_lvel_y"));
-		form.addOption(Option.createOptionNumber("polygon_phys_mass"));
+		form.addOption(Options.createOptionTypeSlider("polygon_phys_state", NDictionary.get("phys_DYNAMIC"),NDictionary.get("phys_KINEMATIC"),NDictionary.get("phys_STATIC")));
+		form.addOption(Options.createOptionNumber("polygon_lvel_x"));
+		form.addOption(Options.createOptionNumber("polygon_lvel_y"));
+		form.addOption(Options.createOptionNumber("polygon_phys_mass"));
 		
-		form.addOption(Option.createOptionNumber("polygon_phys_density"));
-		form.addOption(Option.createOptionNumber("polygon_phys_friction"));
-		form.addOption(Option.createOptionNumber("polygon_phys_restitution"));
+		form.addOption(Options.createOptionNumber("polygon_phys_density"));
+		form.addOption(Options.createOptionNumber("polygon_phys_friction"));
+		form.addOption(Options.createOptionNumber("polygon_phys_restitution"));
 		
 		form.getOption("polygon_phys_density").setValue(definition.density);
 		form.getOption("polygon_phys_friction").setValue(definition.friction);

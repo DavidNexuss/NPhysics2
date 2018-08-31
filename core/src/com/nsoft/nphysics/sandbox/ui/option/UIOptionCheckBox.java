@@ -7,14 +7,13 @@ public class UIOptionCheckBox extends UIOptionComponent<Float, VisCheckBox>{
 
 	private boolean lastCheck;
 	
-	public UIOptionCheckBox(Option master) {
-		this(master,false);
+	public UIOptionCheckBox() {
+		this(false);
 	}
 	
-	public UIOptionCheckBox(Option master,boolean initial) {
-		super(master);
+	public UIOptionCheckBox(boolean initial) {
+		super();
 		lastCheck = initial;
-		init();
 	}
 	@Override
 	public Float getValue() {

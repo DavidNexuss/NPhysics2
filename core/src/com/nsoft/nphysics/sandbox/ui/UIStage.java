@@ -30,6 +30,7 @@ import com.nsoft.nphysics.ThreadManager.Task;
 import com.nsoft.nphysics.UILoader;
 import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.Sandbox;
+import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
 
 public class UIStage extends Stage{
 
@@ -94,7 +95,7 @@ public class UIStage extends Stage{
 		
 		FixedWindow test = new FixedWindow("TEST", null);
 		test.setPosition(20, 40);
-		test.addOption(Option.createOptionNumber("TEST"));
+		test.addOption(new Option("Test", new UIOptionNumber()));
 		
 		menu.addWindow(test);
 		addActor(test);

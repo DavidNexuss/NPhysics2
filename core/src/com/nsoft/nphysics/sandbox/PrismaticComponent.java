@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.Option;
+import com.nsoft.nphysics.sandbox.ui.option.Options;
 
 public class PrismaticComponent extends ObjectChildren{
 
@@ -34,7 +35,7 @@ public class PrismaticComponent extends ObjectChildren{
 		b = new SpriteBatch();
 
 		getForm().addSeparator();
-		getForm().addOption(Option.createOptionNumber("pangle"));
+		getForm().addOption(Options.createOptionNumber("pangle"));
 		getForm().getOption("pangle").setValue(angle);
 	}
 

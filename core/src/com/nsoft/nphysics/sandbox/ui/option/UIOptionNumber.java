@@ -10,11 +10,6 @@ import com.nsoft.nphysics.sandbox.ui.Option;
 
 public class UIOptionNumber extends UIOptionComponent<Float,VisTextField>{
 
-	public UIOptionNumber(Option master) {
-		super(master);
-		init();
-	}
-
 	@Override
 	public void createComponent() {
 		

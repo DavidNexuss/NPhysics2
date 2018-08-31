@@ -22,13 +22,10 @@ public abstract class UIOptionComponent<T,A extends Actor>{
 	public abstract boolean setValue(T newVal);
 	public abstract void createComponent();
 	
-	public UIOptionComponent(Option master) {
-		
-		this.master = master;
-	}
+	public UIOptionComponent() {}
 	
 	public void init() {
-		
+		if(master == null) throw new IllegalStateException();
 		createComponent();
 		initCell();
 	}
@@ -48,6 +45,8 @@ public abstract class UIOptionComponent<T,A extends Actor>{
 	
 	public A getComponent() {return component;}
 	public void setComponent(A neww) {component = neww;}
+	
+	public void setMaster(Option o) {master = o;}
 	
 	public boolean isEnabled() {return enable;}
 	
@@ -91,4 +90,5 @@ public abstract class UIOptionComponent<T,A extends Actor>{
 	public Form getForm() { return master.getForm(); }
 	
 	public void act() {}
+	
 }

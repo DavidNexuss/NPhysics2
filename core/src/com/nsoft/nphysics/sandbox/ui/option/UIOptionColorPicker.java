@@ -22,9 +22,8 @@ public class UIOptionColorPicker extends UIOptionComponent<Color, VisImageButton
 	
 	private ColorPicker picker;
 	private Color color;
-	public UIOptionColorPicker(Option master) {
-		super(master);
-		init();
+	public UIOptionColorPicker() {
+		super();
 	}
 
 	@Override

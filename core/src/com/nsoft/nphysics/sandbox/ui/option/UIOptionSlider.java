@@ -13,21 +13,20 @@ public class UIOptionSlider extends UIOptionComponent<Float, VisSlider>{
 	
 	private float min,max,stepSize;
 	
-	public UIOptionSlider(Option master,String ... args) {
-		this(master,0,args.length - 1,1);
+	public UIOptionSlider(String ... args) {
+		this(0,args.length - 1,1);
 		this.args = args;
 	}
 	
 	
-	public UIOptionSlider(Option master,float min,float max,float stepSize) {
+	public UIOptionSlider(float min,float max,float stepSize) {
 		
-		super(master);
+		super();
 		
 		this.max = max;
 		this.min = min;
 		this.stepSize = stepSize;
 		
-		init();
 	}
 	@Override
 	public Float getValue() {
