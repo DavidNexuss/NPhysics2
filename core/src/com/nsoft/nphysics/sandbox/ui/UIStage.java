@@ -30,6 +30,7 @@ import com.nsoft.nphysics.ThreadManager.Task;
 import com.nsoft.nphysics.UILoader;
 import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.Sandbox;
+import com.nsoft.nphysics.sandbox.ui.option.UIOptionColorPicker;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
 
 public class UIStage extends Stage{
@@ -52,10 +53,12 @@ public class UIStage extends Stage{
 	
 	public static StaticMenu menu;
 	
+	public static UIStage stage;
 	public UIStage() {
 		
 		super(new ScreenViewport());
 		
+		stage = this;
 		initBackGroundShader();
 		shapefill = new ShapeRenderer();
 		FontManager.init();
@@ -95,7 +98,7 @@ public class UIStage extends Stage{
 		
 		FixedWindow test = new FixedWindow("TEST", null);
 		test.setPosition(20, 40);
-		test.addOption(new Option("Test", new UIOptionNumber()));
+		test.addOption(new Option("Test", new UIOptionColorPicker()));
 		
 		menu.addWindow(test);
 		addActor(test);

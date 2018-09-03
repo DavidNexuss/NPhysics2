@@ -108,6 +108,7 @@ public abstract class DragStage extends Stage{
 	}
 	public void dragCamera(float screenX,float screenY) {
 		
+		if(NPhysics.menu) return;
 		float screeny = Gdx.graphics.getHeight() - screenY;
 		
 		

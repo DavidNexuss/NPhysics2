@@ -13,7 +13,7 @@ public class UIOptionNumber extends UIOptionComponent<Float,VisTextField>{
 	@Override
 	public void createComponent() {
 		
-		setComponent(new VisTextField("0.0"));
+		setComponent(new VisTextField("0"));
 		getComponent().setFocusTraversal(false);
 		getComponent().setTextFieldListener(new TextFieldListener() {
 			
@@ -57,7 +57,12 @@ public class UIOptionNumber extends UIOptionComponent<Float,VisTextField>{
 	@Override
 	public boolean setValue(Float newVal) {
 		
-		getComponent().setText("" + newVal);
+		if(newVal.intValue() == newVal.floatValue()) {
+			
+			getComponent().setText("" + newVal.intValue());
+		}else {
+			getComponent().setText("" + newVal.floatValue());
+		}
 		return true;
 	}
 	

@@ -13,7 +13,9 @@ import com.kotcrab.vis.ui.widget.VisCheckBox;
 import com.kotcrab.vis.ui.widget.VisImageButton;
 import com.kotcrab.vis.ui.widget.color.ColorPicker;
 import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.ui.Option;
+import com.nsoft.nphysics.sandbox.ui.UIStage;
 
 public class UIOptionColorPicker extends UIOptionComponent<Color, VisImageButton>{
 
@@ -21,7 +23,7 @@ public class UIOptionColorPicker extends UIOptionComponent<Color, VisImageButton
 	public static final int boxheight = 8;
 	
 	private ColorPicker picker;
-	private Color color;
+	private Color color = Color.WHITE;
 	public UIOptionColorPicker() {
 		super();
 	}
@@ -50,7 +52,7 @@ public class UIOptionColorPicker extends UIOptionComponent<Color, VisImageButton
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				
-				if(!picker.isVisible()) picker.fadeIn();
+				picker.fadeIn();
 				super.clicked(event, x, y);
 			}
 		});
@@ -62,6 +64,8 @@ public class UIOptionColorPicker extends UIOptionComponent<Color, VisImageButton
 				setValue(newColor);
 			}
 		});
+		
+		UIStage.stage.addActor(picker);
 	}
 	
 	private Drawable createImage(Color c) {
