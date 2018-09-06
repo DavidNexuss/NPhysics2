@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -42,6 +43,7 @@ public class SimulationStage extends GridStage{
 	static Matrix4 mat;
 	static Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 	
+	boolean active = true;
 	public SimulationStage(Camera camera) {
 		
 		super(new ScreenViewport(camera));
@@ -118,12 +120,18 @@ public class SimulationStage extends GridStage{
 	@Override
 	public void draw() {
 		
-		aplyForces();
-		world.step(Gdx.graphics.getDeltaTime(), 8, 6);
+		if(active)stepSimulation();
 		renderer.render(world, mat);
 		super.draw();
 	}
 
+	public void stepSimulation() {
+		
+		aplyForces();
+		world.step(Gdx.graphics.getDeltaTime(), 8, 6);
+		
+	}
+	
 	@Override
 	public void updateMatrix() {
 		
@@ -204,4 +212,17 @@ public class SimulationStage extends GridStage{
 		}
 		return false;
 	}
+	
+	@Override
+	public boolean keyDown(int keyCode) {
+		
+		if(super.keyDown(keyCode)) return true;
+		
+		if(keyCode == Keys.ENTER) {
+			active = !active;
+			return true;
+		}
+		return false;
+	}
+	
 }
