@@ -29,6 +29,7 @@ import com.nsoft.nphysics.sandbox.PrismaticComponent;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
+import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 
 public class PolygonObject extends Actor{
 
@@ -47,6 +48,10 @@ public class PolygonObject extends Actor{
 	Body b;
 	
 	World owner;
+	
+	ArrowLabel gravityLabel;
+	ArrowLabel velLabel;
+	
 	public PolygonObject(PolygonDefinition def,World owner) {
 		
 		this.owner = owner;
@@ -59,6 +64,15 @@ public class PolygonObject extends Actor{
 		velocityArrow = new SimpleArrow(center, new Vector2(b.getLinearVelocity()).add(center));
 		gravityArrow.setColor(Color.BLUE);
 		velocityArrow.setColor(Color.CYAN);
+		
+		velLabel = new ArrowLabel();
+		gravityLabel = new ArrowLabel();
+	
+		gravityLabel.setFloat(SimulationStage.gravity.y * b.getMass());
+		gravityLabel.conc("N");
+		
+		gravityLabel.setColor(Color.YELLOW);
+		velLabel.setColor(Color.CYAN);
 
 	}
 	
@@ -116,6 +130,8 @@ public class PolygonObject extends Actor{
 				gravityArrow.updateVertexArray();
 				
 				gravityArrow.draw(batch, parentAlpha);
+				
+				gravityLabel.setPosition(gravityArrow.getStart().add(new Vector2(60, -50)));
 			}
 			
 			if(!(reactX && reactY)) {
@@ -125,6 +141,11 @@ public class PolygonObject extends Actor{
 				velocityArrow.updateVertexArray();
 				
 				velocityArrow.draw(batch, parentAlpha);
+				
+				velLabel.setFloat(b.getLinearVelocity().len() * b.getMass());
+				velLabel.conc("kg m/s");
+				
+				velLabel.setPosition(velocityArrow.getStart().add(new Vector2(60,50)));
 			}
 		}
 		

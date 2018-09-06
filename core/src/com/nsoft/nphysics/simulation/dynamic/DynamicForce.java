@@ -1,13 +1,17 @@
 package com.nsoft.nphysics.simulation.dynamic;
 
+import java.text.DecimalFormat;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.kotcrab.vis.ui.widget.VisLabel;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.ForceComponent.Type;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
+import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 import com.nsoft.nphysics.sandbox.Util;
 
 public class DynamicForce {
@@ -18,10 +22,13 @@ public class DynamicForce {
 	Vector2 diff;
 	Vector2 pforce;
 	ForceComponent.Type type;
+	
+	ArrowLabel label;
 	boolean isCentered = false;
 	
 	SimpleArrow arrow;
 	
+	DecimalFormat d = new DecimalFormat("#.##");
 	Vector2 getOrigin() {
 		
 		return origin;
@@ -59,6 +66,8 @@ public class DynamicForce {
 		pforce = force;
 		type = t;
 		NPhysics.currentStage.addActor(arrow);
+		
+		createLabel();
 	}
 	void update(Body b,Vector2 pivot,boolean usingPosition) {
 		
@@ -90,5 +99,17 @@ public class DynamicForce {
 		}
 		
 		arrow.updateVertexArray();
+		
+		label.setPosition(arrow.getStart().add(new Vector2(60, 30)));
+		
 	}
+	
+	void createLabel() {
+		
+		label = new ArrowLabel();
+		label.setFloat(pforce.len()*10);
+		label.conc("N");
+		label.setColor(Color.RED);
+	}
+	
 }

@@ -65,7 +65,7 @@ public class UIOptionColorPicker extends UIOptionComponent<Color, VisImageButton
 			}
 		});
 		
-		UIStage.stage.addActor(picker);
+	//	UIStage.stage.addActor(picker);
 	}
 	
 	private Drawable createImage(Color c) {
