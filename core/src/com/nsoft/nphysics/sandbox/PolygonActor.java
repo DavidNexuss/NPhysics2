@@ -131,9 +131,8 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 
 	private void initForm() {
 		
-		form = DynamicWindow.createDefaultWindowStructure("Wpolygon");
+		form = DynamicWindow.createDefaultWindowStructure("Wpolygon",this);
 		form.setSize(450, 450);
-		form.setAsForm(this);
 		
 		form.addOption(Options.createOptionTypeSlider("polygon_phys_state", NDictionary.get("phys_DYNAMIC"),NDictionary.get("phys_KINEMATIC"),NDictionary.get("phys_STATIC")));
 		form.addOption(Options.createOptionNumber("polygon_lvel_x"));

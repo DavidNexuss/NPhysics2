@@ -34,15 +34,13 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	
 	public void initBasicForm(String windowName) {
 		
-		form = DynamicWindow.createDefaultWindowStructure(NDictionary.get(windowName));
-		form.setAsForm(this);
+		form = DynamicWindow.createDefaultWindowStructure(NDictionary.get(windowName),this);
 		form.addText("origin", NDictionary.get("origin"));
 		form.addOption(Options.createOptionNumber("originx").setValue(getX() / Util.UNIT));
 		form.addOption(Options.createOptionNumber("originy").setValue(getY() / Util.UNIT));
 		
 		form.getOption("originx").canCopy = false;
 		form.getOption("originy").canCopy = false;
-		form.setAsForm(this);
 		form.setVisible(false);
 		
 		NPhysics.ui.addActor(form);

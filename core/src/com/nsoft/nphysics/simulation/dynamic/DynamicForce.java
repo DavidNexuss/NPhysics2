@@ -69,6 +69,11 @@ public class DynamicForce {
 		
 		createLabel();
 	}
+	
+	void updateLabel() {
+		
+		label.setPosition(arrow.getStart().add(new Vector2(60, 30)));
+	}
 	void update(Body b,Vector2 pivot,boolean usingPosition) {
 		
 		
@@ -100,7 +105,6 @@ public class DynamicForce {
 		
 		arrow.updateVertexArray();
 		
-		label.setPosition(arrow.getStart().add(new Vector2(60, 30)));
 		
 	}
 	

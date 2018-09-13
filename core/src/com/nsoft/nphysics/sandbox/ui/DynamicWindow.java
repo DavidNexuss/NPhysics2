@@ -31,28 +31,19 @@ import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 
-public class DynamicWindow extends VisWindow{
+public class DynamicWindow extends BaseOptionWindow {
 
 	private static DynamicWindow copyBuffer;
 	
-	VisTable content;
 	private VisTable main;
-	HashMap<String, Option> options = new HashMap<>();
-	HashMap<String, VisLabel> texts = new HashMap<>();
-	Form form;
+	
 	VisImageButton copy;
 	VisImageButton paste;
 	
-	public DynamicWindow(String title) {
-		super(title);
-		getTitleLabel().setStyle(new LabelStyle(FontManager.title, Color.WHITE));
-		getTitleTable().pad(5);
-		content = new VisTable();
+	public DynamicWindow(String title,Form form) {
+		super(title,form);
 	}
 	
-	public void setAsForm(Form superior) {
-		form = superior;
-	}
 	
 	public void paste() {
 		
@@ -102,48 +93,6 @@ public class DynamicWindow extends VisWindow{
 		}
 	}
 	public boolean isAForm() {return form != null;}
-	public Option getOption(String name) {return options.get(name);}
-	
-	public Cell<VisTable> addRawTable(VisTable t){
-		
-		Cell<VisTable> cell = content.add(t).expand().fillX();
-		cell.row();
-		updateSize();
-		return cell;
-		
-	}
-	public Cell<Option> addOption(Option p) {
-		
-		p.setForm(form);
-		options.put(p.getName(), p);
-		Cell<Option> cell = content.add(p).expand().fillX();
-		content.row();
-		updateSize();
-		
-		return cell;
-	}
-	
-	public Cell<VisLabel> addText(String name,String text) {
-		
-		VisLabel l = new VisLabel(text);
-		l.setStyle(new LabelStyle(FontManager.subtitle, Color.WHITE));
-		texts.put(name, l);
-		Cell<VisLabel> cell = content.add(l).expand().fillX();
-		cell.row();
-		updateSize();
-		return cell;
-	}
-	
-	public void addSeparator() {
-		
-		content.addSeparator();
-		updateSize();
-	}
-	
-	private void updateSize() {
-		
-		setSize(main.getPrefWidth() + 20, main.getPrefHeight() + 70);
-	}
 	
 	@Override
 	public Actor hit(float x, float y, boolean touchable) {
@@ -153,9 +102,10 @@ public class DynamicWindow extends VisWindow{
 		else NPhysics.currentStage.setFocus(true);
 		return hit;
 	}
-	public static DynamicWindow createDefaultWindowStructure(String name) {
+
+	public static DynamicWindow createDefaultWindowStructure(String name,Form form) {
 		
-		final DynamicWindow d = new DynamicWindow(name);
+		final DynamicWindow d = new DynamicWindow(name,form);
 		
 		VisTable t = new VisTable();
 		t.pad(5f);
@@ -232,8 +182,10 @@ public class DynamicWindow extends VisWindow{
 				return true;
 			}
 		});
+		
 		return d;
 	}
+	
 	public static void showWindow(DynamicWindow w) {
 	
 		if(copyBuffer != null) {
@@ -256,6 +208,13 @@ public class DynamicWindow extends VisWindow{
 		if(w.isAForm())w.form.updateValuesFromForm();
 		ThreadManager.createTask(()->{ w.setVisible(false);}, 0.5f);
 	}
+
+	@Override
+	public Form getForm() {
+		return form;
+	}
+
+
 	
 
 }

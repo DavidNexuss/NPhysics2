@@ -62,7 +62,7 @@ public class PolygonObject extends Actor{
 		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / 10f);
 		gravityArrow = new SimpleArrow(center, force.add(center));
 		velocityArrow = new SimpleArrow(center, new Vector2(b.getLinearVelocity()).add(center));
-		gravityArrow.setColor(Color.BLUE);
+		gravityArrow.setColor(Color.YELLOW);
 		velocityArrow.setColor(Color.CYAN);
 		
 		velLabel = new ArrowLabel();
@@ -147,6 +147,11 @@ public class PolygonObject extends Actor{
 				
 				velLabel.setPosition(velocityArrow.getStart().add(new Vector2(60,50)));
 			}
+		}
+		
+		for (DynamicForce  d : forces) {
+			
+			d.updateLabel();
 		}
 		
 	}

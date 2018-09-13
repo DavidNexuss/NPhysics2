@@ -96,12 +96,14 @@ public class UIStage extends Stage{
 		
 		menu = new StaticMenu();
 		
-		FixedWindow test = new FixedWindow("TEST", null);
-		test.setPosition(20, 40);
-		test.addOption(new Option("Test", new UIOptionColorPicker()));
+		FixedWindow sim = new FixedWindow("Simulation Options", null);
+		sim.setPosition(150, Gdx.graphics.getHeight());
+	
 		
-		menu.addWindow(test);
-		addActor(test);
+		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 50);
+		
+		menu.addWindow(sim);
+		addActor(sim);
 	}
 	public static void initBackGroundShader() {
 		
