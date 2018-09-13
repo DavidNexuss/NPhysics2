@@ -291,6 +291,11 @@ public class UIStage extends Stage{
 		contextMenu.setWidth(40);
 		contextMenu.setColor(new Color(0.2f, 0.2f, 0.2f, 1));
 		
+		doubleContextMenu.setPosition(80, 0);
+		doubleContextMenu.setHeight(Gdx.graphics.getHeight() - 30);
+		doubleContextMenu.setWidth(40);
+		doubleContextMenu.setColor(Color.BLACK);
+		
 		back.setPosition(0, 0);
 		back.setSize(Gdx.graphics.getWidth(), 40);
 		
