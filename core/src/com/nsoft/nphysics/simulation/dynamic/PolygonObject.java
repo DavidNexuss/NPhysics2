@@ -2,6 +2,7 @@ package com.nsoft.nphysics.simulation.dynamic;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -52,6 +53,7 @@ public class PolygonObject extends Actor{
 	ArrowLabel gravityLabel;
 	ArrowLabel velLabel;
 	
+	ArrayList<SimulationJoint> simjoints = new ArrayList<>();
 	public PolygonObject(PolygonDefinition def,World owner) {
 		
 		this.owner = owner;
@@ -123,7 +125,7 @@ public class PolygonObject extends Actor{
 		
 		if(def.type != BodyType.StaticBody) {
 			
-			if(!reactY) {
+			if(true) {
 				
 				gravityArrow.setStart(center);
 				gravityArrow.setEnd(force.add(center));
@@ -154,8 +156,22 @@ public class PolygonObject extends Actor{
 			d.updateLabel();
 		}
 		
+		for (SimulationJoint j : simjoints) {
+			
+			j.draw(batch, parentAlpha);
+		}
+		
 	}
 	
+	public Vector2 getCenter() {
+		
+		return new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
+	}
+	
+	public Vector2 getGravityForce() {
+		
+		return new Vector2(SimulationStage.gravity).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass()); 
+	}
 	public void aplyForce() {
 		 if(b.getType() == BodyType.StaticBody) return;
 		for (DynamicForce  d: forces) {
@@ -194,7 +210,7 @@ public class PolygonObject extends Actor{
 		
 
 		BodyDef bdef = new BodyDef();
-		bdef.type = checkStatic(def.type);
+		bdef.type = def.type;
 		bdef.position.set(def.getCenter(true));
 		bdef.linearVelocity.set(def.linearVelocity);
 		b = owner.createBody(bdef);
@@ -253,8 +269,8 @@ public class PolygonObject extends Actor{
 				def.motorSpeed = s.speed;
 				anchor = def.bodyB;
 				anchors.add(anchor);
-				owner.createJoint(def);
-			
+				
+				
 				if(def.bodyB.getPosition().epsilonEquals(def.bodyA.getPosition(), PHYSICAL_EPSILON)) {
 					
 					reactX = true;
@@ -263,6 +279,9 @@ public class PolygonObject extends Actor{
 
 				if(pivot == null) { pivot = (AxisSupport)c; usePivot = true;}
 				else {usePivot = false;}
+				
+				simjoints.add(new SimulationJoint(owner.createJoint(def)));
+				
 			}
 
 			if (c instanceof PrismaticComponent) {
@@ -272,7 +291,7 @@ public class PolygonObject extends Actor{
 				Vector2 anchor = new Vector2(c.getX()/Util.UNIT, c.getY()/Util.UNIT);
 				def.initialize(b, createAnchor(anchor.x,anchor.y), anchor, new Vector2(1,0).rotate(p.getAngle()));
 				def.enableMotor = true;
-				owner.createJoint(def);
+				simjoints.add(new SimulationJoint(owner.createJoint(def)));
 				
 				if(p.getAngle() == 0 || p.getAngle() == 180) reactY = true;
 				if(p.getAngle() == 90 || p.getAngle() == 270) reactX = true;

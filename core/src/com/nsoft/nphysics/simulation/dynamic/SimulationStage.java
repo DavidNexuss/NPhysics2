@@ -43,13 +43,20 @@ public class SimulationStage extends GridStage{
 	static Matrix4 mat;
 	static Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 	
-	boolean active = true;
+	static boolean realTime = false;
+	static float fakeDelta = 1f/60f;
+	
+	static boolean active = true;
 	public SimulationStage(Camera camera) {
 		
 		super(new ScreenViewport(camera));
 		updateMatrix();
 	}
 	
+	public static float getPhysicsDelta() {
+		
+		return realTime ? Gdx.graphics.getDeltaTime() : fakeDelta;
+	}
 	@Override
 	public void setUp(){
 		
@@ -128,7 +135,7 @@ public class SimulationStage extends GridStage{
 	public void stepSimulation() {
 		
 		aplyForces();
-		world.step(Gdx.graphics.getDeltaTime(), 8, 6);
+		world.step(getPhysicsDelta(), 8, 6);
 		
 	}
 	

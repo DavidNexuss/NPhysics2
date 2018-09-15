@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -21,6 +22,9 @@ public class ArrowLabel {
 		NPhysics.ui.addActor(label);
 	}
 	
+	public void setStyle(BitmapFont f,Color c) {
+		label.setStyle(new LabelStyle(f,c));
+	}
 	public void setText(String str) {
 		
 		label.setText(str);
