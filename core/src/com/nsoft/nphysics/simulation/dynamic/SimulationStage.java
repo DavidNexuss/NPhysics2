@@ -47,6 +47,8 @@ public class SimulationStage extends GridStage{
 	static float fakeDelta = 1f/60f;
 	
 	static boolean active = true;
+	
+	ArrayList<SimulationJoint> rawJointsDraw = new ArrayList<>();
 	public SimulationStage(Camera camera) {
 		
 		super(new ScreenViewport(camera));
@@ -98,7 +100,9 @@ public class SimulationStage extends GridStage{
 				if(d.temp) continue;
 				RevoluteJointDef def = new RevoluteJointDef();
 				def.initialize(objectsMap.get(d.A).b,objectsMap.get(d.B).b, new Vector2(d.getPosition()).scl(1f/Util.UNIT));
-				world.createJoint(def);
+			
+				SimulationJoint a = new SimulationJoint(world.createJoint(def));
+				addActor(a);
 			}
 			
 			if(joint instanceof RopeComponent) {
@@ -113,7 +117,12 @@ public class SimulationStage extends GridStage{
 				def.localAnchorA.set(new Vector2(c.getAnchorA().getVector()).scl(1f/Util.UNIT).sub(def.bodyA.getPosition()));
 				def.localAnchorB.set(new Vector2(c.getAnchorB().getVector()).scl(1f/Util.UNIT).sub(def.bodyB.getPosition()));
 				
-				world.createJoint(def);
+				SimulationJoint a = new SimulationJoint(world.createJoint(def));
+				a.drawMod = true;
+				a.drawComponents = false;
+				a.useMidPoint = true;
+				
+				addActor(a);
 			}
 		}
 	}

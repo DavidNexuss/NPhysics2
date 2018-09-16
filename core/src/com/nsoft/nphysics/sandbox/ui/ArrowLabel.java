@@ -48,4 +48,12 @@ public class ArrowLabel {
 		Vector3 np = NPhysics.currentStage.getCamera().project(new Vector3(p, 0));
 		label.setPosition(np.x, np.y);
 	}
+	
+	public void setVisible(boolean visible) {
+		label.setVisible(visible);
+	}
+	
+	public boolean isVisible() {
+		return label.isVisible();
+	}
 }
