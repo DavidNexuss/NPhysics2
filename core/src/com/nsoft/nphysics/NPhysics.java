@@ -12,6 +12,7 @@ import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.ui.AlertWindow;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dsl.MainTest;
+import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 /**
  * Clase principal del programa
@@ -118,9 +119,21 @@ public class NPhysics extends ApplicationAdapter {
 		currentStage = simulation;
 		sandbox.clean();
 		simulation.setUp();
-		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
+		updateInput();
 	}
 	
+	public static void cleanWorld() {
+		
+		if(currentStage == simulation) switchToSandbox();
+		
+		sandbox = new Sandbox();
+		sandbox.setBackgroundColor(0.8f, 0.9f, 1f, 1f);
+		sandbox.init();
+			
+		currentStage = sandbox;
+		SimulationPackage.update();
+		updateInput();
+	}
 	/**
 	 * Cambia al sandbox
 	 */
@@ -129,9 +142,13 @@ public class NPhysics extends ApplicationAdapter {
 		currentStage = sandbox;
 		simulation.clean();
 		sandbox.setUp();
-		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
+		updateInput();
 	}
 	
+	private static void updateInput() {
+		
+		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
+	}
 	/**
 	 * Allibera memòria, aquesta funció es crida al tancament del programa
 	 */

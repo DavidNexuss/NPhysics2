@@ -48,6 +48,7 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 public class Sandbox extends GridStage implements Handler{
 	
+	public ArrayList<PolygonActor> polygonlist = new ArrayList<>();
 	public static SelectHandle mainSelect = new SelectHandle();
 	public static ArrayList<ForceComponent> unknownForcesList = new ArrayList<ForceComponent>();
 	
@@ -115,7 +116,6 @@ public class Sandbox extends GridStage implements Handler{
 	@Override
 	public void setUp() {
 		// TODO Auto-generated method stub
-		System.out.println("SETPU");
 	}
 	private void initdebug() {
 		

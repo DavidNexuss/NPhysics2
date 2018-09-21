@@ -49,7 +49,6 @@ import earcut4j.Earcut;
 
 public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler,Removeable,Draggable,Form{
 
-	public static ArrayList<PolygonActor> polygonlist = new ArrayList<>();
 	private Point initial;
 	private ArrayList<Point> points = new ArrayList<>();
 	private ArrayList<Segment> segments = new ArrayList<>();
@@ -474,7 +473,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 			temp = null;
 		}
 		
-		polygonlist.add(this);
+		NPhysics.sandbox.polygonlist.add(this);
 
 
 		createDefinition();
@@ -577,7 +576,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	@Override
 	public boolean remove() {
 		
-		polygonlist.remove(this);
+		NPhysics.sandbox.polygonlist.remove(this);
 		for (Point p : points) {
 			p.setObjectParent(null);
 			p.remove();

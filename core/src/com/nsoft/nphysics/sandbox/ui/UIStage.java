@@ -235,6 +235,10 @@ public class UIStage extends Stage{
 		grid = MenuItem.loadNewItem("grid.png", ()->{NPhysics.currentStage.switchSnapping();});
 		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
 		addActor(grid);
+		
+		MenuItem clean = MenuItem.loadNewItem("grid.png", ()->{NPhysics.cleanWorld();});
+		clean.setPosition(Gdx.graphics.getWidth() - 80, 8);
+		addActor(clean);
 	}
 	
 	private Task t = Task.createEmpty();
