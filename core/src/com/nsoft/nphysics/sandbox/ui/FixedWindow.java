@@ -28,5 +28,4 @@ public class FixedWindow extends BaseOptionWindow implements Showable{
 	public Form getForm() {
 		return form;
 	}
-	
 }

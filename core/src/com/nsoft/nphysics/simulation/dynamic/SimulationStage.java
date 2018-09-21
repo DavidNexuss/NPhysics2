@@ -25,6 +25,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
 import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.RopeComponent;
@@ -38,7 +39,7 @@ public class SimulationStage extends GridStage{
 	static HashMap<PolygonActor, PolygonObject> objectsMap;
 	static HashMap<Body, PolygonObject> bodiesMap;
 	Body centre;
-	static Vector2 gravity = new Vector2(0, -9.8f);
+	public static Vector2 gravity = new Vector2(0, -9.8f);
 	static World world;
 	static Matrix4 mat;
 	static Box2DDebugRenderer renderer = new Box2DDebugRenderer();
@@ -53,6 +54,7 @@ public class SimulationStage extends GridStage{
 		
 		super(new ScreenViewport(camera));
 		updateMatrix();
+		NPhysics.ui.addActor(SimulationJoint.elements);
 	}
 	
 	public static float getPhysicsDelta() {
@@ -62,11 +64,21 @@ public class SimulationStage extends GridStage{
 	@Override
 	public void setUp(){
 		
-		clear();
 		initWorld();
 		initObjects();
 		initRawJoints();
 		updateMatrix();
+	}
+	
+	@Override
+	public void clean() {
+		
+		super.clean(); //executa clear(), see DragStage.java
+		cleanUI();
+	}
+	private void cleanUI() {
+		
+		SimulationJoint.elements.clear();
 	}
 	private void initWorld() {
 		

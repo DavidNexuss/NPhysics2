@@ -45,9 +45,13 @@ public class BaseOptionWindow extends VisWindow implements Showable{
 		updateSize();
 	}
 	
+	public HashMap<String, Option> getOptions() {
+		return options;
+	}
+	
 	public Option getOption(String name) {
 		
-		return options.get(name);
+		return getOptions().get(name);
 	}
 	
 	public void addText(String name,String text) {

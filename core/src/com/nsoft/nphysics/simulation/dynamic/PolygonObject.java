@@ -54,6 +54,7 @@ public class PolygonObject extends Actor{
 	ArrowLabel velLabel;
 	
 	ArrayList<SimulationJoint> simjoints = new ArrayList<>();
+	
 	public PolygonObject(PolygonDefinition def,World owner) {
 		
 		this.owner = owner;
@@ -67,8 +68,8 @@ public class PolygonObject extends Actor{
 		gravityArrow.setColor(Color.YELLOW);
 		velocityArrow.setColor(Color.CYAN);
 		
-		velLabel = new ArrowLabel();
-		gravityLabel = new ArrowLabel();
+		velLabel = new ArrowLabel(SimulationJoint.elements);
+		gravityLabel = new ArrowLabel(SimulationJoint.elements);
 	
 		gravityLabel.setFloat(SimulationStage.gravity.y * b.getMass());
 		gravityLabel.conc("N");

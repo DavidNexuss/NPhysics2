@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.nsoft.nphysics.NPhysics;
@@ -15,11 +16,17 @@ public class ArrowLabel {
 
 	VisLabel label;
 	static DecimalFormat f = new DecimalFormat("#.##");
-	public ArrowLabel() {
-		
+	
+	public ArrowLabel(Group g) {
 		label = new VisLabel();
 		label.setStyle(new LabelStyle(FontManager.title, Color.WHITE));
-		NPhysics.ui.addActor(label);
+		g.addActor(label);
+	}
+	
+	public ArrowLabel() {
+		
+		throw new IllegalStateException();
+		//this(NPhysics.ui.getRoot());
 	}
 	
 	public void setStyle(BitmapFont f,Color c) {

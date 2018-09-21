@@ -1,12 +1,14 @@
 package com.nsoft.nphysics.simulation.dynamic;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
@@ -31,6 +33,8 @@ public class SimulationJoint extends Actor{
 	
 	static DecimalFormat format = new DecimalFormat("#.##");
 	
+	public static Group elements = new Group();
+	
 	public SimulationJoint(Joint j) {
 		
 		xreaction = new SimpleArrow(j.getAnchorA(), new Vector2());
@@ -41,9 +45,9 @@ public class SimulationJoint extends Actor{
 		yreaction.setColor(Color.GREEN);
 		areaction.setColor(Color.ORANGE);
 		
-		xlabel = new ArrowLabel();
-		ylabel = new ArrowLabel();
-		alabel = new ArrowLabel();
+		xlabel = new ArrowLabel(elements);
+		ylabel = new ArrowLabel(elements);
+		alabel = new ArrowLabel(elements);
 		
 		xlabel.setStyle(FontManager.subtitle, Color.GREEN);
 		ylabel.setStyle(FontManager.subtitle, Color.GREEN);

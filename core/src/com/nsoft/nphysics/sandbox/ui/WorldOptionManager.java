@@ -1,32 +1,30 @@
 package com.nsoft.nphysics.sandbox.ui;
 
+import java.util.HashMap;
+
 import com.nsoft.nphysics.sandbox.interfaces.Form;
+import com.nsoft.nphysics.sandbox.ui.option.Options;
 
-public class WorldOptionManager{
+public class WorldOptionManager implements Form{
 
-	static Form dynamicSimulationOptions;
 	
-	public static void init() {
-		
+	@Override
+	public BaseOptionWindow getForm() {
+		return null;
 	}
-	static {
+
+	@Override
+	public boolean sendRaw() {
+		return true;
+	}
+	@Override
+	public void updateValuesFromForm(HashMap<String, Option> optionsMap) {
+
+	}
+
+	@Override
+	public void updateValuesToForm() {
 		
-		dynamicSimulationOptions = new Form() {
-			
-			@Override
-			public void updateValuesToForm() {
-				
-			}
-			
-			@Override
-			public void updateValuesFromForm() {
-				
-			}
-			
-			@Override
-			public DynamicWindow getForm() {
-				return null;
-			}
-		};
+		
 	}
 }

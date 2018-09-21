@@ -30,8 +30,10 @@ import com.nsoft.nphysics.ThreadManager.Task;
 import com.nsoft.nphysics.UILoader;
 import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.Sandbox;
+import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionColorPicker;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
+import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 public class UIStage extends Stage{
 
@@ -95,12 +97,15 @@ public class UIStage extends Stage{
 	private void initstaticMenu() {
 		
 		menu = new StaticMenu();
+		WorldOptionManager handler = new WorldOptionManager();
 		
-		FixedWindow sim = new FixedWindow("Simulation Options", null);
-		sim.setPosition(150, Gdx.graphics.getHeight());
-	
-		
+		FixedWindow sim = new FixedWindow("Simulation Options", handler);
+		sim.setPosition(150, Gdx.graphics.getHeight());	
 		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 50);
+		
+		sim.addOption(new Option("gridmeterscale", new UIOptionNumber()).setValue(Util.METER_FACTOR));
+		sim.addOption(new Option("gridnewtonscale", new UIOptionNumber()).setValue(Util.NEWTON_FACTOR));
+		sim.addOption(new Option("gravity", new UIOptionNumber()).setValue(SimulationStage.gravity.y));
 		
 		menu.addWindow(sim);
 		addActor(sim);
@@ -133,7 +138,10 @@ public class UIStage extends Stage{
 		container.setHeight(30);
 
 		view = new ViewSelection();
-		view.add(new ViewTab("Studio"));
+		view.add(new ViewTab("Studio",()->{
+			
+			NPhysics.switchToSandbox();
+		}));
 		view.add(new ViewTab("Simulation",()->{
 			
 			NPhysics.switchToSimulation();

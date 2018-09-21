@@ -80,7 +80,7 @@ public class DynamicWindow extends BaseOptionWindow {
 		dumpConfiguration(from.getForm(), to.getForm());
 	}
 	
-	public static void dumpConfiguration(DynamicWindow from,DynamicWindow to) {
+	public static void dumpConfiguration(BaseOptionWindow from,BaseOptionWindow to) {
 		
 		if(from.form.getClass() == to.form.getClass()) {
 			
