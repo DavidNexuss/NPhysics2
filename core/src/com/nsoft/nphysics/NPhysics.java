@@ -1,5 +1,7 @@
 package com.nsoft.nphysics;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -7,6 +9,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.nsoft.nphysics.sandbox.FastPolygonCreator;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.ui.AlertWindow;
@@ -131,8 +135,14 @@ public class NPhysics extends ApplicationAdapter {
 		sandbox.init();
 			
 		currentStage = sandbox;
+		Point.allpoints = new ArrayList<>();
+		FastPolygonCreator.temp = null;
+		
 		SimulationPackage.update();
 		updateInput();
+		
+		simulation.setCamera(sandbox.getCamera());
+		UIStage.view.switchTab(0);
 	}
 	/**
 	 * Cambia al sandbox

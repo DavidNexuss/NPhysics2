@@ -63,10 +63,9 @@ public class PolygonObject extends Actor{
 		createObject();
 		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
 		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / 10f);
+		
 		gravityArrow = new SimpleArrow(center, force.add(center));
 		velocityArrow = new SimpleArrow(center, new Vector2(b.getLinearVelocity()).add(center));
-		gravityArrow.setColor(Color.YELLOW);
-		velocityArrow.setColor(Color.CYAN);
 		
 		velLabel = new ArrowLabel(SimulationJoint.elements);
 		gravityLabel = new ArrowLabel(SimulationJoint.elements);
@@ -74,22 +73,33 @@ public class PolygonObject extends Actor{
 		gravityLabel.setFloat(SimulationStage.gravity.y * b.getMass());
 		gravityLabel.conc("N");
 		
-		gravityLabel.setColor(Color.YELLOW);
-		velLabel.setColor(Color.CYAN);
 
 	}
 	
 	final Color col = new Color(0.2f, 0.8f, 0.2f, 0.5f);
+	final Color col2 = new Color(0.7f,0.7f,0.2f,0.5f);
 	
 	final Vector2 t1 = new Vector2();
 	final Vector2 t2 = new Vector2();
 	final Vector2 t3 = new Vector2();
 	final Vector2 centre = new Vector2();
+	
+	public static boolean hide = false;
+	public static boolean showVel = false;
+	
+	final static float hidealpha = 0.1f;
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
-		NPhysics.currentStage.shapefill.setColor(col);
+		boolean selected = NPhysics.simulation.currentSesion.selected == this;
 		
+		NPhysics.currentStage.shapefill.setColor(selected ? col2.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1) : col.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1));
+		
+		gravityLabel.setColor(Color.YELLOW.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1));
+		velLabel.setColor(Color.CYAN.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1));
+		
+		gravityArrow.setColor(Color.YELLOW.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1));
+		velocityArrow.setColor(Color.CYAN.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1));
 		for (int i = 0; i < vert.length; i++) {
 			
 
@@ -108,7 +118,7 @@ public class PolygonObject extends Actor{
 			
 		}
 		
-		NPhysics.currentStage.shapefill.setColor(Color.GRAY);
+		NPhysics.currentStage.shapefill.setColor(Color.GRAY.mul(1, 1, 1, hide && !selected ? hidealpha : 1));
 		centre.set(b.getPosition()).add(b.getMassData().center);
 		NPhysics.currentStage.shapefill.circle(centre.x * Util.UNIT , centre.y * Util.UNIT, 3);
 		if(def.childrens.size() != 0) {
@@ -125,41 +135,50 @@ public class PolygonObject extends Actor{
 		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass());
 		
 		if(def.type != BodyType.StaticBody) {
-			
-			if(true) {
 				
 				gravityArrow.setStart(center);
 				gravityArrow.setEnd(force.add(center));
 				gravityArrow.updateVertexArray();
 				
-				gravityArrow.draw(batch, parentAlpha);
+				gravityArrow.draw(batch,parentAlpha);
 				
 				gravityLabel.setPosition(gravityArrow.getStart().add(new Vector2(60, -50)));
-			}
 			
-			if(!(reactX && reactY)) {
-				
-				velocityArrow.setStart(center);
-				velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass())).add(center));
-				velocityArrow.updateVertexArray();
-				
-				velocityArrow.draw(batch, parentAlpha);
-				
-				velLabel.setFloat(b.getLinearVelocity().len() * b.getMass());
-				velLabel.conc("kg m/s");
-				
-				velLabel.setPosition(velocityArrow.getStart().add(new Vector2(60,50)));
-			}
+				if(showVel) {
+					
+
+					velocityArrow.setStart(center);
+					velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass())).add(center));
+					velocityArrow.updateVertexArray();
+					
+					velocityArrow.draw(batch, parentAlpha);
+					
+					velLabel.setVisible(true);
+					velLabel.setFloat(b.getLinearVelocity().len() * b.getMass());
+					velLabel.conc("kg m/s");
+					
+					velLabel.setPosition(velocityArrow.getStart().add(new Vector2(60,50)));
+				}else {
+					
+					velLabel.setVisible(false);
+				}
+		}else {
+			
+			
+			velLabel.setVisible(false);
+			gravityLabel.setVisible(false);
 		}
 		
 		for (DynamicForce  d : forces) {
 			
+			d.show = !(hide && !selected);
 			d.updateLabel();
 		}
 		
 		for (SimulationJoint j : simjoints) {
 			
-			j.draw(batch, parentAlpha);
+			j.show = !(hide && !selected);
+			j.draw(batch,parentAlpha);
 		}
 		
 	}

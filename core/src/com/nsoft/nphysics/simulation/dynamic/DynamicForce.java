@@ -29,6 +29,8 @@ public class DynamicForce {
 	SimpleArrow arrow;
 	
 	DecimalFormat d = new DecimalFormat("#.##");
+	
+	boolean show = true;
 	Vector2 getOrigin() {
 		
 		return origin;
@@ -72,7 +74,10 @@ public class DynamicForce {
 	
 	void updateLabel() {
 		
-		label.setPosition(arrow.getStart().add(new Vector2(60, 30)));
+		label.setPosition(new Vector2(arrow.getStart()).add(new Vector2(60, 30)));
+		label.setColor(show ? Color.RED : Color.RED.cpy().mul(1, 1, 1, PolygonObject.hidealpha));
+		
+		arrow.setColor(show ? Color.RED : Color.RED.cpy().mul(1, 1, 1, PolygonObject.hidealpha));
 	}
 	void update(Body b,Vector2 pivot,boolean usingPosition) {
 		
@@ -110,7 +115,7 @@ public class DynamicForce {
 	
 	void createLabel() {
 		
-		label = new ArrowLabel();
+		label = new ArrowLabel(SimulationJoint.elements);
 		label.setFloat(pforce.len()*10);
 		label.conc("N");
 		label.setColor(Color.RED);

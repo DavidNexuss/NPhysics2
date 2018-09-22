@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
@@ -35,6 +36,10 @@ public class SimulationJoint extends Actor{
 	
 	public static Group elements = new Group();
 	
+	boolean show = true;
+	
+	PolygonObject a,b;
+	
 	public SimulationJoint(Joint j) {
 		
 		xreaction = new SimpleArrow(j.getAnchorA(), new Vector2());
@@ -48,6 +53,10 @@ public class SimulationJoint extends Actor{
 		xlabel = new ArrowLabel(elements);
 		ylabel = new ArrowLabel(elements);
 		alabel = new ArrowLabel(elements);
+		
+		NPhysics.currentStage.addActor(xreaction);
+		NPhysics.currentStage.addActor(yreaction);
+		NPhysics.currentStage.addActor(areaction);
 		
 		xlabel.setStyle(FontManager.subtitle, Color.GREEN);
 		ylabel.setStyle(FontManager.subtitle, Color.GREEN);
@@ -79,6 +88,10 @@ public class SimulationJoint extends Actor{
 		xlabel.setVisible(false);
 		ylabel.setVisible(false);
 		alabel.setVisible(false);
+		
+		xreaction.setVisible(false);
+		yreaction.setVisible(false);
+		areaction.setVisible(false);
 		
 		if(SimulationStage.active) {
 		
@@ -125,9 +138,14 @@ public class SimulationJoint extends Actor{
 			
 			xlabel.setVisible(true);
 			ylabel.setVisible(true);
+			xreaction.setVisible(true);
+			yreaction.setVisible(true);
 			
-			xreaction.draw(batch, parentAlpha);
-			yreaction.draw(batch, parentAlpha);
+			xlabel.getColor().a = show ? 1 : PolygonObject.hidealpha;
+			ylabel.getColor().a = show ? 1 : PolygonObject.hidealpha;
+			
+			xreaction.setColor(show ? Color.GREEN : Color.GREEN.cpy().mul(1, 1, 1, PolygonObject.hidealpha));
+			yreaction.setColor(show ? Color.GREEN : Color.GREEN.cpy().mul(1, 1, 1, PolygonObject.hidealpha));
 			
 			xlabel.setPosition(new Vector2(jointPos).add(50, -50));
 			ylabel.setPosition(new Vector2(jointPos).add(-120,50));
@@ -136,7 +154,11 @@ public class SimulationJoint extends Actor{
 		if (drawMod) {
 			
 			alabel.setVisible(true);
-			areaction.draw(batch, parentAlpha);
+			areaction.setVisible(true);
+			
+			alabel.getColor().a = show ? 1 : PolygonObject.hidealpha;
+			
+			areaction.setColor(show ? Color.ORANGE : Color.ORANGE.cpy().mul(1, 1, 1, PolygonObject.hidealpha));
 			alabel.setPosition(new Vector2(jointPos).add(50,50));
 		}
 	}

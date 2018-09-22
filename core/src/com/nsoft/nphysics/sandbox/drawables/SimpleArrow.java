@@ -2,6 +2,8 @@ package com.nsoft.nphysics.sandbox.drawables;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g3d.environment.AmbientCubemap;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -79,16 +81,22 @@ public class SimpleArrow extends Actor implements VertexBuffer,Pointer{
 	public void draw(Batch batch, float parentAlpha) {
 		
 		Gdx.gl.glLineWidth(2);
+		
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		
+		NPhysics.currentStage.shapeline.setColor(color == null ? NPhysics.currentStage.getInvertedBackColor() : color.cpy().mul(1, 1, 1, parentAlpha));
+		
+		
 		NPhysics.currentStage.shapeline.begin(ShapeType.Line);
 		
-		NPhysics.currentStage.shapeline.setColor(color == null ? NPhysics.currentStage.getInvertedBackColor() : color);
 		
 		NPhysics.currentStage.shapeline.line(buffervertices[0][0], buffervertices[0][1], 
 							buffervertices[1][0], buffervertices[1][1]);
 
 		NPhysics.currentStage.shapeline.end();
 		
-		NPhysics.currentStage.shapefill.setColor(color == null ? NPhysics.currentStage.getInvertedBackColor() : color);
+		NPhysics.currentStage.shapefill.setColor(color == null ? NPhysics.currentStage.getInvertedBackColor() : color.cpy().mul(1, 1, 1, parentAlpha));
 		NPhysics.currentStage.shapefill.triangle(buffervertices[2][0], buffervertices[2][1], 
 					buffervertices[3][0], buffervertices[3][1], 
 					buffervertices[4][0], buffervertices[4][1]);

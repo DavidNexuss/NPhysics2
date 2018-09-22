@@ -2,6 +2,8 @@ package com.nsoft.nphysics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -106,6 +108,12 @@ public abstract class DragStage extends Stage{
 		
 		return camera.zoom;
 	}
+	
+	public void setCamera(Camera camera) {
+		
+		getViewport().setCamera(camera);
+		initOrtographicCamera();
+	}
 	public void dragCamera(float screenX,float screenY) {
 		
 		if(NPhysics.menu) return;
@@ -120,7 +128,7 @@ public abstract class DragStage extends Stage{
 		offsetY = screeny;
 	}
 	
-	public void setUp() {}
+	public void setUp() { updateMatrix(); }
 	public void clean() {
 		
 		clear();
@@ -128,6 +136,11 @@ public abstract class DragStage extends Stage{
 	public boolean isReady() {return true;}
 	public static float zoomVal = 1.2f;
 	
+	public void resetCamera() {
+		
+		camera.setToOrtho(false, Gdx.graphics.getWidth()/ 2, Gdx.graphics.getHeight() / 2);
+		updateMatrix();
+	}
 	public void updateViewport(int width,int height) {
 		
 		getViewport().update(width, height);
@@ -161,5 +174,12 @@ public abstract class DragStage extends Stage{
 			return super.keyDown(keyCode);
 			
 		}
+	}
+	
+	@Override
+	public void draw() {
+		super.draw();
+		Gdx.gl.glEnable(GL30.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 	}
 }

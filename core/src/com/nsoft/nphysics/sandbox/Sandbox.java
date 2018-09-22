@@ -115,7 +115,7 @@ public class Sandbox extends GridStage implements Handler{
 	
 	@Override
 	public void setUp() {
-		// TODO Auto-generated method stub
+		super.setUp();
 	}
 	private void initdebug() {
 		
@@ -397,6 +397,15 @@ public class Sandbox extends GridStage implements Handler{
 		}
 	}
 	
+	public void destroy() {
+		
+		try {
+			finalize();
+		} catch (Throwable e) {
+		
+			e.printStackTrace();
+		}
+	}
 	private void actrotate(boolean useAxis) {
 		
 		boolean snap = isSnapping();

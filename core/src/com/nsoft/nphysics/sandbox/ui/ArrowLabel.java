@@ -41,6 +41,8 @@ public class ArrowLabel {
 		label.setColor(r);
 	}
 	
+	public Color getColor() {return label.getColor();}
+	
 	public void setFloat(float t) {
 		
 		label.setText(f.format(t) + "");

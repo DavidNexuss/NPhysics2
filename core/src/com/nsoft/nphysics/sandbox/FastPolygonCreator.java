@@ -5,7 +5,7 @@ import com.nsoft.nphysics.NPhysics;
 public class FastPolygonCreator {
 
 	
-	static PolygonActor temp;
+	public static PolygonActor temp;
 	
 	public static void handleClick(float x,float y) {
 		

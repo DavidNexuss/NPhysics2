@@ -49,7 +49,7 @@ public class UIStage extends Stage{
 	public static ViewSelection view;
 	static ShapeRenderer shapefill;
 	static Table container;
-	static MenuItem grid;
+	static MenuItem grid,clean;
 	
 	static Actor backgroundAnimation;
 	
@@ -236,7 +236,7 @@ public class UIStage extends Stage{
 		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
 		addActor(grid);
 		
-		MenuItem clean = MenuItem.loadNewItem("grid.png", ()->{NPhysics.cleanWorld();});
+		clean = MenuItem.loadNewItem("grid.png", ()->{NPhysics.cleanWorld();});
 		clean.setPosition(Gdx.graphics.getWidth() - 80, 8);
 		addActor(clean);
 	}
@@ -314,6 +314,6 @@ public class UIStage extends Stage{
 		back.setSize(Gdx.graphics.getWidth(), 40);
 		
 		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
-		
+		clean.setPosition(Gdx.graphics.getWidth() - 80, 8);
 	}
 }

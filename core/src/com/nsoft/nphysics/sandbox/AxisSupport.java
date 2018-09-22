@@ -50,7 +50,7 @@ public class AxisSupport extends ObjectChildren implements Form{
 	public void draw(Batch batch, float parentAlpha) {
 		
 		b.begin();
-		b.setProjectionMatrix(getStage().getCamera().combined);
+		b.setProjectionMatrix(NPhysics.currentStage.camera.combined);
 		b.setColor(new Color(1, 1, 1, getPolygon() == null ? 0.5f: 1));
 		b.draw(Axis, getX() - 16, getY() - 16);
 		b.end();

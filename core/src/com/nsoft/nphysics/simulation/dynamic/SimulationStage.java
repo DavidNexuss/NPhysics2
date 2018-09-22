@@ -35,10 +35,12 @@ import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 public class SimulationStage extends GridStage{
 
 	public static final float ForceMultiplier = 10f;
-	static ArrayList<PolygonObject> objects;
-	static HashMap<PolygonActor, PolygonObject> objectsMap;
-	static HashMap<Body, PolygonObject> bodiesMap;
+	ArrayList<PolygonObject> objects;
+	
+	HashMap<PolygonActor, PolygonObject> objectsMap;
+	HashMap<Body, PolygonObject> bodiesMap;
 	Body centre;
+	
 	public static Vector2 gravity = new Vector2(0, -9.8f);
 	static World world;
 	static Matrix4 mat;
@@ -50,6 +52,13 @@ public class SimulationStage extends GridStage{
 	static boolean active = true;
 	
 	ArrayList<SimulationJoint> rawJointsDraw = new ArrayList<>();
+	
+	static class Sesion{
+		
+		PolygonObject selected;
+	}
+	public Sesion currentSesion;
+	
 	public SimulationStage(Camera camera) {
 		
 		super(new ScreenViewport(camera));
@@ -64,10 +73,13 @@ public class SimulationStage extends GridStage{
 	@Override
 	public void setUp(){
 		
+		super.setUp();
+		
+		active = true;
+		initStage();
 		initWorld();
 		initObjects();
 		initRawJoints();
-		updateMatrix();
 	}
 	
 	@Override
@@ -75,6 +87,11 @@ public class SimulationStage extends GridStage{
 		
 		super.clean(); //executa clear(), see DragStage.java
 		cleanUI();
+	}
+	
+	private void initStage() {
+		
+		currentSesion = new Sesion();
 	}
 	private void cleanUI() {
 		
@@ -88,11 +105,14 @@ public class SimulationStage extends GridStage{
 		
 		objects = new ArrayList<>();
 		objectsMap = new HashMap<>();
+		bodiesMap = new HashMap<>();
+		
 		for (PolygonActor d: SimulationPackage.polygons)  {
 			
 			PolygonObject o = new PolygonObject(d.getDefinition(),world);
 			objects.add(o);
 			objectsMap.put(d, o);
+			bodiesMap.put(o.b, o);
 			addActor(o);
 		}
 		
@@ -115,6 +135,12 @@ public class SimulationStage extends GridStage{
 			
 				SimulationJoint a = new SimulationJoint(world.createJoint(def));
 				addActor(a);
+			
+				a.a = objectsMap.get(d.A);
+				a.b = objectsMap.get(d.B);
+				
+				rawJointsDraw.add(a);
+				
 			}
 			
 			if(joint instanceof RopeComponent) {
@@ -134,7 +160,11 @@ public class SimulationStage extends GridStage{
 				a.drawComponents = false;
 				a.useMidPoint = true;
 				
+				a.a = objectsMap.get(c.getPolygonA());
+				a.b = objectsMap.get(c.getPolygonB());
+				
 				addActor(a);
+				rawJointsDraw.add(a);
 			}
 		}
 	}
@@ -150,6 +180,15 @@ public class SimulationStage extends GridStage{
 		
 		if(active)stepSimulation();
 		renderer.render(world, mat);
+		if(PolygonObject.hide) {
+			
+			for (SimulationJoint j : rawJointsDraw) {
+				
+				if(j.a == currentSesion.selected || j.b == currentSesion.selected) {
+					j.show = true;
+				}else j.show = false;
+			}
+		}
 		super.draw();
 	}
 
@@ -175,6 +214,7 @@ public class SimulationStage extends GridStage{
 			if(fixture.testPoint(tmp.x, tmp.y)) {
 				
 				hit = fixture.getBody();
+				currentSesion.selected = bodiesMap.get(fixture.getBody());
 				return false;
 			}
 			return true;
@@ -248,6 +288,14 @@ public class SimulationStage extends GridStage{
 		
 		if(keyCode == Keys.ENTER) {
 			active = !active;
+			return true;
+		}
+		if(keyCode == Keys.U) {
+			PolygonObject.hide = !PolygonObject.hide;
+			return true;
+		}
+		if(keyCode == Keys.I) {
+			PolygonObject.showVel = !PolygonObject.showVel;
 			return true;
 		}
 		return false;
