@@ -79,7 +79,7 @@ public class UIStage extends Stage{
 		operation.setStyle(new LabelStyle(FontManager.title, Color.WHITE));
 		operation.setColor(Color.BLACK);
 		
-		back.add(operation).fill().expand();
+	//	back.add(operation).fill().expand();
 		
 		addActor(back);
 		
@@ -236,7 +236,7 @@ public class UIStage extends Stage{
 		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
 		addActor(grid);
 		
-		clean = MenuItem.loadNewItem("grid.png", ()->{NPhysics.cleanWorld();});
+		clean = MenuItem.loadNewItem("new.png", ()->{NPhysics.cleanWorld();});
 		clean.setPosition(Gdx.graphics.getWidth() - 80, 8);
 		addActor(clean);
 	}
