@@ -83,7 +83,7 @@ public class GridStage extends DragStage{
 			
 			mousecoord.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(mousecoord);
-			mousecoord.set(snapGrid(mousecoord.x), snapGrid(mousecoord.y), 0);
+			if(isSnapping())mousecoord.set(snapGrid(mousecoord.x), snapGrid(mousecoord.y), 0);
 			camera.project(mousecoord);
 		}
 		gridShader.setUniformf("PX",(int)mousecoord.x);
