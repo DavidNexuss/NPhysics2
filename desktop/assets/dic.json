@@ -159,4 +159,14 @@ dsl_solve:{
 	ESP: "Solucionar"
 	CAT: "Solucionar"
 }
+polygon_lvel_x:{
+	ENG: "Linear Speed in x"
+	ESP: "Velocidad lineal en x"
+	CAT: "Velocitat lineal en x"
+}
+polygon_lvel_y:{
+	ENG: "Linear Speed in y"
+	ESP: "Velocidad lineal en y"
+	CAT: "Velocitat lineal en y"
+}
 }

@@ -118,8 +118,8 @@ public class SimulationJoint extends Actor{
 				xreaction.updateVertexArray();
 				yreaction.updateVertexArray();
 				
-				xlabel.setText(format.format(reaction.x) + "N");
-				ylabel.setText(format.format(reaction.y) + "N");
+				xlabel.setText(format.format(reaction.x) + " xN");
+				ylabel.setText(format.format(reaction.y) + " yN");
 			}
 			
 			if(drawMod) {

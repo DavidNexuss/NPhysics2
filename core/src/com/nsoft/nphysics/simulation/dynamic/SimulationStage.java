@@ -206,6 +206,7 @@ public class SimulationStage extends GridStage{
 		mat = camera.combined.cpy().scale(30, 30, 0);
 	}
 	
+	int button;
 	QueryCallback callback = new QueryCallback() {
 		
 		@Override
@@ -215,6 +216,8 @@ public class SimulationStage extends GridStage{
 				
 				hit = fixture.getBody();
 				currentSesion.selected = bodiesMap.get(fixture.getBody());
+				
+				if(button == 1) hit = null;
 				return false;
 			}
 			return true;
@@ -227,6 +230,7 @@ public class SimulationStage extends GridStage{
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
+		this.button = button;
 		screen.set(screenX, screenY, 0);
 		tmp.set(camera.unproject(screen)).scl(1f/Util.UNIT);
 		
