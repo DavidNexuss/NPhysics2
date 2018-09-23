@@ -19,20 +19,22 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.useGL30 = true;
-		config.vSyncEnabled = true;
+		config.vSyncEnabled = false;
+		config.backgroundFPS = 10;
 		config.foregroundFPS = 60;
-
 		if(arg.length != 0 && arg[0].equals("window")) {
 
 			config.width = 1280;
 			config.height = 720;
-			config.samples = 4;
 		}else {
 			
 			config.width = Toolkit.getDefaultToolkit().getScreenSize().width;
 			config.height = Toolkit.getDefaultToolkit().getScreenSize().height;
 			config.fullscreen = true;
 		}
+		
+
+		config.samples = 4;
 		
 		NPhysics.functions = new SpecificWindowsFunctions();
 		new LwjglApplication(new NPhysics((task,delay)->{

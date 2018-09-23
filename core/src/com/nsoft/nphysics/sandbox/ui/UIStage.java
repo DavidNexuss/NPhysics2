@@ -1,6 +1,7 @@
 package com.nsoft.nphysics.sandbox.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -55,6 +56,9 @@ public class UIStage extends Stage{
 	
 	public static StaticMenu menu;
 	
+	public static VisLabel fps;
+
+	
 	public static UIStage stage;
 	public UIStage() {
 		
@@ -92,8 +96,26 @@ public class UIStage extends Stage{
 		
 		initstaticMenu();
 		
+		fps = new VisLabel() {
+			
+			@Override
+			public void act(float delta) {
+				if(fps.isVisible()) {
+					fps.setText(Gdx.graphics.getFramesPerSecond() + "FPS");
+					super.act(delta);
+				}
+			}
+		};
+		fps.setStyle(new LabelStyle(FontManager.title, Color.RED));
+		addActor(fps);
+		fps.setPosition(100, Gdx.graphics.getHeight() - 50);
+		fps.setVisible(false);
 	}
 	
+	public void showFPS(boolean v) {
+		
+		fps.setVisible(v);
+	}
 	private void initstaticMenu() {
 		
 		menu = new StaticMenu();
@@ -315,5 +337,20 @@ public class UIStage extends Stage{
 		
 		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
 		clean.setPosition(Gdx.graphics.getWidth() - 80, 8);
+		
+		fps.setPosition(100, Gdx.graphics.getHeight() - 50);
+	}
+	
+	@Override
+	public boolean keyDown(int keyCode) {
+		
+		if(super.keyDown(keyCode)) return true;
+		
+		if(keyCode == Keys.F) {
+			showFPS(!fps.isVisible());
+			return true;
+		}
+		
+		return false;
 	}
 }
