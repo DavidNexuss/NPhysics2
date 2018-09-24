@@ -578,7 +578,18 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		NPhysics.sandbox.polygonlist.remove(this);
 		for (Point p : points) {
-			p.setObjectParent(null);
+			
+			ArrayList<PolygonActor> list = p.getObjectParents(PolygonActor.class);
+			
+			boolean canRemove = true;
+			
+			for (PolygonActor polygonActor : list) {
+				if(polygonActor != this) {
+					canRemove = false;
+					break;
+				}
+			}
+			if(!canRemove) continue;
 			p.remove();
 		}
 		

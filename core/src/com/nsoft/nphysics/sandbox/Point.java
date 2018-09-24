@@ -128,7 +128,21 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		return false;
 	}
 	
-	
+	public <T> ArrayList<T> getObjectParents(Class<T> clas){
+		
+		if(objectsParent.isEmpty()) throw new IllegalStateException();
+		
+		ArrayList<T> list = new ArrayList<>();
+		
+		for (Parent p : objectsParent) {
+			
+			if(p.getClass() == clas) {
+				list.add((T)p);
+			}
+		}
+		
+		return list;
+	}
 	public void removeObjectParent(Parent oldParent) {
 		
 		int v = -1;
@@ -275,7 +289,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	@Override
 	public boolean remove() {
 		
-		if(hasObjectParent()) return false;
+		allpoints.remove(this);
 		return super.remove();
 	}
 	
