@@ -10,9 +10,10 @@ import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 public class SimulationPackage {
 
 	static ArrayList<PolygonActor> polygons = NPhysics.sandbox.polygonlist;
-	public static final ArrayList<RawJoint> rawJoints = new ArrayList<>();
+	public static ArrayList<RawJoint> rawJoints = new ArrayList<>();
 	
 	public static void update() {
 		polygons = NPhysics.sandbox.polygonlist;
+		rawJoints = new ArrayList<>();
 	}
 }
