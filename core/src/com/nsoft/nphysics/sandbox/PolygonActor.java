@@ -37,6 +37,7 @@ import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
+import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
 import com.nsoft.nphysics.sandbox.ui.Option;
@@ -68,7 +69,8 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	private DoubleArrow xaxis;
 	private DoubleArrow yaxis;
 	private DiscontLine line;
-	private AngleArcActor arc;
+	
+	private ArrowLabel angleLabel;
 	
 	private DynamicWindow form;
 	private static float axisMargin = 20;
@@ -92,6 +94,9 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		line = new DiscontLine(new Vector2(), new Vector2());
 		line.setVisible(false);
 		addActor(line);
+		
+		angleLabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
+		angleLabel.setColor(Color.BLUE);
 	}
 
 	public PolygonActor createCopy(Vector2 offset) {
@@ -312,10 +317,17 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		if(hookRotation && useAxis) {
 			
+			angleLabel.setVisible(true);
 			NPhysics.currentStage.shapefill.setColor(arcColor);
-			NPhysics.currentStage.shapefill.arc(NPhysics.currentStage.getAxisPosition().getX(), NPhysics.currentStage.getAxisPosition().getY(), 100, 0, (line.getDiff().angleRad())*MathUtils.radDeg);
-			
-		}
+			float angle = (line.getDiff().angleRad())*MathUtils.radDeg;
+			if(angle < 0) {
+				angle = Math.abs(angle);
+				angle = 360 - angle;
+			}
+			angleLabel.setText(((int)(angle / 5))*5 + "º");
+			angleLabel.setPosition(new Vector2(NPhysics.currentStage.getAxisPosition().getVector()).add(new Vector2(120, 0).rotate(angle)));
+			NPhysics.currentStage.shapefill.arc(NPhysics.currentStage.getAxisPosition().getX(), NPhysics.currentStage.getAxisPosition().getY(), 100, 0, angle);
+		}else angleLabel.setVisible(false);
 		super.draw(batch, parentAlpha);
 		
 	}

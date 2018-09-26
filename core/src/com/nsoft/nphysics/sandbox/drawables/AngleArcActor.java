@@ -31,9 +31,6 @@ public class AngleArcActor extends Actor implements Showable{
 	float radius;
 	float angle;
 	
-	private Table table;
-	private TextButton input;
-	
 	
 	public AngleArcActor(Position center,Segment s) {
 		

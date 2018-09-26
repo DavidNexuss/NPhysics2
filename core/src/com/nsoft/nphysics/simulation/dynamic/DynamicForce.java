@@ -115,7 +115,7 @@ public class DynamicForce {
 	
 	void createLabel() {
 		
-		label = new ArrowLabel(SimulationJoint.elements);
+		label = new ArrowLabel(NPhysics.currentStage.getUiGroup());
 		label.setFloat(pforce.len()*10);
 		label.conc("N");
 		label.setColor(Color.RED);

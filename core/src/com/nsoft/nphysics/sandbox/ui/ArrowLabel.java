@@ -23,12 +23,6 @@ public class ArrowLabel {
 		g.addActor(label);
 	}
 	
-	public ArrowLabel() {
-		
-		throw new IllegalStateException();
-		//this(NPhysics.ui.getRoot());
-	}
-	
 	public void setStyle(BitmapFont f,Color c) {
 		label.setStyle(new LabelStyle(f,c));
 	}

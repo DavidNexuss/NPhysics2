@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nsoft.nphysics.sandbox.PositionVector;
@@ -30,17 +31,22 @@ public abstract class DragStage extends Stage{
 
 	private boolean snapping = true;
 	
+	private Group uiGroup;
+	
 	public float RotationRadAngle = 0;
+	
 	public DragStage(Viewport v) {
 		
 		super(v);
 		initOrtographicCamera();
+		
+		uiGroup = new Group();
+		NPhysics.ui.addActor(uiGroup);
 	}
 	
 	public DragStage(Viewport v,DragStage d) {
 		
-		super(v);
-		initOrtographicCamera();
+		this(v);
 		
 		centerX = d.centerX;
 		centerY = d.centerY;
@@ -132,6 +138,7 @@ public abstract class DragStage extends Stage{
 	public void clean() {
 		
 		clear();
+		uiGroup.clear();
 	}
 	public boolean isReady() {return true;}
 	public static float zoomVal = 1.2f;
@@ -146,6 +153,10 @@ public abstract class DragStage extends Stage{
 		getViewport().update(width, height);
 		getCamera().update();
 		updateMatrix();
+	}
+	
+	public Group getUiGroup() {
+		return uiGroup;
 	}
 	@Override
 	public boolean scrolled(int amount) {

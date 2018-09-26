@@ -34,8 +34,6 @@ public class SimulationJoint extends Actor{
 	
 	static DecimalFormat format = new DecimalFormat("#.##");
 	
-	public static Group elements = new Group();
-	
 	boolean show = true;
 	
 	PolygonObject a,b;
@@ -50,9 +48,9 @@ public class SimulationJoint extends Actor{
 		yreaction.setColor(Color.GREEN);
 		areaction.setColor(Color.ORANGE);
 		
-		xlabel = new ArrowLabel(elements);
-		ylabel = new ArrowLabel(elements);
-		alabel = new ArrowLabel(elements);
+		xlabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
+		ylabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
+		alabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
 		
 		NPhysics.currentStage.addActor(xreaction);
 		NPhysics.currentStage.addActor(yreaction);

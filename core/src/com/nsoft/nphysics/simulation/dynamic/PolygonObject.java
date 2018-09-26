@@ -67,8 +67,8 @@ public class PolygonObject extends Actor{
 		gravityArrow = new SimpleArrow(center, force.add(center));
 		velocityArrow = new SimpleArrow(center, new Vector2(b.getLinearVelocity()).add(center));
 		
-		velLabel = new ArrowLabel(SimulationJoint.elements);
-		gravityLabel = new ArrowLabel(SimulationJoint.elements);
+		velLabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
+		gravityLabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
 	
 		gravityLabel.setFloat(SimulationStage.gravity.y * b.getMass());
 		gravityLabel.conc("N");

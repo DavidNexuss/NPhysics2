@@ -63,7 +63,6 @@ public class SimulationStage extends GridStage{
 		
 		super(new ScreenViewport(camera));
 		updateMatrix();
-		NPhysics.ui.addActor(SimulationJoint.elements);
 	}
 	
 	public static float getPhysicsDelta() {
@@ -86,16 +85,11 @@ public class SimulationStage extends GridStage{
 	public void clean() {
 		
 		super.clean(); //executa clear(), see DragStage.java
-		cleanUI();
 	}
 	
 	private void initStage() {
 		
 		currentSesion = new Sesion();
-	}
-	private void cleanUI() {
-		
-		SimulationJoint.elements.clear();
 	}
 	private void initWorld() {
 		
