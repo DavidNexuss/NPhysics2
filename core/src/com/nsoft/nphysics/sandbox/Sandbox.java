@@ -121,7 +121,6 @@ public class Sandbox extends GridStage implements Handler{
 	}
 	private void initdebug() {
 		
-		FastPolygonCreator.createCircle(new Vector2(200, 200), 100);
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
