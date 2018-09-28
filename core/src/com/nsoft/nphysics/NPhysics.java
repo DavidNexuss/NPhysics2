@@ -62,13 +62,15 @@ public class NPhysics extends ApplicationAdapter {
 		GridStage.initGridShader();
 		
 		sandbox = new Sandbox();
+
+		currentStage = sandbox;
+		
 		sandbox.setBackgroundColor(0.8f, 0.9f, 1f, 1f);
 		sandbox.init();
 		
 		simulation = new SimulationStage(sandbox.getCamera());
 		simulation.setBackgroundColor(0, 0, 0, 1);
 		
-		currentStage = sandbox;
 		
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
 	}
@@ -145,7 +147,7 @@ public class NPhysics extends ApplicationAdapter {
 		UIStage.view.switchTab(0);
 	}
 	/**
-	 * Cambia al sandbox
+	 * Canvia al sandbox
 	 */
 	public static void switchToSandbox() {
 		

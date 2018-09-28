@@ -57,6 +57,9 @@ public class GridStage extends DragStage{
 		
 		invertbackColor.set(1f - backColor.r, 1f - backColor.g, 1f - backColor.b, 1f - backColor.a);
 	}
+	/**
+	 * Inicialitza el shader de la cuadricula
+	 */
 	public static void initGridShader() {
 		
 		 String vertexShader = Gdx.files.internal("shaders/vertexShader").readString();

@@ -8,20 +8,13 @@ import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 
-public class PolygonDefinition {
+public class PolygonDefinition extends ObjectDefinition{
 
 	public ArrayList<PositionVector> vertices = new ArrayList<>();
 	public ArrayList<ObjectChildren> childrens;
 	public ArrayList<Integer> indexes = new ArrayList<>();
 	
-	public BodyType type = BodyType.DynamicBody;
-	public float density = 1f;
-	public float friction;
-	public float restitution;
-	
 	private float[] rawVertices;
-	
-	public final Vector2 linearVelocity = new Vector2();
 	
 	public void init() {
 		

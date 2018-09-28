@@ -54,7 +54,10 @@ public abstract class DragStage extends Stage{
 		offsetX = d.offsetX;
 		offsetY = d.offsetY;
 	}
-	
+	/**
+	 * Estableix la posició del eix del món
+	 * @param p
+	 */
 	public void setAxisPosition(Position p) {axisPosition = p;}
 	public Position getAxisPosition() {return axisPosition;}
 	
@@ -79,11 +82,19 @@ public abstract class DragStage extends Stage{
 		centerY = (Gdx.graphics.getHeight() - screenY)*camera.zoom;
 	}
 	
+	/**
+	 * Actualitza les matrius
+	 */
 	public abstract void updateMatrix();
 	
 	public Vector2 getUnproject() {return new Vector2(getUnprojectX(),getUnprojectY());}
 	public Vector2 getUnproject(boolean snap) {return new Vector2(getUnprojectX(snap),getUnprojectY(snap));}
 	
+	/**
+	 * Obté la coordenada més pròxima a un punt de la cuadicula, mateix funcionament per la coordenada X que amb la Y
+	 * @param v
+	 * @return
+	 */
 	public static int snapGrid(float v) { return (int)Util.UNIT*Math.round(v/Util.UNIT); }
 	
 	public void setSnapping(boolean newSnapping) {snapping = newSnapping;}
@@ -115,11 +126,20 @@ public abstract class DragStage extends Stage{
 		return camera.zoom;
 	}
 	
+	/**
+	 * Canvia la camara del Viewport
+	 * @param camera
+	 */
 	public void setCamera(Camera camera) {
 		
 		getViewport().setCamera(camera);
 		initOrtographicCamera();
 	}
+	/**
+	 * Mou la camara
+	 * @param screenX nova coordenada X del cursor
+	 * @param screenY nova coordenada Y del cursor
+	 */
 	public void dragCamera(float screenX,float screenY) {
 		
 		if(NPhysics.menu) return;
@@ -134,7 +154,14 @@ public abstract class DragStage extends Stage{
 		offsetY = screeny;
 	}
 	
+	/**
+	 * Prepara la Stage per a fer el canvi
+	 */
 	public void setUp() { updateMatrix(); }
+	
+	/**
+	 * Limpia la Stage per a fer el canvi
+	 */
 	public void clean() {
 		
 		clear();
@@ -154,7 +181,9 @@ public abstract class DragStage extends Stage{
 		getCamera().update();
 		updateMatrix();
 	}
-	
+	/**
+	 * @return El grup que interactua amb la Stage de la UI
+	 */
 	public Group getUiGroup() {
 		return uiGroup;
 	}
