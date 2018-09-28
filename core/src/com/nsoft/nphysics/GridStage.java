@@ -56,7 +56,6 @@ public class GridStage extends DragStage{
 		
 		invertbackColor.set(1f - backColor.r, 1f - backColor.g, 1f - backColor.b, 1f - backColor.a);
 	}
-	
 	/**
 	 * Inicialitza els shaders de la cuadricula
 	 */

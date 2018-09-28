@@ -73,8 +73,9 @@ public class Sandbox extends GridStage implements Handler{
 		axis.show();
 		setAxisPosition(axis.getCenter());
 		addActor(axis);
-		
+
 		initdebug(); //per propisits de depuració
+
 	}
 	
 	public void initTextures() {
