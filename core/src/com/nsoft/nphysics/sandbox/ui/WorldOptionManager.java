@@ -3,7 +3,6 @@ package com.nsoft.nphysics.sandbox.ui;
 import java.util.HashMap;
 
 import com.nsoft.nphysics.sandbox.interfaces.Form;
-import com.nsoft.nphysics.sandbox.ui.option.Options;
 
 public class WorldOptionManager implements Form{
 

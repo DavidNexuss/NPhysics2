@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
-import com.nsoft.nphysics.sandbox.ui.Option;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
 
 public class PrismaticComponent extends ObjectChildren{

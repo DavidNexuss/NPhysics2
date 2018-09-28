@@ -1,14 +1,12 @@
 package com.nsoft.nphysics.simulation.dynamic;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;

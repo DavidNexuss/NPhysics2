@@ -1,10 +1,9 @@
 package com.nsoft.nphysics;
 
-import com.badlogic.gdx.Gdx;
-
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
 
 /**
  * Classe encarregada de manejar diferents tasques en paral·lel, en cas de que la plataforma

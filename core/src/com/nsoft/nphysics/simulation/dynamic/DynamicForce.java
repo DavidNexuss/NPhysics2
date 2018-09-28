@@ -5,14 +5,12 @@ import java.text.DecimalFormat;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.kotcrab.vis.ui.widget.VisLabel;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.ForceComponent.Type;
+import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
-import com.nsoft.nphysics.sandbox.Util;
 
 public class DynamicForce {
 

@@ -1,6 +1,5 @@
 package com.nsoft.nphysics.sandbox;
 
-import java.util.ArrayList;
 import java.util.Stack;
 
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;

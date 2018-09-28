@@ -1,10 +1,8 @@
 package com.nsoft.nphysics.sandbox.ui.option;
 
-import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisSlider;
 import com.kotcrab.vis.ui.widget.VisTable;
-import com.nsoft.nphysics.sandbox.ui.Option;
 
 public class UIOptionSlider extends UIOptionComponent<Float, VisSlider>{
 

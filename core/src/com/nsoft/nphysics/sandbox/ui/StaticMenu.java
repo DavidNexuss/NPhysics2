@@ -2,10 +2,7 @@ package com.nsoft.nphysics.sandbox.ui;
 
 import java.util.ArrayList;
 
-import javax.lang.model.type.ExecutableType;
-
 import com.nsoft.nphysics.sandbox.interfaces.Execute;
-import com.nsoft.nphysics.sandbox.interfaces.Showable;
 
 public class StaticMenu{
 

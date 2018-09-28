@@ -1,20 +1,14 @@
 package com.nsoft.nphysics.sandbox;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.kotcrab.vis.ui.Focusable;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
-import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
-import com.nsoft.nphysics.sandbox.ui.Option;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
 
 public class AxisSupport extends ObjectChildren implements Form{

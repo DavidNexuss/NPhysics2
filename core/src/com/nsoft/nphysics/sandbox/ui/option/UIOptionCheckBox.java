@@ -1,7 +1,6 @@
 package com.nsoft.nphysics.sandbox.ui.option;
 
 import com.kotcrab.vis.ui.widget.VisCheckBox;
-import com.nsoft.nphysics.sandbox.ui.Option;
 
 public class UIOptionCheckBox extends UIOptionComponent<Float, VisCheckBox>{
 

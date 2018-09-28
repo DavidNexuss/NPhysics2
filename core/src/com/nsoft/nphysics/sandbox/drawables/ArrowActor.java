@@ -3,17 +3,10 @@ package com.nsoft.nphysics.sandbox.drawables;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.kotcrab.vis.ui.widget.VisLabel;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.GameState;
@@ -21,7 +14,6 @@ import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.SelectHandle;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
-import com.nsoft.nphysics.sandbox.ui.FontManager;
 
 public class ArrowActor extends Group implements ClickIn{
 

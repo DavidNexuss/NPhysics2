@@ -1,33 +1,27 @@
 package com.nsoft.nphysics.sandbox;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
-import com.kotcrab.vis.ui.widget.VisTextArea;
 import com.kotcrab.vis.ui.widget.VisTextButton;
-import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.DragStage;
+import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
-import com.nsoft.nphysics.sandbox.drawables.AngleArcActor;
 import com.nsoft.nphysics.sandbox.drawables.DiscontLine;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
@@ -40,12 +34,11 @@ import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
-import com.nsoft.nphysics.sandbox.ui.Option;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
-import com.nsoft.nphysics.simulation.dsl.Force;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
+
 import earcut4j.Earcut;
 
 public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler,Removeable,Draggable,Form{

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.PolygonActor;
-import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
 public class SimulationPackage {

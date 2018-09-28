@@ -1,8 +1,5 @@
 package com.nsoft.nphysics.sandbox;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 
 public class GameState {

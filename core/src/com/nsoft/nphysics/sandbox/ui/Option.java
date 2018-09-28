@@ -1,33 +1,12 @@
 package com.nsoft.nphysics.sandbox.ui;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
-import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
-import com.kotcrab.vis.ui.widget.VisCheckBox;
-import com.kotcrab.vis.ui.widget.VisLabel;
-import com.kotcrab.vis.ui.widget.VisSlider;
 import com.kotcrab.vis.ui.widget.VisTable;
-import com.kotcrab.vis.ui.widget.VisTextField;
-import com.kotcrab.vis.ui.widget.VisTextField.TextFieldListener;
 import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
-import com.nsoft.nphysics.sandbox.ui.option.UIOptionCheckBox;
-import com.nsoft.nphysics.sandbox.ui.option.UIOptionColorPicker;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionComponent;
-import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
-import com.nsoft.nphysics.sandbox.ui.option.UIOptionSlider;
 
 public class Option extends VisTable{
 

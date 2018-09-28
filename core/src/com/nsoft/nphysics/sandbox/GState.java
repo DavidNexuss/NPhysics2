@@ -1,9 +1,5 @@
 package com.nsoft.nphysics.sandbox;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.nsoft.nphysics.NPhysics;
-
 public enum GState {
 	
 	START("Bienvenido a NPhysics2"),
