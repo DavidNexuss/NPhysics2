@@ -57,15 +57,20 @@ public class GridStage extends DragStage{
 		
 		invertbackColor.set(1f - backColor.r, 1f - backColor.g, 1f - backColor.b, 1f - backColor.a);
 	}
+	
+	/**
+	 * Inicialitza els shaders de la cuadricula
+	 */
 	public static void initGridShader() {
 		
 		 String vertexShader = Gdx.files.internal("shaders/vertexShader").readString();
 	     String fragmentShader = Gdx.files.internal("shaders/gridShader").readString();
 	     
 	     gridShader = new ShaderProgram(vertexShader, fragmentShader);
-	     gridShader.pedantic = false;
+	     ShaderProgram.pedantic = false; //Per problemes de compilació del shader es recomanable desactivar pedantic
 	     System.out.println("Shader compiler log: " + gridShader.getLog());
 	     
+	     //Crea una textura buida sobre la que renderitza la cuadricula
 	     Pixmap p = new  Pixmap(1, 1, Format.RGB565);
 	     nullTexture = new Texture(p);
 	     gridBatch = new SpriteBatch();

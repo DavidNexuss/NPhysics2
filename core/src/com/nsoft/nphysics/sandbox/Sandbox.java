@@ -46,6 +46,8 @@ import com.nsoft.nphysics.simulation.dsl.Builder;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
+
+
 public class Sandbox extends GridStage implements Handler{
 	
 	public ArrayList<PolygonActor> polygonlist = new ArrayList<>();
@@ -91,6 +93,7 @@ public class Sandbox extends GridStage implements Handler{
 		setAxisPosition(axis.getCenter());
 		addActor(axis);
 		
+		initdebug(); //per propisits de depuració
 	}
 	
 	public void initTextures() {
@@ -119,6 +122,7 @@ public class Sandbox extends GridStage implements Handler{
 	}
 	private void initdebug() {
 		
+
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
@@ -151,7 +155,8 @@ public class Sandbox extends GridStage implements Handler{
 
 	//--------DRAW-METHODS-----------------
 	
-	
+	//Metode antic per dibuixar la cuadricula
+	@Deprecated
 	public void drawGrid() {
 		
 		shapeline.begin(ShapeType.Line);
@@ -175,8 +180,6 @@ public class Sandbox extends GridStage implements Handler{
 		
 		
 	}
-	//-----------------------CAMERA---------------------------
-	
 	
 	//---------------------INPUT--------------------------//
 	

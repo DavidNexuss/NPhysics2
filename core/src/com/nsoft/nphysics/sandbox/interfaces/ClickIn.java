@@ -9,6 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nsoft.nphysics.sandbox.SelectHandle;
 
+/**
+ * Interfície per poder manejar objectes amb la propietat de ser seleccionats
+ * @author Usuari
+ *
+ */
 public interface ClickIn {
 
 	public default void addInput() {
@@ -30,8 +35,8 @@ public interface ClickIn {
 		return getStage().getCamera().unproject(tmp.set(x, y,0));
 	}
 	
-	public default boolean isSelected() {return getHandler().isSelected(this);}
-	public default boolean isLastSelected() { return getHandler().isLastSelected(this);}
+	public default boolean isSelected() {return getHandler().isSelected(this);} /**@return si l'objecte esta seleccionat per el seu controlador o no*/
+	public default boolean isLastSelected() { return getHandler().isLastSelected(this);} /**@return si l'objecte es el primer seleccionat per el seu controlador*/
 	public default boolean isInside(Vector3 v) {return isInside(v.x, v.y);}
 	public default boolean isInside(Vector2 v) {return isInside(v.x, v.y);}
 	public default boolean isMouseInside() {
@@ -43,7 +48,12 @@ public interface ClickIn {
 		if(getHandler() == null) return;
 		getHandler().setSelected(object,pointer);
 	}
-	
+	/**
+	 * Funció per saber si un punt cau dins del objecte, cal ser implementada per la classe, i hit hauria de seguir el mateix procediment
+	 * @param x Coordenada en X del punter
+	 * @param y Coordenada en Y del punter
+	 * @return si el punt està dins o no
+	 */
 	public boolean isInside(float x,float y);
 	public default void click(int pointer) {}
 	public void select(int pointer);
@@ -52,5 +62,5 @@ public interface ClickIn {
 	
 	public SelectHandle getHandler();
 	public boolean addListener(EventListener input);
-	public Stage getStage();
+	public Stage getStage(); //implementada per Actor
 }

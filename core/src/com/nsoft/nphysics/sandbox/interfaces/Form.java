@@ -3,10 +3,15 @@ package com.nsoft.nphysics.sandbox.interfaces;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.nsoft.nphysics.sandbox.AxisSupport;
 import com.nsoft.nphysics.sandbox.ui.BaseOptionWindow;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.Option;
-
+/**
+ * Interfície que dona la propietat a una classe de tindre un formulari.
+ * @see {@link AxisSupport} {@link ObjectChildren}
+ * @author David
+ */
 public interface Form {
 
 	public BaseOptionWindow getForm();

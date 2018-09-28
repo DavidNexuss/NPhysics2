@@ -6,6 +6,12 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Application.ApplicationType;
 
+/**
+ * Classe encarregada de manejar diferents tasques en paral·lel, en cas de que la plataforma
+ * actual suporti l'us del multi fil s'utilitza, en cas contrari s'afegeix la tasca dins del bucle
+ * de renderitzat, només s'utilitza per tasques programades en un interval d'espera.
+ * @author David
+ */
 public class ThreadManager {
 	
 	public static ArrayList<Task> stackTasks = new ArrayList<>();

@@ -6,7 +6,10 @@ import java.util.Stack;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
-
+/**
+ * Classe encarregada de manejar els objectes per seleccionar i els selecionats.
+ * @author David
+ */
 public class SelectHandle {
 
 	private Stack<ClickIn> selecteds = new Stack<>();
