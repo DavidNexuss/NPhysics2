@@ -226,7 +226,7 @@ public class PolygonObject extends Actor{
 		bdef.position.set(def.getCenter(true));
 		bdef.linearVelocity.set(def.linearVelocity);
 		b = owner.createBody(bdef);
-		createFixtures();
+		def.createFixtures(b);
 		if(bdef.type != BodyType.StaticBody)createJoints();
 	}
 	
@@ -244,26 +244,6 @@ public class PolygonObject extends Actor{
 		
 		return t;
 	}
-	private ArrayList<Fixture> createFixtures(){
-		
-		ArrayList<Fixture> fixtures = new ArrayList<>();
-		
-		for (int i = 0; i < vert.length; i++) {
-			
-			FixtureDef fdef = new FixtureDef();
-			fdef.density = def.density;
-			fdef.friction = def.friction;
-			fdef.restitution = def.restitution;
-			
-			PolygonShape shape = new PolygonShape();
-			shape.set(vert[i]);
-			fdef.shape = shape;
-			b.createFixture(fdef);
-		}
-		
-		return fixtures;
-	}
-
 	private void createJoints() {
 		
 		

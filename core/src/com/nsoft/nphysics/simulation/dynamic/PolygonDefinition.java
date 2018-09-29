@@ -3,6 +3,10 @@ package com.nsoft.nphysics.simulation.dynamic;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.Util;
@@ -149,5 +153,25 @@ public class PolygonDefinition extends ObjectDefinition{
 	public PositionVector get(int index) {
 		
 		return vertices.get(index);
+	}
+	
+	@Override
+	public ArrayList<Fixture> createFixtures(Body b) {
+		
+		float[][] vert = getTriangles(true, true);
+		
+		ArrayList<Fixture> fixtures = new ArrayList<>();
+		
+		for (int i = 0; i < vert.length; i++) {
+			
+			FixtureDef fdef = createFixtureDefinition();
+			
+			PolygonShape shape = new PolygonShape();
+			shape.set(vert[i]);
+			fdef.shape = shape;
+			b.createFixture(fdef);
+		}
+		
+		return fixtures;
 	}
 }
