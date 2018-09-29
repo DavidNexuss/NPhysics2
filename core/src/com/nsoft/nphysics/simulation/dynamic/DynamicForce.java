@@ -1,7 +1,5 @@
 package com.nsoft.nphysics.simulation.dynamic;
 
-import java.text.DecimalFormat;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -25,8 +23,6 @@ public class DynamicForce {
 	boolean isCentered = false;
 	
 	SimpleArrow arrow;
-	
-	DecimalFormat d = new DecimalFormat("#.##");
 	
 	boolean show = true;
 	Vector2 getOrigin() {

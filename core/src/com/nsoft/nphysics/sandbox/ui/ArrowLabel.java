@@ -1,7 +1,5 @@
 package com.nsoft.nphysics.sandbox.ui;
 
-import java.text.DecimalFormat;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
@@ -10,11 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.Util;
 
 public class ArrowLabel {
 
 	VisLabel label;
-	static DecimalFormat f = new DecimalFormat("#.##");
 	
 	public ArrowLabel(Group g) {
 		label = new VisLabel();
@@ -38,7 +36,7 @@ public class ArrowLabel {
 	
 	public void setFloat(float t) {
 		
-		label.setText(f.format(t) + "");
+		label.setText(Util.notation(t) + "");
 	}
 	
 	public void conc(String f) {

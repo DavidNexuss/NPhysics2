@@ -1,7 +1,5 @@
 package com.nsoft.nphysics.simulation.dynamic;
 
-import java.text.DecimalFormat;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -29,8 +27,6 @@ public class SimulationJoint extends Actor{
 	
 	boolean drawComponents = true;
 	boolean drawMod = false;
-	
-	static DecimalFormat format = new DecimalFormat("#.##");
 	
 	boolean show = true;
 	
@@ -114,8 +110,8 @@ public class SimulationJoint extends Actor{
 				xreaction.updateVertexArray();
 				yreaction.updateVertexArray();
 				
-				xlabel.setText(format.format(reaction.x) + " xN");
-				ylabel.setText(format.format(reaction.y) + " yN");
+				xlabel.setText(Util.notation(reaction.x) + " xN");
+				ylabel.setText(Util.notation(reaction.y) + " yN");
 			}
 			
 			if(drawMod) {
@@ -125,7 +121,7 @@ public class SimulationJoint extends Actor{
 				
 				areaction.updateVertexArray();
 				
-				alabel.setText(format.format(reaction.len()) + "N");
+				alabel.setText(Util.notation(reaction.len()) + "N");
 			}
 			
 		}

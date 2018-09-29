@@ -35,6 +35,10 @@ public class Util {
 	public static float METER_FACTOR = 1;
 	public static float NEWTON_FACTOR = 10;
 	
+	public static float notation(float n) {
+		
+		return ((int)(n*100))/100f;
+	}
 	/*
 	 * p[0] =  A.x
 	 * p[1] =  A.y
