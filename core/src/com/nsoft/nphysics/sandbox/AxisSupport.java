@@ -10,6 +10,7 @@ import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
+import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 
 public class AxisSupport extends ObjectChildren implements Form{
 
@@ -24,7 +25,7 @@ public class AxisSupport extends ObjectChildren implements Form{
 	public float torque;
 	public float speed;
 	
-	public AxisSupport(PolygonActor parent) {
+	public AxisSupport(PhysicalActor<ObjectDefinition> parent) {
 		
 		super(parent);
 		initBasicForm("Waxis");

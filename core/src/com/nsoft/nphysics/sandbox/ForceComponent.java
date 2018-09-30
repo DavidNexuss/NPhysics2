@@ -17,6 +17,7 @@ import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dsl.Force.Variable;
+import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 public class ForceComponent extends ObjectChildren implements Form{
@@ -36,7 +37,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 	
 	static ForceComponent temp;
 	
-	public ForceComponent(PolygonActor parent,Vector2 start) {
+	public ForceComponent(PhysicalActor<ObjectDefinition> parent,Vector2 start) {
 		
 		super(parent);
 		list.add(this);
@@ -128,7 +129,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		super.updateValuesFromForm();
 		
 		var = getForm().getOption("fvar").getValue() == 1;
-		getPolygon().updateForceVariableCount();
+		//getPolygon().updateForceVariableCount();
 		
 		arrow.setStart(getPosition().x, getPosition().y);
 		

@@ -23,6 +23,7 @@ import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
+import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.RopeComponent;
 import com.nsoft.nphysics.sandbox.Util;
@@ -33,7 +34,7 @@ public class SimulationStage extends GridStage{
 	public static final float ForceMultiplier = 10f;
 	ArrayList<PolygonObject> objects;
 	
-	HashMap<PolygonActor, PolygonObject> objectsMap;
+	HashMap<PhysicalActor<ObjectDefinition>, PolygonObject> objectsMap;
 	HashMap<Body, PolygonObject> bodiesMap;
 	Body centre;
 	
@@ -97,7 +98,7 @@ public class SimulationStage extends GridStage{
 		objectsMap = new HashMap<>();
 		bodiesMap = new HashMap<>();
 		
-		for (PolygonActor d: SimulationPackage.polygons)  {
+		for (PhysicalActor<ObjectDefinition> d: SimulationPackage.polygons)  {
 			
 			PolygonObject o = new PolygonObject(d.getDefinition(),world);
 			objects.add(o);

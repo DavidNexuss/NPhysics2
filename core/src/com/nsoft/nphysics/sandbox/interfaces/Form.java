@@ -38,4 +38,19 @@ public interface Form {
 		if(! (getForm() instanceof DynamicWindow)) return;
 		DynamicWindow.hideWindow((DynamicWindow) getForm());
 	}
+	
+	public default void setValue(String optName,Object val) {
+		
+		getForm().getOption(optName).setValue(val);
+	}
+	
+	public default <T> T getValue(String optName,Class<T> cls) {
+		
+		return getForm().getOption(optName).getValue(cls);
+	}
+	
+	public default float getValue(String optName) {
+		
+		return getForm().getOption(optName).getValue();
+	}
 }

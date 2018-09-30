@@ -25,13 +25,14 @@ import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.simulation.dsl.Builder;
+import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 
 
 public class Sandbox extends GridStage implements Handler{
 	
-	public ArrayList<PolygonActor> polygonlist = new ArrayList<>();
+	public ArrayList<PhysicalActor<ObjectDefinition>> polygonlist = new ArrayList<>();
 	public static SelectHandle mainSelect = new SelectHandle();
 	public static ArrayList<ForceComponent> unknownForcesList = new ArrayList<ForceComponent>();
 	
@@ -104,7 +105,14 @@ public class Sandbox extends GridStage implements Handler{
 	}
 	private void initdebug() {
 		
-
+		Point cente = new Point(200, 300, false);
+		Point ex = new Point(500, 200, false);
+		
+		CircleActor a = new CircleActor(cente);
+		a.addExtreme(ex);
+		addActor(a);
+		addActor(cente);
+		addActor(ex);
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
@@ -200,7 +208,7 @@ public class Sandbox extends GridStage implements Handler{
 			break;
 		case CREATE_AXIS:
 			
-			AxisSupport s = new AxisSupport((PolygonActor)mainSelect.getLastSelected());
+			AxisSupport s = new AxisSupport((PhysicalActor<ObjectDefinition>)mainSelect.getLastSelected());
 			if(isSnapping())s.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else s.setPosition(screenx, screeny);
 			addActor(s);
@@ -214,14 +222,14 @@ public class Sandbox extends GridStage implements Handler{
 			break;
 		case CREATE_PRISMATIC:
 			
-			PrismaticComponent c = new PrismaticComponent((PolygonActor)mainSelect.getLastSelected());
+			PrismaticComponent c = new PrismaticComponent((PhysicalActor<ObjectDefinition>)mainSelect.getLastSelected());
 			if(isSnapping())c.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else c.setPosition(screenx, screeny);
 			addActor(c);
 			break;
 		case CREATE_FORCE:
 			
-			PolygonActor current = (PolygonActor)mainSelect.getLastSelected();
+			PhysicalActor<ObjectDefinition> current = (PhysicalActor<ObjectDefinition>)mainSelect.getLastSelected();
 			if(ForceComponent.temp != null) {
 				ForceComponent.temp.unhook();
 				ForceComponent.temp = null;

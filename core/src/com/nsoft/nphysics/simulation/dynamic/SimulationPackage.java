@@ -3,12 +3,13 @@ package com.nsoft.nphysics.simulation.dynamic;
 import java.util.ArrayList;
 
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
 public class SimulationPackage {
 
-	static ArrayList<PolygonActor> polygons = NPhysics.sandbox.polygonlist;
+	static ArrayList<PhysicalActor<ObjectDefinition>> polygons = NPhysics.sandbox.polygonlist;
 	public static ArrayList<RawJoint> rawJoints = new ArrayList<>();
 	
 	public static void update() {

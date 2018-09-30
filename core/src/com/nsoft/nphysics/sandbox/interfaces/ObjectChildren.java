@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.Sandbox;
@@ -16,14 +17,15 @@ import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.Option;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
+import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 
 public abstract class ObjectChildren extends Group implements ClickIn,Form,Removeable{
 
-	private PolygonActor parent;
+	private PhysicalActor<ObjectDefinition> parent;
 
 	DynamicWindow form;
 	
-	public ObjectChildren(PolygonActor parent) {
+	public ObjectChildren(PhysicalActor<ObjectDefinition> parent) {
 		
 		if(parent == null) return;
 		this.parent = parent;
@@ -70,7 +72,7 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	
 	public Vector2 getRelativePosition(boolean physValue) {
 		
-		Vector2 s = new Vector2(getX() - getPolygon().getDefinition().getCenter(false).getX(),getY() - getPolygon().getDefinition().getCenter(false).getY());
+		Vector2 s = new Vector2(getX() - getPolygon().getDefinition().getCenter(false).x,getY() - getPolygon().getDefinition().getCenter(false).y);
 		return physValue ? s.scl(1f/Util.UNIT) : s;
 		
 	}
@@ -80,7 +82,7 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 		form.getOption("originx").setValue(getX() / Util.UNIT - NPhysics.currentStage.getAxisPosition().getX() / Util.UNIT);
 		form.getOption("originy").setValue(getY() / Util.UNIT - NPhysics.currentStage.getAxisPosition().getY() / Util.UNIT);
 	}
-	public PolygonActor getPolygon() {return parent;}
+	public PhysicalActor<ObjectDefinition> getPolygon() {return parent;}
 	
 	private void addDragListener() {
 		
@@ -131,7 +133,7 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	@Override
 	public SelectHandle getHandler() {
 		
-		return parent.handler;
+		return parent.getSelectHandleInstance();
 	}
 	
 	@Override

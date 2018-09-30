@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
+import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 
 public class PrismaticComponent extends ObjectChildren{
 
@@ -24,7 +25,7 @@ public class PrismaticComponent extends ObjectChildren{
 	public static PrismaticComponent temp = new PrismaticComponent(null);
 	
 	private float angle = 0;
-	public PrismaticComponent(PolygonActor parent) {
+	public PrismaticComponent(PhysicalActor<ObjectDefinition> parent) {
 		
 		super(parent);
 		initBasicForm("Wprismatic");

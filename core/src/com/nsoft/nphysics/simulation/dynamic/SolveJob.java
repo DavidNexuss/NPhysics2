@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.nsoft.nphysics.sandbox.ForceComponent;
+import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 
@@ -62,7 +63,7 @@ public class SolveJob {
 	PolygonObject var;
 	private void addObjects() {
 		
-		for (PolygonActor d: SimulationPackage.polygons)  {
+		for (PhysicalActor<ObjectDefinition> d: SimulationPackage.polygons)  {
 			
 			PolygonObject o = new PolygonObject(d.getDefinition(),w);
 			if(u.getPolygon() == d) var = o;

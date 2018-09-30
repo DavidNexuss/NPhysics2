@@ -27,7 +27,7 @@ import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 public class PolygonObject extends Actor{
 
 	public static float PHYSICAL_EPSILON = 0.01f;
-	PolygonDefinition def;
+	ObjectDefinition def;
 	SimpleArrow gravityArrow;
 	SimpleArrow velocityArrow;
 	AxisSupport pivot;
@@ -47,7 +47,7 @@ public class PolygonObject extends Actor{
 	
 	ArrayList<SimulationJoint> simjoints = new ArrayList<>();
 	
-	public PolygonObject(PolygonDefinition def,World owner) {
+	public PolygonObject(ObjectDefinition def,World owner) {
 		
 		this.owner = owner;
 		this.def = def;
@@ -220,7 +220,6 @@ public class PolygonObject extends Actor{
 	}
 	private void createObject() {
 		
-
 		BodyDef bdef = new BodyDef();
 		bdef.type = def.type;
 		bdef.position.set(def.getCenter(true));
@@ -324,7 +323,7 @@ public class PolygonObject extends Actor{
 	}
 	private void initVertexBuffer() {
 		
-		vert = def.getTriangles(true, true);
+		vert = ((PolygonDefinition)def).getTriangles(true, true);
 		buff = new float[vert.length][6];
 	}
 }

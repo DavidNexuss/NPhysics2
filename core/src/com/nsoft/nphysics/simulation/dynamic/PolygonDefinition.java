@@ -15,7 +15,6 @@ import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 public class PolygonDefinition extends ObjectDefinition{
 
 	public ArrayList<PositionVector> vertices = new ArrayList<>();
-	public ArrayList<ObjectChildren> childrens;
 	public ArrayList<Integer> indexes = new ArrayList<>();
 	
 	private float[] rawVertices;
@@ -53,7 +52,7 @@ public class PolygonDefinition extends ObjectDefinition{
 		float[] buff = new float[6];
 		if(relative) {
 			
-			PositionVector v = getCenter(false);
+			Vector2 v = getCenter(false);
 			
 			buff[0] = getX(i1) - v.x;
 			buff[1] = getY(i1) - v.y;
@@ -81,15 +80,9 @@ public class PolygonDefinition extends ObjectDefinition{
 		
 		return buff;
 	}
-	public float getCenterY(boolean PhysValue) {
-		
-		return getCenter(PhysValue).y;
-	}
-	public float getCenterX(boolean PhysValue) {
-		
-		return getCenter(PhysValue).x;
-	}
-	public PositionVector getCenter(boolean PhysValue) {
+	
+	@Override
+	public Vector2 getCenter(boolean PhysValue) {
 	/*	
 		float sumx = 0;
 		float sumy = 0;
@@ -110,9 +103,9 @@ public class PolygonDefinition extends ObjectDefinition{
 		return compute2DPolygonCentroid(PhysValue);
 	}
 	
-	public PositionVector compute2DPolygonCentroid(boolean physValue)
+	public Vector2 compute2DPolygonCentroid(boolean physValue)
 	{
-		PositionVector centroid = new PositionVector(new Vector2());
+		Vector2 centroid = new Vector2();
 	    
 		double signedArea = 0.0;
 	    double x0 = 0.0; // Current vertex X
@@ -139,7 +132,7 @@ public class PolygonDefinition extends ObjectDefinition{
 	    centroid.x /= (6.0*signedArea);
 	    centroid.y /= (6.0*signedArea);
 
-	    return physValue ? (PositionVector) centroid.scl(1f/Util.UNIT) : centroid;
+	    return physValue ? centroid.scl(1f/Util.UNIT) : centroid;
 	}
 	public float getY(int index) {
 		

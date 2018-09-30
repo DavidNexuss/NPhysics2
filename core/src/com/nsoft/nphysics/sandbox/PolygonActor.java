@@ -41,21 +41,15 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 import earcut4j.Earcut;
 
-public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler,Removeable,Draggable,Form{
+public class PolygonActor extends PhysicalActor<PolygonDefinition> implements Removeable{
 
 	private Point initial;
-	private ArrayList<Point> points = new ArrayList<>();
 	private ArrayList<Segment> segments = new ArrayList<>();
-	private ArrayList<ObjectChildren> components = new ArrayList<>();
 	private ArrayList<Integer> indexes = new ArrayList<>();
 	private double[] buffer;
-	private boolean end = false;
 	private float X,Y,width,height; //BOUNDS
 	
-	private PolygonDefinition definition;
-	private Polygon hitboxPolygon;
-	
-	public SelectHandle handler = new SelectHandle();  
+	private Polygon hitboxPolygon; 
 	
 	private Vector2 polygonMassCenter = new Vector2();
 	private SimpleArrow gravityArrow;
@@ -64,26 +58,16 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	private DiscontLine line;
 	
 	private ArrowLabel angleLabel;
-	
-	private DynamicWindow form;
 	private static float axisMargin = 20;
 	
 	private int forceVariableCount;
-	private String forceVariableCount_str = "0";
 	
 	private float physMass;
-	
-	@Override public SelectHandle getSelectHandleInstance() { return handler; }
 	
 	public static PolygonActor temp;
 
 	public PolygonActor() {
 		
-		setDebug(true, true);
-		definition = new PolygonDefinition();
-		initForm();
-		addInput();
-		addDragListener();
 		line = new DiscontLine(new Vector2(), new Vector2());
 		line.setVisible(false);
 		addActor(line);
@@ -92,6 +76,11 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		angleLabel.setColor(Color.BLUE);
 	}
 
+	public void initDefinition() {
+		
+		definition = new PolygonDefinition();
+	}
+	
 	public PolygonActor createCopy(Vector2 offset) {
 		
 		PolygonActor newpolygon = new PolygonActor();
@@ -115,110 +104,24 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		
 		return newpolygon;
 	}
-	public boolean keyDown(int keycode){
-		
-		if(keycode == Keys.Q) {
-			
-			if(!form.isVisible()) showForm();
-			return true;
-		}
-		
-		return false;
-	}
 
-	private void initForm() {
-		
-		form = DynamicWindow.createDefaultWindowStructure("Wpolygon",this);
-		form.setSize(450, 450);
-		
-		form.addOption(Options.createOptionTypeSlider("polygon_phys_state", NDictionary.get("phys_DYNAMIC"),NDictionary.get("phys_KINEMATIC"),NDictionary.get("phys_STATIC")));
-		form.addOption(Options.createOptionNumber("polygon_lvel_x"));
-		form.addOption(Options.createOptionNumber("polygon_lvel_y"));
-		form.addOption(Options.createOptionNumber("polygon_phys_mass"));
-		
-		form.addOption(Options.createOptionNumber("polygon_phys_density"));
-		form.addOption(Options.createOptionNumber("polygon_phys_friction"));
-		form.addOption(Options.createOptionNumber("polygon_phys_restitution"));
-		
-		form.getOption("polygon_phys_density").setValue(definition.density);
-		form.getOption("polygon_phys_friction").setValue(definition.friction);
-		form.getOption("polygon_phys_restitution").setValue(definition.restitution);
-		
-		
-		VisTable solve_dsl = new VisTable();
-		VisLabel dsl_t = new VisLabel(NDictionary.get("dsl_unknowns"));
-		dsl_t.setStyle(new LabelStyle(FontManager.subtitle, Color.WHITE));
-		VisLabel dsl_n = new VisLabel() {
-			
-			@Override
-			public void act(float delta) {
-				
-				setText(forceVariableCount_str);
-				super.act(delta);
-			}
-		};
-		VisTextButton dsl_b= new VisTextButton(NDictionary.get("dsl_solve"));
-		
-		solve_dsl.add(dsl_t).expand().align(Align.left);
-		solve_dsl.add(dsl_n).prefWidth(50).width(50);
-		solve_dsl.add(dsl_b).fillX().expand().padLeft(15);
-		
-		solve_dsl.pad(5);
-		form.addRawTable(solve_dsl);
-		
-		form.setVisible(false);
-		NPhysics.ui.addActor(form);
-	}
-	public PolygonDefinition getDefinition() {return definition;}
 	
 	public void updateForceVariableCount() {
 		forceVariableCount = 0;
-		for (ObjectChildren f : components) {
+		for (ObjectChildren f : getComponents()) {
 			
 			if(f instanceof ForceComponent) {
 				
 				forceVariableCount += ((ForceComponent) f).isVariable() ? 1 : 0;
 			}
 		}
-		
-		forceVariableCount_str = forceVariableCount + "";
 	}
 	@Override
 	public boolean isInside(float x, float y) {
 		
 		if (x < X || x > width || y < Y|| y > height) return false;
-		
 		if(hitboxPolygon.contains(x, y)) return true;
 		return false;
-	}
-
-	@Override
-	public void unselect() {
-		
-		current = shape;
-		UIStage.contextMenu.hide();
-	//	xaxis.hide();
-	//	yaxis.hide();
-		
-	}
-	@Override
-	public void select(int pointer) {
-		
-		current = mightSelected;
-		UIStage.contextMenu.show();
-	//	xaxis.show();
-	//	yaxis.show();
-	}
-	
-	@Override
-	public SelectHandle getHandler() {
-		
-		return Sandbox.mainSelect;
-	}
-	@Override
-	public Actor hit(float x, float y, boolean touchable) {
-		
-		return isInside(unproject(Gdx.input.getX(), Gdx.input.getY())) ? this : null;
 	}
 	
 	final Vector2 origin = new Vector2(0, 0);
@@ -229,7 +132,8 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 
 		ClickIn Pointer = this;
 		DragListener d = new DragListener() {
-		    public void drag(InputEvent event, float x, float y, int pointer) {
+		    
+			public void drag(InputEvent event, float x, float y, int pointer) {
 		    	
 		    	doDrag(true,x,y,event);
 		    }
@@ -289,19 +193,11 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		sumy = start.y - origin.y;
 
 	}
-	final static Color shape = 		   new Color(0.2f, 0.8f, 0.2f, 0.6f);
-	final static Color shapeSelected = new Color(0.8f, 0.2f, 0.2f, 0.6f);
-	final static Color mightSelected = new Color(0.8f,0.5f,0.2f,0.6f);
-	final static Color arcColor = new Color(0.5f, 0.5f, 0.9f, 0.4f);
-	
-	Color current = shape;
-	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
+		super.draw(batch, parentAlpha);
 		if(!isEnded()) return;
-		
-		NPhysics.currentStage.shapefill.setColor(isLastSelected() ? shapeSelected : current);
 		
 		Util.renderPolygon(NPhysics.currentStage.shapefill, points, indexes);
 		
@@ -358,7 +254,6 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	}
 	
 	public ArrayList<Point> getPointList() {return points;}
-	public boolean isEnded() {return end;}
 	
 	private void createBuffer() {
 		
@@ -419,13 +314,13 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	public float calculateMass() {
 		
 		physMass = definition.density * getArea(true);
-		form.getOption("polygon_phys_mass").setValue(physMass);
+		setValue("polygon_phys_mass", physMass);
 		return physMass;
 	}
 	public float calculateDensity() {
 		
 		definition.density = physMass / getArea(true);
-		form.getOption("polygon_phys_density").setValue(definition.density);
+		setValue("polygon_phys_density", definition.density);
 		return definition.density;
 	}
 	private void createDefinition() {
@@ -440,7 +335,7 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		}
 		
 		definition.init();
-		definition.childrens = components;
+		definition.childrens = getComponents();
 		
 		polygonMassCenter.set(definition.getCenter(false));
 		
@@ -462,24 +357,22 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 			gravityArrow.updateVertexArray();
 		}
 	}
+	@Override
 	public void end() {
 		
+		super.end();
 		for (Point point : points) {
 			
 			point.setObjectParent(this);
 		}
 		
 		triangulate();
-		end = true;
 		
 		if(temp == this) {
 			
 			NPhysics.sandbox.addActor(this);
 			temp = null;
 		}
-		
-		NPhysics.sandbox.polygonlist.add(this);
-
 
 		createDefinition();
 		createHitBox();
@@ -563,40 +456,8 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 		return isEnded() ? points : null;
 	}
 	
-	
-	public void addComponent(ObjectChildren child) {
-		
-		components.add(child);
-	}
-	
-	public void removeComponent(ObjectChildren child) {
-		
-		components.remove(child);
-	}
-	
-	public ArrayList<ObjectChildren> getObjectChildrenList(){
-		
-		return components;
-	}
 	@Override
 	public boolean remove() {
-		
-		NPhysics.sandbox.polygonlist.remove(this);
-		for (Point p : points) {
-			
-			ArrayList<PolygonActor> list = p.getObjectParents(PolygonActor.class);
-			
-			boolean canRemove = true;
-			
-			for (PolygonActor polygonActor : list) {
-				if(polygonActor != this) {
-					canRemove = false;
-					break;
-				}
-			}
-			if(!canRemove) continue;
-			p.remove();
-		}
 		
 		for (Segment s : segments) {
 			s.remove();
@@ -607,16 +468,11 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 	public Vector2 getPosition() {return new Vector2(getX(), getY());}
 
 	@Override
-	public DynamicWindow getForm() {
-		return form;
-	}
-
-	@Override
 	public void updateValuesFromForm() {
 		
-		float newDensity = form.getOption("polygon_phys_density").getValue();
+		float newDensity = getValue("polygon_phys_density");
 		
-		float newMass = form.getOption("polygon_phys_mass").getValue();
+		float newMass = getValue("polygon_phys_mass");
 		
 		if( definition.density != newDensity) {
 			
@@ -628,10 +484,10 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 			physMass = newMass;
 			calculateDensity();
 		}
-		definition.friction = form.getOption("polygon_phys_friction").getValue();
-		definition.restitution = form.getOption("polygon_phys_restitution").getValue();
+		definition.friction = getValue("polygon_phys_friction");
+		definition.restitution = getValue("polygon_phys_restitution");
 		
-		switch ((int)form.getOption("polygon_phys_state").getValue()) {
+		switch ((int)getValue("polygon_phys_state")) {
 		case 2:
 			definition.type = BodyType.StaticBody;
 			break;
@@ -645,8 +501,8 @@ public class PolygonActor extends Group implements Parent<Point>,ClickIn,Handler
 			throw new IllegalStateException();
 		}
 		
-		definition.linearVelocity.set(form.getOption("polygon_lvel_x").getValue(), 
-									  form.getOption("polygon_lvel_y").getValue());
+		definition.linearVelocity.set(getValue("polygon_lvel_x"), 
+									  getValue("polygon_lvel_y"));
 		
 	}
 

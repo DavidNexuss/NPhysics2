@@ -14,7 +14,7 @@ public class Builder {
 		System.out.println("\n\n\n\n\n\n\n");
 		DSL l = new DSL();
 		
-		for (ObjectChildren object : a.getObjectChildrenList()) {
+		for (ObjectChildren object : a.getComponents()) {
 			
 			if(object instanceof AxisSupport) {
 				
