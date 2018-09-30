@@ -29,18 +29,18 @@ public class GridStage extends DragStage{
 	
 	private boolean focus = true;
 	
-	public ShapeRenderer shapefill;	
-	public ShapeRenderer shapeline;
-	public ShapeRenderer shapepoint;
+	public NShapeRenderer shapefill;	
+	public NShapeRenderer shapeline;
+	public NShapeRenderer shapepoint;
 	
 	public GridStage(Viewport v) {
 		
 		super(v);
 		
 		//VARIABLE INIT:
-		shapefill = new ShapeRenderer();
-		shapeline = new ShapeRenderer();
-		shapepoint = new ShapeRenderer();
+		shapefill = new NShapeRenderer();
+		shapeline = new NShapeRenderer();
+		shapepoint = new NShapeRenderer();
 		
 		invertColor();
 	}
