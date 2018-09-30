@@ -321,9 +321,9 @@ public class Sandbox extends GridStage implements Handler{
 		if(super.keyDown(keyCode)) return true;
 		for (Actor p: getActors()) {
 			
-			if(p instanceof PolygonActor) {
+			if(p instanceof PhysicalActor<?>) {
 				
-				PolygonActor P = (PolygonActor)p;
+				PhysicalActor<ObjectDefinition> P = (PhysicalActor<ObjectDefinition>)p;
 				if(P.isSelected()) {
 					if(P.keyDown(keyCode)) {
 						
@@ -403,9 +403,9 @@ public class Sandbox extends GridStage implements Handler{
 		
 		boolean snap = isSnapping();
 		setSnapping(false);
-		if(mainSelect.getLastSelected() instanceof PolygonActor) {
+		if(mainSelect.getLastSelected() instanceof PhysicalActor<?>) {
 			
-			PolygonActor a = (PolygonActor)mainSelect.getLastSelected();
+			PhysicalActor<ObjectDefinition> a = (PhysicalActor<ObjectDefinition>)mainSelect.getLastSelected();
 			a.hookRotation(!a.hookRotation,useAxis);
 		}
 		setSnapping(snap);

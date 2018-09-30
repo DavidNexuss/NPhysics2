@@ -6,22 +6,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
+import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.drawables.DiscontLine;
+import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Draggable;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
+import com.nsoft.nphysics.sandbox.interfaces.Removeable;
+import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 import com.nsoft.nphysics.sandbox.ui.BaseOptionWindow;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
@@ -29,8 +38,9 @@ import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
+import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
-public abstract class PhysicalActor<D extends ObjectDefinition> extends Group implements Form,Handler,ClickIn,Draggable,Parent<Point>{
+public abstract class PhysicalActor<D extends ObjectDefinition> extends Group implements Form,Handler,ClickIn,Draggable,Parent<Point>,Removeable{
 
 	final static Color shape = 		   new Color(0.2f, 0.8f, 0.2f, 0.6f);
 	final static Color shapeSelected = new Color(0.8f, 0.2f, 0.2f, 0.6f);
@@ -43,7 +53,17 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	private boolean isEnded = false;
 	private Color currentColor = shape;
 	
+	private Vector2 polygonMassCenter = new Vector2();
+	private SimpleArrow gravityArrow;
+	private DiscontLine line;
+	
+	private ArrowLabel angleLabel;
+	
 
+	boolean hookRotation;
+	private float angle;
+	private boolean useAxis;
+	
 	private ArrayList<ObjectChildren> components = new ArrayList<>();
 	
 	D definition;
@@ -59,7 +79,16 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		setDebug(true, true);
 		addInput();
 		addDragListener();
+		
+		line = new DiscontLine(new Vector2(), new Vector2());
+		line.setVisible(false);
+		addActor(line);
+		
+		angleLabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
+		angleLabel.setColor(Color.BLUE);
 	}
+	
+	public Vector2 getPosition() {return new Vector2(getX(), getY());}
 	
 	@Override
 	public SelectHandle getSelectHandleInstance() {
@@ -73,7 +102,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	}
 	
 	abstract void initDefinition();
-	
+	abstract float getArea();
 	public boolean isEnded() {return isEnded;}
 	public void end() {
 		
@@ -83,6 +112,10 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		}
 		
 		NPhysics.sandbox.polygonlist.add((PhysicalActor<ObjectDefinition>) this);
+		
+		polygonMassCenter.set(definition.getCenter(false));
+
+		createArrow();
 	}
 	
 	public D getDefinition() {return definition;}
@@ -130,11 +163,109 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		NPhysics.ui.addActor(form);
 	}
 
+	final Vector2 origin = new Vector2(0, 0);
+	final Vector2 start = new Vector2(0, 0);
+	
+	@Override
+	public void addDragListener() {
+
+		ClickIn Pointer = this;
+		DragListener d = new DragListener() {
+		    
+			public void drag(InputEvent event, float x, float y, int pointer) {
+		    	
+		    	doDrag(true,x,y,event);
+		    }
+		    
+		    @Override
+		    public void dragStart(InputEvent event, float x, float y, int pointer) {
+		    	
+		    	start.set(NPhysics.currentStage.getUnproject(false));
+		    	origin.set(NPhysics.currentStage.getUnproject(false));
+		    	if(!isSelected()) getHandler().setSelected(Pointer);
+				
+		    	sumx = 0;
+		    	sumy = 0;
+		    	
+		    	for (Point p : points) {
+					
+		    		p.originx = p.getX();
+		    		p.originy = p.getY();
+				}
+		    	
+		    }
+		    
+		    @Override
+		    public void dragStop(InputEvent event, float x, float y, int pointer) {
+		    	
+		    	updatePosition(0, 0, null);
+		    }
+		};
+		
+		d.setTapSquareSize(1);
+		addListener(d);
+	}
+	
+	float sumx = 0;
+	float sumy = 0;
+	@Override
+	public void doDrag(boolean pool, float x, float y,InputEvent event) {
+		
+		Vector2 v2 = new Vector2(NPhysics.currentStage.getUnproject(false)).sub(start);
+		for (Point p : points) {
+
+			if (NPhysics.currentStage.isSnapping()) {
+				
+				p.setPosition(DragStage.snapGrid(p.originx + sumx),DragStage.snapGrid(p.originy + sumy));
+				
+			}else {
+				p.moveBy(v2.x, v2.y);
+				updatePosition(0, 0, null);
+			}
+			
+		}
+		
+		start.set(NPhysics.currentStage.getUnproject(false));
+		
+
+		sumx = start.x - origin.x;
+		sumy = start.y - origin.y;
+
+	}
+	Vector2 tempCenter = new Vector2();
+	public void hookRotation(boolean hook,boolean useAxisAsPivot) {
+		
+		if(!isEnded()) throw new IllegalStateException("");
+		hookRotation = hook;
+		useAxis = useAxisAsPivot;
+		if(hookRotation) {
+			tempCenter.set(useAxisAsPivot ? NPhysics.currentStage.getAxisPosition().getVector() : definition.getCenter(false));
+			line.setPositionA(new Vector2(tempCenter).sub(getPosition()));
+			line.hook(hookRotation);
+			line.setOffset(getPosition());
+			line.setVisible(true);
+			
+			for (Point p : points) {
+				
+				p.initial = new Vector2(p.getVector());
+			}
+			
+			line.act(Gdx.graphics.getDeltaTime());
+		}else {
+			
+			line.setVisible(false);
+			angle = line.getDiff().angleRad();
+		}
+	}
+	public void hookMenu() {}
 	public boolean keyDown(int keycode){
 		
 		if(keycode == Keys.Q) {
 			
-			if(!form.isVisible()) showForm();
+			if(!form.isVisible()) {
+				hookMenu();
+				showForm();
+			}
 			return true;
 		}
 		
@@ -145,14 +276,50 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	public void act(float delta) {
 		
 		super.act(delta);
+		if(hookRotation) {
+			
+			rotateVertices(tempCenter, Math.round((line.getDiff().angleRad() - angle)* MathUtils.radDeg / 5)*5  * MathUtils.degRad);
+			if(!isSelected()) hookRotation(false,useAxis);
+		}
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
 		super.draw(batch, parentAlpha);
 
+		NPhysics.currentStage.shapefill.setColor(Color.GRAY);
+		NPhysics.currentStage.shapefill.circle(polygonMassCenter.x, polygonMassCenter.y, 5);
+		
+		if(hookRotation && useAxis) {
+			
+			angleLabel.setVisible(true);
+			NPhysics.currentStage.shapefill.setColor(arcColor);
+			float angle = (line.getDiff().angleRad())*MathUtils.radDeg;
+			if(angle < 0) {
+				angle = Math.abs(angle);
+				angle = 360 - angle;
+			}
+			angleLabel.setText(((int)(angle / 5))*5 + "º");
+			angleLabel.setPosition(new Vector2(NPhysics.currentStage.getAxisPosition().getVector()).add(new Vector2(120, 0).rotate(angle)));
+			NPhysics.currentStage.shapefill.arc(NPhysics.currentStage.getAxisPosition().getX(), NPhysics.currentStage.getAxisPosition().getY(), 100, 0, angle);
+		}else angleLabel.setVisible(false);
+		
 		NPhysics.currentStage.shapefill.setColor(isLastSelected() ? shapeSelected : currentColor);
+		
 	}
+	
+	public void rotateVertices(Vector2 pivot,float angleRad){
+		
+		for (Point p : points) {
+			
+			Vector2 pos = p.initial;
+			Vector2 npos = Util.rotPivot(pivot, pos, angleRad);
+			p.setPosition(npos.x, npos.y,false);
+		}
+		
+		updatePosition();
+	}
+	
 	@Override
 	public void unselect() {
 		
@@ -196,6 +363,10 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	}
 	
 	@Override
+	public ArrayList<Point> getChildList() {
+		return isEnded() ? points : null;
+	}
+	@Override
 	public Actor hit(float x, float y, boolean touchable) {
 		
 		return isInside(unproject(Gdx.input.getX(), Gdx.input.getY())) ? this : null;
@@ -223,5 +394,30 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		
 
 		return super.remove();
+	}
+	
+	private void createArrow() {
+		
+		if(gravityArrow == null) {
+			
+			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
+			gravityArrow = new SimpleArrow(start, new Vector2(start).add(0,-Math.abs(getArea() * Util.UNIT * 9.8f / SimulationStage.ForceMultiplier)));
+			addActor(gravityArrow);
+			gravityArrow.setColor(Color.BLUE);
+		}else {
+			
+			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
+			gravityArrow.setStart(start);
+			gravityArrow.setEnd(new Vector2(start).add(0,-Math.abs(getArea() * Util.UNIT * 9.8f / SimulationStage.ForceMultiplier)));
+			gravityArrow.updateVertexArray();
+		}
+	}
+		
+	@Override
+	public void updatePosition(float x, float y, Point p) {
+		
+		if(p != null) angle = 0 ;
+		createArrow();
+		polygonMassCenter.set(definition.getCenter(false));
 	}
 }

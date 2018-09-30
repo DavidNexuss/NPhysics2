@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.ui.BaseOptionWindow;
@@ -48,6 +49,10 @@ public class CircleActor extends PhysicalActor<CircleDefinition> implements Form
 	}
 	
 	@Override
+	float getArea() {
+		return (float)(Math.PI) * (radius/ Util.UNIT)*(radius/ Util.UNIT);
+	}
+	@Override
 	public void draw(Batch batch, float parentAlpha) {
 
 		super.draw(batch, parentAlpha);
@@ -69,13 +74,15 @@ public class CircleActor extends PhysicalActor<CircleDefinition> implements Form
 		
 		radius = new Vector2(extreme.getVector()).dst(center.getVector());
 		definition.radius = radius / Util.UNIT;
+		definition.center = center.getVector();
+		updateValuesToForm();
+		
+		super.updatePosition(x, y, p);
 	}
-
-
+	
 	@Override
-	public ArrayList<Point> getChildList() {
-		return null;
+	public void updateValuesToForm() {
+		
+		setValue("polygon_phys_mass", getValue("polygon_phys_density") * getArea());
 	}
-	
-	
 }

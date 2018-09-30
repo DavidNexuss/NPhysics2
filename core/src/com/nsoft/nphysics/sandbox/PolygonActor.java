@@ -41,7 +41,7 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 import earcut4j.Earcut;
 
-public class PolygonActor extends PhysicalActor<PolygonDefinition> implements Removeable{
+public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 
 	private Point initial;
 	private ArrayList<Segment> segments = new ArrayList<>();
@@ -51,13 +51,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition> implements Re
 	
 	private Polygon hitboxPolygon; 
 	
-	private Vector2 polygonMassCenter = new Vector2();
-	private SimpleArrow gravityArrow;
-	private DoubleArrow xaxis;
-	private DoubleArrow yaxis;
-	private DiscontLine line;
-	
-	private ArrowLabel angleLabel;
 	private static float axisMargin = 20;
 	
 	private int forceVariableCount;
@@ -68,12 +61,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition> implements Re
 
 	public PolygonActor() {
 		
-		line = new DiscontLine(new Vector2(), new Vector2());
-		line.setVisible(false);
-		addActor(line);
 		
-		angleLabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
-		angleLabel.setColor(Color.BLUE);
 	}
 
 	public void initDefinition() {
@@ -124,75 +112,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition> implements Re
 		return false;
 	}
 	
-	final Vector2 origin = new Vector2(0, 0);
-	final Vector2 start = new Vector2(0, 0);
-	@Override
-	public void addDragListener() {
-
-
-		ClickIn Pointer = this;
-		DragListener d = new DragListener() {
-		    
-			public void drag(InputEvent event, float x, float y, int pointer) {
-		    	
-		    	doDrag(true,x,y,event);
-		    }
-		    
-		    @Override
-		    public void dragStart(InputEvent event, float x, float y, int pointer) {
-		    	
-		    	start.set(NPhysics.currentStage.getUnproject(false));
-		    	origin.set(NPhysics.currentStage.getUnproject(false));
-		    	if(!isSelected()) getHandler().setSelected(Pointer);
-				
-		    	sumx = 0;
-		    	sumy = 0;
-		    	
-		    	for (Point p : points) {
-					
-		    		p.originx = p.getX();
-		    		p.originy = p.getY();
-				}
-		    	
-		    }
-		    
-		    @Override
-		    public void dragStop(InputEvent event, float x, float y, int pointer) {
-		    	
-		    	updatePosition(0, 0, null);
-		    }
-		};
-		
-		d.setTapSquareSize(1);
-		addListener(d);
-	}
 	
-	float sumx = 0;
-	float sumy = 0;
-	@Override
-	public void doDrag(boolean pool, float x, float y,InputEvent event) {
-		
-		Vector2 v2 = new Vector2(NPhysics.currentStage.getUnproject(false)).sub(start);
-		for (Point p : points) {
-
-			if (NPhysics.currentStage.isSnapping()) {
-				
-				p.setPosition(DragStage.snapGrid(p.originx + sumx),DragStage.snapGrid(p.originy + sumy));
-				
-			}else {
-				p.moveBy(v2.x, v2.y);
-				updatePosition(0, 0, null);
-			}
-			
-		}
-		
-		start.set(NPhysics.currentStage.getUnproject(false));
-		
-
-		sumx = start.x - origin.x;
-		sumy = start.y - origin.y;
-
-	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
@@ -201,22 +121,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition> implements Re
 		
 		Util.renderPolygon(NPhysics.currentStage.shapefill, points, indexes);
 		
-		NPhysics.currentStage.shapefill.setColor(Color.GRAY);
-		NPhysics.currentStage.shapefill.circle(polygonMassCenter.x, polygonMassCenter.y, 5);
 		
-		if(hookRotation && useAxis) {
-			
-			angleLabel.setVisible(true);
-			NPhysics.currentStage.shapefill.setColor(arcColor);
-			float angle = (line.getDiff().angleRad())*MathUtils.radDeg;
-			if(angle < 0) {
-				angle = Math.abs(angle);
-				angle = 360 - angle;
-			}
-			angleLabel.setText(((int)(angle / 5))*5 + "º");
-			angleLabel.setPosition(new Vector2(NPhysics.currentStage.getAxisPosition().getVector()).add(new Vector2(120, 0).rotate(angle)));
-			NPhysics.currentStage.shapefill.arc(NPhysics.currentStage.getAxisPosition().getX(), NPhysics.currentStage.getAxisPosition().getY(), 100, 0, angle);
-		}else angleLabel.setVisible(false);
 		super.draw(batch, parentAlpha);
 		
 	}
@@ -299,8 +204,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition> implements Re
 		
 		calculaeBounds();
 		hitboxPolygon.setVertices(definition.getRawVertices());
-		xaxis.setPosition(new PositionVector(X,Y - axisMargin), new PositionVector(width,Y - axisMargin));
-		yaxis.setPosition(new PositionVector(X - axisMargin,Y), new PositionVector(X - axisMargin,height));
 		
 		calculateMass();
 		
@@ -337,30 +240,16 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition> implements Re
 		definition.init();
 		definition.childrens = getComponents();
 		
-		polygonMassCenter.set(definition.getCenter(false));
-		
 	}
 	
-	private void createArrow() {
-		
-		if(gravityArrow == null) {
-			
-			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
-			gravityArrow = new SimpleArrow(start, new Vector2(start).add(0,-Math.abs(hitboxPolygon.area() * Util.UNIT * 9.8f / SimulationStage.ForceMultiplier / (30*30))));
-			addActor(gravityArrow);
-			gravityArrow.setColor(Color.BLUE);
-		}else {
-			
-			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
-			gravityArrow.setStart(start);
-			gravityArrow.setEnd(new Vector2(start).add(0,-Math.abs(hitboxPolygon.area() * Util.UNIT * 9.8f / SimulationStage.ForceMultiplier / (30*30))));
-			gravityArrow.updateVertexArray();
-		}
+	@Override
+	float getArea() {
+		return hitboxPolygon.area() / (30*30);
 	}
 	@Override
 	public void end() {
 		
-		super.end();
+
 		for (Point point : points) {
 			
 			point.setObjectParent(this);
@@ -376,84 +265,29 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition> implements Re
 
 		createDefinition();
 		createHitBox();
-		createArrow();
-		xaxis = new DoubleArrow(new PositionVector(X,Y - axisMargin), new PositionVector(width,Y - axisMargin));
-		yaxis = new DoubleArrow(new PositionVector(X - axisMargin,Y), new PositionVector(X - axisMargin,height));
-		
-		addActor(xaxis);
-		addActor(yaxis);
-		
 
 		calculateMass();
+		
+		super.end();
 	}
 
-	boolean hookRotation;
-	private float angle;
-	private boolean useAxis;
-	public void hookRotation(boolean hook,boolean useAxisAsPivot) {
-		
-		if(!isEnded()) throw new IllegalStateException("");
-		hookRotation = hook;
-		useAxis = useAxisAsPivot;
-		if(hookRotation) {
-			tempCenter.set(useAxisAsPivot ? NPhysics.currentStage.getAxisPosition().getVector() : definition.getCenter(false));
-			line.setPositionA(new Vector2(tempCenter).sub(getPosition()));
-			line.hook(hookRotation);
-			line.setOffset(getPosition());
-			line.setVisible(true);
-			
-			for (Point p : points) {
-				
-				p.initial = new Vector2(p.getVector());
-			}
-			
-			line.act(Gdx.graphics.getDeltaTime());
-		}else {
-			
-			line.setVisible(false);
-			angle = line.getDiff().angleRad();
-		}
-	}
 	
-	Vector2 tempCenter = new Vector2();
+	
 	@Override
 	public void act(float delta) {
 		
-		if(hookRotation) {
-			
-			rotateVertices(tempCenter, Math.round((line.getDiff().angleRad() - angle)* MathUtils.radDeg / 5)*5  * MathUtils.degRad);
-			if(!isSelected()) hookRotation(false,useAxis);
-		}
+		
 		super.act(delta);
 	}
-	public void rotateVertices(Vector2 pivot,float angleRad){
-		
-		for (Point p : points) {
-			
-			Vector2 pos = p.initial;
-			Vector2 npos = Util.rotPivot(pivot, pos, angleRad);
-			p.setPosition(npos.x, npos.y,false);
-		}
-		
-		updatePosition();
-	}
-	
 	@Override
 	public void updatePosition(float x, float y, Point p) {
 		
+		super.updatePosition(x, y, p);
 		if(!isEnded())return;
 		triangulate();
 
 		createDefinition();
 		calculateHitBox();
-		createArrow();
-		if(p != null) angle = 0 ;
-	}
-
-	@Override
-	public ArrayList<Point> getChildList() {
-		
-		return isEnded() ? points : null;
 	}
 	
 	@Override
@@ -464,8 +298,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition> implements Re
 		}
 		return super.remove();
 	}
-	
-	public Vector2 getPosition() {return new Vector2(getX(), getY());}
 
 	@Override
 	public void updateValuesFromForm() {
