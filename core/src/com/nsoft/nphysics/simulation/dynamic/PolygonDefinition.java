@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
@@ -83,27 +84,11 @@ public class PolygonDefinition extends ObjectDefinition{
 	
 	@Override
 	public Vector2 getCenter(boolean PhysValue) {
-	/*	
-		float sumx = 0;
-		float sumy = 0;
-		
-		for (PositionVector v : vertices) {
-			
-			sumx+= v.x;
-			sumy+= v.y;
-		}
-		
-		if(PhysValue) {
-			
-			sumx /= Util.UNIT;
-			sumy /= Util.UNIT;
-		}
-		return new PositionVector(sumx/vertices.size(), sumy/vertices.size());*/
 		
 		return compute2DPolygonCentroid(PhysValue);
 	}
 	
-	public Vector2 compute2DPolygonCentroid(boolean physValue)
+	private Vector2 compute2DPolygonCentroid(boolean physValue)
 	{
 		Vector2 centroid = new Vector2();
 	    
@@ -166,5 +151,40 @@ public class PolygonDefinition extends ObjectDefinition{
 		}
 		
 		return fixtures;
+	}
+	
+	float[][] vert;
+	float[][] buff;
+	
+	@Override
+	protected void initForSimulation() {
+		vert = getTriangles(true, true);
+		buff = new float[vert.length][6];
+	}
+	
+	
+	final Vector2 t1 = new Vector2();
+	final Vector2 t2 = new Vector2();
+	final Vector2 t3 = new Vector2();
+	@Override
+	protected void render(Body b) {
+		
+		for (int i = 0; i < vert.length; i++) {
+			
+
+			Vector2 pos = b.getPosition().scl(Util.UNIT);
+			
+			t1.set(vert[i][0], vert[i][1]).scl(Util.UNIT).add(pos);
+			t2.set(vert[i][2],vert[i][3]).scl(Util.UNIT).add(pos);
+			t3.set(vert[i][4], vert[i][5]).scl(Util.UNIT).add(pos);
+		
+			
+			t1.set(Util.rotPivot(pos, t1, b.getAngle()));
+			t2.set(Util.rotPivot(pos, t2, b.getAngle()));
+			t3.set(Util.rotPivot(pos, t3, b.getAngle()));
+
+			NPhysics.currentStage.shapefill.triangle(t1.x, t1.y, t2.x, t2.y, t3.x, t3.y);
+			
+		}
 	}
 }

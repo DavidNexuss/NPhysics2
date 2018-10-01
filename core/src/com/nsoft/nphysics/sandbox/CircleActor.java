@@ -59,7 +59,7 @@ public class CircleActor extends PhysicalActor<CircleDefinition> implements Form
 		
 		NPhysics.sandbox.shapefill.circle(center.getX(), center.getY(), radius);
 		Gdx.gl.glLineWidth(3);
-		NPhysics.currentStage.shapefill.setColor(0.8f, 0.2f, 0.2f, 0.3f);
+		NPhysics.currentStage.shapeline.setColor(Segment.line);
 		NPhysics.sandbox.shapeline.begin(ShapeType.Line);
 		NPhysics.sandbox.shapeline.circle(center.getX(), center.getY(), radius);
 		NPhysics.sandbox.shapeline.end();

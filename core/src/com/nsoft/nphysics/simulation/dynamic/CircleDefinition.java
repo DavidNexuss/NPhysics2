@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.Util;
 
 public class CircleDefinition extends ObjectDefinition{
@@ -27,8 +28,9 @@ public class CircleDefinition extends ObjectDefinition{
 	public ArrayList<Fixture> createFixtures(Body b) {
 		
 		FixtureDef def = createFixtureDefinition();
+		System.out.println(def.friction);
 		CircleShape s = new CircleShape();
-		s.setPosition(center);
+		s.setPosition(new Vector2());
 		s.setRadius(radius);
 		def.shape = s;
 		
@@ -42,5 +44,16 @@ public class CircleDefinition extends ObjectDefinition{
 	@Override
 	public Vector2 getCenter(boolean physValue) {
 		return physValue ? new Vector2(center).scl(1f/Util.UNIT) : new Vector2(center);
+	}
+	
+	@Override
+	protected void initForSimulation() {
+		
+	}
+	
+	@Override
+	protected void render(Body b) {
+		
+		NPhysics.currentStage.shapefill.circle(b.getPosition().x * Util.UNIT, b.getPosition().y * Util.UNIT, radius * Util.UNIT);
 	}
 }

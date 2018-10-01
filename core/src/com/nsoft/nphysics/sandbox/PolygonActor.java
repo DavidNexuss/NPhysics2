@@ -302,6 +302,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	@Override
 	public void updateValuesFromForm() {
 		
+		super.updateValuesFromForm();
 		float newDensity = getValue("polygon_phys_density");
 		
 		float newMass = getValue("polygon_phys_mass");
@@ -316,8 +317,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 			physMass = newMass;
 			calculateDensity();
 		}
-		definition.friction = getValue("polygon_phys_friction");
-		definition.restitution = getValue("polygon_phys_restitution");
 		
 		switch ((int)getValue("polygon_phys_state")) {
 		case 2:

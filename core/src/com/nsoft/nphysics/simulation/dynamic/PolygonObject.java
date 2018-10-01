@@ -36,8 +36,6 @@ public class PolygonObject extends Actor{
 	boolean reactY = false;
 	boolean reactX = false;
 	
-	float[][] vert;
-	float[][] buff;
 	Body b;
 	
 	World owner;
@@ -51,7 +49,7 @@ public class PolygonObject extends Actor{
 		
 		this.owner = owner;
 		this.def = def;
-		initVertexBuffer();
+		def.initForSimulation();
 		createObject();
 		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
 		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / 10f);
@@ -70,10 +68,6 @@ public class PolygonObject extends Actor{
 	
 	final Color col = new Color(0.2f, 0.8f, 0.2f, 0.5f);
 	final Color col2 = new Color(0.7f,0.7f,0.2f,0.5f);
-	
-	final Vector2 t1 = new Vector2();
-	final Vector2 t2 = new Vector2();
-	final Vector2 t3 = new Vector2();
 	final Vector2 centre = new Vector2();
 	
 	public static boolean hide = false;
@@ -87,28 +81,13 @@ public class PolygonObject extends Actor{
 		
 		NPhysics.currentStage.shapefill.setColor(selected ? col2.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1) : col.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1));
 		
+		def.render(b);
+		
 		gravityLabel.setColor(Color.YELLOW.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1));
 		velLabel.setColor(Color.CYAN.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1));
 		
 		gravityArrow.setColor(Color.YELLOW.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1));
 		velocityArrow.setColor(Color.CYAN.cpy().mul(1, 1, 1, hide && !selected ? hidealpha : 1));
-		for (int i = 0; i < vert.length; i++) {
-			
-
-			Vector2 pos = b.getPosition().scl(Util.UNIT);
-			
-			t1.set(vert[i][0], vert[i][1]).scl(Util.UNIT).add(pos);
-			t2.set(vert[i][2],vert[i][3]).scl(Util.UNIT).add(pos);
-			t3.set(vert[i][4], vert[i][5]).scl(Util.UNIT).add(pos);
-		
-			
-			t1.set(Util.rotPivot(pos, t1, b.getAngle()));
-			t2.set(Util.rotPivot(pos, t2, b.getAngle()));
-			t3.set(Util.rotPivot(pos, t3, b.getAngle()));
-
-			NPhysics.currentStage.shapefill.triangle(t1.x, t1.y, t2.x, t2.y, t3.x, t3.y);
-			
-		}
 		
 		NPhysics.currentStage.shapefill.setColor(Color.GRAY.mul(1, 1, 1, hide && !selected ? hidealpha : 1));
 		centre.set(b.getPosition()).add(b.getMassData().center);
@@ -320,10 +299,5 @@ public class PolygonObject extends Actor{
 		
 		return b;
 		
-	}
-	private void initVertexBuffer() {
-		
-		vert = ((PolygonDefinition)def).getTriangles(true, true);
-		buff = new float[vert.length][6];
 	}
 }

@@ -105,14 +105,6 @@ public class Sandbox extends GridStage implements Handler{
 	}
 	private void initdebug() {
 		
-		Point cente = new Point(200, 300, false);
-		Point ex = new Point(500, 200, false);
-		
-		CircleActor a = new CircleActor(cente);
-		a.addExtreme(ex);
-		addActor(a);
-		addActor(cente);
-		addActor(ex);
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);

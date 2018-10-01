@@ -347,6 +347,13 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		
 	}
 	
+	@Override
+	public void updateValuesFromForm() {
+		
+		definition.density = getValue("polygon_phys_density");
+		definition.friction = getValue("polygon_phys_friction");
+		definition.restitution = getValue("polygon_phys_restitution");
+	}
 	public void addComponent(ObjectChildren child) {
 		
 		components.add(child);

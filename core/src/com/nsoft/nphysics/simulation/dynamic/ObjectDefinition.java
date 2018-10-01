@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public abstract class ObjectDefinition {
 
-	public ArrayList<ObjectChildren> childrens;
+	public ArrayList<ObjectChildren> childrens = new ArrayList<>();
 	
 	public BodyType type = BodyType.DynamicBody;
 	
@@ -43,4 +43,7 @@ public abstract class ObjectDefinition {
 		
 		return def;
 	}
+	
+	abstract protected void initForSimulation();
+	abstract protected void render(Body b);
 }
