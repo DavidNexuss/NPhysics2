@@ -19,7 +19,7 @@ public class DoubleAxisComponent extends Actor implements RawJoint{
 	
 	private static ArrayList<DoubleAxisComponent> axis = new ArrayList<>();
 	
-	public PolygonActor A,B;
+	public PhysicalActor<?> A,B;
 	Body bA,bB;
 	
 	public boolean temp;
@@ -29,8 +29,8 @@ public class DoubleAxisComponent extends Actor implements RawJoint{
 		this.temp = temp;
 		if(!temp) {
 			
-			A = (PolygonActor) Sandbox.mainSelect.getSelecteds().get(0);
-			B = (PolygonActor) Sandbox.mainSelect.getSelecteds().get(1);
+			A = (PhysicalActor<?>) Sandbox.mainSelect.getSelecteds().get(0);
+			B = (PhysicalActor<?>) Sandbox.mainSelect.getSelecteds().get(1);
 			axis.add(this);
 		}
 	}

@@ -134,7 +134,7 @@ public class SelectHandle {
 	
 	private void updateDoubleContextMenu() {
 		
-		if(selecteds.size() == 2 && selecteds.get(0) instanceof PolygonActor && selecteds.get(1) instanceof PolygonActor)
+		if(selecteds.size() == 2 && selecteds.get(0) instanceof PhysicalActor<?> && selecteds.get(1) instanceof PhysicalActor<?>)
 			UIStage.doubleContextMenu.show();
 		else UIStage.doubleContextMenu.hide();
 	}

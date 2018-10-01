@@ -21,6 +21,7 @@ public class CircleDefinition extends ObjectDefinition{
 	public CircleDefinition(float radius,Vector2 center) {
 		this.radius = radius;
 		this.center.set(center);
+		
 	}
 	
 	
@@ -28,7 +29,6 @@ public class CircleDefinition extends ObjectDefinition{
 	public ArrayList<Fixture> createFixtures(Body b) {
 		
 		FixtureDef def = createFixtureDefinition();
-		System.out.println(def.friction);
 		CircleShape s = new CircleShape();
 		s.setPosition(new Vector2());
 		s.setRadius(radius);
