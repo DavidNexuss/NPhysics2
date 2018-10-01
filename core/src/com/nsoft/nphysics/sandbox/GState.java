@@ -11,12 +11,13 @@ public enum GState {
 	CREATE_ROPE("Crea una cuerda"),
 	CREATE_SUPPORT("Crea un soporte"),
 	CREATE_POLYGON("Crea un objeto"),
-	CREATE_FAST_POLYGON("Crea un objeto"),
+	CREATE_CIRCLE(Flag.POLYGON,"Crea un circulo"),
+	CREATE_FAST_POLYGON(Flag.POLYGON,"Crea un objeto"),
 	CREATE_SEGMENTS("Crea segmentos"),
 	CREATE_FORCE("Crea un vector de fuerza"),
 	HOOK_FORCE_ARROW("Dibuja el vector de fuerza"),
-	HOOK_FORCE_ARROW2("Dibuja el vector de fuerza"), 
-;	
+	HOOK_FORCE_ARROW2("Dibuja el vector de fuerza");	
+	
 	public String description;
 	public Runnable cleanTask;
 	public Runnable setUpTask;
@@ -24,11 +25,26 @@ public enum GState {
 	public boolean hasCleanTask() {return cleanTask != null;}
 	public boolean hasSetUpTask() {return setUpTask != null;}
 	
+	public Flag fl;
+	static enum Flag{
+		POLYGON(()->{FastPolygonCreator.temp = null;});
+		
+		Runnable r;
+		Flag(Runnable r){
+			
+			this.r = r;
+		}
+	}
 	private GState(String description) {
 		
 		this(description, null);
 	}
 	
+	private GState(Flag fl,String description) {
+		
+		this(description);
+		this.fl = fl;
+	}
 	GState(String description,Runnable cleanTask) {
 		
 		this(description, cleanTask,null);

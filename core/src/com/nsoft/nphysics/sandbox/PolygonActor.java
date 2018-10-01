@@ -238,7 +238,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		}
 		
 		definition.init();
-		definition.childrens = getComponents();
 		
 	}
 	

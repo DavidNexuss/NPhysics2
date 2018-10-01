@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.ThreadManager;
+import com.nsoft.nphysics.sandbox.GState.Flag;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
 import com.nsoft.nphysics.sandbox.drawables.SimpleAxis;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
@@ -233,10 +234,6 @@ public class Sandbox extends GridStage implements Handler{
 				addActor(ForceComponent.temp);
 			}
 			break;
-		case CREATE_FAST_POLYGON:
-			
-			FastPolygonCreator.handleClick(isSnapping() ? snapGrid(screenx) : screenx, isSnapping() ? snapGrid(screeny) : screeny);
-			return true;
 		case CREATE_ROPE:
 			
 			if(RopeComponent.temp == null) {
@@ -263,6 +260,11 @@ public class Sandbox extends GridStage implements Handler{
 			return true;
 		default:
 			
+			if(GameState.current.fl == Flag.POLYGON) {
+				
+				FastPolygonCreator.handleClick(isSnapping() ? snapGrid(screenx) : screenx, isSnapping() ? snapGrid(screeny) : screeny);
+				return true;
+			}
 			if(!super.touchDown(screenX, screenY, pointer, button)) {
 				
 				mainSelect.unSelect();

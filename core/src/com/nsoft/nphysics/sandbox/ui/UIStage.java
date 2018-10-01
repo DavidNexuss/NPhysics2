@@ -235,8 +235,8 @@ public class UIStage extends Stage{
 		options.add(MenuItem.loadNewItem("start.png", GState.START));
 		options.add(MenuItem.loadNewItem("point.png", GState.CREATE_POINT));
 		options.add(MenuItem.loadNewItem("segment.png", GState.CREATE_SEGMENT));
-		options.add(MenuItem.loadNewItem("shape.png", GState.CREATE_POLYGON));
 		options.add(MenuItem.loadNewItem("shape.png", GState.CREATE_FAST_POLYGON));
+		options.add(MenuItem.loadNewItem("shape.png", GState.CREATE_CIRCLE));
 	}
 	
 	private void setDoubleContextMenuItems() {

@@ -31,16 +31,21 @@ public class CircleActor extends PhysicalActor<CircleDefinition> implements Form
 		definition = new CircleDefinition();
 	}
 	
-	public void addExtreme(Point p) {
+	@Override
+	public CircleActor addPoint(Point p) {
 		if(isEnded()) throw new IllegalStateException();
 		extreme = p;
 		end();
+		return this;
 	}
 	@Override
 	public void end() {
 
 		points.add(center);
 		points.add(extreme);
+		
+		center.setZIndex(1);
+		extreme.setZIndex(1);
 		
 		updatePosition();
 		

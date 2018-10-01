@@ -116,7 +116,12 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		polygonMassCenter.set(definition.getCenter(false));
 
 		createArrow();
+		
+
+		definition.childrens = getComponents();
 	}
+	
+	public abstract PhysicalActor<D> addPoint(Point p);
 	
 	public D getDefinition() {return definition;}
 	private void initForm() {

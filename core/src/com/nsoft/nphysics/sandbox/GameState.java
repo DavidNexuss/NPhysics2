@@ -22,6 +22,7 @@ public class GameState {
 		
 		if(current.hasCleanTask())current.cleanTask.run();
 		if(s.hasSetUpTask()) s.setUpTask.run();
+		if(current.fl != null)current.fl.r.run();
 		current = s;
 		UIStage.setOperationText(current.description);
 	}
