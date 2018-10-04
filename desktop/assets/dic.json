@@ -169,4 +169,19 @@ polygon_lvel_y:{
 	ESP: "Velocidad lineal en y"
 	CAT: "Velocitat lineal en y"
 }
+gridmeterscale:{
+	ENG: "Meters per each square"
+	ESP: "Metros por cada cuadrado"
+	CAT: "Metres per cada quadrat"
+}
+gridnewtonscale:{
+	ENG: "Newtons per each square"
+	ESP: "Newtons por cada cuadro"
+	CAT: "Newtons per cada quadrat"
+}
+gravity:{
+	ENG: "Gravity"
+	ESP: "Gravedad"
+	CAT: "Gravetat"
+}
 }
