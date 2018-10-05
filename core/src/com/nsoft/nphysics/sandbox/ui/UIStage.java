@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -41,6 +43,7 @@ public class UIStage extends Stage{
 	public static OptionPane doubleContextMenu;
 	public static ViewSelection view;
 	static ShapeRenderer shapefill;
+	static ShapeRenderer shapeline;
 	static Table container;
 	static MenuItem grid,clean;
 	
@@ -52,13 +55,17 @@ public class UIStage extends Stage{
 
 	
 	public static UIStage stage;
+	static Group labelGroup;
+	
 	public UIStage() {
 		
 		super(new ScreenViewport());
-		
+		labelGroup = new Group();
+		addActor(labelGroup);
 		stage = this;
 		initBackGroundShader();
 		shapefill = new ShapeRenderer();
+		shapeline = new ShapeRenderer();
 		FontManager.init();
 		setStateMenu();
 		loadViewMenu();
@@ -98,10 +105,12 @@ public class UIStage extends Stage{
 				}
 			}
 		};
-		fps.setStyle(new LabelStyle(FontManager.title, Color.RED));
+		fps.setStyle(new LabelStyle(new BitmapFont(), Color.RED));
 		addActor(fps);
 		fps.setPosition(100, Gdx.graphics.getHeight() - 50);
 		fps.setVisible(false);
+
+		labelGroup.setZIndex(10);
 	}
 	
 	public void showFPS(boolean v) {
@@ -282,18 +291,23 @@ public class UIStage extends Stage{
 		shapefill.setColor(0.1f, 0.1f, 0.1f, 1f);
 		shapefill.rect(container.getX(), container.getY(), container.getWidth(), container.getHeight());
 		shapefill.end();
-		
+
 		backBatch.begin();
 		backSP.setUniformf("A",backgroundAnimation.getColor().a / 2f);
 		backBatch.draw(nullTexture, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		backBatch.end();
+		
+		shapeline.begin(ShapeType.Line);
 		super.draw();
+		shapeline.end();
+		
 	}
 	
 	
 	private void updateMatrix() {
 		
 		shapefill.setProjectionMatrix(getCamera().combined);
+		shapeline.setProjectionMatrix(getCamera().combined);
 		getBatch().setProjectionMatrix(getCamera().combined);
 	}
 	
