@@ -1,4 +1,8 @@
 package com.nsoft.nphysics;
+
+import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
+
 /**
  * Interfas per fer debugging
  * @author David
@@ -22,21 +26,26 @@ public interface Say {
 	 * */
 	
 	static int ___8drrd3148796d_Xaf() {
-	    boolean thisOne = false;
-	    int thisOneCountDown = 1;
-	    StackTraceElement[] elements = Thread.currentThread().getStackTrace();
-	    for(StackTraceElement element : elements) {
-	        String methodName = element.getMethodName();
-	        int lineNum = element.getLineNumber();
-	        if(thisOne && (thisOneCountDown == 0)) {
-	            return lineNum;
-	        } else if(thisOne) {
-	            thisOneCountDown--;
-	        }
-	        if(methodName.equals("___8drrd3148796d_Xaf")) {
-	            thisOne = true;
-	        }
+	    
+		if(Gdx.app == null || Gdx.app.getType() == ApplicationType.Desktop) {
+	    	
+	    	boolean thisOne = false;
+		    int thisOneCountDown = 1;
+		    StackTraceElement[] elements = NPhysics.functions.getCurrentThread().getStackTrace();
+		    for(StackTraceElement element : elements) {
+		        String methodName = element.getMethodName();
+		        int lineNum = element.getLineNumber();
+		        if(thisOne && (thisOneCountDown == 0)) {
+		            return lineNum;
+		        } else if(thisOne) {
+		            thisOneCountDown--;
+		        }
+		        if(methodName.equals("___8drrd3148796d_Xaf")) {
+		            thisOne = true;
+		        }
+		    }
 	    }
+
 	    return -1;
 	}
 }

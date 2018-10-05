@@ -13,4 +13,9 @@ public class SpecificWindowsFunctions implements SpecificOSFunctions{
 			     (Runnable) Toolkit.getDefaultToolkit().getDesktopProperty(name);
 			if (runnable != null) runnable.run();
 	}
+	
+	@Override
+	public Thread getCurrentThread() {
+		return Thread.currentThread();
+	}
 }
