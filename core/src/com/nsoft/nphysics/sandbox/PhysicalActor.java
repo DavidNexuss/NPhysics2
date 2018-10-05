@@ -292,8 +292,11 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		
 		super.draw(batch, parentAlpha);
 
-		NPhysics.currentStage.shapefill.setColor(Color.GRAY);
-		NPhysics.currentStage.shapefill.circle(polygonMassCenter.x, polygonMassCenter.y, 5);
+		if(isEnded) {
+			
+			NPhysics.currentStage.shapefill.setColor(Color.GRAY);
+			NPhysics.currentStage.shapefill.circle(polygonMassCenter.x, polygonMassCenter.y, 5);
+		}
 		
 		if(hookRotation && useAxis) {
 			
