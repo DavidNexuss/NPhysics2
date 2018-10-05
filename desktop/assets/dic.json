@@ -184,4 +184,54 @@ gravity:{
 	ESP: "Gravedad"
 	CAT: "Gravetat"
 }
+menu-create-point:{
+	ENG: "Create the point with your mouse"
+	ESP: "Crea un punto con el cursor"
+	CAT: "Crea un punt amb el cursor"
+}
+menu-create-segment:{
+	ENG: "Create a segment with two points"
+	ESP: "Crea un segmento con dos puntos"
+	CAT: "Crea un segment amb dos punts"
+}
+menu-create-axis:{
+	ENG: "Create a fixed axis"
+	ESP: "Crea un eje fijo"
+	CAT: "Crea un eix fixe"
+}
+menu-create-double-axis:{
+	ENG: "Create an axis"
+	ESP: "Crea un eje"
+	CAT: "Crea un eix"
+}
+menu-create-prismatic:{
+	ENG: "Create a prismatic joint"
+	ESP: "Crea una via prismática"
+	CAT: "Crea una via prismàtica"
+}
+menu-create-rope:{
+	ENG: "Create a rope using two points"
+	ESP: "Crea una cuerda usando dos puntos"
+	CAT: "Crea una corda utilitzant dos punts"
+}
+menu-create-circle:{
+	ENG: "Create an object in the form of a circle"
+	ESP: "Crea un objeto con forma de circulo"
+	CAT: "Crea un objecte en forma de cercle"
+}
+menu-create-polygon:{
+	ENG: "Create an object in the form of a polygon"
+	ESP: "Crea un objeto en forma de polígono"
+	CAT: "Crea un objecte en forma de poligon"
+}
+menu-create-segments:{
+	ENG: "Create a segment with two points"
+	ESP: "Crea un segmento usando dos puntos"
+	CAT: "Crea un segement utilitzant dos punts"
+}
+menu-create-force:{
+	ENG: "Create a force"
+	ESP: "Crea una fuerza"
+	CAT: "Crea una força"
+}
 }
