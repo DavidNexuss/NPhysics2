@@ -13,4 +13,9 @@ public class DefaultOSFunctions implements SpecificOSFunctions{
 	public Thread getCurrentThread() {
 		return null;
 	}
+	
+	@Override
+	public StackTraceElement[] getStackTrace() {
+		return null;
+	}
 }

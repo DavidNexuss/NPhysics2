@@ -31,7 +31,7 @@ public interface Say {
 	    	
 	    	boolean thisOne = false;
 		    int thisOneCountDown = 1;
-		    StackTraceElement[] elements = NPhysics.functions.getCurrentThread().getStackTrace();
+		    StackTraceElement[] elements = NPhysics.functions.getStackTrace();
 		    for(StackTraceElement element : elements) {
 		        String methodName = element.getMethodName();
 		        int lineNum = element.getLineNumber();

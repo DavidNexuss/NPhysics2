@@ -18,4 +18,9 @@ public class SpecificWindowsFunctions implements SpecificOSFunctions{
 	public Thread getCurrentThread() {
 		return Thread.currentThread();
 	}
+	
+	@Override
+	public StackTraceElement[] getStackTrace() {
+		return getCurrentThread().getStackTrace();
+	}
 }
