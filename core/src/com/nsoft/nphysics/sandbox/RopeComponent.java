@@ -13,7 +13,7 @@ import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
 public class RopeComponent extends Actor implements RawJoint, Parent<Point>{
 
-	private PolygonActor A,B;
+	private PhysicalActor<?> A,B;
 	private Point anchorA,anchorB;
 	private ArrayList<Point> anchors = new ArrayList<>();
 	
@@ -23,8 +23,8 @@ public class RopeComponent extends Actor implements RawJoint, Parent<Point>{
 	
 	public RopeComponent() {
 		
-		A = (PolygonActor) Sandbox.mainSelect.getSelecteds().get(0);
-		B = (PolygonActor) Sandbox.mainSelect.getSelecteds().get(1);
+		A = (PhysicalActor<?>) Sandbox.mainSelect.getSelecteds().get(0);
+		B = (PhysicalActor<?>) Sandbox.mainSelect.getSelecteds().get(1);
 		
 		setColor(Color.BLACK);
 	}
@@ -62,12 +62,12 @@ public class RopeComponent extends Actor implements RawJoint, Parent<Point>{
 		return anchorB;
 	}
 	
-	public PolygonActor getPolygonA() {
+	public PhysicalActor<?> getPolygonA() {
 		
 		return A;
 	}
 	
-	public PolygonActor getPolygonB() {
+	public PhysicalActor<?> getPolygonB() {
 		
 		return B;
 	}

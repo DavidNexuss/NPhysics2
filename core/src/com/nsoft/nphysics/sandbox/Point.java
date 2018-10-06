@@ -8,13 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Draggable;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 
-public class Point extends Actor implements ClickIn, Position,Removeable, Draggable{
+public class Point extends Actor implements ClickIn, Position,Removeable, Draggable,Say{
 
 
 	public interface ParentCall{
@@ -100,6 +101,19 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	public Parent getObjectParent() {return getObjectParent(0);}
 	public Parent getObjectParent(int index) {return objectsParent.get(index);}
 	
+	public ArrayList<PhysicalActor<?>> getPhysicalParents(){
+		
+		ArrayList<PhysicalActor<?>> parent = new ArrayList<>();
+		
+		for (Parent<Point> p : objectsParent) {
+			
+			if(p instanceof PhysicalActor<?>) {
+				
+				parent.add((PhysicalActor<?>) p);
+			}
+		}
+		return parent;
+	}
 	public ArrayList<Parent<Point>> getObjectParentList(Class<?> clas){
 		
 		ArrayList<Parent<Point>> parent = new ArrayList<>();
