@@ -280,12 +280,6 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 			
 			createSegment(this, true);
 			break;
-		case CREATE_POLYGON:
-			
-			if(PolygonActor.temp == null) PolygonActor.temp = new PolygonActor();
-			
-			PolygonActor.temp.addPoint(this);
-			break;
 		default:
 			
 			break;
