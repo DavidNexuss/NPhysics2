@@ -63,12 +63,12 @@ public class SimulationJoint extends Actor{
 	
 	public Vector2 getPosition() {
 		
-		return j.getAnchorA().scl(Util.UNIT);
+		return j.getAnchorA().scl(Util.METERS_UNIT());
 	}
 	
 	public Vector2 getPositionB() {
 		
-		return j.getAnchorB().scl(Util.UNIT);
+		return j.getAnchorB().scl(Util.METERS_UNIT());
 	}
 	
 	final Vector2 reaction = new Vector2();
@@ -88,7 +88,7 @@ public class SimulationJoint extends Actor{
 		if(SimulationStage.active) {
 		
 			reaction.set(j.getReactionForce(1f / SimulationStage.getPhysicsDelta()).scl(-1f));
-			dreaction.set(new Vector2(reaction).scl(Util.UNIT / SimulationStage.ForceMultiplier));
+			dreaction.set(new Vector2(reaction).scl(Util.NEWTONS_UNIT()));
 			
 			if(useMidPoint) {
 				

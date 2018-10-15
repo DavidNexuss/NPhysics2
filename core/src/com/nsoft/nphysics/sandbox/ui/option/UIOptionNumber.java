@@ -17,7 +17,7 @@ public class UIOptionNumber extends UIOptionComponent<Float,VisTextField>{
 				
 				if(c == '\r') {
 					
-					getForm().updateValuesFromForm();
+					updateValue();
 				}
 				
 				if(isTextNull(getRawText())) {

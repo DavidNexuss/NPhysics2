@@ -58,6 +58,7 @@ public class UIOptionColorPicker extends UIOptionComponent<Color, VisImageButton
 			@Override
 			public void finished(Color newColor) {
 				setValue(newColor);
+				updateValue();
 			}
 		});
 		

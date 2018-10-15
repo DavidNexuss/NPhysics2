@@ -75,7 +75,7 @@ public class PolygonDefinition extends ObjectDefinition{
 			
 			for (int i = 0; i < buff.length; i++) {
 				
-				buff[i] /= Util.UNIT;
+				buff[i] /= Util.METERS_UNIT();
 			}
 		}
 		
@@ -117,7 +117,7 @@ public class PolygonDefinition extends ObjectDefinition{
 	    centroid.x /= (6.0*signedArea);
 	    centroid.y /= (6.0*signedArea);
 
-	    return physValue ? centroid.scl(1f/Util.UNIT) : centroid;
+	    return physValue ? centroid.scl(1f/Util.METERS_UNIT()) : centroid;
 	}
 	public float getY(int index) {
 		
@@ -172,11 +172,11 @@ public class PolygonDefinition extends ObjectDefinition{
 		for (int i = 0; i < vert.length; i++) {
 			
 
-			Vector2 pos = b.getPosition().scl(Util.UNIT);
+			Vector2 pos = b.getPosition().scl(Util.METERS_UNIT());
 			
-			t1.set(vert[i][0], vert[i][1]).scl(Util.UNIT).add(pos);
-			t2.set(vert[i][2],vert[i][3]).scl(Util.UNIT).add(pos);
-			t3.set(vert[i][4], vert[i][5]).scl(Util.UNIT).add(pos);
+			t1.set(vert[i][0], vert[i][1]).scl(Util.METERS_UNIT()).add(pos);
+			t2.set(vert[i][2],vert[i][3]).scl(Util.METERS_UNIT()).add(pos);
+			t3.set(vert[i][4], vert[i][5]).scl(Util.METERS_UNIT()).add(pos);
 		
 			
 			t1.set(Util.rotPivot(pos, t1, b.getAngle()));

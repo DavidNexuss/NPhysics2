@@ -5,7 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
+import com.nsoft.nphysics.sandbox.ui.FixedWindow;
 import com.nsoft.nphysics.sandbox.ui.Option;
+import com.nsoft.nphysics.sandbox.ui.WorldOptionManager;
 
 public abstract class UIOptionComponent<T,A extends Actor>{
 
@@ -87,6 +89,16 @@ public abstract class UIOptionComponent<T,A extends Actor>{
 	
 	public Form getForm() { return master.getForm(); }
 	
+	public void updateValue() {
+		
+		if(master.parent instanceof FixedWindow) {
+			
+			WorldOptionManager.current = master.parent;
+			WorldOptionManager.current.getForm().updateValuesFromForm();
+		}else {
+			getForm().updateValuesFromForm();
+		}
+	}
 	public void act() {}
 	
 }

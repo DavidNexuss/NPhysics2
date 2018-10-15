@@ -1,9 +1,7 @@
 package com.nsoft.nphysics.sandbox;
 
-import static com.nsoft.nphysics.sandbox.Util.UNIT;
-
+import static com.nsoft.nphysics.sandbox.Util.*;
 import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -116,8 +114,8 @@ public class Sandbox extends GridStage implements Handler{
 		
 		
 		ArrowActor blue = new ArrowActor(new Vector2(0, 0), new Vector2(200, 200));
-		ArrowActor yellow = new ArrowActor(center, new Vector2(center).add(-UNIT*5,UNIT*6));
-		ArrowActor cyan = new ArrowActor(center, new Vector2(center).add(UNIT*5,-UNIT*5));
+		ArrowActor yellow = new ArrowActor(center, new Vector2(center).add(-METERS_UNIT()*5,METERS_UNIT()*6));
+		ArrowActor cyan = new ArrowActor(center, new Vector2(center).add(METERS_UNIT()*5,-METERS_UNIT()*5));
 		
 		blue.setColor(Color.BLUE);
 		yellow.setColor(Color.OLIVE);
@@ -146,10 +144,10 @@ public class Sandbox extends GridStage implements Handler{
 		shapeline.setColor(Color.GRAY);
 		Gdx.gl.glLineWidth(1);
 		
-		int X = Gdx.graphics.getWidth()/Util.UNIT;
-		int Y = Gdx.graphics.getHeight()/Util.UNIT;
+		int X = (int) (Gdx.graphics.getWidth()/Util.METERS_UNIT());
+		int Y = (int) (Gdx.graphics.getHeight()/Util.METERS_UNIT());
 		
-		for (int i = 0 ; i < Gdx.graphics.getWidth(); i+=UNIT) {
+		for (int i = 0 ; i < Gdx.graphics.getWidth(); i+=METERS_UNIT()) {
 			
 			shapeline.line(0, i, Gdx.graphics.getWidth(), i);
 			shapeline.line(i, 0, i, Gdx.graphics.getHeight());

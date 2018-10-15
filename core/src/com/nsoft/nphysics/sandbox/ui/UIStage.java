@@ -127,6 +127,7 @@ public class UIStage extends Stage{
 		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 50);
 		
 		sim.addOption(new Option("gridmeterscale", new UIOptionNumber()).setValue(Util.METER_FACTOR));
+		sim.addOption(new Option("gridscale", new UIOptionNumber()).setValue(Util.getUnit() + .0f));
 		sim.addOption(new Option("gridnewtonscale", new UIOptionNumber()).setValue(Util.NEWTON_FACTOR));
 		sim.addOption(new Option("gravity", new UIOptionNumber()).setValue(SimulationStage.gravity.y));
 		

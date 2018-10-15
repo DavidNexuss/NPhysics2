@@ -38,8 +38,8 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 		
 		form = DynamicWindow.createDefaultWindowStructure(NDictionary.get(windowName),this);
 		form.addText("origin", NDictionary.get("origin"));
-		form.addOption(Options.createOptionNumber("originx").setValue(getX() / Util.UNIT));
-		form.addOption(Options.createOptionNumber("originy").setValue(getY() / Util.UNIT));
+		form.addOption(Options.createOptionNumber("originx").setValue(getX() / Util.METERS_UNIT()));
+		form.addOption(Options.createOptionNumber("originy").setValue(getY() / Util.METERS_UNIT()));
 		
 		form.getOption("originx").canCopy = false;
 		form.getOption("originy").canCopy = false;
@@ -57,7 +57,7 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	public void setX(float x) {
 		
 		super.setX(x + NPhysics.currentStage.getAxisPosition().getX());
-		form.getOption("originx").setValue(getX() / Util.UNIT - NPhysics.currentStage.getAxisPosition().getX() / Util.UNIT);
+		form.getOption("originx").setValue(getX() / Util.METERS_UNIT() - NPhysics.currentStage.getAxisPosition().getX() / Util.METERS_UNIT());
 		
 		
 	}
@@ -66,21 +66,21 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	public void setY(float y) {
 
 		super.setY(y + NPhysics.currentStage.getAxisPosition().getY());
-		form.getOption("originy").setValue(getY() / Util.UNIT - NPhysics.currentStage.getAxisPosition().getY() / Util.UNIT);
+		form.getOption("originy").setValue(getY() / Util.METERS_UNIT() - NPhysics.currentStage.getAxisPosition().getY() / Util.METERS_UNIT());
 		
 	}
 	
 	public Vector2 getRelativePosition(boolean physValue) {
 		
 		Vector2 s = new Vector2(getX() - getPolygon().getDefinition().getCenter(false).x,getY() - getPolygon().getDefinition().getCenter(false).y);
-		return physValue ? s.scl(1f/Util.UNIT) : s;
+		return physValue ? s.scl(1f/Util.METERS_UNIT()) : s;
 		
 	}
 	@Override
 	public void setPosition(float x, float y) {
 		super.setPosition(x, y);
-		form.getOption("originx").setValue(getX() / Util.UNIT - NPhysics.currentStage.getAxisPosition().getX() / Util.UNIT);
-		form.getOption("originy").setValue(getY() / Util.UNIT - NPhysics.currentStage.getAxisPosition().getY() / Util.UNIT);
+		form.getOption("originx").setValue(getX() / Util.METERS_UNIT() - NPhysics.currentStage.getAxisPosition().getX() / Util.METERS_UNIT());
+		form.getOption("originy").setValue(getY() / Util.METERS_UNIT() - NPhysics.currentStage.getAxisPosition().getY() / Util.METERS_UNIT());
 	}
 	public PhysicalActor<ObjectDefinition> getPolygon() {return parent;}
 	
@@ -139,8 +139,8 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	@Override
 	public void updateValuesFromForm() {
 		
-		setX(form.getOption("originx").getValue() * Util.UNIT);
-		setY(form.getOption("originy").getValue() * Util.UNIT);
+		setX(form.getOption("originx").getValue() * Util.METERS_UNIT());
+		setY(form.getOption("originy").getValue() * Util.METERS_UNIT());
 	}
 	@Override
 	public void updateValuesToForm() {}

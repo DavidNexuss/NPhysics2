@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kotcrab.vis.ui.VisUI;
+import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 public class Util {
 
@@ -35,6 +36,12 @@ public class Util {
 	public static float METER_FACTOR = 1;
 	public static float NEWTON_FACTOR = 10;
 	
+	public static float METERS_UNIT() {return UNIT / METER_FACTOR;}
+	public static float NEWTONS_UNIT() {return UNIT / NEWTON_FACTOR;}
+	
+	public static float GRAVITY_UNIT() {return UNIT / NEWTON_FACTOR * (-SimulationStage.gravity.y);}
+	
+	public static int getUnit() {return UNIT;}
 	public static float notation(float n) {
 		
 		return ((int)(n*100))/100f;

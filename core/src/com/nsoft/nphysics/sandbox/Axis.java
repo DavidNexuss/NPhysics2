@@ -1,6 +1,6 @@
 package com.nsoft.nphysics.sandbox;
 
-import static com.nsoft.nphysics.sandbox.Util.UNIT;
+import static com.nsoft.nphysics.sandbox.Util.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -44,16 +44,16 @@ public class Axis extends Actor{
 	private void updateVertices() {
 		
 		//HORITZONTAL LINE
-		vertices[0][0] = -UNIT*size;
+		vertices[0][0] = -METERS_UNIT()*size;
 		vertices[0][1] = 0;
-		vertices[1][0] = UNIT*size;
+		vertices[1][0] = METERS_UNIT()*size;
 		vertices[1][1] = 0;
 		
 		//VERTICAL LINE
 		vertices[2][0] = 0;
-		vertices[2][1] = -UNIT*size;
+		vertices[2][1] = -METERS_UNIT()*size;
 		vertices[3][0] = 0;
-		vertices[3][1] = UNIT*size;
+		vertices[3][1] = METERS_UNIT()*size;
 
 		
 		//X-TEXT-POS
@@ -64,7 +64,7 @@ public class Axis extends Actor{
 		vertices[5][0] = -10;
 		vertices[5][1] = 10;
 		
-		lineDistance = UNIT*size;
+		lineDistance = METERS_UNIT()*size;
 		
 		updateProjection();
 	}

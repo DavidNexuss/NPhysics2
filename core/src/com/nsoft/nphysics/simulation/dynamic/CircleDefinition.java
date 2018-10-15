@@ -43,7 +43,7 @@ public class CircleDefinition extends ObjectDefinition{
 
 	@Override
 	public Vector2 getCenter(boolean physValue) {
-		return physValue ? new Vector2(center).scl(1f/Util.UNIT) : new Vector2(center);
+		return physValue ? new Vector2(center).scl(1f/Util.METERS_UNIT()) : new Vector2(center);
 	}
 	
 	@Override
@@ -54,6 +54,6 @@ public class CircleDefinition extends ObjectDefinition{
 	@Override
 	protected void render(Body b) {
 		
-		NPhysics.currentStage.shapefill.circle(b.getPosition().x * Util.UNIT, b.getPosition().y * Util.UNIT, radius * Util.UNIT);
+		NPhysics.currentStage.shapefill.circle(b.getPosition().x * Util.METERS_UNIT(), b.getPosition().y * Util.METERS_UNIT(), radius * Util.METERS_UNIT());
 	}
 }

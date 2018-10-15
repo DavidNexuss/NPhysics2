@@ -17,6 +17,7 @@ public class Option extends VisTable{
 	
 	public boolean canCopy = true;
 	String[] args;
+	public BaseOptionWindow parent;
 	public Option(String name,UIOptionComponent<?, ?> component) {
 		
 		pad(5);

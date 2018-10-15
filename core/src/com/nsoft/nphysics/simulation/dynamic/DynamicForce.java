@@ -46,17 +46,17 @@ public class DynamicForce {
 	}
 	private Vector2 getStart() {
 		
-		return new Vector2(porigin).scl(Util.UNIT);
+		return new Vector2(porigin).scl(Util.METERS_UNIT());
 	}
 	
 	private Vector2 getEnd() {
 		
-		return new Vector2(pforce).add(porigin).scl(Util.UNIT);
+		return new Vector2(pforce).add(porigin).scl(Util.METERS_UNIT());
 	}
 	
 	void init(Type t) {
 		
-		arrow = new SimpleArrow(new Vector2(origin).scl(Util.UNIT), new Vector2(origin).add(force).scl(Util.UNIT));
+		arrow = new SimpleArrow(new Vector2(origin).scl(Util.METERS_UNIT()), new Vector2(origin).add(force).scl(Util.METERS_UNIT()));
 		arrow.setColor(Color.RED);
 		porigin = origin;
 		pforce = force;
@@ -97,8 +97,8 @@ public class DynamicForce {
 			porigin = Util.rotPivot(pivot, new Vector2(diff).add(b.getPosition()), b.getAngle());
 			pforce = Util.rot(force, b.getAngle());
 			Vector2 pend = Util.rotPivot(pivot, new Vector2(this.force).add(new Vector2(diff).add(b.getPosition())), b.getAngle());
-			arrow.setStart(new Vector2(porigin).scl(Util.UNIT));
-			arrow.setEnd(new Vector2(pend).scl(Util.UNIT));
+			arrow.setStart(new Vector2(porigin).scl(Util.METERS_UNIT()));
+			arrow.setEnd(new Vector2(pend).scl(Util.METERS_UNIT()));
 
 		}
 		

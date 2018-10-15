@@ -37,6 +37,7 @@ public class BaseOptionWindow extends VisWindow implements Showable{
 	public void addOption(Option p) {
 		
 		p.setForm(form);
+		p.parent = this;
 		options.put(p.getName(), p);
 		Cell<Option> cell = content.add(p).expand().fillX();
 		content.row();

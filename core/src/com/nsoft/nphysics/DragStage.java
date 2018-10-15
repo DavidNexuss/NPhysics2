@@ -95,7 +95,7 @@ public abstract class DragStage extends Stage{
 	 * @param v
 	 * @return
 	 */
-	public static int snapGrid(float v) { return (int)Util.UNIT*Math.round(v/Util.UNIT); }
+	public static int snapGrid(float v) { return (int)Util.getUnit()*Math.round(v/Util.getUnit()); }
 	
 	public void setSnapping(boolean newSnapping) {snapping = newSnapping;}
 	public void switchSnapping() {snapping = !snapping;}

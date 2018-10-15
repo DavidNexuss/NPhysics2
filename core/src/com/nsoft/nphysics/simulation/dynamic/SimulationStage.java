@@ -31,7 +31,6 @@ import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
 public class SimulationStage extends GridStage{
 
-	public static final float ForceMultiplier = 10f;
 	ArrayList<PolygonObject> objects;
 	
 	HashMap<PhysicalActor<ObjectDefinition>, PolygonObject> objectsMap;
@@ -122,7 +121,7 @@ public class SimulationStage extends GridStage{
 				DoubleAxisComponent d = (DoubleAxisComponent) joint;
 				if(d.temp) continue;
 				RevoluteJointDef def = new RevoluteJointDef();
-				def.initialize(objectsMap.get(d.A).b,objectsMap.get(d.B).b, new Vector2(d.getPosition()).scl(1f/Util.UNIT));
+				def.initialize(objectsMap.get(d.A).b,objectsMap.get(d.B).b, new Vector2(d.getPosition()).scl(1f/Util.METERS_UNIT()));
 			
 				SimulationJoint a = new SimulationJoint(world.createJoint(def));
 				addActor(a);
@@ -141,10 +140,10 @@ public class SimulationStage extends GridStage{
 				def.bodyA = objectsMap.get(c.getPolygonA()).b;
 				def.bodyB = objectsMap.get(c.getPolygonB()).b;
 				
-				def.maxLength = c.getRopeVector().len() / Util.UNIT;
+				def.maxLength = c.getRopeVector().len() / Util.METERS_UNIT();
 				
-				def.localAnchorA.set(new Vector2(c.getAnchorA().getVector()).scl(1f/Util.UNIT).sub(def.bodyA.getPosition()));
-				def.localAnchorB.set(new Vector2(c.getAnchorB().getVector()).scl(1f/Util.UNIT).sub(def.bodyB.getPosition()));
+				def.localAnchorA.set(new Vector2(c.getAnchorA().getVector()).scl(1f/Util.METERS_UNIT()).sub(def.bodyA.getPosition()));
+				def.localAnchorB.set(new Vector2(c.getAnchorB().getVector()).scl(1f/Util.METERS_UNIT()).sub(def.bodyB.getPosition()));
 				
 				SimulationJoint a = new SimulationJoint(world.createJoint(def));
 				a.drawMod = true;
@@ -194,7 +193,7 @@ public class SimulationStage extends GridStage{
 	public void updateMatrix() {
 		
 		super.updateMatrix();
-		mat = camera.combined.cpy().scale(30, 30, 0);
+		mat = camera.combined.cpy().scale(Util.METERS_UNIT(), Util.METERS_UNIT(), 0);
 	}
 	
 	int button;
@@ -223,7 +222,7 @@ public class SimulationStage extends GridStage{
 		
 		this.button = button;
 		screen.set(screenX, screenY, 0);
-		tmp.set(camera.unproject(screen)).scl(1f/Util.UNIT);
+		tmp.set(camera.unproject(screen)).scl(1f/Util.METERS_UNIT());
 		
 		hit = null;
 		world.QueryAABB(callback, tmp.x - 0.1f, tmp.y - 0.1f, tmp.x + 0.1f, tmp.y + 0.1f);
@@ -254,7 +253,7 @@ public class SimulationStage extends GridStage{
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		
 		if (mousejoint != null) {
-			tmp.set(camera.unproject(screen.set(screenX, screenY, 0))).scl(1f/Util.UNIT);
+			tmp.set(camera.unproject(screen.set(screenX, screenY, 0))).scl(1f/Util.METERS_UNIT());
 			mousejoint.setTarget(target.set(tmp.x, tmp.y));
 			return true;
 		}

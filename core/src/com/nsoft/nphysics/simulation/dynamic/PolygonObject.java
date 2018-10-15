@@ -51,8 +51,8 @@ public class PolygonObject extends Actor{
 		this.def = def;
 		def.initForSimulation();
 		createObject();
-		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
-		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / 10f);
+		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.METERS_UNIT());
+		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.METERS_UNIT() / 10f);
 		
 		gravityArrow = new SimpleArrow(center, force.add(center));
 		velocityArrow = new SimpleArrow(center, new Vector2(b.getLinearVelocity()).add(center));
@@ -91,7 +91,7 @@ public class PolygonObject extends Actor{
 		
 		NPhysics.currentStage.shapefill.setColor(Color.GRAY.mul(1, 1, 1, hide && !selected ? hidealpha : 1));
 		centre.set(b.getPosition()).add(b.getMassData().center);
-		NPhysics.currentStage.shapefill.circle(centre.x * Util.UNIT , centre.y * Util.UNIT, 3);
+		NPhysics.currentStage.shapefill.circle(centre.x * Util.METERS_UNIT() , centre.y * Util.METERS_UNIT(), 3);
 		if(def.childrens.size() != 0) {
 			
 			for (ObjectChildren c : def.childrens) {
@@ -102,8 +102,8 @@ public class PolygonObject extends Actor{
 			}
 		}
 		
-		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
-		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass());
+		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.METERS_UNIT());
+		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.METERS_UNIT() / Util.NEWTONS_UNIT() * b.getMass());
 		
 		if(def.type != BodyType.StaticBody) {
 				
@@ -119,7 +119,7 @@ public class PolygonObject extends Actor{
 					
 
 					velocityArrow.setStart(center);
-					velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass())).add(center));
+					velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.NEWTONS_UNIT() * b.getMass())).add(center));
 					velocityArrow.updateVertexArray();
 					
 					velocityArrow.draw(batch, parentAlpha);
@@ -156,12 +156,12 @@ public class PolygonObject extends Actor{
 	
 	public Vector2 getCenter() {
 		
-		return new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.UNIT);
+		return new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.METERS_UNIT());
 	}
 	
 	public Vector2 getGravityForce() {
 		
-		return new Vector2(SimulationStage.gravity).scl(Util.UNIT / SimulationStage.ForceMultiplier * b.getMass()); 
+		return new Vector2(SimulationStage.gravity).scl(Util.NEWTONS_UNIT() * b.getMass()); 
 	}
 	public void aplyForce() {
 		 if(b.getType() == BodyType.StaticBody) return;
@@ -232,8 +232,8 @@ public class PolygonObject extends Actor{
 				AxisSupport s = (AxisSupport)c;
 
 				RevoluteJointDef def = new RevoluteJointDef();
-				def.bodyB = createAnchor(c.getX()/Util.UNIT, c.getY()/Util.UNIT);
-				def.initialize(b, def.bodyB,new Vector2(c.getX()/Util.UNIT,c.getY()/Util.UNIT));
+				def.bodyB = createAnchor(c.getX()/Util.METERS_UNIT(), c.getY()/Util.METERS_UNIT());
+				def.initialize(b, def.bodyB,new Vector2(c.getX()/Util.METERS_UNIT(),c.getY()/Util.METERS_UNIT()));
 				def.enableMotor = true;
 				def.maxMotorTorque = s.torque;
 				def.motorSpeed = s.speed;
@@ -258,7 +258,7 @@ public class PolygonObject extends Actor{
 				
 				PrismaticComponent p = (PrismaticComponent)c;
 				PrismaticJointDef def = new PrismaticJointDef();
-				Vector2 anchor = new Vector2(c.getX()/Util.UNIT, c.getY()/Util.UNIT);
+				Vector2 anchor = new Vector2(c.getX()/Util.METERS_UNIT(), c.getY()/Util.METERS_UNIT());
 				def.initialize(b, createAnchor(anchor.x,anchor.y), anchor, new Vector2(1,0).rotate(p.getAngle()));
 				def.enableMotor = true;
 				simjoints.add(new SimulationJoint(owner.createJoint(def)));
@@ -270,8 +270,8 @@ public class PolygonObject extends Actor{
 				
 				ForceComponent f = (ForceComponent)c;
 				if(f.isVariable()) return ;
-				Vector2 force = f.getForce().scl(1f/Util.UNIT);
-				Vector2 origin = f.getPosition().scl(1f/Util.UNIT);
+				Vector2 force = f.getForce().scl(1f/Util.METERS_UNIT());
+				Vector2 origin = f.getPosition().scl(1f/Util.METERS_UNIT());
 				
 				DynamicForce d = new DynamicForce();
 				d.force = force;

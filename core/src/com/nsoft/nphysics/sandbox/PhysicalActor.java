@@ -416,14 +416,14 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		if(gravityArrow == null) {
 			
 			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
-			gravityArrow = new SimpleArrow(start, new Vector2(start).add(0,-Math.abs(getArea() * Util.UNIT * 9.8f / SimulationStage.ForceMultiplier)));
+			gravityArrow = new SimpleArrow(start, new Vector2(start).add(0,-Math.abs(getArea() * Util.GRAVITY_UNIT())));
 			addActor(gravityArrow);
 			gravityArrow.setColor(Color.BLUE);
 		}else {
 			
 			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
 			gravityArrow.setStart(start);
-			gravityArrow.setEnd(new Vector2(start).add(0,-Math.abs(getArea() * Util.UNIT * 9.8f / SimulationStage.ForceMultiplier)));
+			gravityArrow.setEnd(new Vector2(start).add(0,-Math.abs(getArea() * Util.GRAVITY_UNIT())));
 			gravityArrow.updateVertexArray();
 		}
 	}

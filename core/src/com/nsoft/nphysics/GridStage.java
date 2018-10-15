@@ -1,6 +1,6 @@
 package com.nsoft.nphysics;
 
-import static com.nsoft.nphysics.sandbox.Util.UNIT;
+import static com.nsoft.nphysics.sandbox.Util.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.nsoft.nphysics.sandbox.Util;
 
 /**
  * Fase que implementa DragStage, defineix una fase amb cuadricula
@@ -93,7 +94,7 @@ public class GridStage extends DragStage{
 		gridShader.setUniformf("PX",(int)mousecoord.x);
 		gridShader.setUniformf("PY", (int)mousecoord.y);
 		
-		gridShader.setUniformf("grid", UNIT/camera.zoom);
+		gridShader.setUniformf("grid", Util.getUnit() /camera.zoom);
 		gridShader.setUniformf("xoffset", tmp.x);
 		gridShader.setUniformf("yoffset", tmp.y);
 		gridShader.setUniformf("X", Gdx.input.getX());

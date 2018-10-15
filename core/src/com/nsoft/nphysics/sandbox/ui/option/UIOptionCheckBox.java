@@ -37,7 +37,7 @@ public class UIOptionCheckBox extends UIOptionComponent<Float, VisCheckBox>{
 		
 		if(lastCheck != getComponent().isChecked()) {
 			
-			getForm().updateValuesFromForm();
+			updateValue();
 			lastCheck = getComponent().isChecked();
 		}
 	}

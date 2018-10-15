@@ -143,14 +143,14 @@ public class ForceComponent extends ObjectChildren implements Form{
 			variable = Variable.X;
 			arrow.setColor(Color.RED);
 			forcex = 50;
-		}else forcex = getForm().getOption("forcex").getValue() * Util.UNIT /SimulationStage.ForceMultiplier;
+		}else forcex = getForm().getOption("forcex").getValue() * Util.NEWTONS_UNIT();
 		
 		if(getForm().getOption("forcey").isNull()) {
 			
 			variable = Variable.Y;
 			arrow.setColor(Color.RED);
 			forcey = 50;
-		}else forcey = getForm().getOption("forcey").getValue() * Util.UNIT /SimulationStage.ForceMultiplier;
+		}else forcey = getForm().getOption("forcey").getValue() * Util.NEWTONS_UNIT();
 		
 		int a = (int) getForm().getOption("ftype").getValue();
 		
@@ -168,8 +168,8 @@ public class ForceComponent extends ObjectChildren implements Form{
 	
 	public void updateValuesToForm() {
 		
-		if(!getForm().getOption("forcex").isNull())getForm().getOption("forcex").setValue(force.x / Util.UNIT * SimulationStage.ForceMultiplier);
-		if(!getForm().getOption("forcey").isNull())getForm().getOption("forcey").setValue(force.y / Util.UNIT * SimulationStage.ForceMultiplier);
+		if(!getForm().getOption("forcex").isNull())getForm().getOption("forcex").setValue(force.x / Util.NEWTONS_UNIT());
+		if(!getForm().getOption("forcey").isNull())getForm().getOption("forcey").setValue(force.y / Util.NEWTONS_UNIT());
 		
 		checknullValues();
 		
@@ -187,7 +187,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		
 			getForm().getOption("forcemod").setEnable(true);
 			getForm().getOption("forceangle").setEnable(true);
-			getForm().getOption("forcemod").setValue(force.len() / Util.UNIT);
+			getForm().getOption("forcemod").setValue(force.len() / Util.METERS_UNIT());
 			getForm().getOption("forceangle").setValue(force.angle());
 			
 		}
