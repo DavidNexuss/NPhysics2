@@ -52,7 +52,7 @@ public class UIStage extends Stage{
 	public static StaticMenu menu;
 	
 	public static VisLabel fps;
-
+	public static Scale s;
 	
 	public static UIStage stage;
 	static Group labelGroup;
@@ -110,6 +110,9 @@ public class UIStage extends Stage{
 		fps.setPosition(100, Gdx.graphics.getHeight() - 50);
 		fps.setVisible(false);
 
+		s = new Scale();
+		s.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 60);
+		addActor(s);
 		labelGroup.setZIndex(10);
 	}
 	
@@ -345,6 +348,9 @@ public class UIStage extends Stage{
 		clean.setPosition(Gdx.graphics.getWidth() - 80, 8);
 		
 		fps.setPosition(100, Gdx.graphics.getHeight() - 50);
+		
+
+		s.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 60);
 	}
 	
 	@Override

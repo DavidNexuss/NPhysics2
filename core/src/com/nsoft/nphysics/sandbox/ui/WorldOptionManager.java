@@ -27,7 +27,6 @@ public class WorldOptionManager implements Form{
 		for (Entry<String, Option> e: optionsMap.entrySet()) {
 		
 
-			System.out.println(e.getValue().getValue());
 			switch (e.getKey()) {
 			case "gravity":
 				
