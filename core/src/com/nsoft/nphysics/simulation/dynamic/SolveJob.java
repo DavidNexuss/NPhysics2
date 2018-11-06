@@ -4,93 +4,71 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 
-public class SolveJob {
+public class SolveJob implements Say{
 
 	static int threshold = 10;
-	World w;
-	ForceComponent u;
-	
-	int n;
-	public SolveJob(ForceComponent u) {
-		
-		this.u = u;
+	final Vector2 position = new Vector2(3, 0);
+	PhysicalActor<?> obj;
+	public SolveJob(PhysicalActor<?> obj) {
+		this.obj = obj;
 	}
 	
 	public boolean start() {
 	
+		float C;
+		int it = 100;
 		
-		int it = 0;
-		float oldsump = 0;
-		float sump = 1;
-		while (sump > 0.1f) {
+		float a = -1000;
+		float b = 1000;
+		float c;
+		
+		do {
+		
+			c = (a+b) /2f;
 			
-			if(u.variable == Variable.X) {
-				u.setForce(new Vector2(n, u.getForce().y));
-				System.out.println("x");
-			}
-			if(u.variable == Variable.Y) {
-				u.setForce(new Vector2(u.getForce().x, n));
-				System.out.println("y");
-			}
+			C = function(c);
 			
-			createWorld();
-			addObjects();
+	//		say(C + " " + c);
+			if(function(a) * C < 0) b = c;
+			else if(function(b)* C < 0) a = c;
 			
-			it++;
-			sump = run();
-			
-			if(sump > oldsump) n += sump;
-			if(sump < oldsump) n -= sump;
-			
-			oldsump = sump;
-			System.out.println(it + " " + sump + " " + u.getForce());
-			if(it > threshold) return false;
-			
-		}
+		} while (it-- > 0);
+		
+		say(c);
 		return true;
 	}
 	
-	private void createWorld() {
+	private World createWorld() {
 		
-		w = new World(SimulationStage.gravity, true);
+		return new World(SimulationStage.gravity, true);
 	}
 	
 	PolygonObject var;
-	private void addObjects() {
-		
-		for (PhysicalActor<ObjectDefinition> d: SimulationPackage.polygons)  {
-			
-			PolygonObject o = new PolygonObject(d.getDefinition(),w);
-			if(u.getPolygon() == d) var = o;
-		}
-	}
 	
-	public float run() {
+	private float function(float argument) {
 		
-		float t = 0;
-		float elapsed = 0.2f;
-		while(t < 2f) {
+		World w = createWorld();
+		addObjects(w);
+		var.b.applyForce(new Vector2(0, argument), new Vector2(position).add(var.b.getPosition()), true);
 		
-			var.b.applyForceToCenter(u.getForce(), true);
-			w.step(elapsed, 10, 8);
-			t+=elapsed;
-		}
+		w.step(1, 8, 6);
 		
 		Array<Body> b = new Array<>();
 		w.getBodies(b);
-		float sump = 0;
-		for (Body body : b) {
-			
-			sump += body.getMass()*body.getLinearVelocity().len();
-		}
-		
-		return sump;
+		return var.b.getAngularVelocity();
 	}
-	
-	
+	private void addObjects(World world) {
+		
+		for (PhysicalActor<ObjectDefinition> d: SimulationPackage.polygons)  {
+			
+			PolygonObject o = new PolygonObject(d.getDefinition(),world);
+			if(obj== d) var = o;
+		}
+	}
 }

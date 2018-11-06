@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.sandbox.AxisSupport;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.PrismaticComponent;
@@ -24,7 +25,7 @@ import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 
-public class PolygonObject extends Actor{
+public class PolygonObject extends Actor implements Say{
 
 	public static float PHYSICAL_EPSILON = 0.01f;
 	ObjectDefinition def;

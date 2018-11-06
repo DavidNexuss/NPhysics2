@@ -371,8 +371,8 @@ public class Sandbox extends GridStage implements Handler{
 			return true;
 		case Keys.P:
 			
-			SolveJob l = new SolveJob(ForceComponent.list.get(0));
-			System.out.println(l.start());
+			SolveJob j = new SolveJob((PhysicalActor<ObjectDefinition>)mainSelect.getLastSelected());
+			j.start();
 			return true;
 		case Keys.O:
 			
