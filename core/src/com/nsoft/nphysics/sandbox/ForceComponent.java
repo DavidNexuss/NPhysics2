@@ -29,14 +29,14 @@ public class ForceComponent extends ObjectChildren implements Form{
 	Type type = Type.WORLD;
 	boolean relative = false;
 	private boolean hook = false;
-	private  boolean var;
+	public  boolean var;
 	private Label label;
 	private static LabelStyle style;
 	
 	public Variable variable;
 	
 	static ForceComponent temp;
-	
+	public static ForceComponent crrnt;
 	public ForceComponent(PhysicalActor<ObjectDefinition> parent,Vector2 start) {
 		
 		super(parent);
@@ -97,7 +97,13 @@ public class ForceComponent extends ObjectChildren implements Form{
 	}
 	
 	public Vector2 getForce() {return new Vector2(force);}
-	public void setForce(Vector2 f) { force.set(f);}
+	private void setInternalForce(Vector2 f) { force.set(f);}
+	
+	public void setForce(Vector2 v) {
+		
+		arrow.setEnd(v.x * Util.NEWTONS_UNIT() + getPosition().x, v.y * Util.NEWTONS_UNIT() + getPosition().y);
+		update();
+	}
 	public Type getType() {
 		
 		return type;
@@ -116,6 +122,9 @@ public class ForceComponent extends ObjectChildren implements Form{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
+		if(var) 
+			arrow.setColor(Color.RED);
+		else    arrow.setColor(Color.BLACK);
 		super.draw(batch, parentAlpha);
 	}
 	@Override
@@ -130,7 +139,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 		
 		var = getForm().getOption("fvar").getValue() == 1;
 		//getPolygon().updateForceVariableCount();
-		
+		if(var)crrnt = this;
 		arrow.setStart(getPosition().x, getPosition().y);
 		
 		float forcex;
@@ -138,19 +147,10 @@ public class ForceComponent extends ObjectChildren implements Form{
 		
 		variable = variable.NONE;
 		arrow.setColor(Color.BLACK);
-		if(getForm().getOption("forcex").isNull()) {
-			
-			variable = Variable.X;
-			arrow.setColor(Color.RED);
-			forcex = 50;
-		}else forcex = getForm().getOption("forcex").getValue() * Util.NEWTONS_UNIT();
+
+		forcex = getForm().getOption("forcex").getValue() * Util.NEWTONS_UNIT();
 		
-		if(getForm().getOption("forcey").isNull()) {
-			
-			variable = Variable.Y;
-			arrow.setColor(Color.RED);
-			forcey = 50;
-		}else forcey = getForm().getOption("forcey").getValue() * Util.NEWTONS_UNIT();
+		forcey = getForm().getOption("forcey").getValue() * Util.NEWTONS_UNIT();
 		
 		int a = (int) getForm().getOption("ftype").getValue();
 		
