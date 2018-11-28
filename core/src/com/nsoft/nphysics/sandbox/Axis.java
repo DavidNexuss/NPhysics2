@@ -9,8 +9,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.Say;
 
-public class Axis extends Actor{
+/**
+ * Actor encarregat de renderitzar un eix amb linies discontinues a la seva posició.
+ * Utilitza un renderitzat immediat amb el ShapeRenderer.
+ * @author David
+ */
+public class Axis extends Actor implements Say{
 
 	//POLYGON-TYPE-2
 	
@@ -49,6 +55,7 @@ public class Axis extends Actor{
 		vertices[1][0] = METERS_UNIT()*size;
 		vertices[1][1] = 0;
 		
+		say("dw");
 		//VERTICAL LINE
 		vertices[2][0] = 0;
 		vertices[2][1] = -METERS_UNIT()*size;

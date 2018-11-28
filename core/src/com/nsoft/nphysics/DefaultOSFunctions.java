@@ -1,7 +1,7 @@
 package com.nsoft.nphysics;
 
 /**
- * Clase que defineix 
+ * Clase que defineix funcions predefinides per a un sistema operatiu no reconegut
  * @author David
  */
 public class DefaultOSFunctions implements SpecificOSFunctions{

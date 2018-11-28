@@ -36,19 +36,40 @@ import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
+import com.nsoft.nphysics.simulation.dynamic.CircleDefinition;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
+/**
+ * Classe encarregada de definir un cos abstracte que només consta d'una forma i un pes a la fase
+ * Sandbox.
+ * Necessita una classe Genèrica que defineixi quin ha de ser el procediment per crear la seva representació a la simulació
+ * @see Definició Circular{@link CircleDefinition}
+ * @see Definició poligon tancat {@link PolygonDefinition}
+ * 
+ * Hereda Group per poder passar la crida de dibuix i la de act als seus fills, ObjectChildrens. A part també hereda les funcions de renderització
+ * Listeners i Animacions d'Actor
+ * -Implementa {@link Form} per poder definir un formulari i modificar propietats dins l'aplicació.
+ * -Implementa {@link Handler} per poder manejar objectes a ser seleccionats, Eg els seus ObjectChildrens
+ * -Implementa {@link ClickIn} per poder ser manejat com a objecte candidat a ser seleccionat per el Handler Superior.
+ * -Implementa {@link Parent} per poder rebre actualitzacions de transformacions dels punts associats a l'objecte, tot i que aquesta classe defineix
+ * 	de forma abstracta la seva participació
+ * -Implementa {@link Removeable} per poder ser seleccionat com a objecte candidat a ser destruit de la simulació ja que inclou un procediment per fer-ho
+ * @author Usuari
+ *
+ * @param <D>
+ */
 public abstract class PhysicalActor<D extends ObjectDefinition> extends Group implements Form,Handler,ClickIn,Draggable,Parent<Point>,Removeable{
 
+	//Colors ja definits de forma estàtica per evitar ser instantiats dins del bucle de renderitzat i augmentar el rendiment.
 	final static Color shape = 		   new Color(0.2f, 0.8f, 0.2f, 0.6f);
 	final static Color shapeSelected = new Color(0.8f, 0.2f, 0.2f, 0.6f);
 	final static Color mightSelected = new Color(0.8f,0.5f,0.2f,0.6f);
 	final static Color arcColor = 	   new Color(0.5f, 0.5f, 0.9f, 0.4f);
 	
-	private DynamicWindow form;
-	private SelectHandle handler;
+	private DynamicWindow form; //Formulari
+	private SelectHandle handler; //Objecte encarregat de manejar solicituds de selecció del handler superior.
 	
 	private boolean isEnded = false;
 	private Color currentColor = shape;
@@ -64,9 +85,9 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	private float angle;
 	private boolean useAxis;
 	
-	private ArrayList<ObjectChildren> components = new ArrayList<>();
+	private ArrayList<ObjectChildren> components = new ArrayList<>(); //Llista de components associats a aquest objecte
 	
-	D definition;
+	D definition; //Definició del objecte per a la simulació
 	
 	protected ArrayList<Point> points = new ArrayList<>();
 	
@@ -106,6 +127,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	public boolean isEnded() {return isEnded;}
 	public void end() {
 		
+		if(isEnded) throw new IllegalStateException(); //Necessari per controlar que aquesta funció només es pugui cridar un sol cop
 		isEnded = true;
 		for (Point point : points) {
 			point.setObjectParent(this);
@@ -124,6 +146,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	public abstract PhysicalActor<D> addPoint(Point p);
 	
 	public D getDefinition() {return definition;}
+	
 	private void initForm() {
 		
 		form = DynamicWindow.createDefaultWindowStructure("Wpolygon",this);
@@ -171,6 +194,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	final Vector2 origin = new Vector2(0, 0);
 	final Vector2 start = new Vector2(0, 0);
 	
+	//Defineix com a de ser tractat l'event d'arrastrament
 	@Override
 	public void addDragListener() {
 
@@ -238,6 +262,8 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 
 	}
 	Vector2 tempCenter = new Vector2();
+	
+	//Funció necessària per poder rotar el cos entorn a un eix
 	public void hookRotation(boolean hook,boolean useAxisAsPivot) {
 		
 		if(!isEnded()) throw new IllegalStateException("");
@@ -263,6 +289,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		}
 	}
 	public void hookMenu() {}
+	//S'implementa per poder llançar el opcionari
 	public boolean keyDown(int keycode){
 		
 		if(keycode == Keys.Q) {

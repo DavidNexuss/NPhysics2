@@ -67,6 +67,7 @@ public class GridStage extends DragStage{
 	     
 	     gridShader = new ShaderProgram(vertexShader, fragmentShader);
 	     ShaderProgram.pedantic = false; //Per problemes de compilació del shader es recomanable desactivar pedantic
+	     
 	     System.out.println("Shader compiler log: " + gridShader.getLog());
 	     
 	     //Crea una textura buida sobre la que renderitza la cuadricula
@@ -91,6 +92,7 @@ public class GridStage extends DragStage{
 			if(isSnapping())mousecoord.set(snapGrid(mousecoord.x), snapGrid(mousecoord.y), 0);
 			camera.project(mousecoord);
 		}
+		//Establim valors a la VRAM de la GPU com a uniforms
 		gridShader.setUniformf("PX",(int)mousecoord.x);
 		gridShader.setUniformf("PY", (int)mousecoord.y);
 		
@@ -99,6 +101,7 @@ public class GridStage extends DragStage{
 		gridShader.setUniformf("yoffset", tmp.y);
 		gridShader.setUniformf("X", Gdx.input.getX());
 		gridShader.setUniformf("Y", Gdx.graphics.getHeight() - Gdx.input.getY());
+		//Executem la draw call
 		gridBatch.draw(nullTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		gridBatch.end();
 		

@@ -20,6 +20,11 @@ import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
+/**
+ * Classe encarregada de definir una força a la fasse Sandbox amb l'objectiu de poder
+ * recrear-la a la simulació
+ * @author David
+ */
 public class ForceComponent extends ObjectChildren implements Form{
 
 	public static enum Type{WORLD,TRANS,REL}

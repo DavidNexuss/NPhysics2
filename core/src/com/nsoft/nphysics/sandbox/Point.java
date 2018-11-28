@@ -15,6 +15,10 @@ import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 
+/**
+ * Actor encarregat de definir una posició i dibuixar-hi amb renderització immediata un punt
+ * @author David
+ */
 public class Point extends Actor implements ClickIn, Position,Removeable, Draggable,Say{
 
 
@@ -203,7 +207,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		hit =  x >= -INPUT_RADIUS/2f && x < getWidth() + INPUT_RADIUS/2f && y >= -INPUT_RADIUS/2f && y < getHeight() + INPUT_RADIUS/2f;
 		return hit ? this : null;
 	}
-	
+	//Executa una crida al objecte pare per poder notificar un canvi de posició i executar les comprovasions necessàries de la nova situació
 	public void updatePosition() {
 		
 		if(hasObjectParent())forEveryParent((p)->{p.updatePosition(getX(), getY(), this);});

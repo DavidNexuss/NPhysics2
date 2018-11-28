@@ -11,6 +11,11 @@ import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.Showable;
 import com.nsoft.nphysics.sandbox.interfaces.VertexBuffer;
 
+/**
+ * Classe encarregada de rendritzar una doble fletxa.
+ * Utilitza renderització immediata amb ShapeRenderer.
+ * @author David
+ */
 public class DoubleArrow extends Actor implements VertexBuffer,Showable {
 
 	private float[][] vertexBuffer  = new float[8][2];

@@ -14,6 +14,10 @@ import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.ui.BaseOptionWindow;
 import com.nsoft.nphysics.simulation.dynamic.CircleDefinition;
 
+/**
+ * Classe que defineix un cos amb forma de cercle per la fase de Sandbox.
+ * @author David
+ */
 public class CircleActor extends PhysicalActor<CircleDefinition> implements Form{
 
 	private Point center;
