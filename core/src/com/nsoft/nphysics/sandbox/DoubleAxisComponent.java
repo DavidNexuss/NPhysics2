@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.simulation.dynamic.PolygonObject;
 /**
- * Classe que defineix el component d'una via prismàtica dins la fase Sandbox.
+ * Classe que defineix el component d'un eix doble dins la fase Sandbox.
  * @see PolygonObject
  * @author David
  */

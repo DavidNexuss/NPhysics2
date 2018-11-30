@@ -13,6 +13,12 @@ import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 
 import earcut4j.Earcut;
 
+/**
+ * Classe que defineix un cos poligonal, hereda de {@link PhysicalActor} i defineix com a de ser la construcció
+ * d'un cos on l'usuari defineix els vertexs
+ * @author Usuari
+ *
+ */
 public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 
 	private Point initial;
@@ -40,7 +46,16 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		
 		definition = new PolygonDefinition();
 	}
+	/**
+	 * Crea una copia del cos a una certa posició relativa
+	 * @param offset Vector que indica la separació entre l'actual cos i la copia
+	 * @return la copia
+	 */
 	
+	/*
+	 * Un pla per el futur seria generalitzar aquesta funció incloent-la en la classe superior,
+	 * així es podria crea copies de cossos especials com CircleActor
+	 */
 	public PolygonActor createCopy(Vector2 offset) {
 		
 		PolygonActor newpolygon = new PolygonActor();
@@ -91,6 +106,9 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		super.draw(batch, parentAlpha);
 		if(!isEnded()) return;
 		
+		/*S'utilitza renderització immediata per renderitzar el poligon en si, realment es podria
+		utilitzar un VBO però l'impacte en rendiment del sistema actual es sostenible*/
+		
 		Util.renderPolygon(NPhysics.currentStage.shapefill, points, indexes);
 		
 		
@@ -132,6 +150,10 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	
 	public ArrayList<Point> getPointList() {return points;}
 	
+	/**
+	 * Crea un buffer on emmagatzarem les posicions dels vertex en una array unidimensional
+	 * aquesta funció s'ha d'executar cada cop que es modifica el cos.
+	 */
 	private void createBuffer() {
 		
 		buffer = new double[points.size()*2];
@@ -142,6 +164,11 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 			buffer[i + 1] = points.get(i/2).getY();
 		}
 	}
+	
+	/**
+	 * Triangulitza el poligon, necessari per poder crea les fixtures d'aquest cos a la simulació
+	 * ja que Box2D no permet l'utilització de poligons concaus com a fixtura
+	 */
 	private void triangulate() {
 		
 		createBuffer();
@@ -149,7 +176,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		indexes = (ArrayList<Integer>) Earcut.earcut(buffer);
 	}
 	
-	private void calculaeBounds() {
+	private void calculateBounds() {
 		
 		X = Float.MAX_VALUE;
 		Y = Float.MAX_VALUE;
@@ -169,12 +196,12 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	}
 
 	private void createHitBox() {
-		calculaeBounds();
+		calculateBounds();
 		hitboxPolygon = new Polygon(definition.getRawVertices());
 	}
 	private void calculateHitBox() {
 		
-		calculaeBounds();
+		calculateBounds();
 		hitboxPolygon.setVertices(definition.getRawVertices());
 		
 		calculateMass();
@@ -246,8 +273,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	
 	@Override
 	public void act(float delta) {
-		
-		
+
 		super.act(delta);
 	}
 	@Override
