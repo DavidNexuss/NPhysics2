@@ -44,6 +44,6 @@ public abstract class ObjectDefinition {
 		return def;
 	}
 	
-	abstract protected void initForSimulation();
+	abstract protected void initForSimulation(); //Prepara l'objecte per la simulació
 	abstract protected void render(Body b);
 }

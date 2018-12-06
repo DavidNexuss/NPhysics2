@@ -47,13 +47,11 @@ public class CircleDefinition extends ObjectDefinition{
 	}
 	
 	@Override
-	protected void initForSimulation() {
-		
-	}
-	
-	@Override
 	protected void render(Body b) {
 		
 		NPhysics.currentStage.shapefill.circle(b.getPosition().x * Util.METERS_UNIT(), b.getPosition().y * Util.METERS_UNIT(), radius * Util.METERS_UNIT());
 	}
+
+	@Override
+	protected void initForSimulation() {}
 }

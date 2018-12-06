@@ -80,7 +80,6 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	
 	private ArrowLabel angleLabel;
 	
-
 	boolean hookRotation;
 	private float angle;
 	private boolean useAxis;
@@ -334,7 +333,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 				angle = Math.abs(angle);
 				angle = 360 - angle;
 			}
-			angleLabel.setText(((int)(angle / 5))*5 + "º");
+			angleLabel.setText((int)(Math.round(angle / 5f)*5f) + "º");
 			angleLabel.setPosition(new Vector2(NPhysics.currentStage.getAxisPosition().getVector()).add(new Vector2(120, 0).rotate(angle)));
 			NPhysics.currentStage.shapefill.arc(NPhysics.currentStage.getAxisPosition().getX(), NPhysics.currentStage.getAxisPosition().getY(), 100, 0, angle);
 		}else angleLabel.setVisible(false);
