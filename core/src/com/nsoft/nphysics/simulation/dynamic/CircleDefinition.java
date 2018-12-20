@@ -10,6 +10,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.Util;
 
+/**
+ * ObjectDefinition d'un cercle
+ * @author David
+ */
 public class CircleDefinition extends ObjectDefinition{
 
 	
@@ -23,7 +27,6 @@ public class CircleDefinition extends ObjectDefinition{
 		this.center.set(center);
 		
 	}
-	
 	
 	@Override
 	public ArrayList<Fixture> createFixtures(Body b) {

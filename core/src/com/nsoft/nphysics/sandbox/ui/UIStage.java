@@ -111,6 +111,8 @@ public class UIStage extends Stage{
 		fps.setVisible(false);
 
 		labelGroup.setZIndex(10);
+		
+	//	setDebugAll(true); //Funció per debugueig
 	}
 	
 	public void showFPS(boolean v) {
