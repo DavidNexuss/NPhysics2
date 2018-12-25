@@ -14,8 +14,8 @@ public class CreditWindow {
 		config.vSyncEnabled = false;
 		config.backgroundFPS = 10;
 		config.foregroundFPS = 60;
-		config.width = 800;
-		config.height = 300;
+		config.width = 872;
+		config.height = 542;
 		config.forceExit = false;
 		LwjglApplication app = new LwjglApplication(new Credit(), config);
 		

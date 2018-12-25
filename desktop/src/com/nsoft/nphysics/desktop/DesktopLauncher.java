@@ -57,6 +57,7 @@ public class DesktopLauncher {
 				}
 			}).start();
 		},true) ,config);	
+		
 	}
 	
 	public static void main (String[] arg) {
