@@ -20,7 +20,7 @@ public class CreditWindow {
 		LwjglApplication app = new LwjglApplication(new Credit(), config);
 		
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 			app.exit();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
