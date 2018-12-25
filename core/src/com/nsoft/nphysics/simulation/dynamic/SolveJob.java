@@ -27,25 +27,28 @@ public class SolveJob implements Say{
 	}
 	public boolean start() {
 	
-		float C;
-		int it = 100;
 		
-		float a = -1000;
-		float b = 1000;
-		float c;
+		//S'executa bolzano en un rang inicial 
+		//comprés entre a i b
+		
+		float C;			//Velocitat angular
+		int it = 100;		//Nombre d'iteracions
+		
+		float a = -1000;	//Mínim
+		float b = 1000;		//Máxim 
+		float c; 			//Módul de la força
 		
 		do {
 		
 			c = (a+b) /2f;
-			
 			C = function(c);
+			
 			if(function(a) * C < 0) {
 				b = c;
 			}
 			else if(function(b)* C < 0) {
 				a = c;
-			}
-			
+			}		
 		} while (it-- > 0);
 		
 		f.setForce(new Vector2(c * MathUtils.cos(rad),c * MathUtils.sin(rad)));
