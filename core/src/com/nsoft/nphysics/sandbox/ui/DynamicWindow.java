@@ -112,6 +112,7 @@ public class DynamicWindow extends BaseOptionWindow {
 			public void clicked(InputEvent event, float x, float y) {
 				
 				hideWindow(d);
+				
 			}
 		});
 		
@@ -197,7 +198,10 @@ public class DynamicWindow extends BaseOptionWindow {
 		}
 		w.addAction(Actions.fadeOut(0.5f,Interpolation.exp5)); 
 		if(w.isAForm())w.form.updateValuesFromForm();
-		ThreadManager.createTask(()->{ w.setVisible(false);}, 0.5f);
+		ThreadManager.createTask(()->{ 
+			w.setVisible(false);
+			NPhysics.currentStage.setFocus(true);
+		}, 0.5f);
 	}
 
 	@Override
