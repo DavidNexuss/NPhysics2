@@ -42,6 +42,13 @@ public class Util {
 	public static float GRAVITY_UNIT() {return UNIT / NEWTON_FACTOR * (-SimulationStage.gravity.y);}
 	
 	public static int getUnit() {return UNIT;}
+	
+	public static String getFancyMeterFactor() {
+		
+		if(METER_FACTOR < 1) {
+			return (int)(METER_FACTOR * 1000) + " mm";
+		}else return METER_FACTOR + " m";
+	}
 	public static float notation(float n) {
 		
 		return ((int)(n*100))/100f;
