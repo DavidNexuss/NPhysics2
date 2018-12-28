@@ -150,7 +150,10 @@ public class ForceComponent extends ObjectChildren implements Form{
 		
 		var = getForm().getOption("fvar").getValue() == 1;
 		//getPolygon().updateForceVariableCount();
-		if(var)crrnt = this;
+		if(var) {
+			crrnt = this;
+			getPolygon().unknown = this;
+		}
 		arrow.setStart(getPosition().x, getPosition().y);
 
 		float newForcex = getForm().getOption("forcex").getValue();

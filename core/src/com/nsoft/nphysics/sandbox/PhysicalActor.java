@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.widget.VisLabel;
@@ -39,6 +40,7 @@ import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
+import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 
 public abstract class PhysicalActor<D extends ObjectDefinition> extends Group implements Form,Handler,ClickIn,Draggable,Parent<Point>,Removeable{
 
@@ -67,6 +69,8 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	private ArrayList<ObjectChildren> components = new ArrayList<>();
 	
 	D definition;
+	
+	ForceComponent unknown;
 	
 	protected ArrayList<Point> points = new ArrayList<>();
 	
@@ -156,6 +160,18 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 			}
 		};
 		VisTextButton dsl_b= new VisTextButton(NDictionary.get("dsl_solve"));
+		PhysicalActor<?> pointer = this;
+		dsl_b.addListener(new ClickListener() {
+			
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				if(unknown != null && unknown.isVariable()) {
+					SolveJob j = new SolveJob(pointer, unknown);
+					j.start();
+				}
+			}
+		});
 		
 		solve_dsl.add(dsl_t).expand().align(Align.left);
 		solve_dsl.add(dsl_n).prefWidth(50).width(50);
