@@ -32,12 +32,14 @@ public class SolveJob implements Say{
 		//comprés entre a i b
 		
 		float C;			//Velocitat angular
-		int it = 100;		//Nombre d'iteracions
 		
 		float a = -1000;	//Mínim
 		float b = 1000;		//Máxim 
 		float c; 			//Módul de la força
 		
+		float Epsilon = 0.000001f;
+		
+		float it = 0;
 		do {
 		
 			c = (a+b) /2f;
@@ -48,13 +50,15 @@ public class SolveJob implements Say{
 			}
 			else if(function(b)* C < 0) {
 				a = c;
-			}		
-		} while (it-- > 0);
+			}
+			
+			it++;
+		} while (C > Epsilon || C < -Epsilon);
 		
 		f.setForce(new Vector2(c * MathUtils.cos(rad),c * MathUtils.sin(rad)));
-		f.var = false;
+		f.setVar(false);
 		
-		say(c);
+		say(c + " " + it + " " + C);
 		return true;
 	}
 	
@@ -70,7 +74,7 @@ public class SolveJob implements Say{
 		World w = createWorld();
 		addObjects(w);
 		var.b.applyForce(new Vector2(MathUtils.cos(rad) *argument,MathUtils.sin(rad) * argument), new Vector2(position), true);
-		
+		var.aplyForce();
 		w.step(1, 8, 6);
 		
 		Array<Body> b = new Array<>();

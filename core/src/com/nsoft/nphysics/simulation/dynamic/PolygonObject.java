@@ -58,11 +58,14 @@ public class PolygonObject extends Actor implements Say{
 		gravityArrow = new SimpleArrow(center, force.add(center));
 		velocityArrow = new SimpleArrow(center, new Vector2(b.getLinearVelocity()).add(center));
 		
-		velLabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
-		gravityLabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
-	
-		gravityLabel.setFloat(SimulationStage.gravity.y * b.getMass());
-		gravityLabel.conc("N");
+		if(NPhysics.currentStage == NPhysics.simulation) {
+			
+			velLabel = new ArrowLabel(NPhysics.simulation.getUiGroup());
+			gravityLabel = new ArrowLabel(NPhysics.simulation.getUiGroup());
+		
+			gravityLabel.setFloat(SimulationStage.gravity.y * b.getMass());
+			gravityLabel.conc("N");
+		}
 		
 
 	}
@@ -270,7 +273,7 @@ public class PolygonObject extends Actor implements Say{
 			if (c instanceof ForceComponent) {
 				
 				ForceComponent f = (ForceComponent)c;
-				if(f.isVariable()) return ;
+				if(f.isVariable()) continue ;
 				Vector2 force = f.getForce().scl(1f/Util.METERS_UNIT());
 				Vector2 origin = f.getPosition().scl(1f/Util.METERS_UNIT());
 				

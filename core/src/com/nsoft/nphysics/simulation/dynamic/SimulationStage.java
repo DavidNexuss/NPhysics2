@@ -47,6 +47,7 @@ public class SimulationStage extends GridStage{
 	
 	static boolean active = true;
 	
+	static boolean simulation = false;
 	ArrayList<SimulationJoint> rawJointsDraw = new ArrayList<>();
 	
 	static class Sesion{
@@ -71,6 +72,7 @@ public class SimulationStage extends GridStage{
 		super.setUp();
 		
 		active = true;
+		simulation = true;
 		initStage();
 		initWorld();
 		initObjects();
@@ -81,6 +83,7 @@ public class SimulationStage extends GridStage{
 	public void clean() {
 		
 		super.clean(); //executa clear(), see DragStage.java
+		simulation = false;
 	}
 	
 	private void initStage() {

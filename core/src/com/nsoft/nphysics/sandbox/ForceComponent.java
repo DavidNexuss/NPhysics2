@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -27,16 +28,16 @@ public class ForceComponent extends ObjectChildren implements Form{
 	ArrowActor arrow;
 	Vector2 force;
 	Type type = Type.WORLD;
+	
 	boolean relative = false;
 	private boolean hook = false;
-	public  boolean var;
+	private boolean var;
 	private Label label;
 	private static LabelStyle style;
 	
-	public Variable variable;
-	
 	static ForceComponent temp;
 	public static ForceComponent crrnt;
+	
 	public ForceComponent(PhysicalActor<ObjectDefinition> parent,Vector2 start) {
 		
 		super(parent);
@@ -131,8 +132,18 @@ public class ForceComponent extends ObjectChildren implements Form{
 	public boolean isInside(float x, float y) {
 		return arrow.isInside(x, y);
 	}
+	
+	public void setVar(boolean newVar) {
+		
+		var = newVar;
+		getForm().getOption("fvar").setValue(newVar ? 1f : 0f);
+	}
 	//------------------------getForm()---------------------------
 
+	
+	private float lastMod,lastAngle;
+	private float lastX,lastY;
+	
 	@Override
 	public void updateValuesFromForm() {
 		super.updateValuesFromForm();
@@ -141,28 +152,47 @@ public class ForceComponent extends ObjectChildren implements Form{
 		//getPolygon().updateForceVariableCount();
 		if(var)crrnt = this;
 		arrow.setStart(getPosition().x, getPosition().y);
-		
-		float forcex;
-		float forcey;
-		
-		variable = variable.NONE;
-		arrow.setColor(Color.BLACK);
 
-		forcex = getForm().getOption("forcex").getValue() * Util.NEWTONS_UNIT();
+		float newForcex = getForm().getOption("forcex").getValue();
+		float newForcey = getForm().getOption("forcey").getValue();
 		
-		forcey = getForm().getOption("forcey").getValue() * Util.NEWTONS_UNIT();
+		float newForceAngle = getForm().getOption("forceangle").getValue();
+		float newForceMod = getForm().getOption("forcemod").getValue();
+		
 		
 		int a = (int) getForm().getOption("ftype").getValue();
-		
-		if(variable != Variable.NONE) getForm().getOption("fvar").setValue(1);
 		
 		if(a == 0) type = Type.WORLD; else
 		if(a == 1) type = Type.TRANS; else
 		if(a == 2) type = Type.REL;
-		arrow.setEnd(getPosition().x + forcex, getPosition().y + forcey);
+		
+		
+		if((newForcex != lastX || newForcey != lastY) && (lastMod == newForceMod && lastAngle == newForceAngle)) {
+			
+			float forcex;
+			float forcey;
+			
+			forcex = getForm().getOption("forcex").getValue() * Util.NEWTONS_UNIT();		
+			forcey = getForm().getOption("forcey").getValue() * Util.NEWTONS_UNIT();
+			
+			arrow.setEnd(getPosition().x + forcex, getPosition().y + forcey);
+		}else if((newForceMod != lastMod || newForceAngle != lastAngle) && (lastX == newForcex && lastY == newForcey)) {
+			
+			float realmod = newForceMod * Util.NEWTONS_UNIT();
+			
+			float newx = (float) (realmod * Math.cos(newForceAngle * MathUtils.degRad));
+			float newy = (float) (realmod * Math.sin(newForceAngle * MathUtils.degRad));
+			
+			arrow.setEnd(getPosition().x + newx, getPosition().y + newy);
+		}else {
+			
+			updateValuesToForm();
+			return;
+		}
+	
 		update();
 		
-		checknullValues();
+		updateValuesToForm();
 	}
 	
 	
@@ -171,26 +201,14 @@ public class ForceComponent extends ObjectChildren implements Form{
 		if(!getForm().getOption("forcex").isNull())getForm().getOption("forcex").setValue(force.x / Util.NEWTONS_UNIT());
 		if(!getForm().getOption("forcey").isNull())getForm().getOption("forcey").setValue(force.y / Util.NEWTONS_UNIT());
 		
-		checknullValues();
+		//TODO:
+		getForm().getOption("forcemod").setValue(new Vector2(force.x, force.y).scl(1f / Util.NEWTONS_UNIT()).len());
+		getForm().getOption("forceangle").setValue(new Vector2(force.x, force.y).angle());
 		
-	}
-	
-	private void checknullValues() {
-		
-		if(variable == Variable.X || variable == Variable.Y) {
-			
-
-			getForm().getOption("forcemod").setEnable(false);
-			getForm().getOption("forceangle").setEnable(false);
-		}
-		else {
-		
-			getForm().getOption("forcemod").setEnable(true);
-			getForm().getOption("forceangle").setEnable(true);
-			getForm().getOption("forcemod").setValue(force.len() / Util.METERS_UNIT());
-			getForm().getOption("forceangle").setValue(force.angle());
-			
-		}
+		lastMod = getForm().getOption("forcemod").getValue();
+		lastAngle = getForm().getOption("forceangle").getValue();
+		lastX = getForm().getOption("forcex").getValue();
+		lastY = getForm().getOption("forcey").getValue();
 	}
 	
 }
