@@ -2,45 +2,23 @@ package com.nsoft.nphysics.sandbox;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
-import com.badlogic.gdx.utils.Align;
-import com.kotcrab.vis.ui.widget.VisLabel;
-import com.kotcrab.vis.ui.widget.VisTable;
-import com.kotcrab.vis.ui.widget.VisTextButton;
-import com.nsoft.nphysics.DragStage;
-import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
-import com.nsoft.nphysics.sandbox.drawables.DiscontLine;
-import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
-import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
-import com.nsoft.nphysics.sandbox.interfaces.Draggable;
-import com.nsoft.nphysics.sandbox.interfaces.Form;
-import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
-import com.nsoft.nphysics.sandbox.interfaces.Parent;
-import com.nsoft.nphysics.sandbox.interfaces.Removeable;
-import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
-import com.nsoft.nphysics.sandbox.ui.FontManager;
-import com.nsoft.nphysics.sandbox.ui.UIStage;
-import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
-import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 import earcut4j.Earcut;
 
+/**
+ * Classe que defineix un cos poligonal, hereda de {@link PhysicalActor} i defineix com a de ser la construcció
+ * d'un cos on l'usuari defineix els vertexs
+ * @author Usuari
+ *
+ */
 public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 
 	private Point initial;
@@ -68,7 +46,16 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		
 		definition = new PolygonDefinition();
 	}
+	/**
+	 * Crea una copia del cos a una certa posició relativa
+	 * @param offset Vector que indica la separació entre l'actual cos i la copia
+	 * @return la copia
+	 */
 	
+	/*
+	 * Un pla per el futur seria generalitzar aquesta funció incloent-la en la classe superior,
+	 * així es podria crea copies de cossos especials com CircleActor
+	 */
 	public PolygonActor createCopy(Vector2 offset) {
 		
 		PolygonActor newpolygon = new PolygonActor();
@@ -119,6 +106,9 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		super.draw(batch, parentAlpha);
 		if(!isEnded()) return;
 		
+		/*S'utilitza renderització immediata per renderitzar el poligon en si, realment es podria
+		utilitzar un VBO però l'impacte en rendiment del sistema actual es sostenible*/
+		
 		Util.renderPolygon(NPhysics.currentStage.shapefill, points, indexes);
 		
 		
@@ -160,6 +150,10 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	
 	public ArrayList<Point> getPointList() {return points;}
 	
+	/**
+	 * Crea un buffer on emmagatzarem les posicions dels vertex en una array unidimensional
+	 * aquesta funció s'ha d'executar cada cop que es modifica el cos.
+	 */
 	private void createBuffer() {
 		
 		buffer = new double[points.size()*2];
@@ -170,6 +164,11 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 			buffer[i + 1] = points.get(i/2).getY();
 		}
 	}
+	
+	/**
+	 * Triangulitza el poligon, necessari per poder crea les fixtures d'aquest cos a la simulació
+	 * ja que Box2D no permet l'utilització de poligons concaus com a fixtura
+	 */
 	private void triangulate() {
 		
 		createBuffer();
@@ -177,7 +176,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		indexes = (ArrayList<Integer>) Earcut.earcut(buffer);
 	}
 	
-	private void calculaeBounds() {
+	private void calculateBounds() {
 		
 		X = Float.MAX_VALUE;
 		Y = Float.MAX_VALUE;
@@ -197,12 +196,12 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	}
 
 	private void createHitBox() {
-		calculaeBounds();
+		calculateBounds();
 		hitboxPolygon = new Polygon(definition.getRawVertices());
 	}
 	private void calculateHitBox() {
 		
-		calculaeBounds();
+		calculateBounds();
 		hitboxPolygon.setVertices(definition.getRawVertices());
 		
 		calculateMass();
@@ -274,8 +273,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	
 	@Override
 	public void act(float delta) {
-		
-		
+
 		super.act(delta);
 	}
 	@Override

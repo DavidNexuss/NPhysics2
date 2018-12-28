@@ -9,6 +9,11 @@ import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
+/**
+ * Classe encarregada de definir el procediment necessari per poder crear les fixtures del objecte
+ * a simular en Box2D
+ * @author David
+ */
 public abstract class ObjectDefinition {
 
 	public ArrayList<ObjectChildren> childrens = new ArrayList<>();
@@ -44,6 +49,6 @@ public abstract class ObjectDefinition {
 		return def;
 	}
 	
-	abstract protected void initForSimulation();
+	abstract protected void initForSimulation(); //Prepara l'objecte per la simulació
 	abstract protected void render(Body b);
 }

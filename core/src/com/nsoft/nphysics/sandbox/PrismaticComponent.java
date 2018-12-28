@@ -24,7 +24,7 @@ public class PrismaticComponent extends ObjectChildren{
 	
 	public static PrismaticComponent temp = new PrismaticComponent(null);
 	
-	private float angle = 0;
+	public float angle = 0;
 	public PrismaticComponent(PhysicalActor<ObjectDefinition> parent) {
 		
 		super(parent);

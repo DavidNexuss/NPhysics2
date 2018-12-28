@@ -10,6 +10,10 @@ import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 
+/**
+ * Classe encarregada de renderitzar una fletxa que representi el vector de la força
+ * @author David
+ */
 public class DynamicForce {
 
 	Vector2 origin;

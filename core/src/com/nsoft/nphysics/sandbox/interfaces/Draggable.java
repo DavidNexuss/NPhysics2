@@ -10,6 +10,12 @@ import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.SelectHandle;
 
+/**
+ * Interfície per definir la propietat de ser arrastrat d'un Actor.
+ * Simplement proveeix unes funcions básiques per poder implementar rápidament un sistema per
+ * arrastrar. Així aquest serà sempre el mateix procediment.
+ * @author David
+ */
 public interface Draggable {
 
 	public default void addDragListener() {
@@ -23,10 +29,11 @@ public interface Draggable {
 	}
 	public SelectHandle getHandler();
 	public boolean addListener(EventListener listener);
+	
+	//TODO: Fix pool
 	public default void doDrag(boolean pool,float x,float y,InputEvent event) {
 		
 		if(pool) {
-			
 			
 			Stack<ClickIn> list = getHandler().getSelecteds();
 			

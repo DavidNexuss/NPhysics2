@@ -11,8 +11,7 @@ import com.nsoft.nphysics.sandbox.SelectHandle;
 
 /**
  * Interfície per poder manejar objectes amb la propietat de ser seleccionats
- * @author Usuari
- *
+ * @author David
  */
 public interface ClickIn {
 
@@ -62,5 +61,6 @@ public interface ClickIn {
 	
 	public SelectHandle getHandler();
 	public boolean addListener(EventListener input);
+	
 	public Stage getStage(); //implementada per Actor
 }

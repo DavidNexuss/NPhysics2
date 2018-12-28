@@ -16,9 +16,22 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kotcrab.vis.ui.VisUI;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
+/**
+ * Classe utilitaria per poder gestionar els diferents tipus d'unitats, per treballar en vectors,
+ * per renderitzar un poligon de forma immediata i altres operacions que s'utilitzen de forma utilitaria
+ * a les diferents classes
+ * @author David
+ */
 public class Util {
 
-
+	/**
+	 * Funció per genèrica per validar si un objecte és instància d'una classe.
+	 * Métode ineficient tot i que és molt més recomanable utilitzar la forma tipada
+	 * instanceof aquesta és la única forma de fer-ho de forma dinàmica
+	 * @param la classe
+	 * @param l'objecte
+	 * @return si es instancia de
+	 */
 	public static <T> boolean isInstance(Class<T> clas,Object p) {
 		try {
 			
@@ -53,6 +66,7 @@ public class Util {
 		
 		return ((int)(n*100))/100f;
 	}
+	
 	/*
 	 * p[0] =  A.x
 	 * p[1] =  A.y
@@ -61,6 +75,7 @@ public class Util {
 	 * p[4] =  C.x
 	 * p[5] =  C.y
 	 */
+	
 	public static float triangleArea(float ... p) {
 		
 		return Math.abs((p[0]*(p[3] - p[5]) + p[2]*(p[5] - p[1]) + p[4]*(p[1] - p[3]))/2);

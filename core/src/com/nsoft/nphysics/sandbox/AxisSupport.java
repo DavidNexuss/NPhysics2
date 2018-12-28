@@ -11,7 +11,13 @@ import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
+import com.nsoft.nphysics.simulation.dynamic.PolygonObject;
 
+/**
+ * Classe que defineix el component d'eix de suport dins la fase Sandbox.
+ * @see PolygonObject
+ * @author David
+ */
 public class AxisSupport extends ObjectChildren implements Form{
 
 	public static int RADIUS = 16;

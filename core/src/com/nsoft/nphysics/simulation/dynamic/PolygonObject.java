@@ -26,6 +26,13 @@ import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 
+
+
+/**
+ * Actor que representa un objecte a se simulat. A part de renderitzar-lo construeix l'objecte Body
+ * per a la simulació
+ * @author David
+ */
 public class PolygonObject extends Actor implements Say{
 
 	public static float PHYSICAL_EPSILON = 0.01f;

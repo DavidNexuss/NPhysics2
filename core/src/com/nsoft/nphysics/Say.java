@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 
 /**
  * Interfas per fer debugging
+ * El propòsit es crear un Log senzill en el que un objecte pugui reportar una informació a la consola
+ * y es pugui saber la linea d'execució i el hash del objecte
  * @author David
  */
 public interface Say {

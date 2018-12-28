@@ -114,8 +114,9 @@ public class UIStage extends Stage{
 		s.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 60);
 		addActor(s);
 		labelGroup.setZIndex(10);
-		
-	//	setDebugAll(true);
+
+		//	setDebugAll(true); //Funció per debugueig
+
 	}
 	
 	public void showFPS(boolean v) {

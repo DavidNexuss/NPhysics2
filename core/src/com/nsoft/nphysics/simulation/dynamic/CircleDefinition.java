@@ -10,6 +10,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.Util;
 
+/**
+ * ObjectDefinition d'un cercle
+ * @author David
+ */
 public class CircleDefinition extends ObjectDefinition{
 
 	
@@ -23,7 +27,6 @@ public class CircleDefinition extends ObjectDefinition{
 		this.center.set(center);
 		
 	}
-	
 	
 	@Override
 	public ArrayList<Fixture> createFixtures(Body b) {
@@ -47,13 +50,11 @@ public class CircleDefinition extends ObjectDefinition{
 	}
 	
 	@Override
-	protected void initForSimulation() {
-		
-	}
-	
-	@Override
 	protected void render(Body b) {
 		
 		NPhysics.currentStage.shapefill.circle(b.getPosition().x * Util.METERS_UNIT(), b.getPosition().y * Util.METERS_UNIT(), radius * Util.METERS_UNIT());
 	}
+
+	@Override
+	protected void initForSimulation() {}
 }

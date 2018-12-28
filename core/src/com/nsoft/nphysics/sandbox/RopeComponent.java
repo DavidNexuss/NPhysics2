@@ -13,7 +13,7 @@ import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
 public class RopeComponent extends Actor implements RawJoint, Parent<Point>{
 
-	private PhysicalActor<?> A,B;
+	public PhysicalActor<?> A,B;
 	private Point anchorA,anchorB;
 	private ArrayList<Point> anchors = new ArrayList<>();
 	

@@ -203,7 +203,7 @@ public abstract class DragStage extends Stage{
 		switch (keyCode) {
 		case Keys.ESCAPE:
 
-			Gdx.app.exit();
+			Gdx.app.exit(); // Preferible a utilitzar System.exit(0);
 			return true;
 		case Keys.F1:
 			

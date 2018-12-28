@@ -11,6 +11,10 @@ import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
 
+/**
+ * Actor encarregat de mostrar en pantalla els vectors de reacció d'una Joint
+ * @author David
+ */
 public class SimulationJoint extends Actor{
 
 	ArrowLabel xlabel;
@@ -32,6 +36,10 @@ public class SimulationJoint extends Actor{
 	
 	PolygonObject a,b;
 	
+	/**
+	 * La Joint a representar
+	 * @param j
+	 */
 	public SimulationJoint(Joint j) {
 		
 		xreaction = new SimpleArrow(j.getAnchorA(), new Vector2());

@@ -33,7 +33,7 @@ public class Sandbox extends GridStage implements Handler{
 	
 	public ArrayList<PhysicalActor<ObjectDefinition>> polygonlist = new ArrayList<>();
 	public static SelectHandle mainSelect = new SelectHandle();
-	public static ArrayList<ForceComponent> unknownForcesList = new ArrayList<ForceComponent>();
+//	public static ArrayList<ForceComponent> unknownForcesList = new ArrayList<ForceComponent>();
 	
 	public static SimpleAxis axis;
 	
