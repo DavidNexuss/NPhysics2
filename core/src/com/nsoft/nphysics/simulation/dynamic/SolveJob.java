@@ -1,96 +1,92 @@
 package com.nsoft.nphysics.simulation.dynamic;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PolygonActor;
+import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 
-public class SolveJob {
+public class SolveJob implements Say{
 
 	static int threshold = 10;
-	World w;
-	ForceComponent u;
-	
-	int n;
-	public SolveJob(ForceComponent u) {
-		
-		this.u = u;
+	Vector2 position;
+	float rad;
+	PhysicalActor<?> obj;
+	ForceComponent f;
+	public SolveJob(PhysicalActor<?> obj,ForceComponent f) {
+		this.obj = obj;
+		this.position = f.getPosition().scl(1f/Util.METERS_UNIT());
+		this.rad = f.getForce().angleRad();
+		this.f = f;
 	}
-	
 	public boolean start() {
 	
 		
-		int it = 0;
-		float oldsump = 0;
-		float sump = 1;
-		while (sump > 0.1f) {
+		//S'executa bolzano en un rang inicial 
+		//comprés entre a i b
+		
+		float C;			//Velocitat angular
+		
+		float a = -1000;	//Mínim
+		float b = 1000;		//Máxim 
+		float c; 			//Módul de la força
+		
+		float Epsilon = 0.000001f;
+		
+		float it = 0;
+		do {
+		
+			c = (a+b) /2f;
+			C = function(c);
 			
-			if(u.variable == Variable.X) {
-				u.setForce(new Vector2(n, u.getForce().y));
-				System.out.println("x");
+			if(function(a) * C < 0) {
+				b = c;
 			}
-			if(u.variable == Variable.Y) {
-				u.setForce(new Vector2(u.getForce().x, n));
-				System.out.println("y");
+			else if(function(b)* C < 0) {
+				a = c;
 			}
-			
-			createWorld();
-			addObjects();
 			
 			it++;
-			sump = run();
-			
-			if(sump > oldsump) n += sump;
-			if(sump < oldsump) n -= sump;
-			
-			oldsump = sump;
-			System.out.println(it + " " + sump + " " + u.getForce());
-			if(it > threshold) return false;
-			
-		}
+		} while (C > Epsilon || C < -Epsilon);
+		
+		f.setForce(new Vector2(c * MathUtils.cos(rad),c * MathUtils.sin(rad)));
+		f.setVar(false);
+		
+		say(c + " " + it + " " + C);
 		return true;
 	}
 	
-	private void createWorld() {
+	private World createWorld() {
 		
-		w = new World(SimulationStage.gravity, true);
+		return new World(SimulationStage.gravity, true);
 	}
 	
 	PolygonObject var;
-	private void addObjects() {
-		
-		for (PhysicalActor<ObjectDefinition> d: SimulationPackage.polygons)  {
-			
-			PolygonObject o = new PolygonObject(d.getDefinition(),w);
-			if(u.getPolygon() == d) var = o;
-		}
-	}
 	
-	public float run() {
+	private float function(float argument) {
 		
-		float t = 0;
-		float elapsed = 0.2f;
-		while(t < 2f) {
-		
-			var.b.applyForceToCenter(u.getForce(), true);
-			w.step(elapsed, 10, 8);
-			t+=elapsed;
-		}
+		World w = createWorld();
+		addObjects(w);
+		var.b.applyForce(new Vector2(MathUtils.cos(rad) *argument,MathUtils.sin(rad) * argument), new Vector2(position), true);
+		var.aplyForce();
+		w.step(1, 8, 6);
 		
 		Array<Body> b = new Array<>();
 		w.getBodies(b);
-		float sump = 0;
-		for (Body body : b) {
-			
-			sump += body.getMass()*body.getLinearVelocity().len();
-		}
-		
-		return sump;
+		return var.b.getAngularVelocity();
 	}
-	
-	
+	private void addObjects(World world) {
+		
+		for (PhysicalActor<ObjectDefinition> d: SimulationPackage.polygons)  {
+			
+			PolygonObject o = new PolygonObject(d.getDefinition(),world);
+			if(obj== d) var = o;
+		}
+	}
 }

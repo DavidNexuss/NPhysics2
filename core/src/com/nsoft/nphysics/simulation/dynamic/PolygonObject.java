@@ -10,12 +10,14 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.sandbox.AxisSupport;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.PrismaticComponent;
@@ -24,7 +26,7 @@ import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 
-public class PolygonObject extends Actor{
+public class PolygonObject extends Actor implements Say{
 
 	public static float PHYSICAL_EPSILON = 0.01f;
 	ObjectDefinition def;
@@ -57,11 +59,14 @@ public class PolygonObject extends Actor{
 		gravityArrow = new SimpleArrow(center, force.add(center));
 		velocityArrow = new SimpleArrow(center, new Vector2(b.getLinearVelocity()).add(center));
 		
-		velLabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
-		gravityLabel = new ArrowLabel(NPhysics.currentStage.getUiGroup());
-	
-		gravityLabel.setFloat(SimulationStage.gravity.y * b.getMass());
-		gravityLabel.conc("N");
+		if(NPhysics.currentStage == NPhysics.simulation) {
+			
+			velLabel = new ArrowLabel(NPhysics.simulation.getUiGroup());
+			gravityLabel = new ArrowLabel(NPhysics.simulation.getUiGroup());
+		
+			gravityLabel.setFloat(SimulationStage.gravity.y * b.getMass());
+			gravityLabel.conc("N");
+		}
 		
 
 	}
@@ -250,7 +255,8 @@ public class PolygonObject extends Actor{
 				if(pivot == null) { pivot = (AxisSupport)c; usePivot = true;}
 				else {usePivot = false;}
 				
-				simjoints.add(new SimulationJoint(owner.createJoint(def)));
+				Joint j = owner.createJoint(def);
+				if(NPhysics.currentStage == NPhysics.simulation)simjoints.add(new SimulationJoint(j));
 				
 			}
 
@@ -261,7 +267,8 @@ public class PolygonObject extends Actor{
 				Vector2 anchor = new Vector2(c.getX()/Util.METERS_UNIT(), c.getY()/Util.METERS_UNIT());
 				def.initialize(b, createAnchor(anchor.x,anchor.y), anchor, new Vector2(1,0).rotate(p.getAngle()));
 				def.enableMotor = true;
-				simjoints.add(new SimulationJoint(owner.createJoint(def)));
+				Joint j = owner.createJoint(def);
+				if(NPhysics.currentStage == NPhysics.simulation)simjoints.add(new SimulationJoint(j));
 				
 				if(p.getAngle() == 0 || p.getAngle() == 180) reactY = true;
 				if(p.getAngle() == 90 || p.getAngle() == 270) reactX = true;
@@ -269,7 +276,7 @@ public class PolygonObject extends Actor{
 			if (c instanceof ForceComponent) {
 				
 				ForceComponent f = (ForceComponent)c;
-				if(f.isVariable()) return ;
+				if(f.isVariable()) continue ;
 				Vector2 force = f.getForce().scl(1f/Util.METERS_UNIT());
 				Vector2 origin = f.getPosition().scl(1f/Util.METERS_UNIT());
 				

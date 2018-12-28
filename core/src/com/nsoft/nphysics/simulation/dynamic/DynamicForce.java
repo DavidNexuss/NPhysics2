@@ -61,9 +61,12 @@ public class DynamicForce {
 		porigin = origin;
 		pforce = force;
 		type = t;
-		NPhysics.currentStage.addActor(arrow);
 		
-		createLabel();
+		if(NPhysics.currentStage == NPhysics.simulation) {
+			NPhysics.currentStage.addActor(arrow);
+			createLabel();
+		}
+		
 	}
 	
 	void updateLabel() {
@@ -109,7 +112,7 @@ public class DynamicForce {
 	
 	void createLabel() {
 		
-		label = new ArrowLabel(NPhysics.currentStage.getUiGroup());
+		label = new ArrowLabel(NPhysics.simulation.getUiGroup());
 		label.setFloat(pforce.len()*10);
 		label.conc("N");
 		label.setColor(Color.RED);

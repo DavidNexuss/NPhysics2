@@ -157,7 +157,7 @@ public abstract class DragStage extends Stage{
 	/**
 	 * Prepara la Stage per a fer el canvi
 	 */
-	public void setUp() { updateMatrix(); }
+	public void setUp() { uiGroup.clear(); updateMatrix(); }
 	
 	/**
 	 * Limpia la Stage per a fer el canvi

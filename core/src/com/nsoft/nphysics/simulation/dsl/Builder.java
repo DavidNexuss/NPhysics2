@@ -25,7 +25,7 @@ public class Builder {
 				ForceComponent c = (ForceComponent)object;
 				Vector2 pos = object.getRelativePosition(true);
 				
-				if(c.variable == Variable.X) {
+			/*	if(c.variable == Variable.X) {
 					Force f =new Force(pos.x, pos.y, Force.NULL, c.getForce().y).setParent(object);
 					f.setVariable(Variable.X);
 					l.addForce(f);
@@ -38,7 +38,7 @@ public class Builder {
 				}
 				else {
 					l.addForce(new Force(pos, c.getForce()).setParent(object));
-				}
+				}*/
 			}
 		}
 		

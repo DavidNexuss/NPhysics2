@@ -27,7 +27,7 @@ closewindow:{
 origin:{
 	ENG: "Set origin vector"
 	ESP: "Establecer vector origen"
-	CAT: "Establir vector origen"
+	CAT: "Estableix vector origen"
 }
 originx:{
 	ENG: "Origin in x"
@@ -57,7 +57,7 @@ forcey:{
 forcemod:{
 	ENG: "Force modulus"
 	ESP: "Módulo de la fuerza"
-	CAT: "Módul de la força"
+	CAT: "Mòdul de la força"
 }
 forceangle:{
 	ENG: "Force angle"

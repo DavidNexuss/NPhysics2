@@ -42,7 +42,6 @@ public class PolygonDefinition extends ObjectDefinition{
 		
 		for (int i = 0; i < indexes.size(); i+=3) {
 			
-			System.out.println(indexes.size());
 			Buff[i/3] = getTriangle(indexes.get(i), indexes.get(i + 1), indexes.get(i + 2), relative, PhysValue);
 		}
 		
