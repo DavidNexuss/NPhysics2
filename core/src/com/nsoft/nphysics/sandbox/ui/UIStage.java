@@ -129,7 +129,7 @@ public class UIStage extends Stage{
 		
 		FixedWindow sim = new FixedWindow("Simulation Options", handler);
 		sim.setPosition(150, Gdx.graphics.getHeight());	
-		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 50);
+		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 200);
 		
 		sim.addOption(new Option("gridmeterscale", new UIOptionNumber()).setValue(Util.METER_FACTOR));
 		sim.addOption(new Option("gridscale", new UIOptionNumber()).setValue(Util.getUnit() + .0f));
