@@ -2,11 +2,13 @@ package com.nsoft.nphysics.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.nsoft.nphysics.Credit;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.ThreadCase;
 import com.nsoft.nphysics.sandbox.PrismaticComponent;
 
 import java.awt.Toolkit;
+import java.io.IOException;
 
 import org.lwjgl.input.Mouse;
 
@@ -16,7 +18,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class DesktopLauncher {
 	
-	public static void main (String[] arg) {
+	public static void program(String[] arg) {
+		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.useGL30 = true;
 		config.vSyncEnabled = false;
@@ -33,7 +36,7 @@ public class DesktopLauncher {
 			config.fullscreen = true;
 		}
 		
-
+		System.out.println("wd");
 		config.samples = 4;
 		
 		NPhysics.functions = new SpecificWindowsFunctions();
@@ -54,5 +57,16 @@ public class DesktopLauncher {
 				}
 			}).start();
 		},true) ,config);	
+		
+	}
+	
+	public static void main (String[] arg) {
+	
+		try {
+			JavaProcess.exec(CreditWindow.class);
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+		program(arg);
 	}
 }
