@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
@@ -254,7 +255,8 @@ public class PolygonObject extends Actor implements Say{
 				if(pivot == null) { pivot = (AxisSupport)c; usePivot = true;}
 				else {usePivot = false;}
 				
-				simjoints.add(new SimulationJoint(owner.createJoint(def)));
+				Joint j = owner.createJoint(def);
+				if(NPhysics.currentStage == NPhysics.simulation)simjoints.add(new SimulationJoint(j));
 				
 			}
 
@@ -265,7 +267,8 @@ public class PolygonObject extends Actor implements Say{
 				Vector2 anchor = new Vector2(c.getX()/Util.METERS_UNIT(), c.getY()/Util.METERS_UNIT());
 				def.initialize(b, createAnchor(anchor.x,anchor.y), anchor, new Vector2(1,0).rotate(p.getAngle()));
 				def.enableMotor = true;
-				simjoints.add(new SimulationJoint(owner.createJoint(def)));
+				Joint j = owner.createJoint(def);
+				if(NPhysics.currentStage == NPhysics.simulation)simjoints.add(new SimulationJoint(j));
 				
 				if(p.getAngle() == 0 || p.getAngle() == 180) reactY = true;
 				if(p.getAngle() == 90 || p.getAngle() == 270) reactX = true;
