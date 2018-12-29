@@ -29,6 +29,7 @@ import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
+import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 
 public class UIStage extends Stage{
 
@@ -132,6 +133,7 @@ public class UIStage extends Stage{
 		sim.addOption(new Option("gridscale", new UIOptionNumber()).setValue(Util.getUnit() + .0f));
 		sim.addOption(new Option("gridnewtonscale", new UIOptionNumber()).setValue(Util.NEWTON_FACTOR));
 		sim.addOption(new Option("gravity", new UIOptionNumber()).setValue(SimulationStage.gravity.y));
+		sim.addOption(new Option("worldwait", new UIOptionNumber()).setValue(SolveJob.waitTime));
 		
 		menu.addWindow(sim);
 		addActor(sim);

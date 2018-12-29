@@ -240,8 +240,16 @@ public class PolygonObject extends Actor implements Say{
 				def.bodyB = createAnchor(c.getX()/Util.METERS_UNIT(), c.getY()/Util.METERS_UNIT());
 				def.initialize(b, def.bodyB,new Vector2(c.getX()/Util.METERS_UNIT(),c.getY()/Util.METERS_UNIT()));
 				def.enableMotor = true;
-				def.maxMotorTorque = s.torque;
-				def.motorSpeed = s.speed;
+				def.maxMotorTorque = Math.abs(s.torque);
+				
+				float si = Math.abs(s.torque) / s.torque;
+				if(s.speed == 0) {
+					def.motorSpeed = Float.MAX_VALUE * si;
+				}else def.motorSpeed = s.speed * si;
+				
+				System.out.println(def.motorSpeed);
+				System.out.println(def.maxMotorTorque);
+				
 				anchor = def.bodyB;
 				anchors.add(anchor);
 				

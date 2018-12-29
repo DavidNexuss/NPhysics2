@@ -11,14 +11,17 @@ import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.simulation.dsl.Force.Variable;
+import com.nsoft.nphysics.simulation.dynamic.SimulationStage.Simulation;
 
 public class SolveJob implements Say{
 
+	public static float waitTime = 3f;
 	static int threshold = 10;
 	Vector2 position;
 	float rad;
 	PhysicalActor<?> obj;
 	ForceComponent f;
+	
 	public SolveJob(PhysicalActor<?> obj,ForceComponent f) {
 		this.obj = obj;
 		this.position = f.getPosition().scl(1f/Util.METERS_UNIT());
@@ -62,31 +65,21 @@ public class SolveJob implements Say{
 		return true;
 	}
 	
-	private World createWorld() {
-		
-		return new World(SimulationStage.gravity, true);
-	}
-	
 	PolygonObject var;
 	
 	private float function(float argument) {
 		
-		World w = createWorld();
-		addObjects(w);
+		Simulation s = new Simulation(SimulationStage.initWorld());
+		SimulationStage.initObjects(s, false);
+		SimulationStage.initRawJoints(s, false);
+
+		var = s.objectsMap.get(obj);
 		var.b.applyForce(new Vector2(MathUtils.cos(rad) *argument,MathUtils.sin(rad) * argument), new Vector2(position), true);
 		var.aplyForce();
-		w.step(1, 8, 6);
+		s.world.step(waitTime, 8, 6);
 		
 		Array<Body> b = new Array<>();
-		w.getBodies(b);
+		s.world.getBodies(b);
 		return var.b.getAngularVelocity();
-	}
-	private void addObjects(World world) {
-		
-		for (PhysicalActor<ObjectDefinition> d: SimulationPackage.polygons)  {
-			
-			PolygonObject o = new PolygonObject(d.getDefinition(),world);
-			if(obj== d) var = o;
-		}
 	}
 }
