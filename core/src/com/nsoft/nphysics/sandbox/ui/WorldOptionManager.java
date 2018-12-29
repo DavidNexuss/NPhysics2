@@ -7,6 +7,7 @@ import java.util.Set;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
+import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 
 public class WorldOptionManager implements Form{
 
@@ -42,6 +43,8 @@ public class WorldOptionManager implements Form{
 				break;
 			case "gridscale": 
 				Util.UNIT = (int) e.getValue().getValue();
+			case "worldwait":
+				SolveJob.waitTime =e.getValue().getValue();
 			default:
 				break;
 			}

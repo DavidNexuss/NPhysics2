@@ -22,6 +22,7 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PolygonActor;
@@ -31,14 +32,8 @@ import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
 public class SimulationStage extends GridStage{
 
-	ArrayList<PolygonObject> objects;
-	
-	HashMap<PhysicalActor<ObjectDefinition>, PolygonObject> objectsMap;
-	HashMap<Body, PolygonObject> bodiesMap;
-	Body centre;
 	
 	public static Vector2 gravity = new Vector2(0, -9.8f);
-	static World world;
 	static Matrix4 mat;
 	static Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 	
@@ -48,11 +43,27 @@ public class SimulationStage extends GridStage{
 	static boolean active = true;
 	
 	static boolean simulation = false;
+	static Simulation dynamicSimulation;
+	
 	ArrayList<SimulationJoint> rawJointsDraw = new ArrayList<>();
 	
 	static class Sesion{
 		
 		PolygonObject selected;
+		
+	}
+	
+	public static class Simulation{
+		
+		World world;
+		ArrayList<PolygonObject> objects;
+		HashMap<PhysicalActor<ObjectDefinition>, PolygonObject> objectsMap;
+		HashMap<Body, PolygonObject> bodiesMap;
+		Body centre;
+		
+		public Simulation(World world) {
+			this.world = world;
+		}
 	}
 	public Sesion currentSesion;
 	
@@ -73,10 +84,12 @@ public class SimulationStage extends GridStage{
 		
 		active = true;
 		simulation = true;
+		
+		
 		initStage();
-		initWorld();
-		initObjects();
-		initRawJoints();
+		dynamicSimulation = new Simulation(initWorld());
+		initObjects(dynamicSimulation,true);
+		initRawJoints(dynamicSimulation,true);
 	}
 	
 	@Override
@@ -90,32 +103,35 @@ public class SimulationStage extends GridStage{
 		
 		currentSesion = new Sesion();
 	}
-	private void initWorld() {
+	public static World initWorld() {
 		
-		world = new World(gravity, true);
+		return new World(gravity, true);
 	}
-	private void initObjects() {
+	public static void initObjects(Simulation s,boolean dynamicSimulation) {
 		
-		objects = new ArrayList<>();
-		objectsMap = new HashMap<>();
-		bodiesMap = new HashMap<>();
+		s.objects = new ArrayList<>();
+		s.objectsMap = new HashMap<>();
+		s.bodiesMap = new HashMap<>();
 		
 		for (PhysicalActor<ObjectDefinition> d: SimulationPackage.polygons)  {
 			
-			PolygonObject o = new PolygonObject(d.getDefinition(),world);
-			objects.add(o);
-			objectsMap.put(d, o);
-			bodiesMap.put(o.b, o);
-			addActor(o);
+			PolygonObject o = new PolygonObject(d.getDefinition(),s.world);
+			s.objects.add(o);
+			s.objectsMap.put(d, o);
+			s.bodiesMap.put(o.b, o);
+			if(dynamicSimulation)NPhysics.simulation.addActor(o);
 		}
 		
-		BodyDef centre = new BodyDef();
-		centre.position.set(getWidth()/2, getHeight()/2);
-		centre.type = BodyType.StaticBody;
-		this.centre = world.createBody(centre);
+		if(dynamicSimulation) {
+			
+			BodyDef centre = new BodyDef();
+			centre.position.set(NPhysics.simulation.getWidth()/2, NPhysics.simulation.getHeight()/2);
+			centre.type = BodyType.StaticBody;
+			s.centre = s.world.createBody(centre);
+		}
 	}
 	
-	private void initRawJoints() {
+	public static void initRawJoints(Simulation s,boolean dynamicSimulation) {
 		
 		for (RawJoint joint : SimulationPackage.rawJoints) {
 			
@@ -124,15 +140,17 @@ public class SimulationStage extends GridStage{
 				DoubleAxisComponent d = (DoubleAxisComponent) joint;
 				if(d.temp) continue;
 				RevoluteJointDef def = new RevoluteJointDef();
-				def.initialize(objectsMap.get(d.A).b,objectsMap.get(d.B).b, new Vector2(d.getPosition()).scl(1f/Util.METERS_UNIT()));
+				def.initialize(s.objectsMap.get(d.A).b,s.objectsMap.get(d.B).b, new Vector2(d.getPosition()).scl(1f/Util.METERS_UNIT()));
 			
-				SimulationJoint a = new SimulationJoint(world.createJoint(def));
-				addActor(a);
+				SimulationJoint a = new SimulationJoint(s.world.createJoint(def));
 			
-				a.a = objectsMap.get(d.A);
-				a.b = objectsMap.get(d.B);
+				a.a = s.objectsMap.get(d.A);
+				a.b = s.objectsMap.get(d.B);
 				
-				rawJointsDraw.add(a);
+				if(dynamicSimulation) {
+					NPhysics.simulation.addActor(a);
+					NPhysics.simulation.rawJointsDraw.add(a);
+				}
 				
 			}
 			
@@ -140,30 +158,33 @@ public class SimulationStage extends GridStage{
 				
 				RopeComponent c = (RopeComponent)joint;
 				RopeJointDef def = new RopeJointDef();
-				def.bodyA = objectsMap.get(c.getPolygonA()).b;
-				def.bodyB = objectsMap.get(c.getPolygonB()).b;
+				def.bodyA = s.objectsMap.get(c.getPolygonA()).b;
+				def.bodyB = s.objectsMap.get(c.getPolygonB()).b;
 				
 				def.maxLength = c.getRopeVector().len() / Util.METERS_UNIT();
 				
 				def.localAnchorA.set(new Vector2(c.getAnchorA().getVector()).scl(1f/Util.METERS_UNIT()).sub(def.bodyA.getPosition()));
 				def.localAnchorB.set(new Vector2(c.getAnchorB().getVector()).scl(1f/Util.METERS_UNIT()).sub(def.bodyB.getPosition()));
 				
-				SimulationJoint a = new SimulationJoint(world.createJoint(def));
+				SimulationJoint a = new SimulationJoint(s.world.createJoint(def));
 				a.drawMod = true;
 				a.drawComponents = false;
 				a.useMidPoint = true;
 				
-				a.a = objectsMap.get(c.getPolygonA());
-				a.b = objectsMap.get(c.getPolygonB());
+				a.a = s.objectsMap.get(c.getPolygonA());
+				a.b = s.objectsMap.get(c.getPolygonB());
 				
-				addActor(a);
-				rawJointsDraw.add(a);
+				if(dynamicSimulation) {
+					
+					NPhysics.simulation.addActor(a);
+					NPhysics.simulation.rawJointsDraw.add(a);
+				}
 			}
 		}
 	}
 	private void aplyForces() {
 		
-		for (PolygonObject polygonObject : objects) {
+		for (PolygonObject polygonObject : dynamicSimulation.objects) {
 			
 			polygonObject.aplyForce();
 		}
@@ -172,7 +193,7 @@ public class SimulationStage extends GridStage{
 	public void draw() {
 		
 		if(active)stepSimulation();
-		renderer.render(world, mat);
+		renderer.render(dynamicSimulation.world, mat);
 		if(PolygonObject.hide) {
 			
 			for (SimulationJoint j : rawJointsDraw) {
@@ -188,7 +209,7 @@ public class SimulationStage extends GridStage{
 	public void stepSimulation() {
 		
 		aplyForces();
-		world.step(getPhysicsDelta(), 8, 6);
+		dynamicSimulation.world.step(getPhysicsDelta(), 8, 6);
 		
 	}
 	
@@ -208,7 +229,7 @@ public class SimulationStage extends GridStage{
 			if(fixture.testPoint(tmp.x, tmp.y)) {
 				
 				hit = fixture.getBody();
-				currentSesion.selected = bodiesMap.get(fixture.getBody());
+				currentSesion.selected = dynamicSimulation.bodiesMap.get(fixture.getBody());
 				
 				if(button == 1) hit = null;
 				return false;
@@ -228,18 +249,18 @@ public class SimulationStage extends GridStage{
 		tmp.set(camera.unproject(screen)).scl(1f/Util.METERS_UNIT());
 		
 		hit = null;
-		world.QueryAABB(callback, tmp.x - 0.1f, tmp.y - 0.1f, tmp.x + 0.1f, tmp.y + 0.1f);
+		dynamicSimulation.world.QueryAABB(callback, tmp.x - 0.1f, tmp.y - 0.1f, tmp.x + 0.1f, tmp.y + 0.1f);
 		
 		if(hit != null && hit.getType() == BodyType.DynamicBody) {
 			
 			MouseJointDef def = new MouseJointDef();
-			def.bodyA = centre;
+			def.bodyA = dynamicSimulation.centre;
 			def.bodyB = hit;
 			def.collideConnected = true;
 			def.target.set(tmp.x, tmp.y);
 			def.maxForce = 1000.0f * hit.getMass();
 
-			mousejoint = (MouseJoint)world.createJoint(def);
+			mousejoint = (MouseJoint)dynamicSimulation.world.createJoint(def);
 			hit.setAwake(true);
 			return true;
 		}
@@ -271,7 +292,7 @@ public class SimulationStage extends GridStage{
 	@Override
 	public boolean touchUp (int x, int y, int pointer, int button) {
 		if (mousejoint != null) {
-			world.destroyJoint(mousejoint);
+			dynamicSimulation.world.destroyJoint(mousejoint);
 			mousejoint = null;
 			return true;
 		}
