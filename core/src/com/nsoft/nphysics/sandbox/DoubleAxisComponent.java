@@ -8,24 +8,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
+import com.nsoft.nphysics.sandbox.interfaces.Related;
 import com.nsoft.nphysics.simulation.dynamic.PolygonObject;
+import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 /**
  * Classe que defineix el component d'un eix doble dins la fase Sandbox.
  * @see PolygonObject
  * @author David
  */
-public class DoubleAxisComponent extends Actor implements RawJoint{
+public class DoubleAxisComponent extends RawJoint {
 
 	public static int RADIUS = 16;
 	public static int INPUT_RADIUS = RADIUS*2;
 	
 	public static DoubleAxisComponent tmp = new DoubleAxisComponent(true);
 	public static SpriteBatch b = new SpriteBatch();
-	
-	private static ArrayList<DoubleAxisComponent> axis = new ArrayList<>();
-	
-	public PhysicalActor<?> A,B;
-	Body bA,bB;
 	
 	public boolean temp;
 	
@@ -34,9 +31,7 @@ public class DoubleAxisComponent extends Actor implements RawJoint{
 		this.temp = temp;
 		if(!temp) {
 			
-			A = (PhysicalActor<?>) Sandbox.mainSelect.getSelecteds().get(0);
-			B = (PhysicalActor<?>) Sandbox.mainSelect.getSelecteds().get(1);
-			axis.add(this);
+			defaultInit();
 		}
 	}
 	

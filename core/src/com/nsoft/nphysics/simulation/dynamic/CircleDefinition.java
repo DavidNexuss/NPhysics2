@@ -34,7 +34,7 @@ public class CircleDefinition extends ObjectDefinition{
 		FixtureDef def = createFixtureDefinition();
 		CircleShape s = new CircleShape();
 		s.setPosition(new Vector2());
-		s.setRadius(radius);
+		s.setRadius(radius * Util.METER_FACTOR);
 		def.shape = s;
 		
 		Fixture f = b.createFixture(def);
@@ -52,7 +52,7 @@ public class CircleDefinition extends ObjectDefinition{
 	@Override
 	protected void render(Body b) {
 		
-		NPhysics.currentStage.shapefill.circle(b.getPosition().x * Util.METERS_UNIT(), b.getPosition().y * Util.METERS_UNIT(), radius * Util.METERS_UNIT());
+		NPhysics.currentStage.shapefill.circle(b.getPosition().x * Util.METERS_UNIT(), b.getPosition().y * Util.METERS_UNIT(), radius * Util.METERS_UNIT() * Util.METER_FACTOR);
 	}
 
 	@Override

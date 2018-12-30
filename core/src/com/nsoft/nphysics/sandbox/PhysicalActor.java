@@ -30,6 +30,7 @@ import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
+import com.nsoft.nphysics.sandbox.interfaces.Related;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 import com.nsoft.nphysics.sandbox.ui.BaseOptionWindow;
@@ -87,6 +88,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	private boolean useAxis;
 	
 	private ArrayList<ObjectChildren> components = new ArrayList<>(); //Llista de components associats a aquest objecte
+	private ArrayList<Related> relateds = new ArrayList<>();
 	
 	D definition; //Definició del objecte per a la simulació
 	
@@ -112,6 +114,15 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		angleLabel.setColor(Color.BLUE);
 	}
 	
+	public void addRelated(Related r) {
+		
+		relateds.add(r);
+		r.addRelation(this);
+	}
+	public void removeFromRelatedList(Related r) {
+		
+		relateds.remove(r);
+	}
 	public Vector2 getPosition() {return new Vector2(getX(), getY());}
 	
 	@Override
@@ -449,7 +460,12 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 			p.remove();
 		}
 		
-
+		ArrayList<Related> rls = (ArrayList<Related>) relateds.clone();
+		
+		for (Related related : rls) {
+			
+			related.destroy();
+		}
 		return super.remove();
 	}
 	

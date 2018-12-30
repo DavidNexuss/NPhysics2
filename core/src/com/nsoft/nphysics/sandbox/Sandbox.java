@@ -241,8 +241,8 @@ public class Sandbox extends GridStage implements Handler{
 				ArrayList<PhysicalActor<?>> parents = p.getPhysicalParents();
 				System.out.println(parents.size());
 				
-				if(parents.get(0) == RopeComponent.temp.getPolygonA()) RopeComponent.temp.setAnchorAPoint(p);
-				if(parents.get(0) == RopeComponent.temp.getPolygonB()) RopeComponent.temp.setAnchorBPoint(p);
+				if(parents.get(0) == RopeComponent.temp.getPhysicalActorA()) RopeComponent.temp.setAnchorAPoint(p);
+				if(parents.get(0) == RopeComponent.temp.getPhysicalActorB()) RopeComponent.temp.setAnchorBPoint(p);
 				
 				addActor(RopeComponent.temp);
 			}else {
@@ -250,8 +250,8 @@ public class Sandbox extends GridStage implements Handler{
 				Point p = Point.getPoint(screenx, screeny);
 				ArrayList<PhysicalActor<?>> parents = p.getPhysicalParents();
 				
-				if(parents.get(0) == RopeComponent.temp.getPolygonA()) RopeComponent.temp.setAnchorAPoint(p);
-				if(parents.get(0) == RopeComponent.temp.getPolygonB()) RopeComponent.temp.setAnchorBPoint(p);
+				if(parents.get(0) == RopeComponent.temp.getPhysicalActorA()) RopeComponent.temp.setAnchorAPoint(p);
+				if(parents.get(0) == RopeComponent.temp.getPhysicalActorB()) RopeComponent.temp.setAnchorBPoint(p);
 				
 				RopeComponent.temp = null;
 			}

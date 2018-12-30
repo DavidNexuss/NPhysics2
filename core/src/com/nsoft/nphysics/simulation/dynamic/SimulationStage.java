@@ -140,12 +140,12 @@ public class SimulationStage extends GridStage{
 				DoubleAxisComponent d = (DoubleAxisComponent) joint;
 				if(d.temp) continue;
 				RevoluteJointDef def = new RevoluteJointDef();
-				def.initialize(s.objectsMap.get(d.A).b,s.objectsMap.get(d.B).b, new Vector2(d.getPosition()).scl(1f/Util.METERS_UNIT()));
+				def.initialize(s.objectsMap.get(d.getPhysicalActorA()).b,s.objectsMap.get(d.getPhysicalActorB()).b, new Vector2(d.getPosition()).scl(1f/Util.METERS_UNIT()));
 			
 				SimulationJoint a = new SimulationJoint(s.world.createJoint(def));
 			
-				a.a = s.objectsMap.get(d.A);
-				a.b = s.objectsMap.get(d.B);
+				a.a = s.objectsMap.get(d.getPhysicalActorA());
+				a.b = s.objectsMap.get(d.getPhysicalActorB());
 				
 				if(dynamicSimulation) {
 					NPhysics.simulation.addActor(a);
@@ -158,8 +158,8 @@ public class SimulationStage extends GridStage{
 				
 				RopeComponent c = (RopeComponent)joint;
 				RopeJointDef def = new RopeJointDef();
-				def.bodyA = s.objectsMap.get(c.getPolygonA()).b;
-				def.bodyB = s.objectsMap.get(c.getPolygonB()).b;
+				def.bodyA = s.objectsMap.get(c.getPhysicalActorA()).b;
+				def.bodyB = s.objectsMap.get(c.getPhysicalActorB()).b;
 				
 				def.maxLength = c.getRopeVector().len() / Util.METERS_UNIT();
 				
@@ -171,8 +171,8 @@ public class SimulationStage extends GridStage{
 				a.drawComponents = false;
 				a.useMidPoint = true;
 				
-				a.a = s.objectsMap.get(c.getPolygonA());
-				a.b = s.objectsMap.get(c.getPolygonB());
+				a.a = s.objectsMap.get(c.getPhysicalActorA());
+				a.b = s.objectsMap.get(c.getPhysicalActorB());
 				
 				if(dynamicSimulation) {
 					
