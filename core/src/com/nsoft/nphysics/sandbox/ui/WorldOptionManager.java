@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.nsoft.nphysics.NDictionary;
+import com.nsoft.nphysics.NDictionary.Languages;
+import com.nsoft.nphysics.Options;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
@@ -43,8 +46,19 @@ public class WorldOptionManager implements Form{
 				break;
 			case "gridscale": 
 				Util.UNIT = (int) e.getValue().getValue();
+				break;
 			case "worldwait":
 				SolveJob.waitTime =e.getValue().getValue();
+				break;
+			case "chooselang":
+				
+				float v = e.getValue().getValue();
+				if(v == 0)Options.options.currentLanguage = Languages.ESP;
+		   else if(v == 1)Options.options.currentLanguage = Languages.CAT;
+		   else if(v == 2)Options.options.currentLanguage = Languages.ENG;
+				
+				Options.save();
+				break;
 			default:
 				break;
 			}

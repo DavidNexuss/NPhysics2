@@ -35,6 +35,7 @@ public class UIOptionSlider extends UIOptionComponent<Float, VisSlider>{
 	public boolean setValue(Float newVal) {
 
 		getComponent().setValue(newVal);
+		l = newVal;
 		return true;
 	}
 
@@ -50,11 +51,21 @@ public class UIOptionSlider extends UIOptionComponent<Float, VisSlider>{
 		super.createCell(cell);
 		cell.add(text).center();
 	}
+	
+	boolean change;
+	float l;
 	@Override
 	public void act() {
 		
 		if(args == null)text.setText(getValue() + "");
-		else text.setText(args[(int)getValue().floatValue()]);
+		else {
+			text.setText(args[(int)getValue().floatValue()]);
+			if(getValue() != l) {
+				
+				l = getValue();
+				updateValue();
+			}
+		}
 	}
 
 }

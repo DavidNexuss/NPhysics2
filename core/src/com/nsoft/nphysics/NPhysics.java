@@ -52,6 +52,7 @@ public class NPhysics extends ApplicationAdapter {
 	public void create () {
 		current = this;
 		
+		Options.init();
 		NDictionary.init();
 		UILoader.loadUI();
 		ui = new UIStage();

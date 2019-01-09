@@ -1,9 +1,11 @@
 package com.nsoft.nphysics;
 
+import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Cubemap;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Json.Serializable;
 import com.badlogic.gdx.utils.JsonValue;
@@ -15,11 +17,10 @@ import com.badlogic.gdx.utils.JsonValue;
 public class NDictionary implements Serializable,Say{
 
 	public static enum Languages{ESP,ENG,CAT}
-	private static Languages currentLanguage = Languages.CAT;
 	private static String languagepath = "dic.json";
 	private static Json json;
 	
-	private static NDictionary dictionary;
+	public static NDictionary dictionary;
 	private HashMap<String, LanguageEntry> keys = new HashMap<>();
 	
 	public static void init() {
@@ -36,18 +37,20 @@ public class NDictionary implements Serializable,Say{
 	@Override
 	public void read(Json json, JsonValue jsonData) {
 		
-		jsonData = jsonData.child;
+		JsonValue cur = jsonData.child;
 		if(jsonData == null) return;
-		readEntries(json, jsonData);
-		
+		readEntries(json, cur.child);
 	}
 	@Override
 	public void write(Json json) {
 		
+
+		json.writeObjectStart("languages");
 		for (Entry<String, LanguageEntry> entries : keys.entrySet()) {
 			
 			json.writeValue(entries.getKey(), entries.getValue(), LanguageEntry.class, getClass());
 		}
+		json.writeObjectEnd();
 	}
 	
 	@Override
@@ -58,7 +61,7 @@ public class NDictionary implements Serializable,Say{
 	
 	public static String get(String key) {
 		
-		return get(key, currentLanguage);
+		return get(key, Options.options.currentLanguage);
 	}
 	public static String get(String key,Languages l) {
 		
@@ -95,7 +98,7 @@ public class NDictionary implements Serializable,Say{
 		
 		public String get() {
 			
-			return get(currentLanguage);
+			return get(Options.options.currentLanguage);
 		}
 		
 		public boolean isMapped(Languages l) {

@@ -21,13 +21,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
 import com.kotcrab.vis.ui.widget.VisLabel;
+import com.nsoft.nphysics.NDictionary;
+import com.nsoft.nphysics.NDictionary.Languages;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.Options;
 import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.ThreadManager.Task;
 import com.nsoft.nphysics.UILoader;
 import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
+import com.nsoft.nphysics.sandbox.ui.option.UIOptionSlider;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 
@@ -131,7 +135,7 @@ public class UIStage extends Stage{
 		
 		FixedWindow sim = new FixedWindow("Simulation Options", handler);
 		sim.setPosition(150, Gdx.graphics.getHeight());	
-		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 200);
+		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 220);
 		
 		sim.addOption(new Option("gridmeterscale", new UIOptionNumber()).setValue(Util.METER_FACTOR));
 		sim.addOption(new Option("gridscale", new UIOptionNumber()).setValue(Util.getUnit() + .0f));
@@ -139,8 +143,22 @@ public class UIStage extends Stage{
 		sim.addOption(new Option("gravity", new UIOptionNumber()).setValue(SimulationStage.gravity.y));
 		sim.addOption(new Option("worldwait", new UIOptionNumber()).setValue(SolveJob.waitTime));
 		
+		FixedWindow lang = new FixedWindow("langoptions", handler);
+		lang.setPosition(600, Gdx.graphics.getHeight());
+		lang.setPosition(lang.getX(), lang.getY() - lang.getPrefHeight() - 100);
+		
+		UIOptionSlider sli = new UIOptionSlider("Español","Català","English");
+		float v = 0;
+		if(Options.options.currentLanguage == Languages.ESP) v = 0;
+   else if(Options.options.currentLanguage == Languages.CAT) v = 1;
+   else if(Options.options.currentLanguage == Languages.ENG) v = 2;
+		
+		lang.addOption(new Option("chooselang", sli));
+		sli.setValue(v);
 		menu.addWindow(sim);
+		menu.addWindow(lang);
 		addActor(sim);
+		addActor(lang);
 	}
 	public static void initBackGroundShader() {
 		
@@ -170,11 +188,11 @@ public class UIStage extends Stage{
 		container.setHeight(30);
 
 		view = new ViewSelection();
-		view.add(new ViewTab("Studio",()->{
+		view.add(new ViewTab(NDictionary.get("studio"),()->{
 			
 			NPhysics.switchToSandbox();
 		}));
-		view.add(new ViewTab("Simulation",()->{
+		view.add(new ViewTab(NDictionary.get("simulation"),()->{
 			
 			NPhysics.switchToSimulation();
 		}));

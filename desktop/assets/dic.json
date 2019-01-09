@@ -1,237 +1,254 @@
 {
-Wforce:{
-	ENG: "Configure force vector"
-	ESP: "Configurar vector de fuerza"
-	CAT: "Configurar el vector de força"
-}
-Waxis:{
-	ENG: "Configure axis support"
-	ESP: "Configurar soporte de eje"
-	CAT: "Configurar soport de eix"
-}
-Wprismatic:{
-	ENG: "Configure prismatic support"
-	ESP: "Configurar soporte prismático"
-	CAT: "Configurar soport prismàtic"
-}
-Wpolygon:{
-	ENG: "Configure object properties"
-	ESP: "Configurar propiedades del objeto"
-	CAT: "Configurar propietats de l'objecte"
-}
-closewindow:{
-	ENG: "Close"
-	ESP: "Cerrar"
-	CAT: "Tancar"
-}
-origin:{
-	ENG: "Set origin vector"
-	ESP: "Establecer vector origen"
-	CAT: "Estableix vector origen"
-}
-originx:{
-	ENG: "Origin in x"
-	ESP: "Origen en x"
-	CAT: "Origen en x"
-}
-originy: {
-	ENG: "Origin in y"
-	ESP: "Origen en y"
-	CAT: "Origen en y"
-}
-force:{
-	ENG: "Set force vector"
-	ESP: "Establecer vector de fuerza"
-	CAT: "Estableix vector de força"
-}
-forcex:{
-	ENG: "Force in x"
-	ESP: "Fuerza en x"
-	CAT: "Força en x"
-}
-forcey:{
-	ENG: "Force in y"
-	ESP: "Fuerza en y"
-	CAT: "Força en y"
-}
-forcemod:{
-	ENG: "Force modulus"
-	ESP: "Módulo de la fuerza"
-	CAT: "Mòdul de la força"
-}
-forceangle:{
-	ENG: "Force angle"
-	ESP: "Angulo de la fuerza"
-	CAT: "Angle de la força"
-}
-ftypeset:{
-	ENG: "Set vector force type"
-	ESP: "Establece el tipo de vector de fuerza"
-	CAT: "Estableix el tipus de vector de força"
-}
-ftype:{
-	ENG: "Vector type"
-	ESP: "Tipo de vector"
-	CAT: "Tipus de vector"
-}
-fvar:{
-	ENG: "Set this force as an unknown"
-	ESP: "Establece esta fuerza como una incógnita"
-	CAT: "Estableix aquesta força com una incògnita"
-}
-fworld:{
-	ENG: "World"
-	ESP: "Mundial"
-	CAT: "Mundial"
-}
-ftrelative:{
-	ENG: "Translation relative"
-	ESP: "Relativa en translación"
-	CAT: "Relativa en translació"
-}
-frelative:{
-	ENG: "Relative"
-	ESP: "Relativa"
-	CAT: "Relativa"
-}
-torque:{
-	ENG: "Maximum torque (N-m)"
-	ESP: "Máximo momento (N-m)"
-	CAT: "Màxim parell (N-m)"
-}
-mspeed:{
-	ENG: "Motor speed (rad/s)"
-	ESP: "Velocidad del motor (rad/s)"
-	CAT: "Velocitat del motor (rad/s)"
-}
-pangle:{
-	ENG: "Prismatic angle"
-	ESP: "Angulo prismático"
-	CAT: "Angle prismàtic"
-}
-phys_DYNAMIC:{
-	ENG: "Dynamic"
-	ESP: "Dinámico"
-	CAT: "Dinàmic"
-}
-phys_KINEMATIC:{
-	ENG: "Kinematic"
-	ESP: "Kinemático"
-	CAT: "Kinemàtic"
-}
-phys_STATIC:{
-	ENG: "Static"
-	ESP: "Estático"
-	CAT: "Estàtic"
-}
-polygon_phys_state:{
-	ENG: "State"
-	ESP: "Estado"
-	CAT: "Estat"
-}
-polygon_phys_mass:{
-	ENG: "Mass"
-	ESP: "Masa"
-	CAT: "Massa"
-}
-polygon_phys_density:{
-	ENG: "Density"
-	ESP: "Densidad"
-	CAT: "Densitat"
-}
-polygon_phys_friction:{
-	ENG: "Friction"
-	ESP: "Fricción"
-	CAT: "Fricció"
-}
-polygon_phys_restitution:{
-	ENG: "Restitution"
-	ESP: "Rebote"
-	CAT: "Rebot"
-}
-dsl_unknowns:{
-	ENG: "Unknown forces"
-	ESP: "Fuerzas desconocidas"
-	CAT: "Forces desconegudes"
-}
-dsl_solve:{
-	ENG: "Solve"
-	ESP: "Solucionar"
-	CAT: "Solucionar"
-}
-polygon_lvel_x:{
-	ENG: "Linear Speed in x"
-	ESP: "Velocidad lineal en x"
-	CAT: "Velocitat lineal en x"
-}
-polygon_lvel_y:{
-	ENG: "Linear Speed in y"
-	ESP: "Velocidad lineal en y"
-	CAT: "Velocitat lineal en y"
-}
-gridmeterscale:{
-	ENG: "Meters per each square"
-	ESP: "Metros por cada cuadrado"
-	CAT: "Metres per cada quadrat"
-}
-gridnewtonscale:{
-	ENG: "Newtons per each square"
-	ESP: "Newtons por cada cuadro"
-	CAT: "Newtons per cada quadrat"
-}
-gravity:{
-	ENG: "Gravity"
-	ESP: "Gravedad"
-	CAT: "Gravetat"
-}
-menu-create-point:{
-	ENG: "Create the point with your mouse"
-	ESP: "Crea un punto con el cursor"
-	CAT: "Crea un punt amb el cursor"
-}
-menu-create-segment:{
-	ENG: "Create a segment with two points"
-	ESP: "Crea un segmento con dos puntos"
-	CAT: "Crea un segment amb dos punts"
-}
-menu-create-axis:{
-	ENG: "Create a fixed axis"
-	ESP: "Crea un eje fijo"
-	CAT: "Crea un eix fixe"
-}
-menu-create-double-axis:{
-	ENG: "Create an axis"
-	ESP: "Crea un eje"
-	CAT: "Crea un eix"
-}
-menu-create-prismatic:{
-	ENG: "Create a prismatic joint"
-	ESP: "Crea una via prismática"
-	CAT: "Crea una via prismàtica"
-}
-menu-create-rope:{
-	ENG: "Create a rope using two points"
-	ESP: "Crea una cuerda usando dos puntos"
-	CAT: "Crea una corda utilitzant dos punts"
-}
-menu-create-circle:{
-	ENG: "Create an object in the form of a circle"
-	ESP: "Crea un objeto con forma de circulo"
-	CAT: "Crea un objecte en forma de cercle"
-}
-menu-create-polygon:{
-	ENG: "Create an object in the form of a polygon"
-	ESP: "Crea un objeto en forma de polígono"
-	CAT: "Crea un objecte en forma de poligon"
-}
-menu-create-segments:{
-	ENG: "Create a segment with two points"
-	ESP: "Crea un segmento usando dos puntos"
-	CAT: "Crea un segement utilitzant dos punts"
-}
-menu-create-force:{
-	ENG: "Create a force"
-	ESP: "Crea una fuerza"
-	CAT: "Crea una força"
+languages: {
+	studio: {
+		ENG: Studio
+		ESP: Estudio
+		CAT: Estudi
+	}
+	forcemod: {
+		ENG: Force modulus
+		ESP: Módulo de la fuerza
+		CAT: Mòdul de la força
+	}
+	menu-create-double-axis: {
+		ENG: Create an axis
+		ESP: Crea un eje
+		CAT: Crea un eix
+	}
+	menu-create-axis: {
+		ENG: Create a fixed axis
+		ESP: Crea un eje fijo
+		CAT: Crea un eix fixe
+	}
+	simulation: {
+		ENG: Simulation
+		ESP: Simulación
+		CAT: Simulació
+	}
+	frelative: {
+		ENG: Relative
+		ESP: Relativa
+		CAT: Relativa
+	}
+	Waxis: {
+		ENG: Configure axis support
+		ESP: Configurar soporte de eje
+		CAT: Configurar soport de eix
+	}
+	phys_STATIC: {
+		ENG: Static
+		ESP: Estático
+		CAT: Estàtic
+	}
+	dsl_solve: {
+		ENG: Solve
+		ESP: Solucionar
+		CAT: Solucionar
+	}
+	dsl_unknowns: {
+		ENG: Unknown forces
+		ESP: Fuerzas desconocidas
+		CAT: Forces desconegudes
+	}
+	ftypeset: {
+		ENG: Set vector force type
+		ESP: Establece el tipo de vector de fuerza
+		CAT: Estableix el tipus de vector de força
+	}
+	polygon_phys_mass: {
+		ENG: Mass
+		ESP: Masa
+		CAT: Massa
+	}
+	polygon_phys_state: {
+		ENG: State
+		ESP: Estado
+		CAT: Estat
+	}
+	fworld: {
+		ENG: World
+		ESP: Mundial
+		CAT: Mundial
+	}
+	ftrelative: {
+		ENG: Translation relative
+		ESP: Relativa en translación
+		CAT: Relativa en translació
+	}
+	menu-create-segments: {
+		ENG: Create a segment with two points
+		ESP: Crea un segmento usando dos puntos
+		CAT: Crea un segement utilitzant dos punts
+	}
+	menu-create-point: {
+		ENG: Create the point with your mouse
+		ESP: Crea un punto con el cursor
+		CAT: Crea un punt amb el cursor
+	}
+	forcey: {
+		ENG: Force in y
+		ESP: Fuerza en y
+		CAT: Força en y
+	}
+	fvar: {
+		ENG: Set this force as an unknown
+		ESP: Establece esta fuerza como una incógnita
+		CAT: Estableix aquesta força com una incògnita
+	}
+	forcex: {
+		ENG: Force in x
+		ESP: Fuerza en x
+		CAT: Força en x
+	}
+	Wforce: {
+		ENG: Configure force vector
+		ESP: Configurar vector de fuerza
+		CAT: Configurar el vector de força
+	}
+	force: {
+		ENG: Set force vector
+		ESP: Establecer vector de fuerza
+		CAT: Estableix vector de força
+	}
+	gridnewtonscale: {
+		ENG: Newtons per each square
+		ESP: Newtons por cada cuadro
+		CAT: Newtons per cada quadrat
+	}
+	menu-create-segment: {
+		ENG: Create a segment with two points
+		ESP: Crea un segmento con dos puntos
+		CAT: Crea un segment amb dos punts
+	}
+	phys_KINEMATIC: {
+		ENG: Kinematic
+		ESP: Kinemático
+		CAT: Kinemàtic
+	}
+	menu-create-prismatic: {
+		ENG: Create a prismatic joint
+		ESP: Crea una via prismática
+		CAT: Crea una via prismàtica
+	}
+	originx: {
+		ENG: Origin in x
+		ESP: Origen en x
+		CAT: Origen en x
+	}
+	origin: {
+		ENG: Set origin vector
+		ESP: Establecer vector origen
+		CAT: Estableix vector origen
+	}
+	originy: {
+		ENG: Origin in y
+		ESP: Origen en y
+		CAT: Origen en y
+	}
+	closewindow: {
+		ENG: Close
+		ESP: Cerrar
+		CAT: Tancar
+	}
+	torque: {
+		ENG: Maximum torque (N-m)
+		ESP: Máximo momento (N-m)
+		CAT: Màxim parell (N-m)
+	}
+	pangle: {
+		ENG: Prismatic angle
+		ESP: Angulo prismático
+		CAT: Angle prismàtic
+	}
+	polygon_lvel_x: {
+		ENG: Linear Speed in x
+		ESP: Velocidad lineal en x
+		CAT: Velocitat lineal en x
+	}
+	menu-create-polygon: {
+		ENG: Create an object in the form of a polygon
+		ESP: Crea un objeto en forma de polígono
+		CAT: Crea un objecte en forma de poligon
+	}
+	Wprismatic: {
+		ENG: Configure prismatic support
+		ESP: Configurar soporte prismático
+		CAT: Configurar soport prismàtic
+	}
+	gridmeterscale: {
+		ENG: Meters per each square
+		ESP: Metros por cada cuadrado
+		CAT: Metres per cada quadrat
+	}
+	polygon_phys_density: {
+		ENG: Density
+		ESP: Densidad
+		CAT: Densitat
+	}
+	polygon_lvel_y: {
+		ENG: Linear Speed in y
+		ESP: Velocidad lineal en y
+		CAT: Velocitat lineal en y
+	}
+	Wpolygon: {
+		ENG: Configure object properties
+		ESP: Configurar propiedades del objeto
+		CAT: Configurar propietats de l'objecte
+	}
+	menu-create-rope: {
+		ENG: Create a rope using two points
+		ESP: Crea una cuerda usando dos puntos
+		CAT: Crea una corda utilitzant dos punts
+	}
+	polygon_phys_friction: {
+		ENG: Friction
+		ESP: Fricción
+		CAT: Fricció
+	}
+	phys_DYNAMIC: {
+		ENG: Dynamic
+		ESP: Dinámico
+		CAT: Dinàmic
+	}
+	start: {
+		ENG: Selection mode
+		ESP: Modo de selección
+		CAT: Mode de selecció
+	}
+	forceangle: {
+		ENG: Force angle
+		ESP: Angulo de la fuerza
+		CAT: Angle de la força
+	}
+	polygon_phys_restitution: {
+		ENG: Restitution
+		ESP: Rebote
+		CAT: Rebot
+	}
+	menu-create-force: {
+		ENG: Create a force
+		ESP: Crea una fuerza
+		CAT: Crea una força
+	}
+	ftype: {
+		ENG: Vector type
+		ESP: Tipo de vector
+		CAT: Tipus de vector
+	}
+	mspeed: {
+		ENG: Motor speed (rad/s)
+		ESP: Velocidad del motor (rad/s)
+		CAT: Velocitat del motor (rad/s)
+	}
+	menu-create-circle: {
+		ENG: Create an object in the form of a circle
+		ESP: Crea un objeto con forma de circulo
+		CAT: Crea un objecte en forma de cercle
+	}
+	gravity: {
+		ENG: Gravity
+		ESP: Gravedad
+		CAT: Gravetat
+	}
 }
 }
