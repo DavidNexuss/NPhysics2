@@ -25,11 +25,20 @@ import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
-import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.RopeComponent;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
-
+/**
+ * Fase encarregada de la simulació dinàmica del programa.
+ * Es el node central al que tots els elements d'aquesta fase
+ * s'afegeixen.
+ * 
+ * Conté l'objecte World i les llistes dels objectes.
+ * També permet l'utilització no gràfica de les seves instruccions
+ * per poder executarles al algoritme de resolució de problemes
+ * d'estàtica.
+ * @author David
+ */
 public class SimulationStage extends GridStage{
 
 	
@@ -52,14 +61,18 @@ public class SimulationStage extends GridStage{
 		PolygonObject selected;
 		
 	}
-	
+	/**
+	 * Conté la informació única d'una simulació no gràfica, tota la part
+	 * estrictament logística que podrà ser utilitzada en un àmbit no gràfic
+	 * @author David
+	 */
 	public static class Simulation{
 		
-		World world;
-		ArrayList<PolygonObject> objects;
-		HashMap<PhysicalActor<ObjectDefinition>, PolygonObject> objectsMap;
-		HashMap<Body, PolygonObject> bodiesMap;
-		Body centre;
+		World world; //El mon
+		ArrayList<PolygonObject> objects; //La llista d'objectes
+		HashMap<PhysicalActor<ObjectDefinition>, PolygonObject> objectsMap; //El mapa d'objectes amb actors
+		HashMap<Body, PolygonObject> bodiesMap; //El mapa de cossos i objectes
+		Body centre; //El cos central
 		
 		public Simulation(World world) {
 			this.world = world;
@@ -73,6 +86,10 @@ public class SimulationStage extends GridStage{
 		updateMatrix();
 	}
 	
+	/**
+	 * Retorna el delta a utilitzar, el real o el fixe
+	 * @return el delta
+	 */
 	public static float getPhysicsDelta() {
 		
 		return realTime ? Gdx.graphics.getDeltaTime() : fakeDelta;
@@ -107,6 +124,11 @@ public class SimulationStage extends GridStage{
 		
 		return new World(gravity, true);
 	}
+	/**
+	 * Inicialitza tots els objectes de Sandbox dins la simulació s
+	 * @param s La simulació a carregar
+	 * @param dynamicSimulation si es tracta de la simulació per a l'entorn gràfic
+	 */
 	public static void initObjects(Simulation s,boolean dynamicSimulation) {
 		
 		s.objects = new ArrayList<>();
@@ -130,7 +152,11 @@ public class SimulationStage extends GridStage{
 			s.centre = s.world.createBody(centre);
 		}
 	}
-	
+	/**
+	 * Carrega les joints primeres a la simulació s
+	 * @param s La simulació a carregar
+	 * @param dynamicSimulation si es tracta de la simulació per a l'entorn gràfic
+	 */
 	public static void initRawJoints(Simulation s,boolean dynamicSimulation) {
 		
 		for (RawJoint joint : SimulationPackage.rawJoints) {
@@ -182,6 +208,9 @@ public class SimulationStage extends GridStage{
 			}
 		}
 	}
+	/**
+	 * Aplica les forces a la simulació d'entorn gràfic
+	 */
 	private void aplyForces() {
 		
 		for (PolygonObject polygonObject : dynamicSimulation.objects) {
@@ -206,6 +235,9 @@ public class SimulationStage extends GridStage{
 		super.draw();
 	}
 
+	/**
+	 * Executa un step de la simulació
+	 */
 	public void stepSimulation() {
 		
 		aplyForces();

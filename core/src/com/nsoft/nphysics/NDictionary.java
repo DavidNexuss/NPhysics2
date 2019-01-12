@@ -1,16 +1,14 @@
 package com.nsoft.nphysics;
 
-import java.security.cert.PKIXRevocationChecker.Option;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Cubemap;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Json.Serializable;
 import com.badlogic.gdx.utils.JsonValue;
 /**
- * Clase encarregada de l'emmagatzament de les traduccions de totes les paraules clau del programa
+ * Classe encarregada de l'emmagatzament de les traduccions de totes les paraules clau del programa
  * escrites al document dic.json
  * @author David
  */

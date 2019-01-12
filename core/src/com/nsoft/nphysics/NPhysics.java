@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.nsoft.nphysics.sandbox.FastPolygonCreator;
+import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.ui.AlertWindow;
@@ -16,8 +17,10 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 /**
  * Clase principal del programa
+ * Es el punt de partida del programa una vegada s'ha executat el marc
+ * dependent de la plataforma.
+ * 
  * @author David
- *
  */
 public class NPhysics extends ApplicationAdapter {
 	
@@ -62,20 +65,21 @@ public class NPhysics extends ApplicationAdapter {
 
 		currentStage = sandbox;
 		
-		sandbox.setBackgroundColor(0.8f, 0.9f, 1f, 1f);
+		sandbox.setBackgroundColor(0.8f, 0.9f, 1f, 1f); //Estableix el fons del programa
 		sandbox.init();
 		
 		simulation = new SimulationStage(sandbox.getCamera());
-		simulation.setBackgroundColor(0, 0, 0, 1);
+		simulation.setBackgroundColor(0, 0, 0, 1); //Estableix el fons del programa
+		//per la simulació
 		
-		
+		//
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
 	}
 
 	boolean first = true;
 	
 	/**
-	 * Bucle de renderització
+	 * Bucle de renderització executat 60 vegades cada segon per executar les draw calls
 	 */
 	@Override
 	public void render () {
@@ -98,7 +102,9 @@ public class NPhysics extends ApplicationAdapter {
 		ThreadManager.act(Gdx.graphics.getDeltaTime());
 		
 	}
-	
+	/**
+	 * Amaga o mostra el menu estàtic
+	 */
 	public static void switchMenu() {
 		
 		if(ui.canSwitch()) {
@@ -116,7 +122,9 @@ public class NPhysics extends ApplicationAdapter {
 		
 		if(!currentStage.isReady()) {
 			
+			//Mostra un misatge d'alerta
 			AlertWindow.throwNewAlert(NDictionary.get("simulation-switch-error-title"), NDictionary.get("simulation-switch-error-msg"));
+			ThreadManager.createTask(()->UIStage.view.switchTab(0), 0.02f);
 			return;
 		}
 		currentStage = simulation;
@@ -125,6 +133,9 @@ public class NPhysics extends ApplicationAdapter {
 		updateInput();
 	}
 	
+	/**
+	 * Llimpia totes les llistes 
+	 */
 	public static void cleanWorld() {
 		
 		if(currentStage == simulation) switchToSandbox();
@@ -132,9 +143,10 @@ public class NPhysics extends ApplicationAdapter {
 		sandbox = new Sandbox();
 		sandbox.setBackgroundColor(0.8f, 0.9f, 1f, 1f);
 		sandbox.init();
-			
+
 		currentStage = sandbox;
 		Point.allpoints = new ArrayList<>();
+		ForceComponent.list = new ArrayList<>();
 		FastPolygonCreator.temp = null;
 		
 		SimulationPackage.update();

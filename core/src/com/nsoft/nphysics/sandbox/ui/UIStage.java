@@ -34,7 +34,15 @@ import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionSlider;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
-
+/**
+ * Classe encarregada de renderitzar i manejar tots els elements visuals
+ * que formen part de l'intefície d'usuari. A part també es el punt central
+ * del paquet destinat a la interfície d'usuari i node principal del que
+ * tots els elements visuals no controlats per la camara estan afegits.
+ * 
+ * Gran part del codi d'aquesta classe es basa en construi tota la interfície
+ * @author David
+ */
 public class UIStage extends Stage{
 
 	static ShaderProgram backSP;
@@ -100,6 +108,7 @@ public class UIStage extends Stage{
 		
 		initstaticMenu();
 		
+		//Contador de fotogrames per segon per motius de debugueig
 		fps = new VisLabel() {
 			
 			@Override
@@ -128,12 +137,18 @@ public class UIStage extends Stage{
 		
 		fps.setVisible(v);
 	}
+	/**
+	 * Inicialitza el menu static o global
+	 */
+	
+	FixedWindow sim;
+	FixedWindow lang;
 	private void initstaticMenu() {
 		
 		menu = new StaticMenu();
 		WorldOptionManager handler = new WorldOptionManager();
 		
-		FixedWindow sim = new FixedWindow("Simulation Options", handler);
+		sim = new FixedWindow(NDictionary.get("simoptions"), handler);
 		sim.setPosition(150, Gdx.graphics.getHeight());	
 		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 220);
 		
@@ -143,7 +158,7 @@ public class UIStage extends Stage{
 		sim.addOption(new Option("gravity", new UIOptionNumber()).setValue(SimulationStage.gravity.y));
 		sim.addOption(new Option("worldwait", new UIOptionNumber()).setValue(SolveJob.waitTime));
 		
-		FixedWindow lang = new FixedWindow("langoptions", handler);
+		lang = new FixedWindow(NDictionary.get("langoptions"), handler);
 		lang.setPosition(600, Gdx.graphics.getHeight());
 		lang.setPosition(lang.getX(), lang.getY() - lang.getPrefHeight() - 100);
 		
@@ -160,13 +175,17 @@ public class UIStage extends Stage{
 		addActor(sim);
 		addActor(lang);
 	}
+	/**
+	 * Carrega el shader per renderitzar el gradient del fons del menú
+	 */
 	public static void initBackGroundShader() {
 		
 		 String vertexShader = Gdx.files.internal("shaders/vertexShader").readString();
 	     String fragmentShader = Gdx.files.internal("shaders/backShader").readString();
 	     
 	     backSP = new ShaderProgram(vertexShader, fragmentShader);
-	     backSP.pedantic = false;
+	     ShaderProgram.pedantic = false;
+	    
 	     System.out.println("Shader compiler log: " + backSP.getLog());
 	     
 	     Pixmap p = new  Pixmap(1, 1, Format.RGB565);
@@ -179,6 +198,9 @@ public class UIStage extends Stage{
 		
 		operation.setText(op);
 	}
+	/**
+	 * Carrega el menu lliscant
+	 */
 	private void loadViewMenu() {
 		
 		container = new Table(UILoader.skin);
@@ -211,13 +233,19 @@ public class UIStage extends Stage{
 		container.setDebug(false);
 	}	
 	
+	/**
+	 * Carrega els 3 menus, el de les opcions el de tria la fase
+	 * i el de desactivar el snap
+	 */
 	public void setStateMenu() {
 		
 		loadOptionMenu();
 		loadContextMenu();
 		loadDoubleContextMenu();
 	}
-	
+	/**
+	 * Carrega el menú d'eines
+	 */
 	private void loadOptionMenu() {
 		
 		options = new OptionPane();
@@ -230,6 +258,9 @@ public class UIStage extends Stage{
 		options.pack();
 		addActor(options);	
 	}
+	/**
+	 * Carrega el submenu d'eines 
+	 */
 	private void loadContextMenu() {
 		
 		contextMenu = new OptionPane();
@@ -245,6 +276,9 @@ public class UIStage extends Stage{
 		contextMenu.setVisible(false);
 	}
 	
+	/**
+	 * Carrega el segon submenu d'eines
+	 */
 	private void loadDoubleContextMenu() {
 		
 		doubleContextMenu = new OptionPane();
@@ -259,12 +293,10 @@ public class UIStage extends Stage{
 		addActor(doubleContextMenu);
 		doubleContextMenu.setVisible(false);
 	}
-	private void setContextMenuItems() {
-		
-		contextMenu.add(MenuItem.loadNewItem("axis.png", GState.CREATE_AXIS));
-		contextMenu.add(MenuItem.loadNewItem("rollaxis.png", GState.CREATE_PRISMATIC));
-		contextMenu.add(MenuItem.loadNewItem("force.png", GState.CREATE_FORCE));
-	}
+	
+	/**
+	 * Afegeix els items del menú d'eines
+	 */
 	private void setOptionMenuItems() {
 		
 		options.add(MenuItem.loadNewItem("start.png", GState.START));
@@ -273,7 +305,20 @@ public class UIStage extends Stage{
 		options.add(MenuItem.loadNewItem("shape.png", GState.CREATE_FAST_POLYGON));
 		options.add(MenuItem.loadNewItem("circle.png", GState.CREATE_CIRCLE));
 	}
+
+	/**
+	 * Afegeix els items del submenu
+	 */
+	private void setContextMenuItems() {
+		
+		contextMenu.add(MenuItem.loadNewItem("axis.png", GState.CREATE_AXIS));
+		contextMenu.add(MenuItem.loadNewItem("rollaxis.png", GState.CREATE_PRISMATIC));
+		contextMenu.add(MenuItem.loadNewItem("force.png", GState.CREATE_FORCE));
+	}
 	
+	/**
+	 * Afegeix els items del segon submenú d'eines
+	 */
 	private void setDoubleContextMenuItems() {
 		
 		doubleContextMenu.add(MenuItem.loadNewItem("axis.png", GState.CREATE_DOUBLE_AXIS));
@@ -290,6 +335,10 @@ public class UIStage extends Stage{
 		addActor(clean);
 	}
 	
+	
+	/************************************************
+	 * Funcions per mostrar i ocultar el menú global
+	 **********************************************/
 	private Task t = Task.createEmpty();
 	
 	public boolean canSwitch() {return t.isComplete();}
@@ -330,7 +379,9 @@ public class UIStage extends Stage{
 		
 	}
 	
-	
+	/**
+	 * Actualitza la matriu dels diferents shaders utilitzats
+	 */
 	private void updateMatrix() {
 		
 		shapefill.setProjectionMatrix(getCamera().combined);
@@ -338,6 +389,9 @@ public class UIStage extends Stage{
 		getBatch().setProjectionMatrix(getCamera().combined);
 	}
 	
+	/**
+	 * Actualitza tot l'esquema per una nova resolució de pantalla
+	 */
 	public void updateUILayout() {
 		
 		getViewport().setScreenSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -374,6 +428,12 @@ public class UIStage extends Stage{
 		
 
 		s.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 60);
+		
+		sim.setPosition(150, Gdx.graphics.getHeight());	
+		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 220);
+		
+		lang.setPosition(600, Gdx.graphics.getHeight());
+		lang.setPosition(lang.getX(), lang.getY() - lang.getPrefHeight() - 100);
 	}
 	
 	@Override
@@ -382,7 +442,7 @@ public class UIStage extends Stage{
 		if(super.keyDown(keyCode)) return true;
 		
 		if(keyCode == Keys.F) {
-			showFPS(!fps.isVisible());
+			showFPS(!fps.isVisible()); //Controla el marcador FPS
 			return true;
 		}
 		

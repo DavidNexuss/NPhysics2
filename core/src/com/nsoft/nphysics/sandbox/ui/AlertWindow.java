@@ -35,11 +35,15 @@ public class AlertWindow extends VisWindow{
 	}
 	public static void throwNewAlert(String title,String message) {
 		
-		String finalMessage = Util.capable(400, message);
+		int size = 450;
+		int prefsize = (int) (new GlyphLayout(FontManager.title, title).width + 20);
+		int finalsize = prefsize > size ? prefsize : size;
+		
+		String finalMessage = Util.capable(finalsize, message);
 		
 		AlertWindow w = new AlertWindow(title,finalMessage);
 		
-		w.setWidth(450);
+		w.setWidth(finalsize);
 		w.setHeight(new GlyphLayout(Util.getNormalFont(), finalMessage).height + 100);
 		
 		w.setPosition((Gdx.graphics.getWidth() - w.getWidth())/2f, (Gdx.graphics.getHeight() - w.getHeight())/2f);

@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -41,7 +40,6 @@ import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dynamic.CircleDefinition;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
-import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 
 /**
@@ -188,7 +186,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 			@Override
 			public void act(float delta) {
 				
-				setText(""); //TODO
+				setText(""); 
 				super.act(delta);
 			}
 		};
@@ -404,9 +402,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 
 
 	@Override
-	public void updateValuesToForm() {
-		
-	}
+	public void updateValuesToForm() {}
 	
 	@Override
 	public void updateValuesFromForm() {

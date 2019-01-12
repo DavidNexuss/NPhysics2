@@ -219,4 +219,12 @@ public class ForceComponent extends ObjectChildren implements Form{
 		lastY = getForm().getOption("forcey").getValue();
 	}
 	
+	public static boolean isReady() {
+		
+		for (ForceComponent forceComponent : list) {
+			
+			if(forceComponent.var) return false;
+		}
+		return true;
+	}
 }

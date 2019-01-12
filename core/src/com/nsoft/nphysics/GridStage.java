@@ -53,6 +53,9 @@ public class GridStage extends DragStage{
 		backColor.set(r, g, b, a);
 		invertColor();
 	}
+	/**
+	 * Inverteix el color del fons
+	 */
 	private void invertColor() {
 		
 		invertbackColor.set(1f - backColor.r, 1f - backColor.g, 1f - backColor.b, 1f - backColor.a);
@@ -79,6 +82,10 @@ public class GridStage extends DragStage{
 
 	final Vector3 tmp = new Vector3();
 	final Vector3 mousecoord = new Vector3();
+	
+	/**
+	 * Executa les draw calls pertinents per renderitzar la cuadrícula
+	 */
 	@Override
 	public void draw() {
 		
@@ -114,6 +121,7 @@ public class GridStage extends DragStage{
 	@Override
 	public void updateMatrix() {
 		
+		//Actualitza les matrius de projecció de els diferents shaders
 		shapefill.setProjectionMatrix(getCamera().combined);
 		shapeline.setProjectionMatrix(getCamera().combined);
 		shapepoint.setProjectionMatrix(getCamera().combined);

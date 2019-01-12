@@ -250,5 +250,45 @@ languages: {
 		ESP: Gravedad
 		CAT: Gravetat
 	}
+	default-error-title: {
+		ENG: Error Alert
+		ESP: Alerta de error
+		CAT: Alerta d'error
+	}
+	simoptions:{
+		ENG: Simulation Options
+		ESP: Opciones de la simulación
+		CAT: Opcions de la simulació
+	}
+	langoptions:{
+		ENG: Language Options
+		ESP: Opciones d'idioma
+		CAT: Opcions d'idioma
+	}
+	gridscale:{
+		ENG: Grid scale
+		ESP: Escala de la cuadrícula
+		CAT: Escala de la quadrícula
+	}
+	worldwait:{
+		ENG: Simulation step wait
+		ESP: Tiempo de espera en simulación
+		CAT: Temps d'espera en simulació
+	}
+	chooselang:{
+		ENG: Language
+		ESP: Idioma
+		CAT: Idioma
+	}
+	simulation-switch-error-title: {
+		ENG: Error in switching from Sandbox to Simulation
+		ESP: Error en cambiar a modo simulación
+		CAT: Error en canvia a mode simulació
+	}
+	simulation-switch-error-msg:{
+		ENG: "An error has ocurred when switching to simulation mode, check if there's any unresolved force."
+		ESP: "Se ha producido en error en cambiar a la simulación, comprueba que todas las fuerzas tengan valores definidos y no haya ninguna incógnita."
+		CAT: "S'ha produït un error en canvia al mode simulació, comprova que totes les forces tinguin valors definits i no hi hagi cap incògnita."
+	}
 }
 }

@@ -2,6 +2,7 @@
 /resources/icons/
 /docs/.vscode/
 /.vs
+/print
 ## Java
 
 *.class

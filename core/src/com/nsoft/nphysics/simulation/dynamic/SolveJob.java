@@ -3,24 +3,26 @@ package com.nsoft.nphysics.simulation.dynamic;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
-import com.nsoft.nphysics.sandbox.PolygonActor;
 import com.nsoft.nphysics.sandbox.Util;
-import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage.Simulation;
-
+/**
+ * Classe per resoldre utilitzant el teorema de Bolzano
+ * una situació estàtica on la suma de moments d'una
+ * forcça igual a 0 necessàriament impliqui que la 
+ * suma de forces també ho sigui.
+ * @author David
+ */
 public class SolveJob implements Say{
 
-	public static float waitTime = 3f;
-	static int threshold = 10;
-	Vector2 position;
-	float rad;
-	PhysicalActor<?> obj;
-	ForceComponent f;
+	public static float waitTime = 3f; //Temps d'espera
+	Vector2 position; //Posició de la força a treballar
+	float rad; //Angle de la força en radians
+	PhysicalActor<?> obj; //L'objecte en qüestió
+	ForceComponent f; //Força
 	
 	public SolveJob(PhysicalActor<?> obj,ForceComponent f) {
 		this.obj = obj;
@@ -37,10 +39,12 @@ public class SolveJob implements Say{
 		float C;			//Velocitat angular
 		
 		float a = -1000;	//Mínim
-		float b = 1000;		//Máxim 
+		float b = 1000;		//Máxim
+		//Valors arbitraris prestablerts 
+		//(podrien formar part d'una variable del programa) si fos necessari
 		float c; 			//Módul de la força
 		
-		float Epsilon = 0.000001f;
+		float Epsilon = 0.000001f; //Tolerància
 		
 		float it = 0;
 		do {
@@ -67,6 +71,13 @@ public class SolveJob implements Say{
 	
 	PolygonObject var;
 	
+	/**
+	 * Versió anàloga d'una funció matemàtica per calcular el
+	 * moment d'una força. Utilitza el calcul del paquet de simulació
+	 * dinàmica que utilitza una simulació de Box2D
+	 * @param argument el nou paràmetre, el valor de la força
+	 * @return la velocitat angular del objecte en qüestió
+	 */
 	private float function(float argument) {
 		
 		Simulation s = new Simulation(SimulationStage.initWorld());
@@ -76,7 +87,8 @@ public class SolveJob implements Say{
 		var = s.objectsMap.get(obj);
 		var.b.applyForce(new Vector2(MathUtils.cos(rad) *argument,MathUtils.sin(rad) * argument), new Vector2(position), true);
 		var.aplyForce();
-		s.world.step(waitTime, 8, 6);
+		s.world.step(waitTime, 8, 6); 
+		//waitTime es una variable definida pel programa per calcular la cantitat de temps a avançar
 		
 		Array<Body> b = new Array<>();
 		s.world.getBodies(b);
