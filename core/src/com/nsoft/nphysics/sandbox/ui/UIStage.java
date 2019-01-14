@@ -430,7 +430,7 @@ public class UIStage extends Stage{
 		s.setPosition(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 60);
 		
 		sim.setPosition(150, Gdx.graphics.getHeight());	
-		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 220);
+		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 100);
 		
 		lang.setPosition(600, Gdx.graphics.getHeight());
 		lang.setPosition(lang.getX(), lang.getY() - lang.getPrefHeight() - 100);
