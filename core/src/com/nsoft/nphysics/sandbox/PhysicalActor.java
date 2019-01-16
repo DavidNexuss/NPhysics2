@@ -69,6 +69,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	final static Color mightSelected = new Color(0.8f,0.5f,0.2f,0.6f);
 	final static Color arcColor = 	   new Color(0.5f, 0.5f, 0.9f, 0.4f);
 	
+	private static String grade = com.nsoft.nphysics.Options.names.grade;
 	private DynamicWindow form; //Formulari
 	private SelectHandle handler; //Objecte encarregat de manejar solicituds de selecció del handler superior.
 	
@@ -358,7 +359,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 				angle = Math.abs(angle);
 				angle = 360 - angle;
 			}
-			angleLabel.setText((int)(Math.round(angle / 5f)*5f) + "º");
+			angleLabel.setText((int)(Math.round(angle / 5f)*5f) + grade);
 			angleLabel.setPosition(new Vector2(NPhysics.currentStage.getAxisPosition().getVector()).add(new Vector2(120, 0).rotate(angle)));
 			NPhysics.currentStage.shapefill.arc(NPhysics.currentStage.getAxisPosition().getX(), NPhysics.currentStage.getAxisPosition().getY(), 100, 0, angle);
 		}else angleLabel.setVisible(false);

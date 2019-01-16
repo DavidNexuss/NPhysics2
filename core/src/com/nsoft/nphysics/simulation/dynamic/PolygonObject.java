@@ -254,9 +254,6 @@ public class PolygonObject extends Actor implements Say{
 					def.motorSpeed = Float.MAX_VALUE * si;
 				}else def.motorSpeed = s.speed * si;
 				
-				System.out.println(def.motorSpeed);
-				System.out.println(def.maxMotorTorque);
-				
 				anchor = def.bodyB;
 				anchors.add(anchor);
 				

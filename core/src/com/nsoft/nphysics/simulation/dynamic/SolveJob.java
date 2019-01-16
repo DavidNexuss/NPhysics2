@@ -59,6 +59,7 @@ public class SolveJob implements Say{
 				a = c;
 			}
 			
+			say(it + ":{  " + c  + " " + C);
 			it++;
 		} while (C > Epsilon || C < -Epsilon);
 		

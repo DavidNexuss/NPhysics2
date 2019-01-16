@@ -18,7 +18,31 @@ public class Options implements Serializable, Say{
 	public static FileHandle file;
 	
 	public static Options options = new Options();
+	public static StaticNames names;
 	
+	public static class StaticNames implements Serializable,Say{
+		
+		public String cat;
+		public String esp;
+		public String eng;
+		public String grade;
+		
+		public StaticNames() {}
+		@Override
+		public void read(Json json, JsonValue jsonData) {
+			
+			jsonData = jsonData.child;
+			cat = jsonData.asString();
+			esp = jsonData.next.asString();
+			eng = jsonData.next.next.asString();
+			grade = jsonData.next.next.next.asString(); 
+		}
+		
+		@Override
+		public void write(Json json) {
+			
+		}
+	}
 	public Options() {}
 	
 	static void init() {
@@ -29,6 +53,7 @@ public class Options implements Serializable, Say{
 	public static void load() {
 		
 		options = json.fromJson(Options.class, file);
+		names = json.fromJson(StaticNames.class, Gdx.files.internal("bin.json").readString());
 	}
 	
 	public static void save() {

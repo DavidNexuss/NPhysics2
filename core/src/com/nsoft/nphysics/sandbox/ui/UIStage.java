@@ -162,7 +162,7 @@ public class UIStage extends Stage{
 		lang.setPosition(600, Gdx.graphics.getHeight());
 		lang.setPosition(lang.getX(), lang.getY() - lang.getPrefHeight() - 100);
 		
-		UIOptionSlider sli = new UIOptionSlider("Español","Català","English");
+		UIOptionSlider sli = new UIOptionSlider(Options.names.esp,Options.names.cat,Options.names.eng);
 		float v = 0;
 		if(Options.options.currentLanguage == Languages.ESP) v = 0;
    else if(Options.options.currentLanguage == Languages.CAT) v = 1;
