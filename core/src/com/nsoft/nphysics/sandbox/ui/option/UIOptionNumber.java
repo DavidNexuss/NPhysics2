@@ -2,8 +2,9 @@ package com.nsoft.nphysics.sandbox.ui.option;
 
 import com.kotcrab.vis.ui.widget.VisTextField;
 import com.kotcrab.vis.ui.widget.VisTextField.TextFieldListener;
+import com.nsoft.nphysics.Say;
 
-public class UIOptionNumber extends UIOptionComponent<Float,VisTextField>{
+public class UIOptionNumber extends UIOptionComponent<Float,VisTextField> implements Say{
 
 	@Override
 	public void createComponent() {
@@ -15,7 +16,7 @@ public class UIOptionNumber extends UIOptionComponent<Float,VisTextField>{
 			@Override
 			public void keyTyped(VisTextField textField, char c) {
 				
-				if(c == '\r') {
+				if(c == '\r' && !isEmpty()) {
 					
 					updateValue();
 				}
@@ -37,6 +38,11 @@ public class UIOptionNumber extends UIOptionComponent<Float,VisTextField>{
 			
 			}
 		});
+	}
+	
+	public boolean isEmpty() {
+		
+		return getComponent().getText().isEmpty();
 	}
 	@Override
 	public Float getValue() {

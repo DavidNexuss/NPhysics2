@@ -33,8 +33,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	
 	private int forceVariableCount;
 	
-	private float physMass;
-	
 	public static PolygonActor temp;
 
 	public PolygonActor() {
@@ -213,18 +211,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		if(m2) return hitboxPolygon.area() / (30*30);
 		else return hitboxPolygon.area();
 	}
-	public float calculateMass() {
-		
-		physMass = definition.density * getArea(true);
-		setValue("polygon_phys_mass", physMass);
-		return physMass;
-	}
-	public float calculateDensity() {
-		
-		definition.density = physMass / getArea(true);
-		setValue("polygon_phys_density", definition.density);
-		return definition.density;
-	}
 	private void createDefinition() {
 		
 		definition.vertices.clear();
@@ -242,7 +228,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	
 	@Override
 	float getArea() {
-		return hitboxPolygon.area() / (30*30);
+		return hitboxPolygon.area();
 	}
 	@Override
 	public void end() {
@@ -263,8 +249,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 
 		createDefinition();
 		createHitBox();
-
-		calculateMass();
 		
 		super.end();
 	}
@@ -300,20 +284,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	public void updateValuesFromForm() {
 		
 		super.updateValuesFromForm();
-		float newDensity = getValue("polygon_phys_density");
-		
-		float newMass = getValue("polygon_phys_mass");
-		
-		if( definition.density != newDensity) {
-			
-			definition.density = newDensity;
-			calculateMass();
-		
-		}else if(physMass != newMass) {
-			
-			physMass = newMass;
-			calculateDensity();
-		}
 		
 		switch ((int)getValue("polygon_phys_state")) {
 		case 2:
@@ -331,12 +301,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		
 		definition.linearVelocity.set(getValue("polygon_lvel_x"), 
 									  getValue("polygon_lvel_y"));
-		
-	}
-
-	@Override
-	public void updateValuesToForm() {
-		
 		
 	}
 }

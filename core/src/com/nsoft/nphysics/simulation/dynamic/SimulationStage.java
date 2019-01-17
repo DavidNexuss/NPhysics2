@@ -70,7 +70,7 @@ public class SimulationStage extends GridStage{
 		
 		World world; //El mon
 		ArrayList<PolygonObject> objects; //La llista d'objectes
-		HashMap<PhysicalActor<ObjectDefinition>, PolygonObject> objectsMap; //El mapa d'objectes amb actors
+		HashMap<PhysicalActor<?>, PolygonObject> objectsMap; //El mapa d'objectes amb actors
 		HashMap<Body, PolygonObject> bodiesMap; //El mapa de cossos i objectes
 		Body centre; //El cos central
 		
@@ -135,7 +135,7 @@ public class SimulationStage extends GridStage{
 		s.objectsMap = new HashMap<>();
 		s.bodiesMap = new HashMap<>();
 		
-		for (PhysicalActor<ObjectDefinition> d: SimulationPackage.polygons)  {
+		for (PhysicalActor<?> d: SimulationPackage.polygons)  {
 			
 			PolygonObject o = new PolygonObject(d.getDefinition(),s.world);
 			s.objects.add(o);

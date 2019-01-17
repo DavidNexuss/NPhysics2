@@ -185,6 +185,26 @@ languages: {
 		ESP: Densidad
 		CAT: Densitat
 	}
+	polygon_isbullet: {
+		ENG: Rigorous simulation for rapid objects
+		ESP: Simulación rigurosa para objetos rápidos
+		CAT: Simulació rigurosa para objectes ràpids
+	}
+	polygon_sim:{
+		ENG: Simulation Options
+		ESP: Opciones del simulador
+		CAT: Opcions del simulador
+	}
+	polygon_lvel:{
+		ENG: Initial Linear Velocity
+		ESP: Velocidad lineal inicial
+		CAT: Velocitat lineal inicial
+	}
+	polygon_phys:{
+		ENG: Material Characteristics 
+		ESP: Características del material
+		CAT: Característiques del material
+	}
 	polygon_lvel_y: {
 		ENG: Linear Speed in y
 		ESP: Velocidad lineal en y

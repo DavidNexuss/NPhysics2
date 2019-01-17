@@ -37,7 +37,7 @@ import com.nsoft.nphysics.simulation.dynamic.SolveJob;
  */
 public class Sandbox extends GridStage implements Handler{
 	
-	public ArrayList<PhysicalActor<ObjectDefinition>> polygonlist = new ArrayList<>();
+	public ArrayList<PhysicalActor<?>> polygonlist = new ArrayList<>();
 	public static SelectHandle mainSelect = new SelectHandle();
 //	public static ArrayList<ForceComponent> unknownForcesList = new ArrayList<ForceComponent>();
 	

@@ -14,7 +14,7 @@ import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
  */
 public class SimulationPackage {
 
-	static ArrayList<PhysicalActor<ObjectDefinition>> polygons = NPhysics.sandbox.polygonlist;
+	static ArrayList<PhysicalActor<?>> polygons = NPhysics.sandbox.polygonlist;
 	public static ArrayList<RawJoint> rawJoints = new ArrayList<>();
 	
 	public static void update() {

@@ -23,6 +23,7 @@ public abstract class ObjectDefinition {
 	public float density = 1f;
 	public float friction;
 	public float restitution;
+	public boolean isBullet = false;
 	
 	public final Vector2 linearVelocity = new Vector2();
 	

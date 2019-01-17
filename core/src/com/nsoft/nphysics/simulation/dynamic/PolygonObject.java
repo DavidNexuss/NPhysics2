@@ -214,15 +214,17 @@ public class PolygonObject extends Actor implements Say{
 		BodyDef bdef = new BodyDef();
 		bdef.type = def.type;
 		bdef.position.set(def.getCenter(true));
+		bdef.bullet = def.isBullet;
 		bdef.linearVelocity.set(def.linearVelocity);
 		b = owner.createBody(bdef);
 		def.createFixtures(b);
+	
 		if(bdef.type != BodyType.StaticBody)createJoints();
 	}
 	
 	private BodyType checkStatic(BodyType t) {
 		
-		if(t == BodyType.StaticBody) return BodyType.StaticBody;
+		if(t == BodyType.StaticBody || t == BodyType.KinematicBody) return BodyType.StaticBody;
 		int n = 0;
 		for (ObjectChildren c : def.childrens) {
 			

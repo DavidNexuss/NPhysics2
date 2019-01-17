@@ -59,7 +59,7 @@ public class CircleActor extends PhysicalActor<CircleDefinition> implements Form
 	
 	@Override
 	float getArea() {
-		return (float)(Math.PI) * (radius/ Util.METERS_UNIT())*(radius/ Util.METERS_UNIT());
+		return (float)(Math.PI) * (radius)*(radius);
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
@@ -84,14 +84,7 @@ public class CircleActor extends PhysicalActor<CircleDefinition> implements Form
 		radius = new Vector2(extreme.getVector()).dst(center.getVector());
 		definition.radius = radius / Util.METERS_UNIT();
 		definition.center = center.getVector();
-		updateValuesToForm();
 		
 		super.updatePosition(x, y, p);
-	}
-	
-	@Override
-	public void updateValuesToForm() {
-		
-		setValue("polygon_phys_mass", getValue("polygon_phys_density") * getArea());
 	}
 }
