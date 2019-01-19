@@ -19,6 +19,7 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationStage.Simulation;
 public class SolveJob implements Say{
 
 	public static float waitTime = 3f; //Temps d'espera
+	public static float exp = -8;
 	Vector2 position; //Posició de la força a treballar
 	float rad; //Angle de la força en radians
 	PhysicalActor<?> obj; //L'objecte en qüestió
@@ -42,13 +43,15 @@ public class SolveJob implements Say{
 		float b = 1000;		//Máxim
 		//Valors arbitraris prestablerts 
 		//(podrien formar part d'una variable del programa) si fos necessari
-		float c; 			//Módul de la força
+		float c = -1; 			//Módul de la força
 		
-		float Epsilon = 0.000001f; //Tolerància
-		
+		float Epsilon = (float) Math.pow(10, exp); //Tolerància
+		say(Epsilon);
 		float it = 0;
+		float oldc;
 		do {
 		
+			oldc = c;
 			c = (a+b) /2f;
 			C = function(c);
 			
@@ -61,7 +64,7 @@ public class SolveJob implements Say{
 			
 			say(it + ":{  " + c  + " " + C);
 			it++;
-		} while (C > Epsilon || C < -Epsilon);
+		} while ((C > Epsilon || C < -Epsilon) && oldc != c);
 		
 		f.setForce(new Vector2(c * MathUtils.cos(rad),c * MathUtils.sin(rad)));
 		f.setVar(false);

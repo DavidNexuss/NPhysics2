@@ -156,10 +156,12 @@ public class UIStage extends Stage{
 		sim.addOption(new Option("gridscale", new UIOptionNumber()).setValue(Util.getUnit() + .0f));
 		sim.addOption(new Option("gridnewtonscale", new UIOptionNumber()).setValue(Util.NEWTON_FACTOR));
 		sim.addOption(new Option("gravity", new UIOptionNumber()).setValue(SimulationStage.gravity.y));
+		sim.addText(NDictionary.get("solvejob"));
 		sim.addOption(new Option("worldwait", new UIOptionNumber()).setValue(SolveJob.waitTime));
+		sim.addOption(new Option("epsilon_exp", new UIOptionNumber()).setValue(SolveJob.exp));
 		
 		lang = new FixedWindow(NDictionary.get("langoptions"), handler);
-		lang.setPosition(600, Gdx.graphics.getHeight());
+		lang.setPosition(700, Gdx.graphics.getHeight());
 		lang.setPosition(lang.getX(), lang.getY() - lang.getPrefHeight() - 100);
 		
 		UIOptionSlider sli = new UIOptionSlider(Options.names.esp,Options.names.cat,Options.names.eng);
@@ -224,7 +226,6 @@ public class UIStage extends Stage{
 		DragPane p = view.getTabsPane();
 		p.pack();
 		container.add(p).expand().fill();
-
 
 		view.initInput();
 		addActor(container);
@@ -401,9 +402,8 @@ public class UIStage extends Stage{
 		getCamera().update();
 		updateMatrix();
 		container.setPosition(40, Gdx.graphics.getHeight()- 30);
-		container.setWidth(Gdx.graphics.getWidth() - 40);
-		container.setHeight(30);
-		
+		view.getTabsPane().setWidth(Gdx.graphics.getWidth());
+		container.setWidth(Gdx.graphics.getWidth());
 		options.setPosition(0, 0);
 		options.setHeight(Gdx.graphics.getHeight());
 		options.setWidth(40);
@@ -432,7 +432,7 @@ public class UIStage extends Stage{
 		sim.setPosition(150, Gdx.graphics.getHeight());	
 		sim.setPosition(sim.getX(), sim.getY() - sim.getPrefHeight() - 100);
 		
-		lang.setPosition(600, Gdx.graphics.getHeight());
+		lang.setPosition(700, Gdx.graphics.getHeight());
 		lang.setPosition(lang.getX(), lang.getY() - lang.getPrefHeight() - 100);
 	}
 	

@@ -310,5 +310,15 @@ languages: {
 		ESP: "Se ha producido en error en cambiar a la simulación, comprueba que todas las fuerzas tengan valores definidos y no haya ninguna incógnita."
 		CAT: "S'ha produït un error en canvia al mode simulació, comprova que totes les forces tinguin valors definits i no hi hagi cap incògnita."
 	}
+	epsilon_exp:{
+		ENG: Algorithm tolerance order
+		ESP: Orden de tolerancia
+		CAT: Ordre de tolerància
+	}
+	solvejob:{
+		ENG: Static Solver Algorithm
+		ESP: Algoritmo de resolución de situaciones estáticas
+		CAT: Algoritme de resolució de situacions estàtiques
+	}
 }
 }

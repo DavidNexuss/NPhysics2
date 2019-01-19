@@ -59,6 +59,10 @@ public class WorldOptionManager implements Form{
 				
 				Options.save();
 				break;
+			case "epsilon_exp":
+				
+				SolveJob.exp = e.getValue().getValue();
+				break;
 			default:
 				break;
 			}
