@@ -61,6 +61,11 @@ public class Sandbox extends GridStage implements Handler{
 		
 		return ForceComponent.isReady(); 
 	}
+	
+	@Override
+	public boolean removeGroups() {
+		return false;
+	}
 	/**
 	 * Inicialitza totes les variables necessàries, carrega les textures i afegeix
 	 * a la fase tots els actors temporals
@@ -101,14 +106,6 @@ public class Sandbox extends GridStage implements Handler{
 		super.addActor(actor);
 	}
 	
-	@Override
-	public void clean() {} //Llimpiesa de la fase controlada externament
-	
-	@Override
-	public void setUp() { //Recàrrega de la fase per defecte com està
-		//establert a DragStage
-		super.setUp();
-	}
 	private void initdebug() {
 		
 		/*GameState.set(State.HOOK_FORCE_ARROW);

@@ -154,18 +154,26 @@ public abstract class DragStage extends Stage{
 		offsetY = screeny;
 	}
 	
+	public abstract boolean removeGroups();
 	/**
 	 * Prepara la Stage per a fer el canvi
 	 */
-	public void setUp() { uiGroup.clear(); updateMatrix(); }
+	public void setUp() { 
+		
+		if(removeGroups()) {
+			uiGroup.clear(); 
+		}else uiGroup.setVisible(true);
+		updateMatrix(); }
 	
 	/**
 	 * Limpia la Stage per a fer el canvi
 	 */
 	public void clean() {
 		
-		clear();
-		uiGroup.clear();
+		if(removeGroups()) {
+			uiGroup.clear();
+			clear();
+		}else uiGroup.setVisible(false);
 	}
 	public boolean isReady() {return true;}
 	public static float zoomVal = 1.2f;

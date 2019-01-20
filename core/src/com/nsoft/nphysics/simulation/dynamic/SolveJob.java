@@ -18,8 +18,8 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationStage.Simulation;
  */
 public class SolveJob implements Say{
 
-	public static float waitTime = 3f; //Temps d'espera
-	public static float exp = -8;
+	public static float waitTime = 0.001f; //Temps d'espera
+	public static float exp = -14;
 	Vector2 position; //Posició de la força a treballar
 	float rad; //Angle de la força en radians
 	PhysicalActor<?> obj; //L'objecte en qüestió
@@ -89,9 +89,13 @@ public class SolveJob implements Say{
 		SimulationStage.initRawJoints(s, false);
 
 		var = s.objectsMap.get(obj);
-		var.b.applyForce(new Vector2(MathUtils.cos(rad) *argument,MathUtils.sin(rad) * argument), new Vector2(position), true);
-		var.aplyForce();
-		s.world.step(waitTime, 8, 6); 
+		
+		for (int i = 0; i < 10; i++) {
+			
+			var.b.applyForce(new Vector2(MathUtils.cos(rad) *argument,MathUtils.sin(rad) * argument), new Vector2(position), true);
+			var.aplyForce();
+			s.world.step(waitTime/10f, 8, 6); 
+		}
 		//waitTime es una variable definida pel programa per calcular la cantitat de temps a avançar
 		
 		Array<Body> b = new Array<>();

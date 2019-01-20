@@ -21,7 +21,7 @@ import com.nsoft.nphysics.sandbox.ui.UIStage;
  * Fase que implementa DragStage, defineix una fase amb cuadricula
  * @author David
  */
-public class GridStage extends DragStage implements Say{
+public abstract class GridStage extends DragStage implements Say{
 
 	public static ShaderProgram gridShader;
 	public static SpriteBatch gridBatch;

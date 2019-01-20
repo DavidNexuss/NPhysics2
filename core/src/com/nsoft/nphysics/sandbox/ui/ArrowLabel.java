@@ -12,7 +12,7 @@ import com.nsoft.nphysics.sandbox.Util;
 
 public class ArrowLabel {
 
-	VisLabel label;
+	public VisLabel label;
 	
 	public ArrowLabel(Group g) {
 		label = new VisLabel();

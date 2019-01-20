@@ -86,6 +86,10 @@ public class SimulationStage extends GridStage{
 		updateMatrix();
 	}
 	
+	@Override
+	public boolean removeGroups() {
+		return true;
+	}
 	/**
 	 * Retorna el delta a utilitzar, el real o el fixe
 	 * @return el delta
