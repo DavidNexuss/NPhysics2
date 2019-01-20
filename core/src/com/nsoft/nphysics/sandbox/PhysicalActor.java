@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -458,6 +459,23 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		definition.restitution = getValue("polygon_phys_restitution");
 		
 		definition.isBullet = getValue("polygon_isbullet") == 1;
+		
+		switch ((int)getValue("polygon_phys_state")) {
+		case 2:
+			definition.type = BodyType.StaticBody;
+			break;
+		case 1:
+			definition.type = BodyType.KinematicBody;
+			break;
+		case 0:
+			definition.type = BodyType.DynamicBody;
+			break;
+		default:
+			throw new IllegalStateException();
+		}
+		
+		definition.linearVelocity.set(getValue("polygon_lvel_x"), 
+									  getValue("polygon_lvel_y"));
 		
 	}
 	public void addComponent(ObjectChildren child) {

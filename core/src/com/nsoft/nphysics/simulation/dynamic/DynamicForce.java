@@ -46,7 +46,7 @@ public class DynamicForce {
 	
 	Vector2 getPhysicalForce() {
 		
-		return new Vector2(type == Type.TRANS || type == Type.REL ? pforce : force).scl(10f);
+		return new Vector2(type == Type.TRANS || type == Type.REL ? pforce : force).scl(Util.NEWTON_FACTOR);
 	}
 	private Vector2 getStart() {
 		

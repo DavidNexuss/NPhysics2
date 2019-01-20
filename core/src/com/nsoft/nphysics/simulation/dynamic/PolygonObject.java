@@ -85,7 +85,7 @@ public class PolygonObject extends Actor implements Say{
 	public static boolean hide = false;
 	public static boolean showVel = false;
 	
-	final static float hidealpha = 0.1f;
+	final static float hidealpha = 0.2f;
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
@@ -119,6 +119,8 @@ public class PolygonObject extends Actor implements Say{
 		
 		if(def.type != BodyType.StaticBody) {
 				
+			if(def.type != BodyType.KinematicBody) {
+				
 				gravityArrow.setStart(center);
 				gravityArrow.setEnd(force.add(center));
 				gravityArrow.updateVertexArray();
@@ -126,21 +128,42 @@ public class PolygonObject extends Actor implements Say{
 				gravityArrow.draw(batch,parentAlpha);
 				
 				gravityLabel.setPosition(gravityArrow.getStart().add(new Vector2(60, -50)));
+			}else {
+				
+				gravityLabel.setVisible(false);
+			}
 			
-				if(showVel) {
+				if(showVel || def.type == BodyType.KinematicBody) {
 					
-
-					velocityArrow.setStart(center);
-					velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.NEWTONS_UNIT() * b.getMass())).add(center));
-					velocityArrow.updateVertexArray();
 					
-					velocityArrow.draw(batch, parentAlpha);
+					if(def.type == BodyType.KinematicBody) {
+						
+						velocityArrow.setStart(center);
+						velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.NEWTON_FACTOR)).add(center));
+						velocityArrow.updateVertexArray();
+						
+						velocityArrow.draw(batch, parentAlpha);
+						
+						velLabel.setVisible(true);
+						velLabel.setFloat(b.getLinearVelocity().len());
+						velLabel.conc("m/s");
+						
+						velLabel.setPosition(velocityArrow.getStart().add(new Vector2(60,50)));
+					}else {
+						
+						velocityArrow.setStart(center);
+						velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.NEWTON_FACTOR * b.getMass())).add(center));
+						velocityArrow.updateVertexArray();
+						
+						velocityArrow.draw(batch, parentAlpha);
+						
+						velLabel.setVisible(true);
+						velLabel.setFloat(b.getLinearVelocity().len() * b.getMass());
+						velLabel.conc("kg m/s");
+						
+						velLabel.setPosition(velocityArrow.getStart().add(new Vector2(60,50)));
+					}
 					
-					velLabel.setVisible(true);
-					velLabel.setFloat(b.getLinearVelocity().len() * b.getMass());
-					velLabel.conc("kg m/s");
-					
-					velLabel.setPosition(velocityArrow.getStart().add(new Vector2(60,50)));
 				}else {
 					
 					velLabel.setVisible(false);

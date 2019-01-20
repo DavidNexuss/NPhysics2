@@ -279,28 +279,4 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		}
 		return super.remove();
 	}
-
-	@Override
-	public void updateValuesFromForm() {
-		
-		super.updateValuesFromForm();
-		
-		switch ((int)getValue("polygon_phys_state")) {
-		case 2:
-			definition.type = BodyType.StaticBody;
-			break;
-		case 1:
-			definition.type = BodyType.KinematicBody;
-			break;
-		case 0:
-			definition.type = BodyType.DynamicBody;
-			break;
-		default:
-			throw new IllegalStateException();
-		}
-		
-		definition.linearVelocity.set(getValue("polygon_lvel_x"), 
-									  getValue("polygon_lvel_y"));
-		
-	}
 }

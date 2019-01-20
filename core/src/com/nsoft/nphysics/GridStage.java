@@ -60,7 +60,7 @@ public abstract class GridStage extends DragStage implements Say{
 	 */
 	private void invertColor() {
 		
-		invertbackColor.set(1f - backColor.r, 1f - backColor.g, 1f - backColor.b, 1f - backColor.a);
+		invertbackColor.set(1f - backColor.r, 1f - backColor.g, 1f - backColor.b, backColor.a);
 	}
 	/**
 	 * Inicialitza els shaders de la cuadricula
