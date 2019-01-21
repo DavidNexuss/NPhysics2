@@ -93,7 +93,7 @@ public class SolveJob implements Say{
 		for (int i = 0; i < 10; i++) {
 			
 			var.b.applyForce(new Vector2(MathUtils.cos(rad) *argument,MathUtils.sin(rad) * argument), new Vector2(position), true);
-			var.aplyForce();
+			s.aplyForces();
 			s.world.step(waitTime/10f, 8, 6); 
 		}
 		//waitTime es una variable definida pel programa per calcular la cantitat de temps a avançar

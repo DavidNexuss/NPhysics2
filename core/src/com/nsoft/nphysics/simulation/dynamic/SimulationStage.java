@@ -77,6 +77,17 @@ public class SimulationStage extends GridStage{
 		public Simulation(World world) {
 			this.world = world;
 		}
+		
+		/**
+		 * Aplica les forces a la simulació
+		 */
+		public void aplyForces() {
+			
+			for (PolygonObject polygonObject : objects) {
+				
+				polygonObject.aplyForce();
+			}
+		}
 	}
 	public Sesion currentSesion;
 	
@@ -212,16 +223,6 @@ public class SimulationStage extends GridStage{
 			}
 		}
 	}
-	/**
-	 * Aplica les forces a la simulació d'entorn gràfic
-	 */
-	private void aplyForces() {
-		
-		for (PolygonObject polygonObject : dynamicSimulation.objects) {
-			
-			polygonObject.aplyForce();
-		}
-	}
 	@Override
 	public void draw() {
 		
@@ -244,7 +245,7 @@ public class SimulationStage extends GridStage{
 	 */
 	public void stepSimulation() {
 		
-		aplyForces();
+		dynamicSimulation.aplyForces();
 		dynamicSimulation.world.step(getPhysicsDelta(), 8, 6);
 		
 	}
