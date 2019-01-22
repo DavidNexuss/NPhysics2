@@ -18,7 +18,7 @@ languages: {
 	menu-create-axis: {
 		ENG: Create a fixed axis
 		ESP: Crea un eje fijo
-		CAT: Crea un eix fixe
+		CAT: Crea un eix fix
 	}
 	simulation: {
 		ENG: Simulation
@@ -33,7 +33,7 @@ languages: {
 	Waxis: {
 		ENG: Configure axis support
 		ESP: Configurar soporte de eje
-		CAT: Configurar soport de eix
+		CAT: Configurar suport de l'eix
 	}
 	phys_STATIC: {
 		ENG: Static
@@ -173,7 +173,7 @@ languages: {
 	Wprismatic: {
 		ENG: Configure prismatic support
 		ESP: Configurar soporte prismático
-		CAT: Configurar soport prismàtic
+		CAT: Configurar suport prismàtic
 	}
 	gridmeterscale: {
 		ENG: Meters per each square
