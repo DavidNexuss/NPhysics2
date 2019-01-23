@@ -206,11 +206,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		
 	}
 	
-	public float getArea(boolean m2) {
-		
-		if(m2) return hitboxPolygon.area() / (30*30);
-		else return hitboxPolygon.area();
-	}
 	private void createDefinition() {
 		
 		definition.vertices.clear();
@@ -228,7 +223,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	
 	@Override
 	float getArea() {
-		return hitboxPolygon.area();
+		return Math.abs(hitboxPolygon.area());
 	}
 	@Override
 	public void end() {

@@ -242,8 +242,8 @@ languages: {
 	}
 	polygon_phys_restitution: {
 		ENG: Restitution
-		ESP: Rebote
-		CAT: Rebot
+		ESP: Restitución
+		CAT: Restitució
 	}
 	menu-create-force: {
 		ENG: Create a force

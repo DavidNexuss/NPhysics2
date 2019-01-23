@@ -44,7 +44,11 @@ public class SelectHandle {
 	
 	public boolean setSelected(ClickIn newSelected,int pointer,boolean force) {
 		
-		if(!hasSelection()) current_type = newSelected.getClass();
+		if(!hasSelection()) {
+			
+			if(newSelected instanceof PhysicalActor<?>) current_type = PhysicalActor.class;
+			else current_type = newSelected.getClass();
+		}
 		
 		if(Sandbox.SHIFT) {
 			
@@ -54,7 +58,7 @@ public class SelectHandle {
 				newSelected.unselect();
 			}else {
 				
-				if(current_type == newSelected.getClass()) {
+				if(current_type.isInstance(newSelected)) {
 					
 					choose(newSelected, selecteds.size());
 					newSelected.select(pointer);
