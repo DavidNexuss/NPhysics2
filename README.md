@@ -7,8 +7,8 @@ Usa las siguientes bibliotecas:
 [Earcut4j](https://github.com/earcut4j/earcut4j)  
 [JTS](https://github.com/locationtech/jts)  
 
-[![Simulador de situaciones din�micas](https://img.youtube.com/vi/MVjDmQk1HLE/0.jpg)](https://www.youtube.com/watch?v=MVjDmQk1HLE)  
-YT: https://www.youtube.com/watch?v=MVjDmQk1HLE
+[![Simulador de situaciones dinámicas](https://raw.githubusercontent.com/DavidNexuss/NPhysics2/master/desktop/assets/logo.png)](https://www.youtube.com/watch?v=aNLhFl5YnPc)  
+YT: https://www.youtube.com/watch?v=aNLhFl5YnPc
 
 ## Cómo funciona?  
 El objetivo del simulador es que puedas resolver problemas de estática, dibujando los objetos: sólidos, cuerdas, puntos de reacción, articulaciones y más..  
