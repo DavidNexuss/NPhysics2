@@ -39,8 +39,8 @@ public class SolveJob implements Say{
 		
 		float C;			//Velocitat angular
 		
-		float a = -1000;	//Mínim
-		float b = 1000;		//Máxim
+		float a = -10000;	//Mínim
+		float b = 10000;		//Máxim
 		//Valors arbitraris prestablerts 
 		//(podrien formar part d'una variable del programa) si fos necessari
 		float c = -1; 			//Módul de la força
