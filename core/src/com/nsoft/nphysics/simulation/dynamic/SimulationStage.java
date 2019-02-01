@@ -26,7 +26,9 @@ import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.RopeComponent;
+import com.nsoft.nphysics.sandbox.SpringComponent;
 import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.drawables.Spring;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 /**
  * Fase encarregada de la simulació dinàmica del programa.
@@ -70,6 +72,7 @@ public class SimulationStage extends GridStage{
 		
 		World world; //El mon
 		ArrayList<PolygonObject> objects; //La llista d'objectes
+		ArrayList<ForceProcessor> processors = new ArrayList<>();
 		HashMap<PhysicalActor<?>, PolygonObject> objectsMap; //El mapa d'objectes amb actors
 		HashMap<Body, PolygonObject> bodiesMap; //El mapa de cossos i objectes
 		Body centre; //El cos central
@@ -86,6 +89,11 @@ public class SimulationStage extends GridStage{
 			for (PolygonObject polygonObject : objects) {
 				
 				polygonObject.aplyForce();
+			}
+			
+			for (ForceProcessor processor : processors) {
+				
+				processor.processForce();
 			}
 		}
 	}
@@ -176,7 +184,11 @@ public class SimulationStage extends GridStage{
 		
 		for (RawJoint joint : SimulationPackage.rawJoints) {
 			
-			if (joint instanceof DoubleAxisComponent) {
+			if(joint instanceof SpringComponent) {
+				
+				s.processors.add(new SpringProcessor((SpringComponent)joint, s));
+			}
+			else if (joint instanceof DoubleAxisComponent) {
 				
 				DoubleAxisComponent d = (DoubleAxisComponent) joint;
 				if(d.temp) continue;
@@ -195,7 +207,7 @@ public class SimulationStage extends GridStage{
 				
 			}
 			
-			if(joint instanceof RopeComponent) {
+			else if(joint instanceof RopeComponent) {
 				
 				RopeComponent c = (RopeComponent)joint;
 				RopeJointDef def = new RopeJointDef();
@@ -237,7 +249,13 @@ public class SimulationStage extends GridStage{
 				}else j.show = false;
 			}
 		}
+		
 		super.draw();
+		
+		for (ForceProcessor fp : dynamicSimulation.processors) {
+			
+			fp.render();
+		}
 	}
 
 	/**

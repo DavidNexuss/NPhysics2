@@ -287,6 +287,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 				
 			}else {
 				p.moveBy(v2.x, v2.y);
+				p.updatePosition();
 				updatePosition(0, 0, null);
 			}
 			
@@ -388,6 +389,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 			Vector2 pos = p.initial;
 			Vector2 npos = Util.rotPivot(pivot, pos, angleRad);
 			p.setPosition(npos.x, npos.y,false);
+			p.updatePosition();
 		}
 		
 		updatePosition();

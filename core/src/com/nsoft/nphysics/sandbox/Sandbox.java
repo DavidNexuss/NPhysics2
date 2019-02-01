@@ -19,6 +19,7 @@ import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.GState.Flag;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
 import com.nsoft.nphysics.sandbox.drawables.SimpleAxis;
+import com.nsoft.nphysics.sandbox.drawables.Spring;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
@@ -108,6 +109,14 @@ public class Sandbox extends GridStage implements Handler{
 	
 	private void initdebug() {
 		
+		/*Spring sp = new Spring();
+		Point a = new Point(200, 100, false);
+		Point b = new Point(300, 200, false);
+		sp.addAnchorA(a);
+		sp.addAnchorB(b);
+		addActor(sp);
+		addActor(a);
+		addActor(b);*/
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
@@ -239,7 +248,6 @@ public class Sandbox extends GridStage implements Handler{
 				RopeComponent.temp = new RopeComponent();
 				Point p = Point.getPoint(screenx, screeny);
 				ArrayList<PhysicalActor<?>> parents = p.getPhysicalParents();
-				System.out.println(parents.size());
 				
 				if(parents.get(0) == RopeComponent.temp.getPhysicalActorA()) RopeComponent.temp.setAnchorAPoint(p);
 				if(parents.get(0) == RopeComponent.temp.getPhysicalActorB()) RopeComponent.temp.setAnchorBPoint(p);
@@ -254,6 +262,30 @@ public class Sandbox extends GridStage implements Handler{
 				if(parents.get(0) == RopeComponent.temp.getPhysicalActorB()) RopeComponent.temp.setAnchorBPoint(p);
 				
 				RopeComponent.temp = null;
+			}
+			return true;
+		case CREATE_SPRING:
+			
+			if(SpringComponent.tmp == null) {
+				
+				SpringComponent.tmp = new SpringComponent();
+				
+				Point p = Point.getPoint(screenx, screeny);
+				ArrayList<PhysicalActor<?>> parents = p.getPhysicalParents();
+				
+				if(parents.get(0) == SpringComponent.tmp.getPhysicalActorA()) SpringComponent.tmp.addAnchorA(p);;
+				if(parents.get(0) == SpringComponent.tmp.getPhysicalActorB()) SpringComponent.tmp.addAnchorB(p);
+				
+				addActor(SpringComponent.tmp);
+			}else {
+				
+				Point p = Point.getPoint(screenx, screeny);
+				ArrayList<PhysicalActor<?>> parents = p.getPhysicalParents();
+				
+				if(parents.get(0) == SpringComponent.tmp.getPhysicalActorA()) SpringComponent.tmp.addAnchorA(p);
+				if(parents.get(0) == SpringComponent.tmp.getPhysicalActorB()) SpringComponent.tmp.addAnchorB(p);
+				
+				SpringComponent.tmp = null;
 			}
 			return true;
 		default:

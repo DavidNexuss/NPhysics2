@@ -11,6 +11,7 @@ public enum GState {
 	CREATE_DOUBLE_AXIS("menu-create-double-axis",()->{DoubleAxisComponent.tmp.setVisible(false);},()->{DoubleAxisComponent.tmp.setVisible(true);}),
 	CREATE_PRISMATIC("menu-create-prismatic",()->{PrismaticComponent.temp.setVisible(false);},()->{PrismaticComponent.temp.setVisible(true);}),
 	CREATE_ROPE("menu-create-rope"),
+	CREATE_SPRING("menu-create-spring"),
 	CREATE_CIRCLE(Flag.POLYGON,"menu-create-circle"),
 	CREATE_FAST_POLYGON(Flag.POLYGON,"menu-create-polygon"),
 	CREATE_SEGMENTS("menu-create-segments"),

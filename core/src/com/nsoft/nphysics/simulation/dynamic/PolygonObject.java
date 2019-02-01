@@ -194,6 +194,11 @@ public class PolygonObject extends Actor implements Say{
 		return new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.METERS_UNIT());
 	}
 	
+	public Vector2 getPhysicalCenter() {
+		
+		return new Vector2(b.getMassData().center).add(b.getPosition());
+	}
+	
 	public Vector2 getGravityForce() {
 		
 		return new Vector2(SimulationStage.gravity).scl(Util.NEWTONS_UNIT() * b.getMass()); 
