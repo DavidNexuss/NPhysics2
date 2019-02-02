@@ -84,7 +84,7 @@ public class Spring implements Say{
 		if(lenght > 0) {
 			
 			XOffset = 5*len/lenght;
-			YScale = (float) Math.min(20, 6*Math.sqrt(lenght/len));
+			YScale = (float) Math.min(20, 10*Math.sqrt(lenght/len));
 		}else {
 			
 			definedLenght = len / Util.METERS_UNIT();

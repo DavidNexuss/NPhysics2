@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
+import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.GState.Flag;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
@@ -24,6 +25,7 @@ import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
+import com.nsoft.nphysics.sandbox.interfaces.Ready;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.simulation.dsl.Builder;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
@@ -56,13 +58,31 @@ public class Sandbox extends GridStage implements Handler{
 		
 	}
 	
-	
+	private String errorMessage;
 	@Override
 	public boolean isReady() {
 		
-		return ForceComponent.isReady(); 
+		for (Actor a : getActors()) {
+			
+			if(a instanceof Ready) {
+				
+				if(!((Ready)a).isReady()) {
+					
+					errorMessage = NDictionary.get(((Ready) a).readyError());
+					return false;
+				}
+			}
+		}
+		
+		if(!ForceComponent.isReady()) {
+			
+			errorMessage = NDictionary.get("force-error");
+			return false;
+		}
+		return true; 
 	}
 	
+	public String getLastErrorMessage() { return errorMessage;}
 	@Override
 	public boolean removeGroups() {
 		return false;

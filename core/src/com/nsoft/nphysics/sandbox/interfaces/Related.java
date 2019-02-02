@@ -18,7 +18,7 @@ public abstract class Related extends Actor{
 			physicalActor.removeFromRelatedList(this);
 		}
 		
-		remove();
+		super.remove();
 		dispose();
 	}
 	

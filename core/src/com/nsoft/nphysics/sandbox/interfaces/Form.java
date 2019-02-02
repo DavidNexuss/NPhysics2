@@ -23,7 +23,7 @@ public interface Form {
 	};
 	
 	public default boolean sendRaw() {return false;}
-	public void updateValuesToForm();
+	public default void updateValuesToForm() {}
 	
 	public default void showForm() {
 		

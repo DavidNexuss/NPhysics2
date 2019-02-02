@@ -29,6 +29,17 @@ public class RawJoint extends Related{
 		SimulationPackage.rawJoints.remove(this);
 	}
 	
+	@Override
+	public boolean remove() {
+		
+		destroy();
+		RawJoint j = this;
+		if(j instanceof Form) {
+			
+			((Form)j).hideForm();
+		}
+		return true;
+	}
 	public void defaultInit() {
 		
 		setPhysicalActorA((PhysicalActor<?>) Sandbox.mainSelect.getSelecteds().get(0));

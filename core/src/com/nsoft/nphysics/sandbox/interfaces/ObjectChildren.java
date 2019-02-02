@@ -152,4 +152,5 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 		parent.removeComponent(this);
 		return super.remove();
 	}
+	
 }

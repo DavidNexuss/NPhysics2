@@ -550,7 +550,11 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 			gravityArrow.updateVertexArray();
 		}
 	}
+	
+	public boolean isStatic() {
 		
+		return definition.type == BodyType.StaticBody;
+	}
 	@Override
 	public void updatePosition(float x, float y, Point p) {
 		

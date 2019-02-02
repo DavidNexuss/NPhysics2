@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.nsoft.nphysics.Say;
+import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.SpringComponent;
@@ -16,7 +17,6 @@ public class SpringProcessor implements ForceProcessor,Say{
 
 	SpringComponent component;
 	private Simulation sim;
-	
 	private PolygonObject StaticObject,DynamicObject;
 	private Vector2 anchorStatic,anchorDynamic;
 	private float stableLenght;
@@ -85,7 +85,7 @@ public class SpringProcessor implements ForceProcessor,Say{
 		float dst = anchorDynamicTemp.dst(anchorStaticTemp);
 		
 		float xv = dst - stableLenght;
-		xv *=-5;
+		xv *=-component.getKConstant();
 		Vector2 direction = new Vector2(anchorDynamicTemp).sub(anchorStaticTemp).setLength(1);
 
 		direction.scl(xv);

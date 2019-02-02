@@ -6,23 +6,55 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nsoft.nphysics.NDictionary;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.drawables.Spring;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
+import com.nsoft.nphysics.sandbox.interfaces.Ready;
+import com.nsoft.nphysics.sandbox.interfaces.Removeable;
+import com.nsoft.nphysics.sandbox.ui.BaseOptionWindow;
+import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
+import com.nsoft.nphysics.sandbox.ui.Option;
+import com.nsoft.nphysics.sandbox.ui.UIStage;
+import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
 
-public class SpringComponent extends RawJoint implements ClickIn,Parent<Point>{
+public class SpringComponent extends RawJoint implements ClickIn,Parent<Point>,Form,Ready,Removeable{
 
 	public Spring spring = new Spring();
+	private DynamicWindow form;
+	private float k = 1;
 	
 	public static SpringComponent tmp;
 	
 	public SpringComponent() {
 		defaultInit();
 		addInput();
+		initForm();
 	}
 	
+	@Override
+	public boolean isReady() {
+		
+		return spring.isEnd() && 
+		((getPhysicalActorA().isStatic() && !getPhysicalActorB().isStatic()) ^ 
+		(!getPhysicalActorA().isStatic() && getPhysicalActorB().isStatic()));
+	}
+	
+	private void initForm() {
+		
+		form = DynamicWindow.createDefaultWindowStructure(NDictionary.get("spring-form"),this);
+		form.addOption(new Option("k-constant", new UIOptionNumber()));
+		
+		getForm().getOption("k-constant").setValue(1f);
+		
+		form.setVisible(false);
+		form.setSize(450, form.getPrefHeight());
+		NPhysics.ui.addActor(form);
+	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
@@ -48,6 +80,8 @@ public class SpringComponent extends RawJoint implements ClickIn,Parent<Point>{
 		
 		spring.updateSpring();
 	}
+	
+	public float getKConstant() {return k;}
 
 	@Override
 	public ArrayList<Point> getChildList() {
@@ -68,11 +102,13 @@ public class SpringComponent extends RawJoint implements ClickIn,Parent<Point>{
 	@Override
 	public void select(int pointer) {
 		spring.selectedFlag = true;
+		showForm();
 	}
 
 	@Override
 	public void unselect() {
 		spring.selectedFlag = false;
+		hideForm();
 	}
 
 	@Override
@@ -80,4 +116,15 @@ public class SpringComponent extends RawJoint implements ClickIn,Parent<Point>{
 		return Sandbox.mainSelect;
 	}
 
+	@Override
+	public BaseOptionWindow getForm() { return form; }
+
+	@Override
+	public void updateValuesToForm() {}
+
+	@Override
+	public void updateValuesFromForm() {
+		
+		k = getForm().getOption("k-constant").getValue();
+	}
 }
