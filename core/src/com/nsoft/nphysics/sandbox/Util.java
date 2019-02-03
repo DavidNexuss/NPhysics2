@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -44,6 +46,10 @@ public class Util {
 		}
 	}
 	
+	public static interface FloatInjector{
+		
+		public void inject(float[] buff);
+	}
 	public static int UNIT = 30;
 	
 	public static float METER_FACTOR = 1;
@@ -152,6 +158,29 @@ public class Util {
 		}
 	}
 	
+	public static void inject(float[][] buff,FloatInjector inj) {
+		
+		float[] newBuff = new float[buff.length*2];
+		int j = 0;
+		for (int i = 0; i < buff.length; i++) {
+			newBuff[j] = buff[i][0];
+			newBuff[j+1] = buff[i][1];
+			j+=2;
+		}
+		
+		inj.inject(newBuff);
+	}
+	public static void renderPolygon(Polygon p,ShapeRenderer sh) {
+		
+		float[] v = p.getVertices();
+		sh.begin(ShapeType.Line);
+		for (int i = 0; i < v.length/2f; i+=2) {
+			
+			if(v.length > i+3)sh.line(i, i+1, i+2, i+3);
+		}
+		
+		sh.end();
+	}
 	public static Drawable getDrawable(Texture t) {
 		
 		return new TextureRegionDrawable(new TextureRegion(t));

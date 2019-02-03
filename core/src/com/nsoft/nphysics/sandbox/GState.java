@@ -12,6 +12,7 @@ public enum GState {
 	CREATE_PRISMATIC("menu-create-prismatic",()->{PrismaticComponent.temp.setVisible(false);},()->{PrismaticComponent.temp.setVisible(true);}),
 	CREATE_ROPE("menu-create-rope"),
 	CREATE_SPRING("menu-create-spring"),
+	CREATE_PULLEY("menu-create-pulley"),
 	CREATE_CIRCLE(Flag.POLYGON,"menu-create-circle"),
 	CREATE_FAST_POLYGON(Flag.POLYGON,"menu-create-polygon"),
 	CREATE_SEGMENTS("menu-create-segments"),

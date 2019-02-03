@@ -340,5 +340,15 @@ languages: {
 		ESP: Constante de recuperación (N/m)
 		CAT: Constant de recuperació (N/m)
 	}
+	menu-create-spring:{
+		ENG: Create a Spring
+		ESP: Crear un muelle
+		CAT: Crear una molla
+	}
+	menu-create-pulley:{
+		ENG: Create a Pulley
+		ESP: Crear una polea
+		CAT: Crear una politja
+	}
 }
 }

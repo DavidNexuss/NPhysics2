@@ -19,6 +19,7 @@ import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.GState.Flag;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
+import com.nsoft.nphysics.sandbox.drawables.Pulley;
 import com.nsoft.nphysics.sandbox.drawables.SimpleAxis;
 import com.nsoft.nphysics.sandbox.drawables.Spring;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
@@ -126,8 +127,27 @@ public class Sandbox extends GridStage implements Handler{
 		if(actor instanceof RawJoint) SimulationPackage.rawJoints.add((RawJoint)actor);
 		super.addActor(actor);
 	}
-	
 	private void initdebug() {
+		
+		
+	/*	PulleyComponent p = new PulleyComponent();
+		
+		Point GroundA = new Point(200, 100, false);
+		Point AnchorA = new Point(200,400,false);
+		Point AnchorB = new Point(400, 400, false);
+		Point GroundB = new Point(400, 100, false);
+		
+		p.setGroundA(GroundA);
+		p.setAnchorA(AnchorA);
+		p.setGroundB(GroundB);
+		p.setAnchorB(AnchorB);
+		
+		addActor(GroundA);
+		addActor(AnchorA);
+		addActor(AnchorB);
+		addActor(GroundB);
+		
+		addActor(p);*/
 		
 		/*Spring sp = new Spring();
 		Point a = new Point(200, 100, false);
@@ -187,7 +207,7 @@ public class Sandbox extends GridStage implements Handler{
 		shapeline.end();
 
 	}
-	
+
 	/*
 	 * Les funcions següents touchDragged touchDown i MouseMove corresponen a la classe
 	 * Stage i son executades cada cop que l'usuari mou el cursor clica o arrastra.
@@ -307,6 +327,21 @@ public class Sandbox extends GridStage implements Handler{
 				
 				SpringComponent.tmp = null;
 			}
+			return true;
+		case CREATE_PULLEY:
+			
+			if(PulleyComponent.tmp == null) {
+				PulleyComponent.tmp = new PulleyComponent();
+				addActor(PulleyComponent.tmp);
+			}
+			Pulley p = PulleyComponent.tmp.getPullley();
+			if(p.getGroundA() == null)p.setGroundA(Point.getPoint(screenx, screeny));
+	   else if(p.getAnchorA() == null)p.setAnchorA(Point.getPoint(screenx, screeny));
+	   else if(p.getAnchorB() == null)p.setAnchorB(Point.getPoint(screenx, screeny));
+	   else if(p.getGroundB() == null)p.setGroundB(Point.getPoint(screenx, screeny));
+			
+			if(p.isComplete()) PulleyComponent.tmp = null;
+			
 			return true;
 		default:
 			

@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
+import com.badlogic.gdx.physics.box2d.joints.PulleyJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -25,9 +26,11 @@ import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
+import com.nsoft.nphysics.sandbox.PulleyComponent;
 import com.nsoft.nphysics.sandbox.RopeComponent;
 import com.nsoft.nphysics.sandbox.SpringComponent;
 import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.drawables.Pulley;
 import com.nsoft.nphysics.sandbox.drawables.Spring;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 /**
@@ -184,7 +187,24 @@ public class SimulationStage extends GridStage{
 		
 		for (RawJoint joint : SimulationPackage.rawJoints) {
 			
-			if(joint instanceof SpringComponent) {
+			if(joint instanceof PulleyComponent) {
+				
+				PulleyComponent p = (PulleyComponent)joint;
+				PulleyJointDef def = new PulleyJointDef();
+				Body a = s.objectsMap.get(p.getPhysicalActorA()).b;
+				Body b = s.objectsMap.get(p.getPhysicalActorB()).b;
+				
+				Pulley pul = p.getPullley();
+				Vector2 groundA = pul.getGroundA().getVector().scl(1f/Util.METERS_UNIT());
+				Vector2 groundB = pul.getGroundB().getVector().scl(1f/Util.METERS_UNIT());
+				Vector2 anchorA = pul.getAnchorA().getVector().scl(1f/Util.METERS_UNIT());
+				Vector2 anchorB = pul.getAnchorB().getVector().scl(1f/Util.METERS_UNIT());
+				
+				def.initialize(a, b, anchorA, anchorB, groundA, groundB, 1);
+				
+				s.world.createJoint(def);
+			}
+			else if(joint instanceof SpringComponent) {
 				
 				s.processors.add(new SpringProcessor((SpringComponent)joint, s));
 			}
