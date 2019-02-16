@@ -4,18 +4,25 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PositionVector;
 import com.nsoft.nphysics.sandbox.SpringComponent;
 import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.drawables.Spring;
+import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage.Simulation;
 
 public class SpringProcessor implements ForceProcessor,Say{
 
 	SpringComponent component;
+	
+	SimpleArrow arrow;
+	ArrowLabel label;
+	
 	private Simulation sim;
 	private PolygonObject StaticObject,DynamicObject;
 	private Vector2 anchorStatic,anchorDynamic;
@@ -26,6 +33,16 @@ public class SpringProcessor implements ForceProcessor,Say{
 		this.component = component;
 		this.sim = sim;
 		init();
+		
+		arrow = new SimpleArrow(new Vector2(), new Vector2());
+		arrow.setColor(1f, 0f, 0f, 1f);
+		arrow.setVisible(true);
+		
+		if(NPhysics.currentStage == NPhysics.simulation) {
+			label = new ArrowLabel(NPhysics.simulation.getUiGroup());
+			label.setColor(Color.RED);
+			label.setVisible(true);
+		}
 	}
 
 	private void init() {
@@ -98,10 +115,26 @@ public class SpringProcessor implements ForceProcessor,Say{
 		spring.addAnchorB(pvs);
 		
 		spring.updateSpring();
+		
+		Vector2 start = new Vector2(anchorDynamicTemp);
+		Vector2 end = new Vector2(start).add(direction.scl(Util.NEWTONS_UNIT()));
+		
+		arrow.setStart(start);
+		arrow.setEnd(end);
+		
+		arrow.updateVertexArray();
+		
+		if(NPhysics.currentStage == NPhysics.simulation) {
+			
+			label.setFloat(xv);
+			label.setPosition(new Vector2(start).add(20, 20));
+		}
 	}
 	@Override
 	public void render() {
 		
 		spring.render();
+		
+		arrow.draw(NPhysics.currentStage.getBatch(), 1);
 	}
 }

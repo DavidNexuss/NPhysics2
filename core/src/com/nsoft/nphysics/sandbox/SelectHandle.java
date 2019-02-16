@@ -13,7 +13,7 @@ public class SelectHandle {
 
 	private Stack<ClickIn> selecteds = new Stack<>();
 	private Class<?> current_type;
-	private boolean multiSelection = false;
+	public boolean multiSelection = false;
 	
 	public ClickIn getLastSelected() {
 		
@@ -50,7 +50,7 @@ public class SelectHandle {
 			else current_type = newSelected.getClass();
 		}
 		
-		if(Sandbox.SHIFT) {
+		if(Sandbox.SHIFT || multiSelection) {
 			
 			if(isSelected(newSelected)) {
 				

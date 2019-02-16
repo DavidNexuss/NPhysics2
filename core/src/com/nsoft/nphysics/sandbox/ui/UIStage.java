@@ -324,8 +324,8 @@ public class UIStage extends Stage{
 		
 		doubleContextMenu.add(MenuItem.loadNewItem("axis.png", GState.CREATE_DOUBLE_AXIS));
 		doubleContextMenu.add(MenuItem.loadNewItem("segment.png", GState.CREATE_ROPE));
-		doubleContextMenu.add(MenuItem.loadNewItem("axis.png", GState.CREATE_SPRING));
-		doubleContextMenu.add(MenuItem.loadNewItem("segment.png", GState.CREATE_PULLEY));
+		doubleContextMenu.add(MenuItem.loadNewItem("spring.png", GState.CREATE_SPRING));
+		doubleContextMenu.add(MenuItem.loadNewItem("pulley.png", GState.CREATE_PULLEY));
 	}
 	private void loadSubMenu() {
 		

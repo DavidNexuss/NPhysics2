@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -272,10 +273,12 @@ public class SimulationStage extends GridStage{
 		
 		super.draw();
 		
+		shapefill.begin(ShapeType.Filled);
 		for (ForceProcessor fp : dynamicSimulation.processors) {
 			
 			fp.render();
 		}
+		shapefill.end();
 	}
 
 	/**

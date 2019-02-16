@@ -10,13 +10,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.NDictionary;
+import com.nsoft.nphysics.Selector;
 import com.nsoft.nphysics.ThreadManager;
+import com.nsoft.nphysics.ThreadManager.Task;
 import com.nsoft.nphysics.sandbox.GState.Flag;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
 import com.nsoft.nphysics.sandbox.drawables.Pulley;
@@ -51,11 +54,13 @@ public class Sandbox extends GridStage implements Handler{
 	public SelectHandle getSelectHandleInstance() { return mainSelect; }
 	
 	public static BitmapFont bitmapfont;
-	
+	public static Selector selector;
 	public Sandbox() {
 		
 		super(new ScreenViewport());
 		bitmapfont = new BitmapFont();
+		selector = new Selector();
+		addActor(selector);
 		
 	}
 	
@@ -212,7 +217,6 @@ public class Sandbox extends GridStage implements Handler{
 	 * Les funcions següents touchDragged touchDown i MouseMove corresponen a la classe
 	 * Stage i son executades cada cop que l'usuari mou el cursor clica o arrastra.
 	 */
-	
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		
@@ -221,12 +225,24 @@ public class Sandbox extends GridStage implements Handler{
 
 			if(!super.touchDragged(screenX, screenY, pointer)) {
 				
-				if(GameState.is(GState.START))dragCamera(screenX, screenY);
-
+				if(Gdx.input.isButtonPressed(0) && GameState.is(GState.START))dragCamera(screenX, screenY);
+				if(Gdx.input.isButtonPressed(1)) {
+					selector.setEnd(getUnproject());
+				} 
 			}
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		
+		if(!super.touchUp(screenX, screenY, pointer, button)) {
+			
+			selector.addAction(Actions.fadeOut(0.4f, Interpolation.exp10));
+		}
+		return true; 
 	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -352,8 +368,25 @@ public class Sandbox extends GridStage implements Handler{
 			}
 			if(!super.touchDown(screenX, screenY, pointer, button)) {
 				
-				mainSelect.unSelect();
-				setCenter(screenX, screenY);
+				
+				if(button == 1) {
+					if(selector.getColor().a == 0 && selector.getActions().size == 0) {
+						selector.setVisible(true);
+						selector.getColor().a = 1;
+						selector.setStart(getUnproject());
+						selector.setEnd(getUnproject());
+						mainSelect.multiSelection = true;
+					}
+				}else {
+					
+
+					mainSelect.unSelect();
+					setCenter(screenX, screenY);
+					
+					selector.pool.clear();
+					
+					mainSelect.multiSelection = false;
+				}
 			}
 		}
 		return true;
