@@ -201,7 +201,7 @@ public class SimulationStage extends GridStage{
 				Vector2 anchorA = pul.getAnchorA().getVector().scl(1f/Util.METERS_UNIT());
 				Vector2 anchorB = pul.getAnchorB().getVector().scl(1f/Util.METERS_UNIT());
 				
-				def.initialize(a, b, anchorA, anchorB, groundA, groundB, 1);
+				def.initialize(a, b, anchorA, anchorB, groundA, groundB, p.ratio);
 				
 				s.world.createJoint(def);
 			}

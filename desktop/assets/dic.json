@@ -350,5 +350,15 @@ languages: {
 		ESP: Crear una polea
 		CAT: Crear una politja
 	}
+	pulley-form:{
+		ENG: Pulley Options
+		ESP: Opciones de la polea
+		CAT: Opcions de la politja
+	}
+	pulley-ratio:{
+		ENG: Mechanical Advantage
+		ESP: Ventaja mecanica
+		CAT: Advantatge mecànic
+	}
 }
 }

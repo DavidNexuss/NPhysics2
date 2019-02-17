@@ -7,22 +7,43 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.nsoft.nphysics.NDictionary;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.drawables.Pulley;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
+import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
+import com.nsoft.nphysics.sandbox.ui.BaseOptionWindow;
+import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
+import com.nsoft.nphysics.sandbox.ui.Option;
+import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
 
-public class PulleyComponent extends RawJoint implements ClickIn,Parent<Point>{
+public class PulleyComponent extends RawJoint implements ClickIn,Parent<Point>,Form{
 
 	public Pulley pulley = new Pulley();
+	public float ratio = 1;
 	public static PulleyComponent tmp;
 	
+	private DynamicWindow form;
 	public PulleyComponent() {
 		addInput();
 		getColor().a = 0;
 		defaultInit();
+		initForm();
 	}
 	
+	private void initForm() {
+		
+		form = DynamicWindow.createDefaultWindowStructure(NDictionary.get("pulley-form"),this);
+		form.setVisible(false);
+		
+		form.addOption(new Option("pulley-ratio", new UIOptionNumber()));
+		form.getOption("pulley-ratio").setValue(ratio);
+		
+		NPhysics.ui.addActor(form);
+	}
 	public void setGroundA(Point p) {
 		
 		pulley.setGroundA(p);
@@ -74,11 +95,13 @@ public class PulleyComponent extends RawJoint implements ClickIn,Parent<Point>{
 	@Override
 	public void select(int pointer) { 
 		pulley.selectedFlag = true;
+		showForm();
 	}
 
 	@Override
 	public void unselect() {
 		pulley.selectedFlag = false;
+		hideForm();
 	}
 
 	@Override
@@ -91,5 +114,16 @@ public class PulleyComponent extends RawJoint implements ClickIn,Parent<Point>{
 		
 		pulley.alphaCounter = getColor().a;
 		pulley.render();
+	}
+
+	@Override
+	public BaseOptionWindow getForm() {
+		return form;
+	}
+	
+	@Override
+	public void updateValuesFromForm() {
+		
+		ratio = getForm().getOption("pulley-ratio").getValue();
 	}
 }
