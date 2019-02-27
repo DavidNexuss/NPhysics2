@@ -111,6 +111,19 @@ public class Sandbox extends GridStage implements Handler{
 	}
 	private void initdebug() {
 		
+		
+		Point a = new Point(300,300, false);
+		Point b = new Point(400,300, false);
+		Point c = new Point(300,400, false);
+		Point d = new Point(400,400, false);
+		
+		addActor(a);
+		addActor(b);
+		addActor(c);
+		addActor(d);
+		
+		WaterComponent water = new WaterComponent(a, b, c, d);
+		addActor(water);
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
