@@ -61,6 +61,11 @@ public class SimpleArrow extends Actor implements VertexBuffer,Pointer{
 	}
 	
 	@Override
+	public void setColor(float r, float g, float b, float a) {
+		
+		setColor(new Color(r, g, b, a));
+	}
+	@Override
 	public void setColor(Color color) {
 		
 		if(this.color == null) this.color = new Color(color);

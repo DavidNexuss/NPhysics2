@@ -10,19 +10,26 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
+import com.nsoft.nphysics.NDictionary;
+import com.nsoft.nphysics.Selector;
 import com.nsoft.nphysics.ThreadManager;
+import com.nsoft.nphysics.ThreadManager.Task;
 import com.nsoft.nphysics.sandbox.GState.Flag;
 import com.nsoft.nphysics.sandbox.drawables.ArrowActor;
+import com.nsoft.nphysics.sandbox.drawables.Pulley;
 import com.nsoft.nphysics.sandbox.drawables.SimpleAxis;
+import com.nsoft.nphysics.sandbox.drawables.Spring;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
+import com.nsoft.nphysics.sandbox.interfaces.Ready;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.simulation.dsl.Builder;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
@@ -37,7 +44,7 @@ import com.nsoft.nphysics.simulation.dynamic.SolveJob;
  */
 public class Sandbox extends GridStage implements Handler{
 	
-	public ArrayList<PhysicalActor<ObjectDefinition>> polygonlist = new ArrayList<>();
+	public ArrayList<PhysicalActor<?>> polygonlist = new ArrayList<>();
 	public static SelectHandle mainSelect = new SelectHandle();
 //	public static ArrayList<ForceComponent> unknownForcesList = new ArrayList<ForceComponent>();
 	
@@ -47,19 +54,44 @@ public class Sandbox extends GridStage implements Handler{
 	public SelectHandle getSelectHandleInstance() { return mainSelect; }
 	
 	public static BitmapFont bitmapfont;
-	
+	public static Selector selector;
 	public Sandbox() {
 		
 		super(new ScreenViewport());
 		bitmapfont = new BitmapFont();
+		selector = new Selector();
+		addActor(selector);
 		
 	}
 	
-	
+	private String errorMessage;
 	@Override
 	public boolean isReady() {
 		
-		return ForceComponent.isReady(); 
+		for (Actor a : getActors()) {
+			
+			if(a instanceof Ready) {
+				
+				if(!((Ready)a).isReady()) {
+					
+					errorMessage = NDictionary.get(((Ready) a).readyError());
+					return false;
+				}
+			}
+		}
+		
+		if(!ForceComponent.isReady()) {
+			
+			errorMessage = NDictionary.get("force-error");
+			return false;
+		}
+		return true; 
+	}
+	
+	public String getLastErrorMessage() { return errorMessage;}
+	@Override
+	public boolean removeGroups() {
+		return false;
 	}
 	/**
 	 * Inicialitza totes les variables necessàries, carrega les textures i afegeix
@@ -100,17 +132,7 @@ public class Sandbox extends GridStage implements Handler{
 		if(actor instanceof RawJoint) SimulationPackage.rawJoints.add((RawJoint)actor);
 		super.addActor(actor);
 	}
-	
-	@Override
-	public void clean() {} //Llimpiesa de la fase controlada externament
-	
-	@Override
-	public void setUp() { //Recàrrega de la fase per defecte com està
-		//establert a DragStage
-		super.setUp();
-	}
 	private void initdebug() {
-		
 		
 		Point a = new Point(300,300, false);
 		Point b = new Point(400,300, false);
@@ -124,6 +146,33 @@ public class Sandbox extends GridStage implements Handler{
 		
 		WaterComponent water = new WaterComponent(a, b, c, d);
 		addActor(water);
+	/*	PulleyComponent p = new PulleyComponent();
+		
+		Point GroundA = new Point(200, 100, false);
+		Point AnchorA = new Point(200,400,false);
+		Point AnchorB = new Point(400, 400, false);
+		Point GroundB = new Point(400, 100, false);
+		
+		p.setGroundA(GroundA);
+		p.setAnchorA(AnchorA);
+		p.setGroundB(GroundB);
+		p.setAnchorB(AnchorB);
+		
+		addActor(GroundA);
+		addActor(AnchorA);
+		addActor(AnchorB);
+		addActor(GroundB);
+		
+		addActor(p);*/
+		
+		/*Spring sp = new Spring();
+		Point a = new Point(200, 100, false);
+		Point b = new Point(300, 200, false);
+		sp.addAnchorA(a);
+		sp.addAnchorB(b);
+		addActor(sp);
+		addActor(a);
+		addActor(b);*/
 		/*GameState.set(State.HOOK_FORCE_ARROW);
 		ArrowActor.debug = new ArrowActor(new Vector2(center.x, center.y));
 		ArrowActor.hook(ArrowActor.debug);
@@ -174,12 +223,11 @@ public class Sandbox extends GridStage implements Handler{
 		shapeline.end();
 
 	}
-	
+
 	/*
 	 * Les funcions següents touchDragged touchDown i MouseMove corresponen a la classe
 	 * Stage i son executades cada cop que l'usuari mou el cursor clica o arrastra.
 	 */
-	
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		
@@ -188,12 +236,24 @@ public class Sandbox extends GridStage implements Handler{
 
 			if(!super.touchDragged(screenX, screenY, pointer)) {
 				
-				if(GameState.is(GState.START))dragCamera(screenX, screenY);
-
+				if(Gdx.input.isButtonPressed(0) && GameState.is(GState.START))dragCamera(screenX, screenY);
+				if(Gdx.input.isButtonPressed(1)) {
+					selector.setEnd(getUnproject());
+				} 
 			}
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		
+		if(!super.touchUp(screenX, screenY, pointer, button)) {
+			
+			selector.addAction(Actions.fadeOut(0.4f, Interpolation.exp10));
+		}
+		return true; 
 	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -255,7 +315,6 @@ public class Sandbox extends GridStage implements Handler{
 				RopeComponent.temp = new RopeComponent();
 				Point p = Point.getPoint(screenx, screeny);
 				ArrayList<PhysicalActor<?>> parents = p.getPhysicalParents();
-				System.out.println(parents.size());
 				
 				if(parents.get(0) == RopeComponent.temp.getPhysicalActorA()) RopeComponent.temp.setAnchorAPoint(p);
 				if(parents.get(0) == RopeComponent.temp.getPhysicalActorB()) RopeComponent.temp.setAnchorBPoint(p);
@@ -272,6 +331,45 @@ public class Sandbox extends GridStage implements Handler{
 				RopeComponent.temp = null;
 			}
 			return true;
+		case CREATE_SPRING:
+			
+			if(SpringComponent.tmp == null) {
+				
+				SpringComponent.tmp = new SpringComponent();
+				
+				Point p = Point.getPoint(screenx, screeny);
+				ArrayList<PhysicalActor<?>> parents = p.getPhysicalParents();
+				
+				if(parents.get(0) == SpringComponent.tmp.getPhysicalActorA()) SpringComponent.tmp.addAnchorA(p);;
+				if(parents.get(0) == SpringComponent.tmp.getPhysicalActorB()) SpringComponent.tmp.addAnchorB(p);
+				
+				addActor(SpringComponent.tmp);
+			}else {
+				
+				Point p = Point.getPoint(screenx, screeny);
+				ArrayList<PhysicalActor<?>> parents = p.getPhysicalParents();
+				
+				if(parents.get(0) == SpringComponent.tmp.getPhysicalActorA()) SpringComponent.tmp.addAnchorA(p);
+				if(parents.get(0) == SpringComponent.tmp.getPhysicalActorB()) SpringComponent.tmp.addAnchorB(p);
+				
+				SpringComponent.tmp = null;
+			}
+			return true;
+		case CREATE_PULLEY:
+			
+			if(PulleyComponent.tmp == null) {
+				PulleyComponent.tmp = new PulleyComponent();
+				addActor(PulleyComponent.tmp);
+			}
+			Pulley p = PulleyComponent.tmp.getPullley();
+			if(p.getGroundA() == null)p.setGroundA(Point.getPoint(screenx, screeny));
+	   else if(p.getAnchorA() == null)p.setAnchorA(Point.getPoint(screenx, screeny));
+	   else if(p.getAnchorB() == null)p.setAnchorB(Point.getPoint(screenx, screeny));
+	   else if(p.getGroundB() == null)p.setGroundB(Point.getPoint(screenx, screeny));
+			
+			if(p.isComplete()) PulleyComponent.tmp = null;
+			
+			return true;
 		default:
 			
 			if(GameState.current.fl == Flag.POLYGON) {
@@ -281,8 +379,25 @@ public class Sandbox extends GridStage implements Handler{
 			}
 			if(!super.touchDown(screenX, screenY, pointer, button)) {
 				
-				mainSelect.unSelect();
-				setCenter(screenX, screenY);
+				
+				if(button == 1) {
+					if(selector.getColor().a == 0 && selector.getActions().size == 0) {
+						selector.setVisible(true);
+						selector.getColor().a = 1;
+						selector.setStart(getUnproject());
+						selector.setEnd(getUnproject());
+						mainSelect.multiSelection = true;
+					}
+				}else {
+					
+
+					mainSelect.unSelect();
+					setCenter(screenX, screenY);
+					
+					selector.pool.clear();
+					
+					mainSelect.multiSelection = false;
+				}
 			}
 		}
 		return true;

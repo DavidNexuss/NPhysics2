@@ -12,14 +12,16 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.ui.UIStage;
 
 /**
  * Fase que implementa DragStage, defineix una fase amb cuadricula
  * @author David
  */
-public class GridStage extends DragStage{
+public abstract class GridStage extends DragStage implements Say{
 
 	public static ShaderProgram gridShader;
 	public static SpriteBatch gridBatch;
@@ -58,7 +60,7 @@ public class GridStage extends DragStage{
 	 */
 	private void invertColor() {
 		
-		invertbackColor.set(1f - backColor.r, 1f - backColor.g, 1f - backColor.b, 1f - backColor.a);
+		invertbackColor.set(1f - backColor.r, 1f - backColor.g, 1f - backColor.b, backColor.a);
 	}
 	/**
 	 * Inicialitza els shaders de la cuadricula
@@ -117,7 +119,14 @@ public class GridStage extends DragStage{
 		shapefill.end();
 		tmp.set(Vector3.Zero);
 	}
-	
+	ScreenViewport vp = new ScreenViewport();
+	@Override
+	public void updateViewport(int width, int height) {
+		
+		super.updateViewport(width, height);
+		
+	//	gridBatch.setTransformMatrix(UIStage.stage.getCamera().combined);
+	}
 	@Override
 	public void updateMatrix() {
 		

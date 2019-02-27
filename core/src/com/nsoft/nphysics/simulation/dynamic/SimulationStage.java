@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
+import com.badlogic.gdx.physics.box2d.joints.PulleyJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -25,8 +27,12 @@ import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
+import com.nsoft.nphysics.sandbox.PulleyComponent;
 import com.nsoft.nphysics.sandbox.RopeComponent;
+import com.nsoft.nphysics.sandbox.SpringComponent;
 import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.drawables.Pulley;
+import com.nsoft.nphysics.sandbox.drawables.Spring;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 /**
  * Fase encarregada de la simulació dinàmica del programa.
@@ -70,12 +76,29 @@ public class SimulationStage extends GridStage{
 		
 		World world; //El mon
 		ArrayList<PolygonObject> objects; //La llista d'objectes
-		HashMap<PhysicalActor<ObjectDefinition>, PolygonObject> objectsMap; //El mapa d'objectes amb actors
+		ArrayList<ForceProcessor> processors = new ArrayList<>();
+		HashMap<PhysicalActor<?>, PolygonObject> objectsMap; //El mapa d'objectes amb actors
 		HashMap<Body, PolygonObject> bodiesMap; //El mapa de cossos i objectes
 		Body centre; //El cos central
 		
 		public Simulation(World world) {
 			this.world = world;
+		}
+		
+		/**
+		 * Aplica les forces a la simulació
+		 */
+		public void aplyForces() {
+			
+			for (PolygonObject polygonObject : objects) {
+				
+				polygonObject.aplyForce();
+			}
+			
+			for (ForceProcessor processor : processors) {
+				
+				processor.processForce();
+			}
 		}
 	}
 	public Sesion currentSesion;
@@ -86,6 +109,10 @@ public class SimulationStage extends GridStage{
 		updateMatrix();
 	}
 	
+	@Override
+	public boolean removeGroups() {
+		return true;
+	}
 	/**
 	 * Retorna el delta a utilitzar, el real o el fixe
 	 * @return el delta
@@ -135,7 +162,7 @@ public class SimulationStage extends GridStage{
 		s.objectsMap = new HashMap<>();
 		s.bodiesMap = new HashMap<>();
 		
-		for (PhysicalActor<ObjectDefinition> d: SimulationPackage.polygons)  {
+		for (PhysicalActor<?> d: SimulationPackage.polygons)  {
 			
 			PolygonObject o = new PolygonObject(d.getDefinition(),s.world);
 			s.objects.add(o);
@@ -161,7 +188,28 @@ public class SimulationStage extends GridStage{
 		
 		for (RawJoint joint : SimulationPackage.rawJoints) {
 			
-			if (joint instanceof DoubleAxisComponent) {
+			if(joint instanceof PulleyComponent) {
+				
+				PulleyComponent p = (PulleyComponent)joint;
+				PulleyJointDef def = new PulleyJointDef();
+				Body a = s.objectsMap.get(p.getPhysicalActorA()).b;
+				Body b = s.objectsMap.get(p.getPhysicalActorB()).b;
+				
+				Pulley pul = p.getPullley();
+				Vector2 groundA = pul.getGroundA().getVector().scl(1f/Util.METERS_UNIT());
+				Vector2 groundB = pul.getGroundB().getVector().scl(1f/Util.METERS_UNIT());
+				Vector2 anchorA = pul.getAnchorA().getVector().scl(1f/Util.METERS_UNIT());
+				Vector2 anchorB = pul.getAnchorB().getVector().scl(1f/Util.METERS_UNIT());
+				
+				def.initialize(a, b, anchorA, anchorB, groundA, groundB, p.ratio);
+				
+				s.world.createJoint(def);
+			}
+			else if(joint instanceof SpringComponent) {
+				
+				s.processors.add(new SpringProcessor((SpringComponent)joint, s));
+			}
+			else if (joint instanceof DoubleAxisComponent) {
 				
 				DoubleAxisComponent d = (DoubleAxisComponent) joint;
 				if(d.temp) continue;
@@ -180,7 +228,7 @@ public class SimulationStage extends GridStage{
 				
 			}
 			
-			if(joint instanceof RopeComponent) {
+			else if(joint instanceof RopeComponent) {
 				
 				RopeComponent c = (RopeComponent)joint;
 				RopeJointDef def = new RopeJointDef();
@@ -208,16 +256,6 @@ public class SimulationStage extends GridStage{
 			}
 		}
 	}
-	/**
-	 * Aplica les forces a la simulació d'entorn gràfic
-	 */
-	private void aplyForces() {
-		
-		for (PolygonObject polygonObject : dynamicSimulation.objects) {
-			
-			polygonObject.aplyForce();
-		}
-	}
 	@Override
 	public void draw() {
 		
@@ -232,7 +270,15 @@ public class SimulationStage extends GridStage{
 				}else j.show = false;
 			}
 		}
+		
 		super.draw();
+		
+		shapefill.begin(ShapeType.Filled);
+		for (ForceProcessor fp : dynamicSimulation.processors) {
+			
+			fp.render();
+		}
+		shapefill.end();
 	}
 
 	/**
@@ -240,7 +286,7 @@ public class SimulationStage extends GridStage{
 	 */
 	public void stepSimulation() {
 		
-		aplyForces();
+		dynamicSimulation.aplyForces();
 		dynamicSimulation.world.step(getPhysicsDelta(), 8, 6);
 		
 	}

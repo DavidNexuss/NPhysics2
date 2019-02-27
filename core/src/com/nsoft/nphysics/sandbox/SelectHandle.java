@@ -12,8 +12,8 @@ import com.nsoft.nphysics.sandbox.ui.UIStage;
 public class SelectHandle {
 
 	private Stack<ClickIn> selecteds = new Stack<>();
-
-	private boolean multiSelection = false;
+	private Class<?> current_type;
+	public boolean multiSelection = false;
 	
 	public ClickIn getLastSelected() {
 		
@@ -44,7 +44,13 @@ public class SelectHandle {
 	
 	public boolean setSelected(ClickIn newSelected,int pointer,boolean force) {
 		
-		if(Sandbox.SHIFT) {
+		if(!hasSelection()) {
+			
+			if(newSelected instanceof PhysicalActor<?>) current_type = PhysicalActor.class;
+			else current_type = newSelected.getClass();
+		}
+		
+		if(Sandbox.SHIFT || multiSelection) {
 			
 			if(isSelected(newSelected)) {
 				
@@ -52,8 +58,11 @@ public class SelectHandle {
 				newSelected.unselect();
 			}else {
 				
-				choose(newSelected, selecteds.size());
-				newSelected.select(pointer);
+				if(current_type.isInstance(newSelected)) {
+					
+					choose(newSelected, selecteds.size());
+					newSelected.select(pointer);
+				}
 			}
 			return true;
 		}

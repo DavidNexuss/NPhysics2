@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -21,6 +22,7 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.nsoft.nphysics.DragStage;
 import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.sandbox.drawables.DiscontLine;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
@@ -61,7 +63,7 @@ import com.nsoft.nphysics.simulation.dynamic.SolveJob;
  *
  * @param <D>
  */
-public abstract class PhysicalActor<D extends ObjectDefinition> extends Group implements Form,Handler,ClickIn,Draggable,Parent<Point>,Removeable{
+public abstract class PhysicalActor<D extends ObjectDefinition> extends Group implements Form,Handler,ClickIn,Draggable,Parent<Point>,Removeable,Say{
 
 	//Colors ja definits de forma estàtica per evitar ser instantiats dins del bucle de renderitzat i augmentar el rendiment.
 	final static Color shape = 		   new Color(0.2f, 0.8f, 0.2f, 0.6f);
@@ -69,6 +71,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	final static Color mightSelected = new Color(0.8f,0.5f,0.2f,0.6f);
 	final static Color arcColor = 	   new Color(0.5f, 0.5f, 0.9f, 0.4f);
 	
+	private static String grade = com.nsoft.nphysics.Options.names.grade;
 	private DynamicWindow form; //Formulari
 	private SelectHandle handler; //Objecte encarregat de manejar solicituds de selecció del handler superior.
 	
@@ -91,6 +94,8 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	D definition; //Definició del objecte per a la simulació
 	
 	ForceComponent unknown;
+	
+	private float physMass;
 	
 	protected ArrayList<Point> points = new ArrayList<>();
 	
@@ -135,7 +140,6 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	}
 	
 	abstract void initDefinition();
-	abstract float getArea();
 	public boolean isEnded() {return isEnded;}
 	public void end() {
 		
@@ -145,14 +149,15 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 			point.setObjectParent(this);
 		}
 		
-		NPhysics.sandbox.polygonlist.add((PhysicalActor<ObjectDefinition>) this);
+		NPhysics.sandbox.polygonlist.add(this);
 		
 		polygonMassCenter.set(definition.getCenter(false));
 
 		createArrow();
 		
-
 		definition.childrens = getComponents();
+		
+		calculateMass();
 	}
 	
 	public abstract PhysicalActor<D> addPoint(Point p);
@@ -161,13 +166,22 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	
 	private void initForm() {
 		
-		form = DynamicWindow.createDefaultWindowStructure("Wpolygon",this);
+		form = DynamicWindow.createDefaultWindowStructure(NDictionary.get("Wpolygon"),this);
 		form.setSize(450, 450);
 		
+		form.addText(NDictionary.get("polygon_sim"));
+		form.addOption(Options.createCheckBoxOption("polygon_isbullet"));
 		form.addOption(Options.createOptionTypeSlider("polygon_phys_state", NDictionary.get("phys_DYNAMIC"),NDictionary.get("phys_KINEMATIC"),NDictionary.get("phys_STATIC")));
+		form.addSeparator();
+		
+		form.addText(NDictionary.get("polygon_lvel"));
 		form.addOption(Options.createOptionNumber("polygon_lvel_x"));
 		form.addOption(Options.createOptionNumber("polygon_lvel_y"));
+		form.addSeparator();
+		
+		form.addText(NDictionary.get("polygon_phys"));
 		form.addOption(Options.createOptionNumber("polygon_phys_mass"));
+		
 		
 		form.addOption(Options.createOptionNumber("polygon_phys_density"));
 		form.addOption(Options.createOptionNumber("polygon_phys_friction"));
@@ -273,6 +287,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 				
 			}else {
 				p.moveBy(v2.x, v2.y);
+				p.updatePosition();
 				updatePosition(0, 0, null);
 			}
 			
@@ -358,7 +373,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 				angle = Math.abs(angle);
 				angle = 360 - angle;
 			}
-			angleLabel.setText((int)(Math.round(angle / 5f)*5f) + "º");
+			angleLabel.setText((int)(Math.round(angle / 5f)*5f) + grade);
 			angleLabel.setPosition(new Vector2(NPhysics.currentStage.getAxisPosition().getVector()).add(new Vector2(120, 0).rotate(angle)));
 			NPhysics.currentStage.shapefill.arc(NPhysics.currentStage.getAxisPosition().getX(), NPhysics.currentStage.getAxisPosition().getY(), 100, 0, angle);
 		}else angleLabel.setVisible(false);
@@ -374,6 +389,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 			Vector2 pos = p.initial;
 			Vector2 npos = Util.rotPivot(pivot, pos, angleRad);
 			p.setPosition(npos.x, npos.y,false);
+			p.updatePosition();
 		}
 		
 		updatePosition();
@@ -402,14 +418,67 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 
 
 	@Override
-	public void updateValuesToForm() {}
+	public void updateValuesToForm() {
+		
+		setValue("polygon_phys_mass", getValue("polygon_phys_density") * getPhysicalArea());
+	}
+	
+
+	abstract float getArea();
+	public float getPhysicalArea() { return getArea() / (Util.METERS_UNIT()*Util.METERS_UNIT());}
+	public float calculateMass() {
+		
+		physMass = definition.density * getPhysicalArea();
+		setValue("polygon_phys_mass", physMass);
+		return physMass;
+	}
+	private float calculateDensity() {
+		
+		definition.density = physMass / getPhysicalArea();
+		setValue("polygon_phys_density", definition.density);
+		return definition.density;
+	}
 	
 	@Override
 	public void updateValuesFromForm() {
 		
-		definition.density = getValue("polygon_phys_density");
+		float newDensity = getValue("polygon_phys_density");
+		
+		float newMass = getValue("polygon_phys_mass");
+		
+		if( definition.density != newDensity) {
+			
+			definition.density = newDensity;
+			calculateMass();
+		
+		}else if(physMass != newMass) {
+			
+			physMass = newMass;
+			calculateDensity();
+		}
+		
 		definition.friction = getValue("polygon_phys_friction");
 		definition.restitution = getValue("polygon_phys_restitution");
+		
+		definition.isBullet = getValue("polygon_isbullet") == 1;
+		
+		switch ((int)getValue("polygon_phys_state")) {
+		case 2:
+			definition.type = BodyType.StaticBody;
+			break;
+		case 1:
+			definition.type = BodyType.KinematicBody;
+			break;
+		case 0:
+			definition.type = BodyType.DynamicBody;
+			break;
+		default:
+			throw new IllegalStateException();
+		}
+		
+		definition.linearVelocity.set(getValue("polygon_lvel_x"), 
+									  getValue("polygon_lvel_y"));
+		
 	}
 	public void addComponent(ObjectChildren child) {
 		
@@ -470,23 +539,30 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		if(gravityArrow == null) {
 			
 			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
-			gravityArrow = new SimpleArrow(start, new Vector2(start).add(0,-Math.abs(getArea() * Util.GRAVITY_UNIT())));
+			gravityArrow = new SimpleArrow(start, new Vector2(start).add(0,-Math.abs(getPhysicalArea() * Util.GRAVITY_UNIT())));
 			addActor(gravityArrow);
 			gravityArrow.setColor(Color.BLUE);
 		}else {
 			
 			Vector2 start = new Vector2(polygonMassCenter).sub(getPosition());
 			gravityArrow.setStart(start);
-			gravityArrow.setEnd(new Vector2(start).add(0,-Math.abs(getArea() * Util.GRAVITY_UNIT())));
+			gravityArrow.setEnd(new Vector2(start).add(0,-Math.abs(getPhysicalArea() * Util.GRAVITY_UNIT())));
 			gravityArrow.updateVertexArray();
 		}
 	}
+	
+	public boolean isStatic() {
 		
+		return definition.type == BodyType.StaticBody;
+	}
 	@Override
 	public void updatePosition(float x, float y, Point p) {
 		
 		if(p != null) angle = 0 ;
 		createArrow();
 		polygonMassCenter.set(definition.getCenter(false));
+		
+		calculateMass();
+		updateValuesToForm();
 	}
 }

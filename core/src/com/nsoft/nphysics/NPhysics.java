@@ -123,7 +123,7 @@ public class NPhysics extends ApplicationAdapter {
 		if(!currentStage.isReady()) {
 			
 			//Mostra un misatge d'alerta
-			AlertWindow.throwNewAlert(NDictionary.get("simulation-switch-error-title"), NDictionary.get("simulation-switch-error-msg"));
+			AlertWindow.throwNewAlert(NDictionary.get("simulation-switch-error-title"), NDictionary.get("simulation-switch-error-msg") + "\n" +sandbox.getLastErrorMessage());
 			ThreadManager.createTask(()->UIStage.view.switchTab(0), 0.02f);
 			return;
 		}

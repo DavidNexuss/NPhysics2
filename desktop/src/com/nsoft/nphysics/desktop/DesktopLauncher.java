@@ -29,7 +29,7 @@ public class DesktopLauncher {
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.useGL30 = true; //OpenGL ES 3.0
-		config.vSyncEnabled = false; //Sincronització vertical (molt útil en la majoria de casos però desactivada per debugueig)
+		config.vSyncEnabled = true; //Sincronització vertical (molt útil en la majoria de casos però desactivada per debugueig)
 		config.backgroundFPS = 10;
 		config.foregroundFPS = 60; //Objectiu màxim de FPS
 		if(arg.length != 0 && arg[0].equals("window")) {

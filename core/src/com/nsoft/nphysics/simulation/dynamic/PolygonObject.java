@@ -85,7 +85,7 @@ public class PolygonObject extends Actor implements Say{
 	public static boolean hide = false;
 	public static boolean showVel = false;
 	
-	final static float hidealpha = 0.1f;
+	final static float hidealpha = 0.2f;
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
@@ -119,6 +119,8 @@ public class PolygonObject extends Actor implements Say{
 		
 		if(def.type != BodyType.StaticBody) {
 				
+			if(def.type != BodyType.KinematicBody) {
+				
 				gravityArrow.setStart(center);
 				gravityArrow.setEnd(force.add(center));
 				gravityArrow.updateVertexArray();
@@ -126,21 +128,42 @@ public class PolygonObject extends Actor implements Say{
 				gravityArrow.draw(batch,parentAlpha);
 				
 				gravityLabel.setPosition(gravityArrow.getStart().add(new Vector2(60, -50)));
+			}else {
+				
+				gravityLabel.setVisible(false);
+			}
 			
-				if(showVel) {
+				if(showVel || def.type == BodyType.KinematicBody) {
 					
-
-					velocityArrow.setStart(center);
-					velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.NEWTONS_UNIT() * b.getMass())).add(center));
-					velocityArrow.updateVertexArray();
 					
-					velocityArrow.draw(batch, parentAlpha);
+					if(def.type == BodyType.KinematicBody) {
+						
+						velocityArrow.setStart(center);
+						velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.NEWTON_FACTOR)).add(center));
+						velocityArrow.updateVertexArray();
+						
+						velocityArrow.draw(batch, parentAlpha);
+						
+						velLabel.setVisible(true);
+						velLabel.setFloat(b.getLinearVelocity().len());
+						velLabel.conc("m/s");
+						
+						velLabel.setPosition(velocityArrow.getStart().add(new Vector2(60,50)));
+					}else {
+						
+						velocityArrow.setStart(center);
+						velocityArrow.setEnd(new Vector2(new Vector2(b.getLinearVelocity()).scl(Util.NEWTON_FACTOR * b.getMass())).add(center));
+						velocityArrow.updateVertexArray();
+						
+						velocityArrow.draw(batch, parentAlpha);
+						
+						velLabel.setVisible(true);
+						velLabel.setFloat(b.getLinearVelocity().len() * b.getMass());
+						velLabel.conc("kg m/s");
+						
+						velLabel.setPosition(velocityArrow.getStart().add(new Vector2(60,50)));
+					}
 					
-					velLabel.setVisible(true);
-					velLabel.setFloat(b.getLinearVelocity().len() * b.getMass());
-					velLabel.conc("kg m/s");
-					
-					velLabel.setPosition(velocityArrow.getStart().add(new Vector2(60,50)));
 				}else {
 					
 					velLabel.setVisible(false);
@@ -169,6 +192,11 @@ public class PolygonObject extends Actor implements Say{
 	public Vector2 getCenter() {
 		
 		return new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.METERS_UNIT());
+	}
+	
+	public Vector2 getPhysicalCenter() {
+		
+		return new Vector2(b.getMassData().center).add(b.getPosition());
 	}
 	
 	public Vector2 getGravityForce() {
@@ -214,15 +242,17 @@ public class PolygonObject extends Actor implements Say{
 		BodyDef bdef = new BodyDef();
 		bdef.type = def.type;
 		bdef.position.set(def.getCenter(true));
+		bdef.bullet = def.isBullet;
 		bdef.linearVelocity.set(def.linearVelocity);
 		b = owner.createBody(bdef);
 		def.createFixtures(b);
+	
 		if(bdef.type != BodyType.StaticBody)createJoints();
 	}
 	
 	private BodyType checkStatic(BodyType t) {
 		
-		if(t == BodyType.StaticBody) return BodyType.StaticBody;
+		if(t == BodyType.StaticBody || t == BodyType.KinematicBody) return BodyType.StaticBody;
 		int n = 0;
 		for (ObjectChildren c : def.childrens) {
 			
@@ -253,9 +283,6 @@ public class PolygonObject extends Actor implements Say{
 				if(s.speed == 0) {
 					def.motorSpeed = Float.MAX_VALUE * si;
 				}else def.motorSpeed = s.speed * si;
-				
-				System.out.println(def.motorSpeed);
-				System.out.println(def.maxMotorTorque);
 				
 				anchor = def.bodyB;
 				anchors.add(anchor);

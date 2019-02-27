@@ -43,7 +43,7 @@ public class AlertWindow extends VisWindow{
 		
 		AlertWindow w = new AlertWindow(title,finalMessage);
 		
-		w.setWidth(finalsize);
+		w.setWidth(finalsize + 20);
 		w.setHeight(new GlyphLayout(Util.getNormalFont(), finalMessage).height + 100);
 		
 		w.setPosition((Gdx.graphics.getWidth() - w.getWidth())/2f, (Gdx.graphics.getHeight() - w.getHeight())/2f);
