@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -54,14 +55,16 @@ public class PolygonObject extends Actor implements Say{
 	
 	ArrayList<SimulationJoint> simjoints = new ArrayList<>();
 	
+	private Polygon polygon;
 	public PolygonObject(ObjectDefinition def,World owner) {
 		
 		this.owner = owner;
 		this.def = def;
 		def.initForSimulation();
+		polygon = new Polygon();
 		createObject();
 		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.METERS_UNIT());
-		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.METERS_UNIT() / 10f);
+		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.NEWTONS_UNIT()/Util.METERS_UNIT());
 		
 		gravityArrow = new SimpleArrow(center, force.add(center));
 		velocityArrow = new SimpleArrow(center, new Vector2(b.getLinearVelocity()).add(center));
@@ -74,7 +77,6 @@ public class PolygonObject extends Actor implements Say{
 			gravityLabel.setFloat(SimulationStage.gravity.y * b.getMass());
 			gravityLabel.conc("N");
 		}
-		
 
 	}
 	
@@ -115,7 +117,7 @@ public class PolygonObject extends Actor implements Say{
 		}
 		
 		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.METERS_UNIT());
-		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.METERS_UNIT() / Util.NEWTONS_UNIT() * b.getMass());
+		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.NEWTONS_UNIT() * b.getMass());
 		
 		if(def.type != BodyType.StaticBody) {
 				

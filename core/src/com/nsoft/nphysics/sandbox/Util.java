@@ -100,6 +100,18 @@ public class Util {
 		}
 	}
 
+	public static void renderPolygon(ShapeRenderer rend,float[] vertxs,List<Integer> indexes) {
+		
+		for (int i = 0; i < indexes.size(); i+=3) {
+			
+			rend.triangle(			   vertxs[indexes.get(i)*2], 
+									   vertxs[indexes.get(i)*2 + 1], 
+									   vertxs[indexes.get(i+1)*2], 
+									   vertxs[indexes.get(i+1)*2 +1], 
+									   vertxs[indexes.get(i+2)*2], 
+									   vertxs[indexes.get(i+2)*2 +1]);
+		}
+	}
 	public static void renderPolygon(ShapeRenderer rend,ArrayList<Point> points,List<Integer> indexes) {
 		
 		for (int i = 0; i < indexes.size(); i+=3) {

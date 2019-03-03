@@ -146,6 +146,8 @@ public class Sandbox extends GridStage implements Handler{
 		
 		WaterComponent water = new WaterComponent(a, b, c, d);
 		addActor(water);
+		
+		SimulationPackage.waterComponents.add(water);
 	/*	PulleyComponent p = new PulleyComponent();
 		
 		Point GroundA = new Point(200, 100, false);

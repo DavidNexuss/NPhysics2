@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PolygonActor;
+import com.nsoft.nphysics.sandbox.WaterComponent;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
 /**
@@ -16,9 +17,11 @@ public class SimulationPackage {
 
 	static ArrayList<PhysicalActor<?>> polygons = NPhysics.sandbox.polygonlist;
 	public static ArrayList<RawJoint> rawJoints = new ArrayList<>();
+	public static ArrayList<WaterComponent> waterComponents = new ArrayList<>();
 	
 	public static void update() {
 		polygons = NPhysics.sandbox.polygonlist;
 		rawJoints = new ArrayList<>();
+		waterComponents = new ArrayList<>();
 	}
 }

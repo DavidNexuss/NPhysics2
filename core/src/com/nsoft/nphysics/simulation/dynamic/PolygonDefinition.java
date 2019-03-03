@@ -35,6 +35,18 @@ public class PolygonDefinition extends ObjectDefinition{
 			rawVertices[i + 1] = vertices.get(i/2).y;
 		}
 	}
+	
+	public float[] getRawPhysicalVertices() {
+		
+		float[] rawPhysicalVertices = new float[rawVertices.length];
+		
+		for (int i = 0; i < rawPhysicalVertices.length; i++) {
+			
+			rawPhysicalVertices[i] = rawVertices[i] / Util.METERS_UNIT();
+		}
+		
+		return rawPhysicalVertices;
+	}
 	public float[] getRawVertices() {return rawVertices;}
 	public float[][] getTriangles(boolean relative,boolean PhysValue){
 		
@@ -149,18 +161,43 @@ public class PolygonDefinition extends ObjectDefinition{
 			b.createFixture(fdef);
 		}
 		
+		for (int i = 0; i < physicalVertx.length; i++) {
+			if(i % 2 == 0)physicalVertx[i] -= b.getPosition().x;
+			else physicalVertx[i] -= b.getPosition().y;
+		}
 		return fixtures;
 	}
 	
 	float[][] vert;
 	float[][] buff;
 	
+	float[] physicalVertx;
+	public float[] physicalVertxproj;
 	@Override
 	protected void initForSimulation() {
 		vert = getTriangles(true, true);
 		buff = new float[vert.length][6];
+		physicalVertx = getRawPhysicalVertices();
+		for (int i = 0; i < physicalVertx.length; i++) {
+			System.out.println(physicalVertx[i]);
+		}
+		physicalVertxproj = new float[physicalVertx.length];
 	}
 	
+	public float[] updateVertxArray(Vector2 pos,float anglerad) {
+		
+		for (int i = 0; i < physicalVertx.length; i+=2) {
+			
+			float x = physicalVertx[i];
+			float y = physicalVertx[i+1];
+			
+			physicalVertxproj[i] = Util.rotx(x, y, anglerad) + pos.x;
+			physicalVertxproj[i+1] = Util.roty(x, y, anglerad) + pos.y;
+			
+		}
+		
+		return physicalVertxproj;
+	}
 	
 	final Vector2 t1 = new Vector2();
 	final Vector2 t2 = new Vector2();

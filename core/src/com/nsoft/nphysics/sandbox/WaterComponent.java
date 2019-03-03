@@ -13,7 +13,7 @@ import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 public class WaterComponent extends Actor implements Parent<Point>,Removeable{
 
 	private Point a,b,c,d;
-	Vector2 va,vb,vc,vd;
+	public Vector2 va,vb,vc,vd;
 	final static Color color = new Color(0.2f, 0.2f, 0.8f, 0.6f);
 	public WaterComponent(Point a,Point b,Point c,Point d) {
 		
