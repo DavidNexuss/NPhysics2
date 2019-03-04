@@ -87,6 +87,7 @@ public class SpringProcessor implements ForceProcessor,Say{
 	final Vector2 anchorStaticTemp = new Vector2();
 	final Vector2 anchorDynamicTemp = new Vector2();
 	
+	float lxv;
 	@Override
 	public void processForce() {
 		
@@ -124,17 +125,25 @@ public class SpringProcessor implements ForceProcessor,Say{
 		
 		arrow.updateVertexArray();
 		
-		if(NPhysics.currentStage == NPhysics.simulation) {
-			
-			label.setFloat(xv);
-			label.setPosition(new Vector2(start).add(20, 20));
-		}
+		lxv =xv;
 	}
+
+	final static float hidealpha = PolygonObject.hidealpha;
 	@Override
 	public void render() {
 		
-		spring.render();
-		
-		arrow.draw(NPhysics.currentStage.getBatch(), 1);
+		if(NPhysics.currentStage == NPhysics.simulation) {
+			
+			boolean selected = NPhysics.simulation.currentSesion.selected == DynamicObject;
+
+			arrow.setColor(Color.RED.cpy().mul(1, 1, 1, PolygonObject.hide && !selected ? hidealpha : 1));
+			label.setColor(Color.RED.cpy().mul(1, 1, 1, PolygonObject.hide && !selected ? hidealpha : 1));
+			spring.normal = Color.WHITE.cpy().mul(1, 1, 1, PolygonObject.hide && !selected ? hidealpha : 1);
+			
+			label.setFloat(lxv);
+			label.setPosition(new Vector2(anchorDynamicTemp).add(20, 20));
+			spring.render();
+			arrow.draw(NPhysics.currentStage.getBatch(), 1);
+		}
 	}
 }
