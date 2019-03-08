@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.NDictionary;
+import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.Selector;
 import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.ThreadManager.Task;
@@ -133,21 +134,6 @@ public class Sandbox extends GridStage implements Handler{
 		super.addActor(actor);
 	}
 	private void initdebug() {
-		
-		Point a = new Point(300,300, false);
-		Point b = new Point(400,300, false);
-		Point c = new Point(300,400, false);
-		Point d = new Point(400,400, false);
-		
-		addActor(a);
-		addActor(b);
-		addActor(c);
-		addActor(d);
-		
-		WaterComponent water = new WaterComponent(a, b, c, d);
-		addActor(water);
-		
-		SimulationPackage.waterComponents.add(water);
 	/*	PulleyComponent p = new PulleyComponent();
 		
 		Point GroundA = new Point(200, 100, false);
@@ -226,6 +212,20 @@ public class Sandbox extends GridStage implements Handler{
 
 	}
 
+	@Override
+	public void draw() {
+		super.draw();
+		if(GameState.is(GState.CREATE_WATER)) {
+			shapefill.begin(ShapeType.Filled);
+			shapefill.setColor(WaterComponent.color.r, WaterComponent.color.g, WaterComponent.color.b, WaterComponent.color.a - 0.3f);
+			float screenx = getUnprojectX();
+			float screeny = getUnprojectY();
+			
+			shapefill.rect(screenx-Util.UNIT, screeny-Util.UNIT, Util.UNIT*2, Util.UNIT*2);
+			shapefill.end();
+		}
+		
+	}
 	/*
 	 * Les funcions següents touchDragged touchDown i MouseMove corresponen a la classe
 	 * Stage i son executades cada cop que l'usuari mou el cursor clica o arrastra.
@@ -270,32 +270,32 @@ public class Sandbox extends GridStage implements Handler{
 			if(isSnapping())Point.lastPoint = new Point(snapGrid(screenx),snapGrid(screeny), true);
 			else Point.lastPoint = new Point(screenx,screeny, true);
 			addActor(Point.lastPoint);
-			break;
+			return true;
 		case HOOK_FORCE_ARROW2: //Es finalitza la creació d'una força
 			
 			ArrowActor.unhook();
-			break;
+			return true;
 		case CREATE_AXIS: //Es crea un eix
 			
 			AxisSupport s = new AxisSupport((PhysicalActor<ObjectDefinition>)mainSelect.getLastSelected());
 			if(isSnapping())s.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else s.setPosition(screenx, screeny);
 			addActor(s);
-			break;
+			return true;
 		case CREATE_DOUBLE_AXIS: //Es crea un eix entre dos objectes
 			
 			DoubleAxisComponent d = new DoubleAxisComponent(false);
 			if(isSnapping())d.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else d.setPosition(screenx, screeny);
 			addActor(d);
-			break;
+			return true;
 		case CREATE_PRISMATIC: //Es crea una via prismàtica
 			
 			PrismaticComponent c = new PrismaticComponent((PhysicalActor<ObjectDefinition>)mainSelect.getLastSelected());
 			if(isSnapping())c.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else c.setPosition(screenx, screeny);
 			addActor(c);
-			break;
+			return true;
 		case CREATE_FORCE: //Es crea una força
 			
 			PhysicalActor<ObjectDefinition> current = (PhysicalActor<ObjectDefinition>)mainSelect.getLastSelected();
@@ -309,7 +309,7 @@ public class Sandbox extends GridStage implements Handler{
 				ForceComponent.temp.hook();
 				addActor(ForceComponent.temp);
 			}
-			break;
+			return true;
 		case CREATE_ROPE: //Es crea una corda
 			
 			if(RopeComponent.temp == null) {
@@ -371,6 +371,26 @@ public class Sandbox extends GridStage implements Handler{
 			
 			if(p.isComplete()) PulleyComponent.tmp = null;
 			
+			return true;
+		case CREATE_WATER:
+			
+			screenx = getUnprojectX();
+			screeny = getUnprojectY();
+			
+			Point pa = new Point(screenx-Util.UNIT,screeny-Util.UNIT, false);
+			Point pb = new Point(screenx+Util.UNIT,screeny-Util.UNIT, false);
+			Point pc = new Point(screenx-Util.UNIT,screeny+Util.UNIT, false);
+			Point pd = new Point(screenx+Util.UNIT,screeny+Util.UNIT, false);
+			
+			addActor(pa);
+			addActor(pb);
+			addActor(pc);
+			addActor(pd);
+			
+			WaterComponent water = new WaterComponent(pa, pb, pc, pd);
+			addActor(water);
+			
+			SimulationPackage.waterComponents.add(water);
 			return true;
 		default:
 			

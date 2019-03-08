@@ -305,6 +305,7 @@ public class UIStage extends Stage{
 		options.add(MenuItem.loadNewItem("segment.png", GState.CREATE_SEGMENT));
 		options.add(MenuItem.loadNewItem("shape.png", GState.CREATE_FAST_POLYGON));
 		options.add(MenuItem.loadNewItem("circle.png", GState.CREATE_CIRCLE));
+		options.add(MenuItem.loadNewItem("water.png", GState.CREATE_WATER));
 	}
 
 	/**
