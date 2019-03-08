@@ -31,6 +31,7 @@ import com.nsoft.nphysics.sandbox.PulleyComponent;
 import com.nsoft.nphysics.sandbox.RopeComponent;
 import com.nsoft.nphysics.sandbox.SpringComponent;
 import com.nsoft.nphysics.sandbox.Util;
+import com.nsoft.nphysics.sandbox.WaterComponent;
 import com.nsoft.nphysics.sandbox.drawables.Pulley;
 import com.nsoft.nphysics.sandbox.drawables.Spring;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
@@ -81,6 +82,7 @@ public class SimulationStage extends GridStage{
 		HashMap<Body, PolygonObject> bodiesMap; //El mapa de cossos i objectes
 		Body centre; //El cos central
 		
+		float worldTime;
 		public Simulation(World world) {
 			this.world = world;
 		}
@@ -99,6 +101,12 @@ public class SimulationStage extends GridStage{
 				
 				processor.processForce();
 			}
+		}
+
+		public void step(float timeStep, int i, int j) {
+			
+			world.step(timeStep, i, j);
+			worldTime+= timeStep;
 		}
 	}
 	public Sesion currentSesion;
@@ -134,6 +142,7 @@ public class SimulationStage extends GridStage{
 		dynamicSimulation = new Simulation(initWorld());
 		initObjects(dynamicSimulation,true);
 		initRawJoints(dynamicSimulation,true);
+		initWater(dynamicSimulation);
 	}
 	
 	@Override
@@ -256,6 +265,13 @@ public class SimulationStage extends GridStage{
 			}
 		}
 	}
+	
+	public static void initWater(Simulation s) {
+		
+		for (WaterComponent waterComponent : SimulationPackage.waterComponents) {
+			s.processors.add(new WaterProcessor(waterComponent, s));
+		}
+	}
 	@Override
 	public void draw() {
 		
@@ -287,7 +303,7 @@ public class SimulationStage extends GridStage{
 	public void stepSimulation() {
 		
 		dynamicSimulation.aplyForces();
-		dynamicSimulation.world.step(getPhysicsDelta(), 8, 6);
+		dynamicSimulation.step(getPhysicsDelta(), 8, 6);
 		
 	}
 	

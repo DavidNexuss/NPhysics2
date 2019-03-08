@@ -89,8 +89,7 @@ public abstract class GridStage extends DragStage implements Say{
 	 * Executa les draw calls pertinents per renderitzar la cuadrícula
 	 */
 	@Override
-	public void draw() {
-		
+	public void draw() {	
 		gridBatch.begin();
 		camera.project(tmp);
 		

@@ -17,6 +17,7 @@ public enum GState {
 	CREATE_FAST_POLYGON(Flag.POLYGON,"menu-create-polygon"),
 	CREATE_SEGMENTS("menu-create-segments"),
 	CREATE_FORCE("menu-create-force"),
+	CREATE_WATER("menu-create-water"),
 	HOOK_FORCE_ARROW("menu-create-force.1"),
 	HOOK_FORCE_ARROW2("menu-create-force.2");	
 	

@@ -20,6 +20,11 @@ languages: {
 		ESP: Crea un eje fijo
 		CAT: Crea un eix fix
 	}
+	menu-create-water:{
+		ENG: Create water
+		ESP: Crea agua
+		CAT: Crea aigua
+	}
 	simulation: {
 		ENG: Simulation
 		ESP: Simulación
