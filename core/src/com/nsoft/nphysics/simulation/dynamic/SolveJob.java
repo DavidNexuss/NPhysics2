@@ -87,7 +87,7 @@ public class SolveJob implements Say{
 		Simulation s = new Simulation(SimulationStage.initWorld());
 		SimulationStage.initObjects(s, false);
 		SimulationStage.initRawJoints(s, false);
-
+		SimulationStage.initWater(s);
 		var = s.objectsMap.get(obj);
 		
 		for (int i = 0; i < 10; i++) {
