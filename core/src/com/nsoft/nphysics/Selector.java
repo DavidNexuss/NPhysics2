@@ -51,7 +51,7 @@ public class Selector extends Actor implements Say{
 			Vector2 posPoint = new Vector2(point.getX(), point.getY());
 			if(!(posPoint.x > low.x && posPoint.x < high.x && posPoint.y > low.y && posPoint.y < high.y))
 				newList.add(point);
-				if(point.isSelected())NPhysics.sandbox.mainSelect.unSelect(point);
+				//if(point.isSelected())Sandbox.mainSelect.unSelect(point);
 		}
 		for (Point point : Point.allpoints) {
 			

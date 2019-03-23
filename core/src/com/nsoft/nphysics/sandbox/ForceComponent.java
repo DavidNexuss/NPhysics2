@@ -17,7 +17,6 @@ import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
-import com.nsoft.nphysics.simulation.dsl.Force.Variable;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 

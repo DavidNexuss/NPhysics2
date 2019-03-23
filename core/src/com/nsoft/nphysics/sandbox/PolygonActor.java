@@ -1,6 +1,7 @@
 package com.nsoft.nphysics.sandbox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
@@ -23,7 +24,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 
 	private Point initial;
 	private ArrayList<Segment> segments = new ArrayList<>();
-	private ArrayList<Integer> indexes = new ArrayList<>();
+	private List<Integer> indexes = new ArrayList<>();
 	private double[] buffer;
 	private float X,Y,width,height; //BOUNDS
 	
@@ -171,7 +172,7 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 		
 		createBuffer();
 		
-		indexes = (ArrayList<Integer>) Earcut.earcut(buffer);
+		indexes = Earcut.earcut(buffer);
 	}
 	
 	private void calculateBounds() {

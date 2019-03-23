@@ -24,7 +24,6 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 	public static final float SHOW_DELAY = 1f;
 	public static final float INPUT_EPSILON = 20f;
 	public static final float DETECT_EPSILON = 0.1f;
-	private static ArrayList<Segment> segments = new ArrayList<Segment>();
 	
 	private Point A;
 	private Point B;
@@ -60,8 +59,6 @@ public class Segment extends Group implements Parent<Point>,ClickIn,Showable{
 		setAlpha(0);
 		updateAll();
 		addInput();
-		
-		segments.add(this);
 	}	
 
 	

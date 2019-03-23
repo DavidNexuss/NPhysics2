@@ -35,8 +35,8 @@ public class NDictionary implements Serializable,Say{
 	@Override
 	public void read(Json json, JsonValue jsonData) {
 		
-		JsonValue cur = jsonData.child;
 		if(jsonData == null) return;
+		JsonValue cur = jsonData.child;
 		readEntries(json, cur.child);
 	}
 	@Override

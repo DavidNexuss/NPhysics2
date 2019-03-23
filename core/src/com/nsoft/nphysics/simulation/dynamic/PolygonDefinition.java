@@ -1,6 +1,7 @@
 package com.nsoft.nphysics.simulation.dynamic;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -16,7 +17,7 @@ import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 public class PolygonDefinition extends ObjectDefinition{
 
 	public ArrayList<PositionVector> vertices = new ArrayList<>();
-	public ArrayList<Integer> indexes = new ArrayList<>();
+	public List<Integer> indexes = new ArrayList<>();
 	
 	private float[] rawVertices;
 	
@@ -103,12 +104,12 @@ public class PolygonDefinition extends ObjectDefinition{
 	{
 		Vector2 centroid = new Vector2();
 	    
-		double signedArea = 0.0;
-	    double x0 = 0.0; // Current vertex X
-	    double y0 = 0.0; // Current vertex Y
-	    double x1 = 0.0; // Next vertex X
-	    double y1 = 0.0; // Next vertex Y
-	    double a = 0.0;  // Partial signed area
+		float signedArea = 0f;
+	    float x0 = 0f; // Current vertex X
+	    float y0 = 0f; // Current vertex Y
+	    float x1 = 0f; // Next vertex X
+	    float y1 = 0f; // Next vertex Y
+	    float a = 0f;  // Partial signed area
 
 	    // For all vertices
 	  

@@ -39,7 +39,7 @@ public interface Draggable {
 			
 			for (ClickIn clickIn : list) {
 				
-				if(clickIn instanceof Draggable && clickIn != this && clickIn != null) {
+				if(clickIn instanceof Draggable && clickIn != this) {
 					if(!(Sandbox.SHIFT || Sandbox.mainSelect.multiSelection)) clickIn.getHandler().unSelect(clickIn);
 					((Draggable) clickIn).doDrag(false, x, y,event);
 				}

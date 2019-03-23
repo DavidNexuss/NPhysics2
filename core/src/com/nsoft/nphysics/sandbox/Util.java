@@ -30,8 +30,8 @@ public class Util {
 	 * Funció per genèrica per validar si un objecte és instància d'una classe.
 	 * Métode ineficient tot i que és molt més recomanable utilitzar la forma tipada
 	 * instanceof aquesta és la única forma de fer-ho de forma dinàmica
-	 * @param la classe
-	 * @param l'objecte
+	 * @param clas la classe
+	 * @param p l'objecte
 	 * @return si es instancia de
 	 */
 	public static <T> boolean isInstance(Class<T> clas,Object p) {

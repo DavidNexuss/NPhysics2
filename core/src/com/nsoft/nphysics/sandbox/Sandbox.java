@@ -32,7 +32,6 @@ import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.interfaces.Ready;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
-import com.nsoft.nphysics.simulation.dsl.Builder;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
@@ -188,30 +187,6 @@ public class Sandbox extends GridStage implements Handler{
 	//	addActor(new SimpleArrow(center, new Vector2(center).add(200,200)));
 	}
 	
-
-	//--------DRAW-METHODS-----------------
-	
-	//Metode antic per dibuixar la cuadricula
-	@Deprecated
-	public void drawGrid() {
-		
-		shapeline.begin(ShapeType.Line);
-		shapeline.setColor(Color.GRAY);
-		Gdx.gl.glLineWidth(1);
-		
-		int X = (int) (Gdx.graphics.getWidth()/Util.METERS_UNIT());
-		int Y = (int) (Gdx.graphics.getHeight()/Util.METERS_UNIT());
-		
-		for (int i = 0 ; i < Gdx.graphics.getWidth(); i+=METERS_UNIT()) {
-			
-			shapeline.line(0, i, Gdx.graphics.getWidth(), i);
-			shapeline.line(i, 0, i, Gdx.graphics.getHeight());
-		}
-		
-		shapeline.end();
-
-	}
-
 	@Override
 	public void draw() {
 		super.draw();

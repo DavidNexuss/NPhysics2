@@ -164,8 +164,6 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		int v = -1;
 		for (int i = 0; i < objectsParent.size(); i++) {
 			if(oldParent == objectsParent.get(i)) {
-				
-				if(v != -1) throw new IllegalStateException();
 				v = i;
 				break;
 			}
