@@ -51,7 +51,7 @@ public class NPhysics extends ApplicationAdapter {
 	@Override
 	public void create () {
 		current = this;
-		
+
 		Options.init();
 		NDictionary.init();
 		UILoader.loadUI();

@@ -26,8 +26,8 @@ public class FastPolygonCreator {
 	 * es reutilitza i per últim finalitza un cos si es selecciona el primer punt d'aquest.
 	 * En cas de que es tracte de la creació d'un cos especial on els punts no defineixen els limits d'aquest,
 	 * per exemple {@link CircleActor} s'utilitza un procés individual.
-	 * @param x, posició x del cursor desprojectada
-	 * @param y, posició y del cursor desprojectada
+	 * @param x posició x del cursor desprojectada
+	 * @param y posició y del cursor desprojectada
 	 */
 	public static void handleClick(float x,float y) {
 		
@@ -68,8 +68,8 @@ public class FastPolygonCreator {
 	 * Per crear un cos circular s'utilitza la variant {@link CircleActor}
 	 * 
 	 * Aquesta funció només té un ús per debugueig
-	 * @param center, posició mundial del centre de la circunferència
-	 * @param radius, radi de la circunferència
+	 * @param center posició mundial del centre de la circunferència
+	 * @param radius radi de la circunferència
 	 */
 	public static void createCircle(Vector2 center,float radius) {
 		
