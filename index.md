@@ -9,6 +9,11 @@ body {
     color: #666;
     letter-spacing: 1.5px;
 }
+
+img{
+
+    width: 100%
+}
 #main-content {width: 80%;}
 </style>
 ## Welcome to GitHub Pages
@@ -58,3 +63,4 @@ Este apartado tiene como objetivo mostrar la creación de objetos simples, poder
 Una vez abierto el programa, este muestra una cuadrícula sobre un fondo azul claro, esta es la area de diseño, donde definiremos los objetos i las relaciones entre ellos.  
 
 El programa por defecto usará el inglés como lengua, si se desea cambiar de lengua solo hay que pulsar F1 y modificar su opción. Una vez hecho los cambios hay que reiniciar el programa para que surtan efecto.
+<img src="language.PNG">
