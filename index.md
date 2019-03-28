@@ -9,13 +9,28 @@ Este es un trabajo de investigación de bachillerato, el propósito de este es l
 ### Ejemplo de un brazo robótico  
 <iframe width="100%" height="500" src="https://www.youtube.com/embed/Fn4RER__GAM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+## Descargar
+
+El programa se puede descargar desde la página de GitHub en su última versión estable ya compilada, en cada lanzamiento existen 3 versiones del programa comprimido:
+
++ NPhysics.zip (Para descomprimir usando cualquier programa de descompresión)
++ NPhysics.7z (Para descomprimir usando 7z)
++ NPhysics.exe (Autoejecutable para Windows que descomprime el programa)
+
+NPhysics esta escrito en Java lo que permite que el programa sea multiplataforma, se puede ejecutar en cualquier distribución de Linux, Windows y MacOS. Siempre y cuando se tenga instalado [JRE](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) o JDK[JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)  
 ## Para compilar
 
-El proyecto es gestionado usando gradle. Para compilar solo hay que ejecutar:  
+En caso que se desee usar la última versión del programa en su último commit se puede compilar el programa directamente desde el repositorio.
+El proyecto es gestionado usando gradle. Para compilar los archivos binarios solo hay que ejecutar la siguiente orden en la raíz del repositorio:  
 
-```gradlew desktop:dist``` Para compilar el .jar  
-```gradlew html:dist``` Para compilar la app web
+```gradlew desktop:dist```  
 
+Esta ordena compilará el programa y copiara el ejecutable en la carpeta ```desktop/build/libs```, esta es la carpeta en la que se generará el programa compilado cada vez.  
+Una vez compilado hay que copiar todo el contenido de la carpeta ```desktop/assets``` a la carpeta donde se encuentra el compilado.  
+
+### Para ejecutar
+
+Para ejecutar el programa ya compilado solo hay que ejecutar la orden ```java -jar desktop1.0```  
 Usa las siguientes bibliotecas:  
 [Libgdx](https://libgdx.badlogicgames.com/)  
 [Earcut4j](https://github.com/earcut4j/earcut4j)  
