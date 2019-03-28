@@ -67,4 +67,10 @@ Una vez configurado el idioma el programa esta listo para su uso, a partir de aq
 
 ### Disposición de los elementos gráficos  
 
-Una vez abierto el programa, este muestra una cuadrícula sobre un fondo azul claro, esta es la area de diseño, donde definiremos los objetos i las relaciones entre ellos.  
+Una vez abierto el programa, este muestra una cuadrícula sobre un fondo azul claro, esta es la area de diseño, donde definiremos los objetos i las relaciones entre ellos. El programa tiene 3 menús principales: 
+
++ La barra superior que nos permite cambiar entre la fase de diseño y la de simulación
++ El menú lateral que nos permite seleccionar la herramienta a usar en la fase de diseño
++ La barra inferior que contiene un botón para borrar todos los objetos del diseño y otro para poder activar/desactivar la función del programa que autoajusta los elementos a la cuadrícula. 
+
+El menú en el que nos centraremos en este punto es el de selección de la herramienta
