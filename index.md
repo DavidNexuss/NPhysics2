@@ -82,3 +82,7 @@ Por defecto la herramienta seleccionada es la del mouse, esta nos permite selecc
 ### Crear un objeto simple
 
 Para crear un objeto o cuerpo simple con forma de polígono hay que pulsar usar la herramienta de creación de polígono. Para crear un polígono solo hay que clicar en el plano los puntos deseados que conformaran sus vertices, una vez terminado hay que volver a clicar sobre el primer vertice.
+
+No hay que preocuparse por crear los puntos por separado si la posición deseada no es un punto el programa lo creara automáticamente.
+
+Una vez el objeto esta creado se puede acceder a la ventana para cambiar sus propiedades físicas con la tecla ```Q``` 
