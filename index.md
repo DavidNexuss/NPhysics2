@@ -1,5 +1,14 @@
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
 <style>
 .inner {width: 60%;} 
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #666;
+    letter-spacing: 1.5px;
+}
 #main-content {width: 80%;}
 </style>
 ## Welcome to GitHub Pages
