@@ -85,4 +85,19 @@ Para crear un objeto o cuerpo simple con forma de polígono hay que pulsar usar 
 
 No hay que preocuparse por crear los puntos por separado si la posición deseada no es un punto el programa lo creara automáticamente.
 
-Una vez el objeto esta creado se puede acceder a la ventana para cambiar sus propiedades físicas con la tecla ```Q``` 
+Una vez el objeto esta creado se puede acceder a la ventana para cambiar sus propiedades físicas con la tecla ```Q```. En esta se muestran varias opciones listadas a continuación:
+
+<img src="poligon.PNG">
+
++ Opciones del simulador
+- simulación reigurosa para objetos rápidos (Como de rigurosa debe ser la simulación en casos extremos, dejar desmarcada por norma general)
+- Estado (Dinámico, Kinemático, Estático)
++ Velocidad lineal
+- Velocidad lineal en x 
+- Velocidad lineal en y 
++ Características del material
+- Masa (en kg)
+- Densidad (en kg/m^2)
+- Fricción (Coeficiente de fricción, entre 0 y 1)
+- Restitución (Coeficiente de restitución, entre 0 y 1)
+
