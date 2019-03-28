@@ -1,32 +1,25 @@
 ## Welcome to GitHub Pages
 
-You can use the [editor on GitHub](https://github.com/DavidNexuss/NPhysics2/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Este es un trabajo de investigación de bachillerato, el propósito de este es la creación de un Simulador de Dinámica que permita resolver problemas de estática planteados por el usuario, un conjunto de problemas físicos y mecánicos donde el objetivo que se busca es encontrar el equilibrio de las fuerzas en el sistema. Una vez este solucione el sistema ejecutará una simulación en tiempo real donde se supondrá que es una situación dinámica y se comprobará si realmente hay movimiento. Tanto la simulación como el planteamiento del problema se llevarán a cabo en un entorno gráfico y de fácil uso.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Fn4RER__GAM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-### Markdown
+## Para compilar
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+El proyecto es gestionado usando gradle. Para compilar solo hay que ejecutar:  
 
-```markdown
-Syntax highlighted code block
+```gradlew desktop:dist``` Para compilar el .jar  
+```gradlew html:dist``` Para compilar la app web
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
+[![Simulador de situaciones dinámicas](https://raw.githubusercontent.com/DavidNexuss/NPhysics2/master/desktop/assets/logo.png)](https://www.youtube.com/watch?v=aNLhFl5YnPc)
 
-1. Numbered
-2. List
+Usa las siguientes bibliotecas:  
+[Libgdx](https://libgdx.badlogicgames.com/)  
+[Earcut4j](https://github.com/earcut4j/earcut4j)  
+[JTS](https://github.com/locationtech/jts)  
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
 ### Jekyll Themes
 
