@@ -52,3 +52,9 @@ Este apartado pretende servir como una pequeña guía de uso introductoria para 
 ## Primeros pasos
 
 Este apartado tiene como objetivo mostrar la creación de objetos simples, poder mnodificar sus atributos físicos y mostrar el manejo de los objetos y de las entidades básicas de la fase de diseño de la simulación.
+
+<iframe width="100%" height="500" src="https://www.youtube.com/embed/9XXuS8zimsY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Una vez abierto el programa, este muestra una cuadrícula sobre un fondo azul claro, esta es la area de diseño, donde definiremos los objetos i las relaciones entre ellos.  
+
+El programa por defecto usará el inglés como lengua, si se desea cambiar de lengua solo hay que pulsar F1 y modificar su opción. Una vez hecho los cambios hay que reiniciar el programa para que surtan efecto.
