@@ -26,7 +26,7 @@ El programa se puede descargar desde la página de GitHub en su última versión
 + NPhysics.7z (Para descomprimir usando 7z)
 + NPhysics.exe (Autoejecutable para Windows que descomprime el programa)
 
-NPhysics esta escrito en Java lo que permite que el programa sea multiplataforma, se puede ejecutar en cualquier distribución de Linux, Windows y MacOS. Siempre y cuando se tenga instalado [JRE](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) o JDK[JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)  
+NPhysics esta escrito en Java lo que permite que el programa sea multiplataforma, se puede ejecutar en cualquier distribución de Linux, Windows y MacOS. Siempre y cuando se tenga instalado [JRE](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) o [JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)  
 ## Para compilar
 
 En caso que se desee usar la última versión del programa en su último commit se puede compilar el programa directamente desde el repositorio.
