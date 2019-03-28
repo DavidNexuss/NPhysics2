@@ -73,4 +73,6 @@ Una vez abierto el programa, este muestra una cuadrícula sobre un fondo azul cl
 + El menú lateral que nos permite seleccionar la herramienta a usar en la fase de diseño
 + La barra inferior que contiene un botón para borrar todos los objetos del diseño y otro para poder activar/desactivar la función del programa que autoajusta los elementos a la cuadrícula. 
 
-El menú en el que nos centraremos en este punto es el de selección de la herramienta
+### Movimiento del plano
+
+Por defecto la herramienta seleccionada es la del mouse, esta nos permite seleccionar objetos y mover el plano. Si pulsamos en un lugar vacío y mantenemos pulsado podremos arrastrar el plano, también podemos mover el eje de referencia pulsando la tecla ```A``` sobre el lugar deseado.
