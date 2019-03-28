@@ -44,3 +44,11 @@ Usa las siguientes bibliotecas:
 [Libgdx](https://libgdx.badlogicgames.com/)  
 [Earcut4j](https://github.com/earcut4j/earcut4j)  
 [JTS](https://github.com/locationtech/jts)  
+
+# Guía de uso  
+
+Este apartado pretende servir como una pequeña guía de uso introductoria para mostrar las funciones del programa, desde poder crear objetos simples hasta poder incluir en la simulación muelles, poleas, ejes, motores, agua y más. Para hacer esta guía más explicatoria y amena irá acompañada de una série de videos por cada apartado en los que se mostrará los pasos a seguir.  
+
+## Primeros pasos
+
+Este apartado tiene como objetivo mostrar la creación de objetos simples, poder mnodificar sus atributos físicos y mostrar el manejo de los objetos y de las entidades básicas de la fase de diseño de la simulación.
