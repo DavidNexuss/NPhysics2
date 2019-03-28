@@ -73,6 +73,12 @@ Una vez abierto el programa, este muestra una cuadrícula sobre un fondo azul cl
 + El menú lateral que nos permite seleccionar la herramienta a usar en la fase de diseño
 + La barra inferior que contiene un botón para borrar todos los objetos del diseño y otro para poder activar/desactivar la función del programa que autoajusta los elementos a la cuadrícula. 
 
+Al pasar el cursor por encima de uno de los botones del menú lateral de las herramientas este mostrará en pantalla un breve texto que descrive su función.  
+
 ### Movimiento del plano
 
 Por defecto la herramienta seleccionada es la del mouse, esta nos permite seleccionar objetos y mover el plano. Si pulsamos en un lugar vacío y mantenemos pulsado podremos arrastrar el plano, también podemos mover el eje de referencia pulsando la tecla ```A``` sobre el lugar deseado.
+
+### Crear un objeto simple
+
+Para crear un objeto o cuerpo simple con forma de polígono hay que pulsar usar la herramienta de creación de polígono. Para crear un polígono solo hay que clicar en el plano los puntos deseados que conformaran sus vertices, una vez terminado hay que volver a clicar sobre el primer vertice.
