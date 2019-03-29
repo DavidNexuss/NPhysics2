@@ -130,7 +130,7 @@ Una vez definido el objeto en la fase de edición se le puede añadir fuerzas qu
 
 Para crear la fuerza hay que clicar en el punto del plano que sera su origen, luego en el punto en que el vector de la fuerza termina, esto es solo para poder definir la dirección del vector de una forma visual, para poder definir la magnitud del vector de una forma más precisa se selecciona el vector y este mostrará en pantalla la ventana para poder editar sus propiedades.  
 
-<img src="force.PNG" class="imgscreen">
+<img src="fuerza.PNG" class="imgscreen">
 
 ## Articulaciones
 
