@@ -77,11 +77,11 @@ Al pasar el cursor por encima de uno de los botones del menú lateral de las her
 
 ### Movimiento del plano
 
-Por defecto la herramienta seleccionada es la del mouse, esta nos permite seleccionar objetos y mover el plano. Si pulsamos en un lugar vacío y mantenemos pulsado podremos arrastrar el plano, también podemos mover el eje de referencia pulsando la tecla ```A``` sobre el lugar deseado.
+Por defecto la herramienta seleccionada es la del **mouse** ![Alt](/menu/start.png), esta nos permite seleccionar objetos y mover el plano. Si pulsamos en un lugar vacío y mantenemos pulsado podremos arrastrar el plano, también podemos mover el eje de referencia pulsando la tecla ```A``` sobre el lugar deseado.
 
 ### Crear un objeto simple
 
-Para crear un objeto o cuerpo simple con forma de polígono hay que pulsar usar la herramienta de creación de polígono ![Alt](/menu/shape.png). Para crear un polígono solo hay que clicar en el plano los puntos deseados que conformaran sus vértices, una vez terminado hay que volver a clicar sobre el primer vértice.
+Para crear un objeto o cuerpo simple con forma de polígono hay que pulsar usar la **herramienta de creación de polígono** ![Alt](/menu/shape.png). Para crear un polígono solo hay que clicar en el plano los puntos deseados que conformaran sus vértices, una vez terminado hay que volver a clicar sobre el primer vértice.
 
 No hay que preocuparse por crear los puntos por separado si la posición deseada no es un punto el programa lo creara automáticamente.
 
