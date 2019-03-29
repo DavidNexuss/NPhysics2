@@ -118,7 +118,9 @@ Una vez dispuestos los objetos se puede pasar a la fase de Simulación con pulsa
 | Fuerzas descritas por el usuario | Rojo |
 | Fuerza de gravedad | Amarillo |
 | Fuerzas de reacción  | Verde |
-| Tensión de las cuerdas | Naranja |
+| Tensión de las cuerdas | Naranja |  
 
-También puede mostrar el momento lineal de los objetos pulsando la tecla ```I```, por defecto esta función esta desactivada. Si puede parecer muy caótico
+También puede mostrar el momento lineal de los objetos pulsando la tecla ```I```, por defecto esta función esta desactivada. Cuando se simulan muchos objetos a la vez puede parecer muy caótico que el programa muestre toda esta información, por eso existe una función que permite esconder todas las flechas, valores y oscurecer los objetos, y solo mostrar resaltada la información del objeto seleccionado. Esta función se activa con la tecla ```U```.
+
+Para volver a la fase de diseño solo hay que pulsar su botón en la barra superior.
 
