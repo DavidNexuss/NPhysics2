@@ -124,3 +124,16 @@ También puede mostrar el momento lineal de los objetos pulsando la tecla ```I``
 
 Para volver a la fase de diseño solo hay que pulsar su botón en la barra superior.
 
+## Definir Fuerzas
+
+Una vez definido el objeto en la fase de edición se le puede añadir fuerzas que se aplicarán en la simulación. Para crear una fuerza primero hay que seleccionar el objeto en el modo de diseño. Luego usar la herramienta de creación de fuerzas.
+## Articulaciones
+
+El programa permite crear varios tipos de articulaciones para poder simular escenarios mas complejos. Esta es una lista de todas las articulaciones o herramientas para definir relaciones entre dos objetos del simulador.
+
++ Ejes y motores
++ Vías prismáticas
++ Cuerdas
++ Muelles
++ Poleas
+
