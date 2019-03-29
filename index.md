@@ -52,11 +52,11 @@ Usa las siguientes bibliotecas:
 
 # Guía de uso  
 
-Este apartado pretende servir como una pequeña guía de uso introductoria para mostrar las funciones del programa, desde poder crear objetos simples hasta poder incluir en la simulación muelles, poleas, ejes, motores, agua y más. Para hacer esta guía más explicatoria y amena irá acompañada de una série de videos por cada apartado en los que se mostrará los pasos a seguir.  
+Este apartado pretende servir como una pequeña guía de uso introductoria para mostrar las funciones del programa, desde poder crear objetos simples hasta poder incluir en la simulación muelles, poleas, ejes, motores, agua y más. Para hacer esta guía más explicatória y amena irá acompañada de una serie de videos por cada apartado en los que se mostrará los pasos a seguir.  
 
 ## Primeros pasos
 
-Este apartado tiene como objetivo mostrar la creación de objetos simples, poder mnodificar sus atributos físicos y mostrar el manejo de los objetos y de las entidades básicas de la fase de diseño de la simulación.
+Este apartado tiene como objetivo mostrar la creación de objetos simples, poder modificar sus atributos físicos y mostrar el manejo de los objetos y de las entidades básicas de la fase de diseño de la simulación.
 
 El programa por defecto usará el inglés como lengua, si se desea cambiar de lengua pulse  ```F1``` para mostrar la configuración del programa, modifique el valor ```Language``` usando la barra desplazable y modifique su opción. Una vez hecho los cambios hay que reiniciar el programa para que surtan efecto.  
 <img src="language.PNG">
@@ -73,7 +73,7 @@ Una vez abierto el programa, este muestra una cuadrícula sobre un fondo azul cl
 + El menú lateral que nos permite seleccionar la herramienta a usar en la fase de diseño
 + La barra inferior que contiene un botón para borrar todos los objetos del diseño y otro para poder activar/desactivar la función del programa que autoajusta los elementos a la cuadrícula. 
 
-Al pasar el cursor por encima de uno de los botones del menú lateral de las herramientas este mostrará en pantalla un breve texto que descrive su función.  
+Al pasar el cursor por encima de uno de los botones del menú lateral de las herramientas este mostrará en pantalla un breve texto que describe su función.  
 
 ### Movimiento del plano
 
@@ -81,7 +81,7 @@ Por defecto la herramienta seleccionada es la del mouse, esta nos permite selecc
 
 ### Crear un objeto simple
 
-Para crear un objeto o cuerpo simple con forma de polígono hay que pulsar usar la herramienta de creación de polígono. Para crear un polígono solo hay que clicar en el plano los puntos deseados que conformaran sus vertices, una vez terminado hay que volver a clicar sobre el primer vertice.
+Para crear un objeto o cuerpo simple con forma de polígono hay que pulsar usar la herramienta de creación de polígono. Para crear un polígono solo hay que clicar en el plano los puntos deseados que conformaran sus vértices, una vez terminado hay que volver a clicar sobre el primer vértice.
 
 No hay que preocuparse por crear los puntos por separado si la posición deseada no es un punto el programa lo creara automáticamente.
 
@@ -90,14 +90,14 @@ Una vez el objeto esta creado se puede acceder a la ventana para cambiar sus pro
 <img src="poligon.PNG">
 
 + Opciones del simulador
-- simulación reigurosa para objetos rápidos (Como de rigurosa debe ser la simulación en casos extremos, dejar desmarcada por norma general)
-- Estado (Dinámico, Kinemático, Estático)
+    - simulación rigurosa para objetos rápidos (Como de rigurosa debe ser la simulación en casos extremos, dejar desmarcada por norma general)
+    - Estado (Dinámico, Kinemático, Estático)
 + Velocidad lineal
-- Velocidad lineal en x 
-- Velocidad lineal en y 
+    - Velocidad lineal en x 
+    - Velocidad lineal en y 
 + Características del material
-- Masa (en kg)
-- Densidad (en kg/m^2)
-- Fricción (Coeficiente de fricción, entre 0 y 1)
-- Restitución (Coeficiente de restitución, entre 0 y 1)
+    - Masa (en kg)
+    - Densidad (en kg/m^2)
+    - Fricción (Coeficiente de fricción, entre 0 y 1)
+    - Restitución (Coeficiente de restitución, entre 0 y 1)
 
