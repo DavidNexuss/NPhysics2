@@ -126,7 +126,12 @@ Para volver a la fase de diseño solo hay que pulsar su botón en la barra super
 
 ## Definir Fuerzas
 
-Una vez definido el objeto en la fase de edición se le puede añadir fuerzas que se aplicarán en la simulación. Para crear una fuerza primero hay que seleccionar el objeto en el modo de diseño. Luego usar la **herramienta de creación de fuerzas** ![Alt](/menu/force.png).
+Una vez definido el objeto en la fase de edición se le puede añadir fuerzas que se aplicarán en la simulación. Para crear una fuerza primero hay que seleccionar el objeto en el modo de diseño. Luego usar la **herramienta de creación de fuerzas** ![Alt](/menu/force.png).  
+
+Para crear la fuerza hay que clicar en el punto del plano que sera su origen, luego en el punto en que el vector de la fuerza termina, esto es solo para poder definir la dirección del vector de una forma visual, para poder definir la magnitud del vector de una forma más precisa se selecciona el vector y este mostrará en pantalla la ventana para poder editar sus propiedades.  
+
+<img src="force.PNG" class="imgscreen">
+
 ## Articulaciones
 
 El programa permite crear varios tipos de articulaciones para poder simular escenarios mas complejos. Esta es una lista de todas las articulaciones o herramientas para definir relaciones entre dos objetos del simulador.
