@@ -90,9 +90,9 @@ Una vez el objeto esta creado se puede acceder a la ventana para cambiar sus pro
 <img src="poligon.PNG">
 
 + Opciones del simulador
-    - simulación rigurosa para objetos rápidos (Como de rigurosa debe ser la simulación en casos extremos, dejar desmarcada por norma general)
+    - Simulación rigurosa para objetos rápidos (Como de rigurosa debe ser la simulación en casos extremos, dejar desmarcada por norma general)
     - Estado (Dinámico, Kinemático, Estático)
-+ Velocidad lineal
++ Velocidad lineal (en m/s)
     - Velocidad lineal en x 
     - Velocidad lineal en y 
 + Características del material
@@ -100,4 +100,25 @@ Una vez el objeto esta creado se puede acceder a la ventana para cambiar sus pro
     - Densidad (en kg/m^2)
     - Fricción (Coeficiente de fricción, entre 0 y 1)
     - Restitución (Coeficiente de restitución, entre 0 y 1)
+
+La opción de simulación rigurosa para objetos rápidos solo se debe aplicar a aquellos objetos que experimenten comportamientos extraños como atravesar otros objetos. Esta opción le marcará al simulador que sea más riguroso en el momento de calcular las colisiones.
+
+La velocidad lineal es la velocidad inicial del objeto.
+
+Después de cambiar cualquier valor se recomienda pulsar ```Intro``` para que los cambios surtan efecto.
+
+Con el objeto seleccionado se puede pulsar la tecla ```C``` sobre cualquier punto para crear un duplicado del objeto.  
+
+### Simulación
+
+Una vez dispuestos los objetos se puede pasar a la fase de Simulación con pulsar su botón en la barra superior. El fondo cambia a un color negro y la simulación empieza. En esta fase se puede coger objetos con el ratón y manipularlos. El programa muestra las fuerzas que actúan sobre los objetos (excepto las producidas por colisiones).
+
+| Tipo de Fuerza | Color |
+|---|---|
+| Fuerzas descritas por el usuario | Rojo |
+| Fuerza de gravedad | Amarillo |
+| Fuerzas de reacción  | Verde |
+| Tensión de las cuerdas | Naranja |
+
+También puede mostrar el momento lineal de los objetos pulsando la tecla ```I```, por defecto esta función esta desactivada. Si puede parecer muy caótico
 
