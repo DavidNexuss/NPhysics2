@@ -141,9 +141,9 @@ Para crear la fuerza hay que clicar en el punto del plano que sera su origen, lu
         Establece este vector como una incógnita, más adelante se explica esta función.
 + Tipo de vector
     Esta opción permite definir como debe evolucionar la posición del vector conforme se ejecute la simulación:
-        - *Mundial* hace que el vector siempre se aplique en la misma posición mundial (no relativa al objeto).
-        - *Relativa en traslación* hace que el origen del vector sea relativo a la posición y ángulo del objeto pero su dirección será siempre la misma.
-        - *Relativa* hace que el origen y la dirección del vector sean relativos a la posición y rotación del objeto.
+    + *Mundial* hace que el vector siempre se aplique en la misma posición mundial (no relativa al objeto).
+    + *Relativa en traslación* hace que el origen del vector sea relativo a la posición y ángulo del objeto pero su dirección será siempre la misma.
+    + *Relativa* hace que el origen y la dirección del vector sean relativos a la posición y rotación del objeto.
 
 
 
