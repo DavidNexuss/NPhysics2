@@ -129,7 +129,7 @@ Para volver a la fase de diseño solo hay que pulsar su botón en la barra super
 
 Una vez definido el objeto en la fase de edición se le puede añadir fuerzas que se aplicarán en la simulación. Para crear una fuerza primero hay que seleccionar el objeto en el modo de diseño. Luego usar la **herramienta de creación de fuerzas** ![Alt](/menu/force.png).  
 
-Para crear la fuerza hay que clicar en el punto del plano que sera su origen, luego en el punto en que el vector de la fuerza termina, esto es solo para poder definir la dirección del vector de una forma visual, para poder definir la magnitud del vector de una forma más precisa se selecciona el vector y este mostrará en pantalla la ventana para poder editar sus propiedades.  
+Para crear la fuerza hay que clicar en el punto del plano que sera su origen, luego en el punto en que el vector de la fuerza termina, esto es solo para poder definir la dirección del vector de una forma visual, para poder definir la magnitud del vector de una forma más precisa se selecciona el vector y este mostrará en pantalla la ventana para poder editar sus propiedades. El vector seleccionado se pinta de Amarillo. 
 
 <img src="fuerza.PNG" class="imgscreen">
 
@@ -138,9 +138,14 @@ Para crear la fuerza hay que clicar en el punto del plano que sera su origen, lu
 + Establecer vector de fuerza
     Permite establecer las componentes del vector, su módulo y su ángulo, en el caso de que se quiera trabajar con coordenadas cartesianas o polares
     - *Establecer esta fuerza como una incógnita*
-        Establece este vector como una incógnita [¹]
+        Establece este vector como una incógnita, más adelante se explica esta función.
++ Tipo de vector
+    Esta opción permite definir como debe evolucionar la posición del vector conforme se ejecute la simulación:
+        - *Mundial* hace que el vector siempre se aplique en la misma posición mundial (no relativa al objeto).
+        - *Relativa en traslación* hace que el origen del vector sea relativo a la posición y ángulo del objeto pero su dirección será siempre la misma.
+        - *Relativa* hace que el origen y la dirección del vector sean relativos a la posición y rotación del objeto.
 
-[¹]: Esta opción es 
+
 
 ## Articulaciones
 
