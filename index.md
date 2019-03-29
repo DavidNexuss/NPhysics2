@@ -145,6 +145,8 @@ Para crear la fuerza hay que clicar en el punto del plano que sera su origen, lu
     + *Relativa en traslación* hace que el origen del vector sea relativo a la posición y ángulo del objeto pero su dirección será siempre la misma.
     + *Relativa* hace que el origen y la dirección del vector sean relativos a la posición y rotación del objeto.
 
+Una vez modificados los parámetros deseados cierre la ventana con ```Cerrar``` y podrá ver actuar la fuerza en la fase de simulación.
+Para poder eliminar una fuerza hay que seleccionarla y pulsar ```Suprimir```.
 
 
 ## Articulaciones
