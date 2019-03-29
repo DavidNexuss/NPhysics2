@@ -162,7 +162,7 @@ languages: {
 	}
 	pangle: {
 		ENG: Prismatic angle
-		ESP: Angulo prismático
+		ESP: Ángulo prismático
 		CAT: Angle prismàtic
 	}
 	polygon_lvel_x: {
@@ -242,7 +242,7 @@ languages: {
 	}
 	forceangle: {
 		ENG: Force angle
-		ESP: Angulo de la fuerza
+		ESP: Ángulo de la fuerza
 		CAT: Angle de la força
 	}
 	polygon_phys_restitution: {
