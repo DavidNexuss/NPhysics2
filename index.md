@@ -10,7 +10,7 @@ body {
     letter-spacing: 1.5px;
 }
 
-img{
+.imgscreen{
 
     width: 100%
 }
@@ -59,7 +59,7 @@ Este apartado pretende servir como una pequeña guía de uso introductoria para 
 Este apartado tiene como objetivo mostrar la creación de objetos simples, poder modificar sus atributos físicos y mostrar el manejo de los objetos y de las entidades básicas de la fase de diseño de la simulación.
 
 El programa por defecto usará el inglés como lengua, si se desea cambiar de lengua pulse  ```F1``` para mostrar la configuración del programa, modifique el valor ```Language``` usando la barra desplazable y modifique su opción. Una vez hecho los cambios hay que reiniciar el programa para que surtan efecto.  
-<img src="language.PNG">
+<img src="language.PNG" class="imgscreen">
 
 Una vez configurado el idioma el programa esta listo para su uso, a partir de aquí ya no es necesario configurar nada más para usar el programa aunque le recomiendo leer y seguir la guía.  
 
@@ -87,7 +87,7 @@ No hay que preocuparse por crear los puntos por separado si la posición deseada
 
 Una vez el objeto esta creado se puede acceder a la ventana para cambiar sus propiedades físicas con la tecla ```Q```. En esta se muestran varias opciones listadas a continuación:
 
-<img src="poligon.PNG">
+<img src="poligon.PNG" class="imgscreen">
 
 + Opciones del simulador
     - Simulación rigurosa para objetos rápidos (Como de rigurosa debe ser la simulación en casos extremos, dejar desmarcada por norma general)
