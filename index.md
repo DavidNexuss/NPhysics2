@@ -172,3 +172,4 @@ El programa permite crear varios tipos de articulaciones para poder simular esce
 + Muelles
 + Poleas
 
+<iframe width="100%" height="500" src="https://www.youtube.com/embed/fGHbkg4_ygM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
