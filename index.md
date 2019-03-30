@@ -24,6 +24,9 @@ Este es un trabajo de investigación de bachillerato, el propósito de este es l
 ## Ejemplo de un brazo robótico  
 <iframe width="100%" height="500" src="https://www.youtube.com/embed/Fn4RER__GAM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+## Simulación con agua
+<iframe width="100%" height="500" src="https://www.youtube.com/embed/cf9TsXBXMsg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 # Aplicaciones
 
 El programa que he desarrollado permite de una forma eficiente resolver problemas que podrían necesitar de ensayos reales de los que la mayoría seguramente serían destructivos. Tampoco sería justo ni sensato proponer ningún programa informático como sustituto del ensayo empírico de una estructura pero sí permiten muchísima flexibilidad a esta alternativa, se pueden simular gran variedad de estructuras en cuestiones de segundos sin falta de ningún gasto económico o material.
