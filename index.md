@@ -25,6 +25,9 @@ Este es un trabajo de investigación de bachillerato, el propósito de este es l
 
 # Aplicaciones
 
+El programa que he desarrollado permite de una forma eficiente resolver problemas que podrían necesitar de ensayos reales de los que la mayoría seguramente serían destructivos. Tampoco sería justo ni sensato proponer ningún programa informático como sustituto del ensayo empírico de una estructura pero sí permiten muchísima flexibilidad a esta alternativa, se pueden simular gran variedad de estructuras en cuestiones de segundos sin falta de ningún gasto económico o material.
+Por otro lado, también creé el programa con el propósito de que todo el mundo que estuviese interesado en el mundo de la mecánica lo pudiera utilizar y sobre todo poder despertar el interés por la mecánica, la física, y la ciencia en general a un público general.
+
 # Instalación
 
 NPhysics es un programa portable, no es necesaria ninguna interfaz de instalación y se puede ejecutar desde la carpeta contenedora del programa. Se puede o bien descargar la última versión estable ya compilada desde GitHub o compilar el proyecto por uno mismo.
