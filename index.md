@@ -23,15 +23,25 @@ Este es un trabajo de investigación de bachillerato, el propósito de este es l
 ### Ejemplo de un brazo robótico  
 <iframe width="100%" height="500" src="https://www.youtube.com/embed/Fn4RER__GAM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+# Aplicaciones
+
+# Instalación
+
+NPhysics es un programa portable, no es necesaria ninguna interfaz de instalación y se puede ejecutar desde la carpeta contenedora del programa. Se puede o bien descargar la última versión estable ya compilada desde GitHub o compilar el proyecto por uno mismo.
+
 ## Descargar
 
 El programa se puede descargar desde la página de GitHub en su última versión estable ya compilada, en cada lanzamiento existen 3 versiones del programa comprimido:
 
-+ NPhysics.zip (Para descomprimir usando cualquier programa de descompresión)
-+ NPhysics.7z (Para descomprimir usando 7z)
-+ NPhysics.exe (Autoejecutable para Windows que descomprime el programa)
++ *NPhysics.zip* (Para descomprimir usando cualquier programa de descompresión)
++ *NPhysics.7z* (Para descomprimir usando 7z)
++ *NPhysics.exe* (Autoejecutable para Windows que descomprime el programa)
 
 NPhysics esta escrito en Java lo que permite que el programa sea multiplataforma, se puede ejecutar en cualquier distribución de Linux, Windows y MacOS. Siempre y cuando se tenga instalado [JRE](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) o [JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)  
+
+Una vez descargado y descomprimido solo hay que ejecutar el archivo *NPhysics.jar*, por defecto el programa se ejecuta en pantalla pero se puede ejecutar en modo ventana con el archivo *window.bat* (solo en Windows).
+
+También se puede ejecutar desde un terminal escribiendo la orden ```java -jar NPhysics.jar```, en pantalla completa, y ```java -jar NPhysics.jar window```, en modo ventana. 
 ## Para compilar
 
 En caso que se desee usar la última versión del programa en su último commit se puede compilar el programa directamente desde el repositorio.
