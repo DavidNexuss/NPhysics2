@@ -1,6 +1,6 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
 <style>
-.inner {width: 60%;} 
+.inner {width: 1200px;} 
 body {
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 20px;
