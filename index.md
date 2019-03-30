@@ -22,13 +22,13 @@ Este es un trabajo de investigación de bachillerato, el propósito de este es l
 
 # Simulaciones de ejemplo
 ## Ejemplo de un brazo robótico  
-<iframe width="100%" height="500" src="https://www.youtube.com/embed/Fn4RER__GAM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="500" id="1" src="https://www.youtube.com/embed/Fn4RER__GAM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Cálculo del par motor
-<iframe width="100%" height="500" src="https://www.youtube.com/embed/QfJBSMPoN-0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="500" id="2" src="https://www.youtube.com/embed/QfJBSMPoN-0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Simulación con agua
-<iframe width="100%" height="500" src="https://www.youtube.com/embed/cf9TsXBXMsg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="500" id="3" src="https://www.youtube.com/embed/cf9TsXBXMsg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # Aplicaciones
 
@@ -83,7 +83,7 @@ El programa por defecto usará el inglés como lengua, si se desea cambiar de le
 
 Una vez configurado el idioma el programa esta listo para su uso, a partir de aquí ya no es necesario configurar nada más para usar el programa aunque le recomiendo leer y seguir la guía.  
 
-<iframe width="100%" height="500" src="https://www.youtube.com/embed/9XXuS8zimsY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="500" if="4" src="https://www.youtube.com/embed/9XXuS8zimsY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Disposición de los elementos gráficos  
 
@@ -179,4 +179,4 @@ El programa permite crear varios tipos de articulaciones para poder simular esce
 + Muelles
 + Poleas
 
-<iframe width="100%" height="500" src="https://www.youtube.com/embed/fGHbkg4_ygM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="500" if="5" src="https://www.youtube.com/embed/fGHbkg4_ygM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
