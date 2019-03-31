@@ -175,6 +175,8 @@ El programa permite crear varios tipos de articulaciones para poder simular esce
 
 Para la creación de articulaciones es necesario seleccionar los objetos deseados sobre los cuales se aplicará la articulación. Algunas requieren de un objeto seleccionado y otras de 2, para seleccionar dos elementos al mismo tiempo hay que mantener pulsada la tecla ```Shift``` y clicar sobre ambos.
 
+Algunas de estas tienen propiedades que pueden ser modificadas para poder acceder al panel de propiedades de estas hay que seleccionar la articulación y al hacerlo se mostrará el panel.
+
 + Ejes y motores
 + Vías prismáticas
 + Cuerdas
@@ -203,7 +205,16 @@ Las cuerdas no tienen ninguna propiedad definible.
 
 ### Muelles
 
- 
+Los muelles relacionan dos objetos de una forma similar a las cuerdas, solo que en la cuerdas teníamos una tensión aplicada en ambos puntos de soporte cuando se superaba una condición, los muelles por otra parte solo aplican una fuerza a uno de los dos objetos y esta fuerza es proporcional a la distancia que los separa de manera que ```F = -kx``` (la ley de Hooke). Sin entrar en todas las implicaciones de la teoría añadir muelles es bastante sencillo. Hay que seleccionar dos objetos, como se hacia en las cuerdas, solo que esta vez se escoge la herramienta de creación de muelles ![Alt](/menu/spring.png). Una vez escogida al igual que en las cuerdas se selecciona un punto de cada objeto que actuarán como soportes. Una vez hecho el muelle ya estará creado.
+
+Una vez creado se le pueden definir su constante de elasticidad k (N/m). La opción esta en su panel de propiedades.  
+
+Es necesario definir uno de los dos objetos como estático, para que la simulación sepa sobre quien aplicar la fuerza. Se puede combinar con la vía prismática para asegurar el movimiento del objeto en la recta que pasa por los dos puntos de soporte del muelle.
+
+### Poleas
+
+
+
 ## Solucionador de situaciones estáticas
 
 El programa tiene la funcionalidad de calcular el valor exacto que debe tener una fuerza aplicada en un punto y dirección concreto para 
