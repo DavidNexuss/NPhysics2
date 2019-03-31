@@ -177,6 +177,8 @@ Para la creación de articulaciones es necesario seleccionar los objetos deseado
 
 Algunas de estas tienen propiedades que pueden ser modificadas para poder acceder al panel de propiedades de estas hay que seleccionar la articulación y al hacerlo se mostrará el panel.
 
+Una vez en la simulación las articulaciones dibujaran sus fuerzas de reacción (de color verde) en el lugar pertinente.  
+
 + Ejes y motores
 + Vías prismáticas
 + Cuerdas
@@ -213,8 +215,14 @@ Es necesario definir uno de los dos objetos como estático, para que la simulaci
 
 ### Poleas
 
-
+Para crear una polea 
 
 ## Solucionador de situaciones estáticas
 
-El programa tiene la funcionalidad de calcular el valor exacto que debe tener una fuerza aplicada en un punto y dirección concreto para 
+El programa tiene la funcionalidad de calcular el valor exacto que debe tener una fuerza aplicada en un punto y dirección concreto para provocar una situación estática en el objeto deseado. Hay que crear una fuerza que nos servirá de incógnita y definir su dirección, luego el programa se encargara de encontrar su valor para poder cumplir con las condiciones de una situación estática.
+
+Por como funciona el algoritmo que calcula la fuerza solo se puede resolver en situaciones en que intervenga el par que genera esta fuerza, por ejemplo, si todas las fuerzas son definidas sobre el mismo punto incluyendo la incógnita el programa no podrá encontrar valor. Por suerte el conjunto de problemas más interesantes no son de este tipo y el algoritmo los podrá resolver. Si en nuestro problema intervienen varias incógnitas y objetos es recomendable ejecutar el algoritmo por partes, solucionando primero las fuerzas que menos intervengan en el problema.
+
+<iframe width="100%" height="500" src="https://www.youtube.com/embed/dwM0EW825JU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Las fuerzas marcadas como incógnita se renderizan en rojo, para que el programa las calcule o bien se puede pulsar la tecla ```P``` con el objeto seleccionado o pulsando el botón de ```Solucionar``` que hay en el panel de propiedades del objeto.
