@@ -215,7 +215,11 @@ Es necesario definir uno de los dos objetos como estático, para que la simulaci
 
 ### Poleas
 
-Para crear una polea 
+Para crear una polea entre dos objetos se necesita de antemano dos puntos que sirvan de soportes, se pueden crea con la herramienta de crear puntos ![Alt](/menu/point.png), se colocan de la siguiente manera:
+
+Luego hay que seleccionar ambos objetos y escoger la herramienta *polea* ![Alt](/menu/pulley.png), primero seleccionamos un punto del objeto luego su punto de soporte, luego el punto de soporte del objeto secundario y luego un punto del objeto secundario. Una vez hecho este proceso se crea la polea.
+
+El panel de propiedades de la polea tiene una opción para modificar el valor de la relación de transmisión de la polea.
 
 ## Solucionador de situaciones estáticas
 
