@@ -7,8 +7,8 @@ languages: {
 	}
 	forcemod: {
 		ENG: Force modulus
-		ESP: M√≥dulo de la fuerza
-		CAT: M√≤dul de la for√ßa
+		ESP: MÛdulo de la fuerza
+		CAT: MÚdul de la forÁa
 	}
 	menu-create-double-axis: {
 		ENG: Create an axis
@@ -27,8 +27,8 @@ languages: {
 	}
 	simulation: {
 		ENG: Simulation
-		ESP: Simulaci√≥n
-		CAT: Simulaci√≥
+		ESP: SimulaciÛn
+		CAT: SimulaciÛ
 	}
 	frelative: {
 		ENG: Relative
@@ -42,8 +42,8 @@ languages: {
 	}
 	phys_STATIC: {
 		ENG: Static
-		ESP: Est√°tico
-		CAT: Est√†tic
+		ESP: Est·tico
+		CAT: Est‡tic
 	}
 	dsl_solve: {
 		ENG: Solve
@@ -58,7 +58,7 @@ languages: {
 	ftypeset: {
 		ENG: Set vector force type
 		ESP: Establece el tipo de vector de fuerza
-		CAT: Estableix el tipus de vector de for√ßa
+		CAT: Estableix el tipus de vector de forÁa
 	}
 	polygon_phys_mass: {
 		ENG: Mass
@@ -77,8 +77,8 @@ languages: {
 	}
 	ftrelative: {
 		ENG: Translation relative
-		ESP: Relativa en translaci√≥n
-		CAT: Relativa en translaci√≥
+		ESP: Relativa en translaciÛn
+		CAT: Relativa en translaciÛ
 	}
 	menu-create-segments: {
 		ENG: Create a segment with two points
@@ -93,27 +93,27 @@ languages: {
 	forcey: {
 		ENG: Force in y
 		ESP: Fuerza en y
-		CAT: For√ßa en y
+		CAT: ForÁa en y
 	}
 	fvar: {
 		ENG: Set this force as an unknown
-		ESP: Establece esta fuerza como una inc√≥gnita
-		CAT: Estableix aquesta for√ßa com una inc√≤gnita
+		ESP: Establece esta fuerza como una incÛgnita
+		CAT: Estableix aquesta forÁa com una incÚgnita
 	}
 	forcex: {
 		ENG: Force in x
 		ESP: Fuerza en x
-		CAT: For√ßa en x
+		CAT: ForÁa en x
 	}
 	Wforce: {
 		ENG: Configure force vector
 		ESP: Configurar vector de fuerza
-		CAT: Configurar el vector de for√ßa
+		CAT: Configurar el vector de forÁa
 	}
 	force: {
 		ENG: Set force vector
 		ESP: Establecer vector de fuerza
-		CAT: Estableix vector de for√ßa
+		CAT: Estableix vector de forÁa
 	}
 	gridnewtonscale: {
 		ENG: Newtons per each square
@@ -127,13 +127,13 @@ languages: {
 	}
 	phys_KINEMATIC: {
 		ENG: Kinematic
-		ESP: Kinem√°tico
-		CAT: Kinem√†tic
+		ESP: Kinem·tico
+		CAT: Kinem‡tic
 	}
 	menu-create-prismatic: {
 		ENG: Create a prismatic joint
-		ESP: Crea una via prism√°tica
-		CAT: Crea una via prism√†tica
+		ESP: Crea una via prism·tica
+		CAT: Crea una via prism‡tica
 	}
 	originx: {
 		ENG: Origin in x
@@ -157,13 +157,13 @@ languages: {
 	}
 	torque: {
 		ENG: Maximum torque (N-m)
-		ESP: M√°ximo momento (N-m)
-		CAT: M√†xim parell (N-m)
+		ESP: M·ximo momento (N-m)
+		CAT: M‡xim parell (N-m)
 	}
 	pangle: {
 		ENG: Prismatic angle
-		ESP: √Ångulo prism√°tico
-		CAT: Angle prism√†tic
+		ESP: ¡ngulo prism·tico
+		CAT: Angle prism‡tic
 	}
 	polygon_lvel_x: {
 		ENG: Linear Speed in x
@@ -172,13 +172,13 @@ languages: {
 	}
 	menu-create-polygon: {
 		ENG: Create an object in the form of a polygon
-		ESP: Crea un objeto en forma de pol√≠gono
+		ESP: Crea un objeto en forma de polÌgono
 		CAT: Crea un objecte en forma de poligon
 	}
 	Wprismatic: {
 		ENG: Configure prismatic support
-		ESP: Configurar soporte prism√°tico
-		CAT: Configurar suport prism√†tic
+		ESP: Configurar soporte prism·tico
+		CAT: Configurar suport prism‡tic
 	}
 	gridmeterscale: {
 		ENG: Meters per each square
@@ -192,8 +192,8 @@ languages: {
 	}
 	polygon_isbullet: {
 		ENG: Rigorous simulation for rapid objects
-		ESP: Simulaci√≥n rigurosa para objetos r√°pidos
-		CAT: Simulaci√≥ rigurosa para objectes r√†pids
+		ESP: SimulaciÛn rigurosa para objetos r·pidos
+		CAT: SimulaciÛ rigurosa para objectes r‡pids
 	}
 	polygon_sim:{
 		ENG: Simulation Options
@@ -207,8 +207,8 @@ languages: {
 	}
 	polygon_phys:{
 		ENG: Material Characteristics 
-		ESP: Caracter√≠sticas del material
-		CAT: Caracter√≠stiques del material
+		ESP: CaracterÌsticas del material
+		CAT: CaracterÌstiques del material
 	}
 	polygon_lvel_y: {
 		ENG: Linear Speed in y
@@ -227,33 +227,33 @@ languages: {
 	}
 	polygon_phys_friction: {
 		ENG: Friction
-		ESP: Fricci√≥n
-		CAT: Fricci√≥
+		ESP: FricciÛn
+		CAT: FricciÛ
 	}
 	phys_DYNAMIC: {
 		ENG: Dynamic
-		ESP: Din√°mico
-		CAT: Din√†mic
+		ESP: Din·mico
+		CAT: Din‡mic
 	}
 	start: {
 		ENG: Selection mode
-		ESP: Modo de selecci√≥n
-		CAT: Mode de selecci√≥
+		ESP: Modo de selecciÛn
+		CAT: Mode de selecciÛ
 	}
 	forceangle: {
 		ENG: Force angle
-		ESP: √Ångulo de la fuerza
-		CAT: Angle de la for√ßa
+		ESP: ¡ngulo de la fuerza
+		CAT: Angle de la forÁa
 	}
 	polygon_phys_restitution: {
 		ENG: Restitution
-		ESP: Restituci√≥n
-		CAT: Restituci√≥
+		ESP: RestituciÛn
+		CAT: RestituciÛ
 	}
 	menu-create-force: {
 		ENG: Create a force
 		ESP: Crea una fuerza
-		CAT: Crea una for√ßa
+		CAT: Crea una forÁa
 	}
 	ftype: {
 		ENG: Vector type
@@ -282,8 +282,8 @@ languages: {
 	}
 	simoptions:{
 		ENG: Simulation Options
-		ESP: Opciones de la simulaci√≥n
-		CAT: Opcions de la simulaci√≥
+		ESP: Opciones de la simulaciÛn
+		CAT: Opcions de la simulaciÛ
 	}
 	langoptions:{
 		ENG: Language Options
@@ -292,13 +292,13 @@ languages: {
 	}
 	gridscale:{
 		ENG: Grid scale
-		ESP: Escala de la cuadr√≠cula
-		CAT: Escala de la quadr√≠cula
+		ESP: Escala de la cuadrÌcula
+		CAT: Escala de la quadrÌcula
 	}
 	worldwait:{
 		ENG: Simulation step wait
-		ESP: Tiempo de espera en simulaci√≥n
-		CAT: Temps d'espera en simulaci√≥
+		ESP: Tiempo de espera en simulaciÛn
+		CAT: Temps d'espera en simulaciÛ
 	}
 	chooselang:{
 		ENG: Language
@@ -307,33 +307,33 @@ languages: {
 	}
 	simulation-switch-error-title: {
 		ENG: Error in switching from Sandbox to Simulation
-		ESP: Error en cambiar a modo simulaci√≥n
-		CAT: Error en canvia a mode simulaci√≥
+		ESP: Error en cambiar a modo simulaciÛn
+		CAT: Error en canvia a mode simulaciÛ
 	}
 	simulation-switch-error-msg:{
 		ENG: "An error has ocurred when switching to simulation mode."
-		ESP: "Se ha producido en error en cambiar a la simulaci√≥n."
-		CAT: "S'ha produ√Øt un error en canvia al mode simulaci√≥."
+		ESP: "Se ha producido en error en cambiar a la simulaciÛn."
+		CAT: "S'ha produÔt un error en canvia al mode simulaciÛ."
 	}
 	force-error:{
 		ENG: "Check if there's any unresolved force."
-		ESP: "Comprueba que todas las fuerzas tengan valores definidos y no haya ninguna inc√≥gnita."
-		CAT: "Comprova que totes les forces tinguin valors definits i no hi hagi cap inc√≤gnita."
+		ESP: "Comprueba que todas las fuerzas tengan valores definidos y no haya ninguna incÛgnita."
+		CAT: "Comprova que totes les forces tinguin valors definits i no hi hagi cap incÚgnita."
 	}
 	springcomponent-error:{
 		ENG: "All spring must be defined with a Static Object and a Dynamic Object."
-		ESP: "Todos los muelles deben ser definidos entre un objeto est√°tico i uno din√°mico."
-		CAT: "Totes les molles han de ser definides entre un objecte est√†tic i un din√†mic."
+		ESP: "Todos los muelles deben ser definidos entre un objeto est·tico i uno din·mico."
+		CAT: "Totes les molles han de ser definides entre un objecte est‡tic i un din‡mic."
 	}
 	epsilon_exp:{
 		ENG: Algorithm tolerance order
 		ESP: Orden de tolerancia
-		CAT: Ordre de toler√†ncia
+		CAT: Ordre de toler‡ncia
 	}
 	solvejob:{
 		ENG: Static Solver Algorithm
-		ESP: Algoritmo de resoluci√≥n de situaciones est√°ticas
-		CAT: Algoritme de resoluci√≥ de situacions est√†tiques
+		ESP: Algoritmo de resoluciÛn de situaciones est·ticas
+		CAT: Algoritme de resoluciÛ de situacions est‡tiques
 	}
 	spring-form:{
 		ENG: Spring Options
@@ -342,8 +342,8 @@ languages: {
 	}
 	k-constant:{
 		ENG: Recuperation Constant (N/m)
-		ESP: Constante de recuperaci√≥n (N/m)
-		CAT: Constant de recuperaci√≥ (N/m)
+		ESP: Constante de recuperaciÛn (N/m)
+		CAT: Constant de recuperaciÛ (N/m)
 	}
 	menu-create-spring:{
 		ENG: Create a Spring
@@ -362,8 +362,8 @@ languages: {
 	}
 	pulley-ratio:{
 		ENG: Mechanical Advantage
-		ESP: Ventaja mec√°nica
-		CAT: Advantatge mec√†nic
+		ESP: Ventaja mec·nica
+		CAT: Advantatge mec‡nic
 	}
 }
 }
