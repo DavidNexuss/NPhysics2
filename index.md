@@ -187,7 +187,23 @@ Para la creación de articulaciones es necesario seleccionar los objetos deseado
 
 Los ejes fijos son la articulación más fácil de colocar, para definirlos se selecciona el objeto deseado. Una vez seleccionado aparecerá la barra lateral para herramientas que requieran de la selección de un objeto. La primera de ellas es la de *creación de un eje/motor*![Alt](/menu/axis.png) (La misma herramienta hace ambas funciones ya que el funcionar de motor o de eje dependerá de que valor le demos a la propiedad de par motor). Una vez escogida la herramienta para colocarlo es tan simple como clicar en el punto donde se desea el soporte.
 
-Su tabla de propiedades consiste en dos campos para definir su posición relativa al eje de referencia y dos más para definir sus propiedades físicas. La primera es el par motor que hará, si el valor es 0 actuará como eje y si es diferente de 0 como motor. El segundo establece la velocidad angular máxima a la que hará girar este cuerpo el motor (en rad/s)
+Su tabla de propiedades consiste en dos campos para definir su posición relativa al eje de referencia y dos más para definir sus propiedades físicas. La primera es el par motor que hará, si el valor es 0 actuará como eje y si es diferente de 0 como motor. El segundo establece la velocidad angular máxima a la que hará girar este cuerpo el motor (en rad/s).
+
+### Vías prismáticas
+
+Las vías prismáticas limitan el movimiento de un objeto a un solo eje. Para añadir uno a un objeto primero se selecciona el objeto y la herramienta de creación de *vías prismáticas*![Alt](/menu/rollaxis.png). Su colocación es similar sino igual a la de los ejes.  
+
+Las vías prismáticas dibujan sobre su icono una linea roja que indica el eje sobre el que se podrá desplazar el objeto. Su panel de propiedades tiene dos campos para ajustar la posición de la articulación y uno para definir el ángulo de la vía.
+
+### Cuerdas
+
+Las cuerdas unen dos objetos y establecen la distancia máxima que podría haber entre sus dos puntos de soporte, esta es su única implicación física. Para colocar una cuerda se deben seleccionar los dos objetos deseados. Aparecerá un menú para colocar articulaciones que relacionen dos objetos, escoja la herramienta para crear una *cuerda* ![Alt](/menu/segment.png). Para crear la cuerda una vez seleccionada su herramienta hay que clicar los puntos de soporte, primero el del primer objeto y luego el del segundo (el orden es irrelevante). Una vez la cuerda esta colocada se puede modificar moviendo sus puntos de soporte.  
+
+Las cuerdas no tienen ninguna propiedad definible.
+
+### Muelles
+
+ 
 ## Solucionador de situaciones estáticas
 
 El programa tiene la funcionalidad de calcular el valor exacto que debe tener una fuerza aplicada en un punto y dirección concreto para 
