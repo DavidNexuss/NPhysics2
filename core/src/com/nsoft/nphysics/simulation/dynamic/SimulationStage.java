@@ -24,8 +24,10 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.nsoft.nphysics.GridStage;
+import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
+import com.nsoft.nphysics.sandbox.GameState;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PulleyComponent;
 import com.nsoft.nphysics.sandbox.RopeComponent;
@@ -35,6 +37,7 @@ import com.nsoft.nphysics.sandbox.WaterComponent;
 import com.nsoft.nphysics.sandbox.drawables.Pulley;
 import com.nsoft.nphysics.sandbox.drawables.Spring;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
+import com.nsoft.nphysics.sandbox.ui.UIStage;
 /**
  * Fase encarregada de la simulació dinàmica del programa.
  * Es el node central al que tots els elements d'aquesta fase
@@ -143,6 +146,14 @@ public class SimulationStage extends GridStage{
 		initObjects(dynamicSimulation,true);
 		initRawJoints(dynamicSimulation,true);
 		initWater(dynamicSimulation);
+		
+		//UI
+		
+		UIStage.contextMenu.hide();
+		UIStage.doubleContextMenu.hide();
+		UIStage.options.hide();
+		
+		UIStage.operation.setText(NDictionary.get("simulation"));
 	}
 	
 	@Override
@@ -150,6 +161,11 @@ public class SimulationStage extends GridStage{
 		
 		super.clean(); //executa clear(), see DragStage.java
 		simulation = false;
+		
+		//UI
+		
+		UIStage.options.show();
+		UIStage.setOperationText(GameState.current.description);
 	}
 	
 	private void initStage() {

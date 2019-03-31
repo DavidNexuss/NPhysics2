@@ -49,8 +49,8 @@ public class UIStage extends Stage{
 	static Texture nullTexture;
 	static SpriteBatch backBatch;
 	
-	static OptionPane options;
-	static VisLabel operation;
+	public static OptionPane options;
+	public static VisLabel operation;
 	static Table back;
 	public static OptionPane contextMenu;
 	public static OptionPane doubleContextMenu;
@@ -95,7 +95,7 @@ public class UIStage extends Stage{
 		operation.setStyle(new LabelStyle(FontManager.title, Color.WHITE));
 		operation.setColor(Color.BLACK);
 		
-	//	back.add(operation).fill().expand();
+		back.add(operation).fill().expand();
 		
 		addActor(back);
 		
@@ -225,7 +225,7 @@ public class UIStage extends Stage{
 		
 		DragPane p = view.getTabsPane();
 		p.pack();
-		container.add(p).expand().fill();
+		container.add(p).expand().fill().padLeft(5);
 
 		view.initInput();
 		addActor(container);
@@ -404,7 +404,7 @@ public class UIStage extends Stage{
 		getCamera().position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
 		getCamera().update();
 		updateMatrix();
-		container.setPosition(40, Gdx.graphics.getHeight()- 30);
+		container.setPosition(0, Gdx.graphics.getHeight()- 30);
 		view.getTabsPane().setWidth(Gdx.graphics.getWidth());
 		container.setWidth(Gdx.graphics.getWidth());
 		options.setPosition(0, 0);
@@ -412,7 +412,7 @@ public class UIStage extends Stage{
 		options.setWidth(40);
 		
 		contextMenu.setPosition(40, 0);
-		contextMenu.setHeight(Gdx.graphics.getHeight() - 30);
+		contextMenu.setHeight(Gdx.graphics.getHeight() - 20);
 		contextMenu.setWidth(40);
 		contextMenu.setColor(new Color(0.2f, 0.2f, 0.2f, 1));
 		
@@ -424,8 +424,8 @@ public class UIStage extends Stage{
 		back.setPosition(0, 0);
 		back.setSize(Gdx.graphics.getWidth(), 40);
 		
-		grid.setPosition(Gdx.graphics.getWidth() - 40, 8);
-		clean.setPosition(Gdx.graphics.getWidth() - 80, 8);
+		grid.setPosition(Gdx.graphics.getWidth() - 40, 5);
+		clean.setPosition(Gdx.graphics.getWidth() - 80, 5);
 		
 		fps.setPosition(100, Gdx.graphics.getHeight() - 50);
 		

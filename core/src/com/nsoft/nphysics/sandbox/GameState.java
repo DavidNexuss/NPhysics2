@@ -4,7 +4,7 @@ import com.nsoft.nphysics.sandbox.ui.UIStage;
 
 public class GameState {
 
-	static GState current = GState.START;
+	public static GState current = GState.START;
 	
 	static {
 		
