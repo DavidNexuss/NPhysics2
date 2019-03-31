@@ -173,6 +173,8 @@ Para poder eliminar una fuerza hay que seleccionarla y pulsar ```Suprimir```.
 
 El programa permite crear varios tipos de articulaciones para poder simular escenarios mas complejos. Esta es una lista de todas las articulaciones o herramientas para definir relaciones entre dos objetos del simulador.
 
+Para la creación de articulaciones es necesario seleccionar los objetos deseados sobre los cuales se aplicará la articulación. Algunas requieren de un objeto seleccionado y otras de 2, para seleccionar dos elementos al mismo tiempo hay que mantener pulsada la tecla ```Shift``` y clicar sobre ambos.
+
 + Ejes y motores
 + Vías prismáticas
 + Cuerdas
@@ -181,6 +183,11 @@ El programa permite crear varios tipos de articulaciones para poder simular esce
 
 <iframe width="100%" height="500" if="5" src="https://www.youtube.com/embed/fGHbkg4_ygM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+### Ejes y motores
+
+Los ejes fijos son la articulación más fácil de colocar, para definirlos se selecciona el objeto deseado. Una vez seleccionado aparecerá la barra lateral para herramientas que requieran de la selección de un objeto. La primera de ellas es la de *creación de un eje/motor*![Alt](/menu/axis.png) (La misma herramienta hace ambas funciones ya que el funcionar de motor o de eje dependerá de que valor le demos a la propiedad de par motor). Una vez escogida la herramienta para colocarlo es tan simple como clicar en el punto donde se desea el soporte.
+
+Su tabla de propiedades consiste en dos campos para definir su posición relativa al eje de referencia y dos más para definir sus propiedades físicas. La primera es el par motor que hará, si el valor es 0 actuará como eje y si es diferente de 0 como motor. El segundo establece la velocidad angular máxima a la que hará girar este cuerpo el motor (en rad/s)
 ## Solucionador de situaciones estáticas
 
 El programa tiene la funcionalidad de calcular el valor exacto que debe tener una fuerza aplicada en un punto y dirección concreto para 
