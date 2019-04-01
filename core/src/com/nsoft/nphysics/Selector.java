@@ -57,8 +57,6 @@ public class Selector extends Actor implements Say{
 			
 			Vector2 posPoint = new Vector2(point.getX(), point.getY());
 			if(posPoint.x > low.x && posPoint.x < high.x && posPoint.y > low.y && posPoint.y < high.y) {
-				
-				say(posPoint);
 				newList.add(point);
 			}
 		}

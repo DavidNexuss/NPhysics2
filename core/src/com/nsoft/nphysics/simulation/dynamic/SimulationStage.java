@@ -27,6 +27,7 @@ import com.nsoft.nphysics.GridStage;
 import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.sandbox.DoubleAxisComponent;
+import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.GameState;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.PulleyComponent;
@@ -152,7 +153,9 @@ public class SimulationStage extends GridStage{
 		UIStage.contextMenu.hide();
 		UIStage.doubleContextMenu.hide();
 		UIStage.options.hide();
+
 		
+		GameState.set(GState.START);
 		UIStage.operation.setText(NDictionary.get("simulation"));
 	}
 	
