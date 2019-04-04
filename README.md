@@ -39,4 +39,4 @@ Una vez compilado hay que copiar todo el contenido de la carpeta ```desktop/asse
 
 ### Para ejecutar
 
-Para ejecutar el programa ya compilado solo hay que ejecutar la orden ```java -jar desktop1.0```  
+Para ejecutar el programa ya compilado solo hay que ejecutar la orden ```java -jar desktop-1.0```  
