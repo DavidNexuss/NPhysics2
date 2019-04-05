@@ -1,16 +1,11 @@
 package com.nsoft.nphysics.sandbox;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
-import com.nsoft.nphysics.sandbox.interfaces.Related;
 import com.nsoft.nphysics.simulation.dynamic.PolygonObject;
-import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 /**
  * Classe que defineix el component d'un eix doble dins la fase Sandbox.
  * @see PolygonObject

@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.Sandbox;
-import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
 
 public class Selector extends Actor implements Say{
 
@@ -65,7 +64,7 @@ public class Selector extends Actor implements Say{
 		
 		for (Point point : pool) {
 			
-			if(!point.isSelected()) NPhysics.sandbox.mainSelect.setSelected(point);
+			if(!point.isSelected()) Sandbox.mainSelect.setSelected(point);
 		}
 	}
 	@Override

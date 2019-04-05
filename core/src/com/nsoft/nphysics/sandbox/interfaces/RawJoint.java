@@ -1,6 +1,5 @@
 package com.nsoft.nphysics.sandbox.interfaces;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import com.nsoft.nphysics.sandbox.PhysicalActor;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;

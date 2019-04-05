@@ -5,7 +5,8 @@ import com.nsoft.nphysics.sandbox.interfaces.Position;
 
 public class PositionVector extends Vector2 implements Position{
 
-	
+	private static final long serialVersionUID = 1L;
+
 	public PositionVector(float x,float y) {
 		super(x, y);
 	}

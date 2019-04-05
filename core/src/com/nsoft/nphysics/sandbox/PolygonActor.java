@@ -6,9 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.nsoft.nphysics.NPhysics;
-import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 
@@ -29,10 +27,6 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 	private float X,Y,width,height; //BOUNDS
 	
 	private Polygon hitboxPolygon; 
-	
-	private static float axisMargin = 20;
-	
-	private int forceVariableCount;
 	
 	public static PolygonActor temp;
 
@@ -81,14 +75,14 @@ public class PolygonActor extends PhysicalActor<PolygonDefinition>{
 
 	
 	public void updateForceVariableCount() {
-		forceVariableCount = 0;
+		/*forceVariableCount = 0;
 		for (ObjectChildren f : getComponents()) {
 			
 			if(f instanceof ForceComponent) {
 				
 				forceVariableCount += ((ForceComponent) f).isVariable() ? 1 : 0;
 			}
-		}
+		}*/
 	}
 	@Override
 	public boolean isInside(float x, float y) {

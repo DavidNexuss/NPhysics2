@@ -11,8 +11,6 @@ import com.nsoft.nphysics.sandbox.ui.option.UIOptionComponent;
 public class Option extends VisTable{
 
 	UIOptionComponent<?, ?> component;
-	private boolean lastCheck = false;
-	private Label l;
 	Form form;
 	
 	public boolean canCopy = true;

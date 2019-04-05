@@ -9,8 +9,6 @@ public class Grid implements VertexBuffer{
 	private Vector2 point;
 	private float size;
 	private float anglerad;
-	
-	private float[][] vertices;
 	private float[][] buffervertices;
 	
 	public Grid(Vector2 point, float size, float angledeg) {

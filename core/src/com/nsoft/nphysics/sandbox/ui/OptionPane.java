@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kotcrab.vis.ui.widget.Separator;
 import com.kotcrab.vis.ui.widget.VisTable;
-import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.interfaces.Showable;
 

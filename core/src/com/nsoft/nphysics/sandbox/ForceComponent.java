@@ -18,7 +18,6 @@ import com.nsoft.nphysics.sandbox.interfaces.ObjectChildren;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
-import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 
 /**
  * Classe encarregada de definir una força a la fasse Sandbox amb l'objectiu de poder
@@ -37,7 +36,6 @@ public class ForceComponent extends ObjectChildren implements Form{
 	private boolean hook = false;
 	private boolean var;
 	private Label label;
-	private static LabelStyle style;
 	
 	static ForceComponent temp;
 	public static ForceComponent crrnt;
@@ -102,7 +100,6 @@ public class ForceComponent extends ObjectChildren implements Form{
 	}
 	
 	public Vector2 getForce() {return new Vector2(force);}
-	private void setInternalForce(Vector2 f) { force.set(f);}
 	
 	public void setForce(Vector2 v) {
 		

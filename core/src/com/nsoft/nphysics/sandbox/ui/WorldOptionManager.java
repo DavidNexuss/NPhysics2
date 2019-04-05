@@ -2,9 +2,7 @@ package com.nsoft.nphysics.sandbox.ui;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Set;
 
-import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NDictionary.Languages;
 import com.nsoft.nphysics.Options;
 import com.nsoft.nphysics.sandbox.Util;

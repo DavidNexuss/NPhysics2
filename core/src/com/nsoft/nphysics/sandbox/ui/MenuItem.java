@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kotcrab.vis.ui.widget.VisImageButton;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
-import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.sandbox.GState;
 import com.nsoft.nphysics.sandbox.GameState;
@@ -27,8 +25,6 @@ public class MenuItem extends VisImageButton implements Say{
 	
 	private Runnable run;
 	private GState gstate;
-	
-	private Texture texture;
 	
 	private VisLabel label;
 	private VisTable table;
@@ -57,8 +53,6 @@ public class MenuItem extends VisImageButton implements Say{
 	public MenuItem(Texture t) {
 		
 		super(Util.getDrawable(t));
-		texture = t;
-		
 		addInput();
 	}
 	

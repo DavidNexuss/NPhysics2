@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
@@ -19,7 +18,6 @@ import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 import com.nsoft.nphysics.sandbox.ui.BaseOptionWindow;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.Option;
-import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.sandbox.ui.option.UIOptionNumber;
 
 public class SpringComponent extends RawJoint implements ClickIn,Parent<Point>,Form,Ready,Removeable{

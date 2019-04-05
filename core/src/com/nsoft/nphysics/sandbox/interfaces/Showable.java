@@ -3,7 +3,6 @@ package com.nsoft.nphysics.sandbox.interfaces;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.nsoft.nphysics.ThreadManager;
 

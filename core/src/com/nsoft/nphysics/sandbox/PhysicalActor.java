@@ -525,6 +525,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 			p.remove();
 		}
 		
+		@SuppressWarnings("unchecked")
 		ArrayList<Related> rls = (ArrayList<Related>) relateds.clone();
 		
 		for (Related related : rls) {

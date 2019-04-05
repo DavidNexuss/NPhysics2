@@ -36,7 +36,6 @@ import com.nsoft.nphysics.sandbox.SpringComponent;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.WaterComponent;
 import com.nsoft.nphysics.sandbox.drawables.Pulley;
-import com.nsoft.nphysics.sandbox.drawables.Spring;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 /**

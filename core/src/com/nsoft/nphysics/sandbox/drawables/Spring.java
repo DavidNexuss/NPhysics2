@@ -2,25 +2,15 @@ package com.nsoft.nphysics.sandbox.drawables;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.Say;
-import com.nsoft.nphysics.sandbox.Point;
-import com.nsoft.nphysics.sandbox.RopeComponent;
-import com.nsoft.nphysics.sandbox.Sandbox;
-import com.nsoft.nphysics.sandbox.SelectHandle;
 import com.nsoft.nphysics.sandbox.Util;
-import com.nsoft.nphysics.sandbox.interfaces.ClickIn;
-import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
-import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 
 public class Spring implements Say{
 

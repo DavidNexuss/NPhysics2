@@ -1,11 +1,8 @@
 package com.nsoft.nphysics.sandbox;
 
-import java.util.Iterator;
-
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nsoft.nphysics.NPhysics;
-import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 
 /**
  * Classe encarregada de la creació dels cossos a la fase Sandbox.

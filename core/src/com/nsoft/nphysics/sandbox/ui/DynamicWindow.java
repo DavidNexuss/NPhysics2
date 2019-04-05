@@ -26,8 +26,6 @@ public class DynamicWindow extends BaseOptionWindow {
 
 	private static DynamicWindow copyBuffer;
 	
-	private VisTable main;
-	
 	VisImageButton copy;
 	VisImageButton paste;
 	
@@ -165,7 +163,6 @@ public class DynamicWindow extends BaseOptionWindow {
 		table_text.add(copypaste).expand().fill();
 		t.add(table_text).fill();
 		d.add(t).expand().fill();
-		d.main = t;
 		d.addListener(new InputListener() {
 			
 			@Override

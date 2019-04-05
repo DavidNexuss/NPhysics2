@@ -6,22 +6,18 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.GeometryUtils;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.SutherlandHodgman;
-import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.WaterComponent;
 import com.nsoft.nphysics.sandbox.drawables.SimpleArrow;
 import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 import com.nsoft.nphysics.simulation.dynamic.SimulationStage.Simulation;
 
-import earcut4j.Earcut;
 import earcut4j.EarcutFloat;
 
 public class WaterProcessor implements ForceProcessor,Say{

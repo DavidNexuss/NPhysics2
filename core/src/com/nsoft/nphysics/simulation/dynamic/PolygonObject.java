@@ -4,15 +4,11 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Joint;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
@@ -54,14 +50,11 @@ public class PolygonObject extends Actor implements Say{
 	ArrowLabel velLabel;
 	
 	ArrayList<SimulationJoint> simjoints = new ArrayList<>();
-	
-	private Polygon polygon;
 	public PolygonObject(ObjectDefinition def,World owner) {
 		
 		this.owner = owner;
 		this.def = def;
 		def.initForSimulation();
-		polygon = new Polygon();
 		createObject();
 		Vector2 center = new Vector2(b.getMassData().center).add(b.getPosition()).scl(Util.METERS_UNIT());
 		Vector2 force = new Vector2(SimulationStage.gravity).scl(Util.NEWTONS_UNIT()/Util.METERS_UNIT());
@@ -252,7 +245,7 @@ public class PolygonObject extends Actor implements Say{
 		if(bdef.type != BodyType.StaticBody)createJoints();
 	}
 	
-	private BodyType checkStatic(BodyType t) {
+	/*private BodyType checkStatic(BodyType t) {
 		
 		if(t == BodyType.StaticBody || t == BodyType.KinematicBody) return BodyType.StaticBody;
 		int n = 0;
@@ -265,7 +258,7 @@ public class PolygonObject extends Actor implements Say{
 		}
 		
 		return t;
-	}
+	}*/
 	private void createJoints() {
 		
 		

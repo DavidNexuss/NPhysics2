@@ -102,8 +102,8 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		}
 	}
 
-	public Parent getObjectParent() {return getObjectParent(0);}
-	public Parent getObjectParent(int index) {return objectsParent.get(index);}
+	public Parent<?> getObjectParent() {return getObjectParent(0);}
+	public Parent<?> getObjectParent(int index) {return objectsParent.get(index);}
 	
 	public ArrayList<PhysicalActor<?>> getPhysicalParents(){
 		
@@ -136,7 +136,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		
 		if(objectsParent.isEmpty()) return false;
 		
-		for (Parent p : objectsParent) {
+		for (Parent<?> p : objectsParent) {
 			
 			if(Util.isInstance(clas, p)) return true;
 		}
@@ -150,7 +150,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		
 		ArrayList<T> list = new ArrayList<>();
 		
-		for (Parent p : objectsParent) {
+		for (Parent<?> p : objectsParent) {
 			
 			if(p.getClass() == clas) {
 				list.add((T)p);
@@ -159,7 +159,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		
 		return list;
 	}
-	public void removeObjectParent(Parent oldParent) {
+	public void removeObjectParent(Parent<?> oldParent) {
 		
 		int v = -1;
 		for (int i = 0; i < objectsParent.size(); i++) {
@@ -172,8 +172,8 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		if(v != -1) objectsParent.remove(v);
 	}
 	
-	public void setObjectParent(Parent newParent) {addObjectParent(newParent);}
-	public void addObjectParent(Parent newParent) {
+	public void setObjectParent(Parent<Point> newParent) {addObjectParent(newParent);}
+	public void addObjectParent(Parent<Point> newParent) {
 
 		if(!objectsParent.contains(newParent)) objectsParent.add(newParent);
 	}

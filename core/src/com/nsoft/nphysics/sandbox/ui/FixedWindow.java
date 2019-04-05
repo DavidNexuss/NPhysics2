@@ -1,8 +1,5 @@
 package com.nsoft.nphysics.sandbox.ui;
 
-import java.util.HashMap;
-
-import com.kotcrab.vis.ui.widget.VisTable;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 import com.nsoft.nphysics.sandbox.interfaces.Showable;
 
