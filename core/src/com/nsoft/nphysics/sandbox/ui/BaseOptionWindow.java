@@ -39,6 +39,7 @@ public class BaseOptionWindow extends VisWindow implements Showable{
 		p.setForm(form);
 		p.parent = this;
 		options.put(p.getName(), p);
+		Cell<Option> cell = content.add(p).expand().fillX();
 		content.row();
 		updateSize();
 	}
