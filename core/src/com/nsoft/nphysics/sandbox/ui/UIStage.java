@@ -36,11 +36,11 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationStage;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 /**
  * Classe encarregada de renderitzar i manejar tots els elements visuals
- * que formen part de l'intefície d'usuari. A part també es el punt central
- * del paquet destinat a la interfície d'usuari i node principal del que
+ * que formen part de l'intefï¿½cie d'usuari. A part tambï¿½ es el punt central
+ * del paquet destinat a la interfï¿½cie d'usuari i node principal del que
  * tots els elements visuals no controlats per la camara estan afegits.
  * 
- * Gran part del codi d'aquesta classe es basa en construi tota la interfície
+ * Gran part del codi d'aquesta classe es basa en construi tota la interfï¿½cie
  * @author David
  */
 public class UIStage extends Stage{
@@ -129,7 +129,7 @@ public class UIStage extends Stage{
 		addActor(s);
 		labelGroup.setZIndex(10);
 
-		//	setDebugAll(true); //Funció per debugueig
+		//	setDebugAll(true); //Funciï¿½ per debugueig
 
 	}
 	
@@ -178,12 +178,12 @@ public class UIStage extends Stage{
 		addActor(lang);
 	}
 	/**
-	 * Carrega el shader per renderitzar el gradient del fons del menú
+	 * Carrega el shader per renderitzar el gradient del fons del menï¿½
 	 */
 	public static void initBackGroundShader() {
 		
-		 String vertexShader = Gdx.files.internal("shaders/vertexShader").readString();
-	     String fragmentShader = Gdx.files.internal("shaders/backShader").readString();
+		 String vertexShader = Gdx.files.internal("shaders/vertexShader.glsl").readString();
+	     String fragmentShader = Gdx.files.internal("shaders/backShader.glsl").readString();
 	     
 	     backSP = new ShaderProgram(vertexShader, fragmentShader);
 	     ShaderProgram.pedantic = false;
@@ -245,7 +245,7 @@ public class UIStage extends Stage{
 		loadDoubleContextMenu();
 	}
 	/**
-	 * Carrega el menú d'eines
+	 * Carrega el menï¿½ d'eines
 	 */
 	private void loadOptionMenu() {
 		
@@ -296,7 +296,7 @@ public class UIStage extends Stage{
 	}
 	
 	/**
-	 * Afegeix els items del menú d'eines
+	 * Afegeix els items del menï¿½ d'eines
 	 */
 	private void setOptionMenuItems() {
 		
@@ -319,7 +319,7 @@ public class UIStage extends Stage{
 	}
 	
 	/**
-	 * Afegeix els items del segon submenú d'eines
+	 * Afegeix els items del segon submenï¿½ d'eines
 	 */
 	private void setDoubleContextMenuItems() {
 		
@@ -341,7 +341,7 @@ public class UIStage extends Stage{
 	
 	
 	/************************************************
-	 * Funcions per mostrar i ocultar el menú global
+	 * Funcions per mostrar i ocultar el menï¿½ global
 	 **********************************************/
 	private Task t = Task.createEmpty();
 	
@@ -394,7 +394,7 @@ public class UIStage extends Stage{
 	}
 	
 	/**
-	 * Actualitza tot l'esquema per una nova resolució de pantalla
+	 * Actualitza tot l'esquema per una nova resoluciï¿½ de pantalla
 	 */
 	public void updateUILayout() {
 		

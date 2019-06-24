@@ -63,11 +63,11 @@ public abstract class GridStage extends DragStage implements Say{
 	 */
 	public static void initGridShader() {
 		
-		 String vertexShader = Gdx.files.internal("shaders/vertexShader").readString();
-	     String fragmentShader = Gdx.files.internal("shaders/gridShader").readString();
+		 String vertexShader = Gdx.files.internal("shaders/vertexShader.glsl").readString();
+	     String fragmentShader = Gdx.files.internal("shaders/gridShader.glsl").readString();
 	     
 	     gridShader = new ShaderProgram(vertexShader, fragmentShader);
-	     ShaderProgram.pedantic = false; //Per problemes de compilació del shader es recomanable desactivar pedantic
+	     ShaderProgram.pedantic = false; //Per problemes de compilaciï¿½ del shader es recomanable desactivar pedantic
 	     
 	     System.out.println("Shader compiler log: " + gridShader.getLog());
 	     
@@ -82,7 +82,7 @@ public abstract class GridStage extends DragStage implements Say{
 	final Vector3 mousecoord = new Vector3();
 	
 	/**
-	 * Executa les draw calls pertinents per renderitzar la cuadrícula
+	 * Executa les draw calls pertinents per renderitzar la cuadrï¿½cula
 	 */
 	@Override
 	public void draw() {	
@@ -125,7 +125,7 @@ public abstract class GridStage extends DragStage implements Say{
 	@Override
 	public void updateMatrix() {
 		
-		//Actualitza les matrius de projecció de els diferents shaders
+		//Actualitza les matrius de projecciï¿½ de els diferents shaders
 		shapefill.setProjectionMatrix(getCamera().combined);
 		shapeline.setProjectionMatrix(getCamera().combined);
 		shapepoint.setProjectionMatrix(getCamera().combined);
