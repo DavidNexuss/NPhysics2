@@ -121,8 +121,9 @@ public class SpringComponent extends RawJoint implements ClickIn,Parent<Point>,F
 	public void updateValuesToForm() {}
 
 	@Override
-	public void updateValuesFromForm() {
+	public boolean updateValuesFromForm() {
 		
 		k = getForm().getOption("k-constant").getValue();
+		return true;
 	}
 }

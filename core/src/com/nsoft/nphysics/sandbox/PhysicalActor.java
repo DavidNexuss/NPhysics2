@@ -37,6 +37,7 @@ import com.nsoft.nphysics.sandbox.ui.ArrowLabel;
 import com.nsoft.nphysics.sandbox.ui.BaseOptionWindow;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.FontManager;
+import com.nsoft.nphysics.sandbox.ui.Option;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dynamic.CircleDefinition;
@@ -45,27 +46,27 @@ import com.nsoft.nphysics.simulation.dynamic.PolygonDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 
 /**
- * Classe encarregada de definir un cos abstracte que només consta d'una forma i un pes a la fase
+ * Classe encarregada de definir un cos abstracte que nomï¿½s consta d'una forma i un pes a la fase
  * Sandbox.
- * Necessita una classe Genèrica que defineixi quin ha de ser el procediment per crear la seva representació a la simulació
- * @see Definició Circular{@link CircleDefinition}
- * @see Definició poligon tancat {@link PolygonDefinition}
+ * Necessita una classe Genï¿½rica que defineixi quin ha de ser el procediment per crear la seva representaciï¿½ a la simulaciï¿½
+ * @see Definiciï¿½ Circular{@link CircleDefinition}
+ * @see Definiciï¿½ poligon tancat {@link PolygonDefinition}
  * 
- * Hereda Group per poder passar la crida de dibuix i la de act als seus fills, ObjectChildrens. A part també hereda les funcions de renderització
+ * Hereda Group per poder passar la crida de dibuix i la de act als seus fills, ObjectChildrens. A part tambï¿½ hereda les funcions de renderitzaciï¿½
  * Listeners i Animacions d'Actor
- * -Implementa {@link Form} per poder definir un formulari i modificar propietats dins l'aplicació.
+ * -Implementa {@link Form} per poder definir un formulari i modificar propietats dins l'aplicaciï¿½.
  * -Implementa {@link Handler} per poder manejar objectes a ser seleccionats, Eg els seus ObjectChildrens
  * -Implementa {@link ClickIn} per poder ser manejat com a objecte candidat a ser seleccionat per el Handler Superior.
  * -Implementa {@link Parent} per poder rebre actualitzacions de transformacions dels punts associats a l'objecte, tot i que aquesta classe defineix
- * 	de forma abstracta la seva participació
- * -Implementa {@link Removeable} per poder ser seleccionat com a objecte candidat a ser destruit de la simulació ja que inclou un procediment per fer-ho
+ * 	de forma abstracta la seva participaciï¿½
+ * -Implementa {@link Removeable} per poder ser seleccionat com a objecte candidat a ser destruit de la simulaciï¿½ ja que inclou un procediment per fer-ho
  * @author Usuari
  *
  * @param <D>
  */
 public abstract class PhysicalActor<D extends ObjectDefinition> extends Group implements Form,Handler,ClickIn,Draggable,Parent<Point>,Removeable,Say{
 
-	//Colors ja definits de forma estàtica per evitar ser instantiats dins del bucle de renderitzat i augmentar el rendiment.
+	//Colors ja definits de forma estï¿½tica per evitar ser instantiats dins del bucle de renderitzat i augmentar el rendiment.
 	final static Color shape = 		   new Color(0.2f, 0.8f, 0.2f, 0.6f);
 	final static Color shapeSelected = new Color(0.8f, 0.2f, 0.2f, 0.6f);
 	final static Color mightSelected = new Color(0.8f,0.5f,0.2f,0.6f);
@@ -73,7 +74,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	
 	private static String grade = com.nsoft.nphysics.Options.names.grade;
 	private DynamicWindow form; //Formulari
-	private SelectHandle handler; //Objecte encarregat de manejar solicituds de selecció del handler superior.
+	private SelectHandle handler; //Objecte encarregat de manejar solicituds de selecciï¿½ del handler superior.
 	
 	private boolean isEnded = false;
 	private Color currentColor = shape;
@@ -91,11 +92,12 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	private ArrayList<ObjectChildren> components = new ArrayList<>(); //Llista de components associats a aquest objecte
 	private ArrayList<Related> relateds = new ArrayList<>();
 	
-	D definition; //Definició del objecte per a la simulació
+	D definition; //Definiciï¿½ del objecte per a la simulaciï¿½
 	
 	ForceComponent unknown;
 	
 	private float physMass;
+	private String id_name;
 	
 	protected ArrayList<Point> points = new ArrayList<>();
 	
@@ -143,7 +145,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	public boolean isEnded() {return isEnded;}
 	public void end() {
 		
-		if(isEnded) throw new IllegalStateException(); //Necessari per controlar que aquesta funció només es pugui cridar un sol cop
+		if(isEnded) throw new IllegalStateException(); //Necessari per controlar que aquesta funciï¿½ nomï¿½s es pugui cridar un sol cop
 		isEnded = true;
 		for (Point point : points) {
 			point.setObjectParent(this);
@@ -169,6 +171,9 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		form = DynamicWindow.createDefaultWindowStructure(NDictionary.get("Wpolygon"),this);
 		form.setSize(450, 450);
 		
+		form.addOption(Options.createOptionField("id-name"));
+		form.getOption("id-name").setValue(Sandbox.getNewID());
+		
 		form.addText(NDictionary.get("polygon_sim"));
 		form.addOption(Options.createCheckBoxOption("polygon_isbullet"));
 		form.addOption(Options.createOptionTypeSlider("polygon_phys_state", NDictionary.get("phys_DYNAMIC"),NDictionary.get("phys_KINEMATIC"),NDictionary.get("phys_STATIC")));
@@ -190,8 +195,9 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		form.getOption("polygon_phys_density").setValue(definition.density);
 		form.getOption("polygon_phys_friction").setValue(definition.friction);
 		form.getOption("polygon_phys_restitution").setValue(definition.restitution);
-		
-		
+
+		id_name = getValueAsString("id-name");
+
 		VisTable solve_dsl = new VisTable();
 		VisLabel dsl_t = new VisLabel(NDictionary.get("dsl_unknowns"));
 		dsl_t.setStyle(new LabelStyle(FontManager.subtitle, Color.WHITE));
@@ -302,7 +308,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	}
 	Vector2 tempCenter = new Vector2();
 	
-	//Funció necessària per poder rotar el cos entorn a un eix
+	//Funciï¿½ necessï¿½ria per poder rotar el cos entorn a un eix
 	public void hookRotation(boolean hook,boolean useAxisAsPivot) {
 		
 		if(!isEnded()) throw new IllegalStateException("");
@@ -328,7 +334,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		}
 	}
 	public void hookMenu() {}
-	//S'implementa per poder llançar el opcionari
+	//S'implementa per poder llanï¿½ar el opcionari
 	public boolean keyDown(int keycode){
 		
 		if(keycode == Keys.Q) {
@@ -416,6 +422,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		return form;
 	}
 
+	public String getIdName(){return id_name;}
 
 	@Override
 	public void updateValuesToForm() {
@@ -440,8 +447,9 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 	}
 	
 	@Override
-	public void updateValuesFromForm() {
+	public boolean updateValuesFromForm() {
 		
+		boolean ready = true;
 		float newDensity = getValue("polygon_phys_density");
 		
 		float newMass = getValue("polygon_phys_mass");
@@ -478,6 +486,28 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		
 		definition.linearVelocity.set(getValue("polygon_lvel_x"), 
 									  getValue("polygon_lvel_y"));
+
+		String newname = getValueAsString("id-name");
+		boolean change = true;
+		for (PhysicalActor p : NPhysics.sandbox.polygonlist) {
+			
+			if(p == this)continue;
+			if(p.getIdName().equals(newname)){
+				change = false;
+				break;
+			}
+		}
+
+		if(change){
+			id_name = newname;
+			getForm().getOption("id-name").unwarn();
+		}else{
+
+			getForm().getOption("id-name").warn();
+			ready = false;
+		}
+
+		return ready;
 		
 	}
 	public void addComponent(ObjectChildren child) {

@@ -22,6 +22,7 @@ public abstract class UIOptionComponent<T,A extends Actor>{
 	public abstract boolean setValue(T newVal);
 	public abstract void createComponent();
 	
+	public boolean canCopy = true;
 	public UIOptionComponent() {}
 	
 	public void init() {

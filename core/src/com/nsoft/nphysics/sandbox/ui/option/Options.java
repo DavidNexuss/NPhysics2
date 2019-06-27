@@ -12,7 +12,10 @@ public class Options {
 			
 		return new Option(name, new UIOptionNumber());
 	}
+	public static Option createOptionField(String name) {
 		
+		return new Option(name, new UIOptionField());	
+	}
 	public static Option createOptionSlider(String name,float min,float max,float step) {
 			
 		return new Option(name, new UIOptionSlider(min, max, step));
@@ -27,5 +30,4 @@ public class Options {
 			
 		return new Option(name, new UIOptionColorPicker());
 	}
-	
 }

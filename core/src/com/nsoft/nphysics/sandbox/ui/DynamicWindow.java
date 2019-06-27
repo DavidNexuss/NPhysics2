@@ -18,11 +18,12 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.ThreadManager;
 import com.nsoft.nphysics.sandbox.Util;
 import com.nsoft.nphysics.sandbox.interfaces.Form;
 
-public class DynamicWindow extends BaseOptionWindow {
+public class DynamicWindow extends BaseOptionWindow implements Say{
 
 	private static DynamicWindow copyBuffer;
 	
@@ -92,6 +93,7 @@ public class DynamicWindow extends BaseOptionWindow {
 		return hit;
 	}
 
+	public boolean isReady(){return true;}
 	public static DynamicWindow createDefaultWindowStructure(String name,Form form) {
 		
 		final DynamicWindow d = new DynamicWindow(name,form);
@@ -109,6 +111,7 @@ public class DynamicWindow extends BaseOptionWindow {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				
+				if(d.isReady())
 				hideWindow(d);
 				
 			}
@@ -193,8 +196,13 @@ public class DynamicWindow extends BaseOptionWindow {
 			
 			if(!option.getValue().isReady()) return;
 		}
-		w.addAction(Actions.fadeOut(0.5f,Interpolation.exp5)); 
-		if(w.isAForm())w.form.updateValuesFromForm();
+		boolean ready = true; 
+		if(w.isAForm()){
+			ready = w.form.updateValuesFromForm();
+	//		w.say(ready);
+		}
+		if(!ready)return;
+		w.addAction(Actions.fadeOut(0.5f,Interpolation.exp5));
 		ThreadManager.createTask(()->{ 
 			w.setVisible(false);
 			NPhysics.currentStage.setFocus(true);

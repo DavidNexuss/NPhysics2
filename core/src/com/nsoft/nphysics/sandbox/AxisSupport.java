@@ -83,11 +83,12 @@ public class AxisSupport extends ObjectChildren implements Form{
 	
 	//--------------------------FORM--------------------
 	@Override
-	public void updateValuesFromForm() {
+	public boolean updateValuesFromForm() {
 		
 		super.updateValuesFromForm();
 		torque = getForm().getOption("torque").getValue();
 		speed = getForm().getOption("mspeed").getValue();
+		return true;
 	}
 	
 }

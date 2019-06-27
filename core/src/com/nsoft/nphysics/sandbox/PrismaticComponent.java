@@ -85,8 +85,9 @@ public class PrismaticComponent extends ObjectChildren{
 		return angle;
 	}
 	@Override
-	public void updateValuesFromForm() {
+	public boolean updateValuesFromForm() {
 		super.updateValuesFromForm();
 		angle = getForm().getOption("pangle").getValue();
+		return true;
 	}
 }

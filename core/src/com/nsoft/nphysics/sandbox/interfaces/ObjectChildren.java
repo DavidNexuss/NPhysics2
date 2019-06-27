@@ -132,10 +132,11 @@ public abstract class ObjectChildren extends Group implements ClickIn,Form,Remov
 	}
 	
 	@Override
-	public void updateValuesFromForm() {
+	public boolean updateValuesFromForm() {
 		
 		setX(form.getOption("originx").getValue() * Util.METERS_UNIT());
 		setY(form.getOption("originy").getValue() * Util.METERS_UNIT());
+		return true;
 	}
 	@Override
 	public void updateValuesToForm() {}

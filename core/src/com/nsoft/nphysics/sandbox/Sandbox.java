@@ -31,15 +31,17 @@ import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
 
 /**
- * Fase encarregada de gestionar tot el procès de la creació i plantejament del problema
- * a resoldre. Conté una llista de tots els objectes a simular i gestionar l'input en la 
- * selecció d'aquests a part de renderitzar-los a la pantalla.
+ * Fase encarregada de gestionar tot el procï¿½s de la creaciï¿½ i plantejament del problema
+ * a resoldre. Contï¿½ una llista de tots els objectes a simular i gestionar l'input en la 
+ * selecciï¿½ d'aquests a part de renderitzar-los a la pantalla.
  * @author David
  */
 public class Sandbox extends GridStage implements Handler{
 	
 	public ArrayList<PhysicalActor<?>> polygonlist = new ArrayList<>();
 	public static SelectHandle mainSelect = new SelectHandle();
+	public static String defaultid = "object";
+	public static int count = 0;
 //	public static ArrayList<ForceComponent> unknownForcesList = new ArrayList<ForceComponent>();
 	
 	public static SimpleAxis axis;
@@ -49,6 +51,12 @@ public class Sandbox extends GridStage implements Handler{
 	
 	public static BitmapFont bitmapfont;
 	public static Selector selector;
+
+	public static String getNewID(){
+
+		count++;
+		return defaultid + count;
+	}
 	public Sandbox() {
 		
 		super(new ScreenViewport());
@@ -88,7 +96,7 @@ public class Sandbox extends GridStage implements Handler{
 		return false;
 	}
 	/**
-	 * Inicialitza totes les variables necessàries, carrega les textures i afegeix
+	 * Inicialitza totes les variables necessï¿½ries, carrega les textures i afegeix
 	 * a la fase tots els actors temporals
 	 */
 	public void init() {
@@ -108,7 +116,7 @@ public class Sandbox extends GridStage implements Handler{
 		setAxisPosition(axis.getCenter());
 		addActor(axis);
 
-		initdebug(); //per propisits de depuració
+		initdebug(); //per propisits de depuraciï¿½
 
 	}
 	
@@ -196,7 +204,7 @@ public class Sandbox extends GridStage implements Handler{
 		
 	}
 	/*
-	 * Les funcions següents touchDragged touchDown i MouseMove corresponen a la classe
+	 * Les funcions segï¿½ents touchDragged touchDown i MouseMove corresponen a la classe
 	 * Stage i son executades cada cop que l'usuari mou el cursor clica o arrastra.
 	 */
 	@Override
@@ -240,7 +248,7 @@ public class Sandbox extends GridStage implements Handler{
 			else Point.lastPoint = new Point(screenx,screeny, true);
 			addActor(Point.lastPoint);
 			return true;
-		case HOOK_FORCE_ARROW2: //Es finalitza la creació d'una força
+		case HOOK_FORCE_ARROW2: //Es finalitza la creaciï¿½ d'una forï¿½a
 			
 			ArrowActor.unhook();
 			return true;
@@ -258,14 +266,14 @@ public class Sandbox extends GridStage implements Handler{
 			else d.setPosition(screenx, screeny);
 			addActor(d);
 			return true;
-		case CREATE_PRISMATIC: //Es crea una via prismàtica
+		case CREATE_PRISMATIC: //Es crea una via prismï¿½tica
 			
 			PrismaticComponent c = new PrismaticComponent((PhysicalActor<ObjectDefinition>)mainSelect.getLastSelected());
 			if(isSnapping())c.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else c.setPosition(screenx, screeny);
 			addActor(c);
 			return true;
-		case CREATE_FORCE: //Es crea una força
+		case CREATE_FORCE: //Es crea una forï¿½a
 			
 			PhysicalActor<ObjectDefinition> current = (PhysicalActor<ObjectDefinition>)mainSelect.getLastSelected();
 			if(ForceComponent.temp != null) {
@@ -456,10 +464,10 @@ public class Sandbox extends GridStage implements Handler{
 				((Removeable)in).remove();
 			}
 			return true;
-		case Keys.SHIFT_LEFT: //Activa la multiselecció
+		case Keys.SHIFT_LEFT: //Activa la multiselecciï¿½
 			SHIFT = true;
 			return true;
-		case Keys.A: //Mou la mira mòbil
+		case Keys.A: //Mou la mira mï¿½bil
 			axis.hide();
 			final SimpleAxis temp = axis;
 			ThreadManager.createTask(()->{temp.addAction(Actions.removeActor());}, temp.getFadeDuration());
@@ -482,7 +490,7 @@ public class Sandbox extends GridStage implements Handler{
 			
 			actrotate(false);
 			return true;
-		case Keys.S: //Rota l'objecte seleccionat en funció de la mira mòbil
+		case Keys.S: //Rota l'objecte seleccionat en funciï¿½ de la mira mï¿½bil
 			actrotate(true);
 			return true;
 		case Keys.C: //Copia l'objecte
@@ -492,7 +500,7 @@ public class Sandbox extends GridStage implements Handler{
 				addActor(((PolygonActor)mainSelect.getLastSelected()).createCopy(new Vector2(getUnproject())));
 			}
 			return true;
-		case Keys.P: //Resol cualsevol incògnita
+		case Keys.P: //Resol cualsevol incï¿½gnita
 			
 			if(mainSelect.getLastSelected() instanceof PhysicalActor<?>) {
 				SolveJob j = new SolveJob((PhysicalActor<?>)mainSelect.getLastSelected(), ForceComponent.crrnt);
@@ -500,7 +508,7 @@ public class Sandbox extends GridStage implements Handler{
 			}
 			
 			return true;
-		case Keys.O: //Funció antigua per resoldre l'incògnita de forma tradicional
+		case Keys.O: //Funciï¿½ antigua per resoldre l'incï¿½gnita de forma tradicional
 			//@Deprecated
 			//Builder.solve((PolygonActor)mainSelect.getLastSelected());
 		default:
@@ -509,7 +517,7 @@ public class Sandbox extends GridStage implements Handler{
 	}
 	
 	/**
-	 * Funció per assegurar la destrucció del objecte i que el GC el borri de la RAM
+	 * Funciï¿½ per assegurar la destrucciï¿½ del objecte i que el GC el borri de la RAM
 	 */
 	public void destroy() {
 		
@@ -535,7 +543,7 @@ public class Sandbox extends GridStage implements Handler{
 	public boolean keyUp(int keyCode) {
 		
 		switch (keyCode) {
-		case Keys.SHIFT_LEFT: //Desactiva la multiselecció
+		case Keys.SHIFT_LEFT: //Desactiva la multiselecciï¿½
 			mainSelect.cleanArray();
 			SHIFT = false;
 			

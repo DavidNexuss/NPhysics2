@@ -8,7 +8,7 @@ import com.nsoft.nphysics.sandbox.ui.BaseOptionWindow;
 import com.nsoft.nphysics.sandbox.ui.DynamicWindow;
 import com.nsoft.nphysics.sandbox.ui.Option;
 /**
- * Interfície que dona la propietat a una classe de tindre un formulari.
+ * Interfï¿½cie que dona la propietat a una classe de tindre un formulari.
  * @see {@link AxisSupport} {@link ObjectChildren}
  * @author David
  */
@@ -16,10 +16,11 @@ public interface Form {
 
 	public BaseOptionWindow getForm();
 	
-	public default void updateValuesFromForm(HashMap<String, Option> optionsMap) {};
-	public default void updateValuesFromForm() {
+	public default boolean updateValuesFromForm(HashMap<String, Option> optionsMap) { return true;};
+	public default boolean updateValuesFromForm() {
 		
-		if(sendRaw()) updateValuesFromForm(getForm().getOptions());
+		if(sendRaw()) return updateValuesFromForm(getForm().getOptions());
+		return true;
 	};
 	
 	public default boolean sendRaw() {return false;}
@@ -52,5 +53,10 @@ public interface Form {
 	public default float getValue(String optName) {
 		
 		return getForm().getOption(optName).getValue();
+	}
+
+	public default String getValueAsString(String optName) {
+		
+		return getForm().getOption(optName).getValueAsString();
 	}
 }

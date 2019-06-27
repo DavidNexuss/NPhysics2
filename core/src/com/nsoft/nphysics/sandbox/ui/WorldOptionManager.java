@@ -24,7 +24,7 @@ public class WorldOptionManager implements Form{
 		return true;
 	}
 	@Override
-	public void updateValuesFromForm(HashMap<String, Option> optionsMap) {
+	public boolean updateValuesFromForm(HashMap<String, Option> optionsMap) {
 		
 		for (Entry<String, Option> e: optionsMap.entrySet()) {
 		
@@ -65,6 +65,8 @@ public class WorldOptionManager implements Form{
 				break;
 			}
 		}
+
+		return true;
 	}
 
 	@Override

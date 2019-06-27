@@ -20,8 +20,8 @@ import com.nsoft.nphysics.sandbox.ui.option.Options;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 
 /**
- * Classe encarregada de definir una força a la fasse Sandbox amb l'objectiu de poder
- * recrear-la a la simulació
+ * Classe encarregada de definir una forï¿½a a la fasse Sandbox amb l'objectiu de poder
+ * recrear-la a la simulaciï¿½
  * @author David
  */
 public class ForceComponent extends ObjectChildren implements Form{
@@ -146,7 +146,7 @@ public class ForceComponent extends ObjectChildren implements Form{
 	private float lastX,lastY;
 	
 	@Override
-	public void updateValuesFromForm() {
+	public boolean updateValuesFromForm() {
 		super.updateValuesFromForm();
 		
 		var = getForm().getOption("fvar").getValue() == 1;
@@ -191,12 +191,13 @@ public class ForceComponent extends ObjectChildren implements Form{
 		}else {
 			
 			updateValuesToForm();
-			return;
+			return true;
 		}
 	
 		update();
 		
 		updateValuesToForm();
+		return true;
 	}
 	
 	

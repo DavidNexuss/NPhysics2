@@ -121,8 +121,9 @@ public class PulleyComponent extends RawJoint implements ClickIn,Parent<Point>,F
 	}
 	
 	@Override
-	public void updateValuesFromForm() {
+	public boolean updateValuesFromForm() {
 		
 		ratio = getForm().getOption("pulley-ratio").getValue();
+		return true;
 	}
 }
