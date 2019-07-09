@@ -2,4 +2,7 @@ desktop/
 core/
 .gradle/
 build.gradle
+Gemfile
+Gemfile.lock
+_site/
 .vscode/
