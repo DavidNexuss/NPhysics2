@@ -1,0 +1,7 @@
+En aquest treball de recerca em vaig proposar l'objectiu de crear una aplicació d'escriptori en la que l'usuari puguès plantejar una situació de mecànica i el programa executés una simulació en temps real. Tot i que aquest era l'objectiu inicial vaig decidir també incloure la funció de resoldre problemes d'estàtica en els que el programa hauria de calcular el valor concret d'una força o parell per a que el conjunt del problema romangués en repòs.
+
+El meu treball es divideix en dus parts, una pràctica i l'altra teòrica.
+
+La pràctica ques la programació del programa en si, el codi i com resoldre els problemes que he trobat alhora de programar en aquesta apliació en concret. Mentre que en la teòrica he explicat per una banda la base física sobre la que es fonamenten els càlculs i per l'altra l'explicació dels diferents recursos que he utilitzat i la resolució d'alguns problemes generals per a la creació de programes similars. 
+
+El programari es de codi lliure i es pot trobar al repositori de GitHub llistat al final del treball.
