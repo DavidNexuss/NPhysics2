@@ -1,0 +1,25 @@
+Resum
+En aquest treball de recerca em vaig proposar l'objectiu de crear una aplicació d'escriptori en la que l'usuari puguès plantejar una situació de mecànica i el programa executés una simulació en temps real. Tot i que aquest era l'objectiu inicial vaig decidir també incloure la funció de resoldre problemes d'estàtica en els que el programa hauria de calcular el valor concret d'una força o parell per a que el conjunt del problema romangués en repòs.
+
+El meu treball es divideix en dus parts, una pràctica i l'altra teòrica.
+
+La pràctica ques la programació del programa en si, el codi i com resoldre els problemes que he trobat alhora de programar en aquesta apliació en concret. Mentre que en la teòrica he explicat per una banda la base física sobre la que es fonamenten els càlculs i per l'altra l'explicació dels diferents recursos que he utilitzat i la resolució d'alguns problemes generals per a la creació de programes similars. 
+
+El programari es de codi lliure i es pot trobar al repositori de GitHub llistat al final del treball.
+
+Objectius
+
+L’objectiu del meu treball es la creació d’un programa informàtic que permeti a l’usuari simular en temps real situacions dinàmiques apart de donar solució a problemes d’estàtica, només en dues dimensions. Aquests son un conjunt de problemes de mecànica on l’objectiu passa per trobar les condicions necessàries per a que un sistema concret romangui en repòs. Apart d’una implementació bàsica, també tenia com a objectiu la implementació de juntes com els eixos i les vies prismàtiques i després molles i politges, finalment amb la combinació de totes aquestes dins del programa l’usuari hauria de ser capaç de poder crear conjunts més complexos com motors pistons i braços robòtics.
+L’objectiu principal del programa es que tingués una interfície còmoda i senzilla d’utilitzar així tothom podria utilitzar-lo sense gaire dificultat.
+Per a evitar la excessiva complicació que suposaria programar de 0 un motor de físiques 2D en temps real vaig decidir emprar un de ja construït bastant popular en la comunitat anomenat Box2D, que la única i principal funció que té es executar la simulació i calcular les posicions i velocitats dels objectes.
+
+Procediment.
+Una vegada vaig escollir el tema no vaig pensar realment en quin procediment o quin mètode de treball havia de seguir creia que tenia les idees suficientment ordenades dins el meu cap, estava molt determinat a començar a programar com a tal. De fet no vaig ni buscar informació per internet o en altres fonts sobre alternatives a les biblioteques o llenguatges que estava decidit a emprar.
+Però per la extensió del programa que havia d’escriure ràpidament em vaig donar conte que havia de seguir algunes normes per poder portar aquest treball endavant, més que res perquè amb la quantitat de codi que havia d’escriure i les diferents versions que havia de mantenir no podia permetre’m el luxe de ser desordenat i perdre’m en el meu propi codi.  Vaig decidir parar de programar i fer recerca per aprendre parcialment altres llenguatges adequats per al treball i d’altres biblioteques. Però finalment, tenint en compte la meva prèvia experiència en Java i la necessitat d’utilitzar una biblioteca com Libgdx per aquest treball em va portar a raonar que la elecció que havia fet en un primer moment era la correcta. Podria semblar una pèrdua de temps però sens dubte va  ser la decisió encertada.
+Juntament amb aplicacions com Git i Gradle i la utilització de normes a l’hora de nombrar funcions, classes etc, em vaig donar per satisfet amb el marc de treball que havia aconseguit.
+
+Conclusió
+Una vegada finalitzat i presentat el treball puc dir que he aprés a portar el desenvolupament de un programa d’aquesta mida, a utilitzar ferramentes com Git i Gradle i aspectes de Java o de la programació de la GPU i el funcionament de la Graphics Pipeline que desconeixia.
+Tot i així com explico en el treball em vaig quedar amb les ganes d’incloure més funcionalitats de les que tenia previst en un primer moment, però com no em volia quedar amb les ganes de incloure-les dins el programa les vaig afegir setmanes després de la presentació del treball.
+Finalment tot el codi i el programa queden lliures al repositori de GitHub sota una distribució de codi lliure. Allí es pot veure tot el treball commit a commit i les diferents branques del projecte.
+Per acabar dir que estic satisfet amb el meu treball que m’ha servit per aprendre millor conceptes de programació i a part la creació d’una eina gratuïta que tothom podrà utilitzar.
