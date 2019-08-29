@@ -200,7 +200,7 @@ public class UIStage extends Stage{
 		license.addText(NDictionary.get("license-header"));
 		VisTable tbutton = new VisTable();
 
-			VisTextButton button = new VisTextButton("license-button");
+			VisTextButton button = new VisTextButton(NDictionary.get("license"));
 			button.addListener(new ClickListener(){
 				@Override
 				public void clicked(InputEvent event, float x, float y) {

@@ -42,7 +42,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 public class DesktopLauncher {
 	
 	public static void program(String[] arg) {
-		
+
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.useGL30 = true; //OpenGL ES 3.0
 		config.vSyncEnabled = true; //Sincronitzaci� vertical (molt �til en la majoria de casos per� desactivada per debugueig)
@@ -85,11 +85,11 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 	
 		//Execuci� d'un proc�s independent per executar la caratula
-		try {
-			JavaProcess.exec(CreditWindow.class);
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
+		//try {
+		//	JavaProcess.exec(CreditWindow.class);
+		//} catch (IOException | InterruptedException e) {
+		//	e.printStackTrace();
+		//}
 		program(arg);
 	}
 }

@@ -370,8 +370,18 @@ languages: {
 		ESP: Etiqueta
 		CAT: Etiqueta
 	}
+	license:{
+		ENG: "License"
+		ESP: "Licencia"
+		CAT: "llicència"
+	}
+	license-header:{
+		ENG: "Program license GPL v3.0"
+		ESP: "Licencia del programa GPL v3.0"
+		CAT: "Llicència del programa GPL v3.0"
+	}
 	license-message:{
-		CAT: "NPhysics
+		ENG: "NPhysics
 		Copyright (C) 2018  David Garcia Tejeda
 		
 		Contact me at davidgt7d1@gmail.com
@@ -386,6 +396,35 @@ languages: {
 		
 		You should have received a copy of the GNU General Public License
 		along with this program.  If not, see <https://www.gnu.org/licenses/>."
+		ESP: "NPhysics
+		Copyright (C) 2018 David García Tejeda
+		
+		Contáctame en davidgt7d1@gmail.com
+		
+		Este programa es software libre: puede redistribuirlo y / o modificarlo
+		bajo los términos de la Licencia Pública General GNU publicada por
+		Free Software Foundation, ya sea la versión 3 de la Licencia, o
+		(a su elección) cualquier versión posterior. Este programa se distribuye con la esperanza de que sea útil,
+		pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de
+		COMERCIABILIDAD o APTITUD PARA UN PROPÓSITO EN PARTICULAR. Ver el
+		Licencia pública general de GNU para más detalles.
+		
+		Debería haber recibido una copia de la Licencia Pública General de GNU
+		junto con este programa. Si no, vea <https://www.gnu.org/licenses/>."
+		CAT: "Copyright (C) 2018 David Garcia Tejeda
+
+		Poseu-vos en contacte amb mi a davidgt7d1@gmail.com
+		
+		Aquest programa és programari gratuït: podeu redistribuir-lo i / o modificar-lo
+		a les termes de la Llicència Pública General GNU publicada per
+		la Free Software Foundation, sigui la versió 3 de la Llicència, o bé
+		(a la vostra opció) qualsevol versió posterior. Aquest programa es distribueix amb l'esperança que us sigui útil,
+		però SENSE CAP GARANTIA; sense la garantia implícita de
+		COMERCIABILITAT O ADECUACIÓ PER A UNA FINALITAT PARTICULAR. Vegeu el
+		Llicència pública general GNU per a més detalls.
+		
+		Hauríeu d’haver rebut una còpia de la llicència pública general GNU
+		juntament amb aquest programa. Si no, vegeu <https://www.gnu.org/licenses/>."
 	}
 }
 }
