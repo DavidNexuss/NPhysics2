@@ -15,20 +15,3 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
-
-package com.nsoft.nphysics.sandbox.ui;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-
-public class FontManager {
-
-	public static BitmapFont title;
-	public static BitmapFont subtitle;
-	
-	static void init() {
-		
-		title = new BitmapFont(Gdx.files.internal("fonts/title.fnt"));
-		subtitle = new BitmapFont(Gdx.files.internal("fonts/subtitle.fnt"));
-	}
-}
