@@ -32,13 +32,17 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
 import com.kotcrab.vis.ui.widget.VisLabel;
+import com.kotcrab.vis.ui.widget.VisTable;
+import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.nsoft.nphysics.NDictionary;
 import com.nsoft.nphysics.NDictionary.Languages;
 import com.nsoft.nphysics.NPhysics;
@@ -190,10 +194,29 @@ public class UIStage extends Stage{
 		
 		lang.addOption(new Option("chooselang", sli));
 		sli.setValue(v);
+
+		FixedWindow license = new FixedWindow(NDictionary.get("license"),null);
+		license.setPosition(700, Gdx.graphics.getHeight() - 300);
+		license.addText(NDictionary.get("license-header"));
+		VisTable tbutton = new VisTable();
+
+			VisTextButton button = new VisTextButton("license-button");
+			button.addListener(new ClickListener(){
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					AlertWindow.throwNewAlert(NDictionary.get("license"), 
+											  NDictionary.get("license-message"), false);
+				}
+			});
+			tbutton.add(button);
+
+		license.addRawTable(tbutton);
 		menu.addWindow(sim);
 		menu.addWindow(lang);
+		menu.addWindow(license);
 		addActor(sim);
 		addActor(lang);
+		addActor(license);
 	}
 	/**
 	 * Carrega el shader per renderitzar el gradient del fons del men�

@@ -85,7 +85,7 @@ public class NPhysics extends ApplicationAdapter {
 		
 		simulation = new SimulationStage(sandbox.getCamera());
 		simulation.setBackgroundColor(0, 0, 0, 1); //Estableix el fons del programa
-		//per la simulació
+		//per la simulaciï¿½
 		
 		//
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
@@ -94,7 +94,7 @@ public class NPhysics extends ApplicationAdapter {
 	boolean first = true;
 	
 	/**
-	 * Bucle de renderització executat 60 vegades cada segon per executar les draw calls
+	 * Bucle de renderitzaciï¿½ executat 60 vegades cada segon per executar les draw calls
 	 */
 	@Override
 	public void render () {
@@ -107,7 +107,7 @@ public class NPhysics extends ApplicationAdapter {
 		
 		if(first) { System.out.println(first = false);}
 		
-		//Executa els bucles lògics de l'actual fase i la interfas, i executa draw calls.
+		//Executa els bucles lï¿½gics de l'actual fase i la interfas, i executa draw calls.
 		currentStage.draw(); 
 		currentStage.act();
 		ui.draw(); 			
@@ -118,7 +118,7 @@ public class NPhysics extends ApplicationAdapter {
 		
 	}
 	/**
-	 * Amaga o mostra el menu estàtic
+	 * Amaga o mostra el menu estï¿½tic
 	 */
 	public static void switchMenu() {
 		
@@ -131,14 +131,14 @@ public class NPhysics extends ApplicationAdapter {
 		}
 	}
 	/**
-	 * Cambia a la simulació
+	 * Cambia a la simulaciï¿½
 	 */
 	public static void switchToSimulation() {
 		
 		if(!currentStage.isReady()) {
 			
 			//Mostra un misatge d'alerta
-			AlertWindow.throwNewAlert(NDictionary.get("simulation-switch-error-title"), NDictionary.get("simulation-switch-error-msg") + "\n" +sandbox.getLastErrorMessage());
+			AlertWindow.throwNewAlert(NDictionary.get("simulation-switch-error-title"), NDictionary.get("simulation-switch-error-msg") + "\n" +sandbox.getLastErrorMessage(),true);
 			ThreadManager.createTask(()->UIStage.view.switchTab(0), 0.02f);
 			return;
 		}
@@ -186,7 +186,7 @@ public class NPhysics extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(new InputMultiplexer(ui,currentStage));
 	}
 	/**
-	 * Allibera memòria, aquesta funció es crida al tancament del programa
+	 * Allibera memï¿½ria, aquesta funciï¿½ es crida al tancament del programa
 	 */
 	@Override
 	public void dispose () {
@@ -195,7 +195,7 @@ public class NPhysics extends ApplicationAdapter {
 	}
 	
 	/**
-	 * Actualitza els viewports, funció cridada al cambi de tamany de la finestra
+	 * Actualitza els viewports, funciï¿½ cridada al cambi de tamany de la finestra
 	 */
 	@Override
 	public void resize(int width, int height) {

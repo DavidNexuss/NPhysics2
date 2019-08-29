@@ -51,7 +51,7 @@ public class AlertWindow extends VisWindow{
 		addAction(Actions.fadeOut(0.5f, Interpolation.exp5));
 		ThreadManager.createTask(()->{ setVisible(false);}, 0.5f);
 	}
-	public static void throwNewAlert(String title,String message) {
+	public static void throwNewAlert(String title,String message,boolean alert) {
 		
 		int size = 450;
 		int prefsize = (int) (new GlyphLayout(FontManager.title, title).width + 20);
@@ -96,7 +96,7 @@ public class AlertWindow extends VisWindow{
 		NPhysics.ui.addActor(w);
 		w.addAction(Actions.fadeIn(0.3f,Interpolation.exp10));
 		
-		NPhysics.functions.playSound("win.sound.exclamation");
+		if(alert)NPhysics.functions.playSound("win.sound.exclamation");
 		
 	}
 }

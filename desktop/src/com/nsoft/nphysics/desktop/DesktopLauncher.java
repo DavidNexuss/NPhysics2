@@ -33,7 +33,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 /**
  * Punt d'entrada del programa, l'objectiu es crear el context de OpenGL
- * amb la biblioteca LWJGL i passa l'execució del programa a la 
+ * amb la biblioteca LWJGL i passa l'execuciï¿½ del programa a la 
  * classe que actua com adaptador NPhysics.java o en el cas de la caratula
  * del programa Credit.java
  * 
@@ -45,9 +45,9 @@ public class DesktopLauncher {
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.useGL30 = true; //OpenGL ES 3.0
-		config.vSyncEnabled = true; //Sincronització vertical (molt útil en la majoria de casos però desactivada per debugueig)
+		config.vSyncEnabled = true; //Sincronitzaciï¿½ vertical (molt ï¿½til en la majoria de casos perï¿½ desactivada per debugueig)
 		config.backgroundFPS = 10;
-		config.foregroundFPS = 60; //Objectiu màxim de FPS
+		config.foregroundFPS = 60; //Objectiu mï¿½xim de FPS
 		if(arg.length != 0 && arg[0].equals("window")) {
 
 			config.width = 1280; //amplada de la finestra
@@ -58,13 +58,13 @@ public class DesktopLauncher {
 			config.height = Toolkit.getDefaultToolkit().getScreenSize().height;
 			config.fullscreen = true;
 		}
-		config.samples = 4; //Filtre MSAAx4 (Podriem aplicar també un FXAA si la GPU
+		config.samples = 4; //Filtre MSAAx4 (Podriem aplicar tambï¿½ un FXAA si la GPU
 		//fos incompatible
 		
 		NPhysics.functions = new SpecificWindowsFunctions();
 		new LwjglApplication(new NPhysics((task,delay)->{
 			
-			//Format de l'execuicó d'un fil paral·lel @see ThreadManager
+			//Format de l'execuicï¿½ d'un fil paralï¿½lel @see ThreadManager
 			new Thread(new Runnable() {
 				
 				@Override
@@ -84,7 +84,7 @@ public class DesktopLauncher {
 	
 	public static void main (String[] arg) {
 	
-		//Execució d'un procès independent per executar la caratula
+		//Execuciï¿½ d'un procï¿½s independent per executar la caratula
 		try {
 			JavaProcess.exec(CreditWindow.class);
 		} catch (IOException | InterruptedException e) {
