@@ -34,7 +34,7 @@ import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
 
 /**
- * Actor encarregat de definir una posició i dibuixar-hi amb renderització immediata un punt
+ * Actor encarregat de definir una posiciï¿½ i dibuixar-hi amb renderitzaciï¿½ immediata un punt
  * @author David
  */
 public class Point extends Actor implements ClickIn, Position,Removeable, Draggable,Say{
@@ -105,6 +105,13 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		return null;
 		
 	}
+
+	@Override
+	public void setColor(Color color) {
+		base = color;
+		current = base;
+	}
+	private Color base = point;
 	private Color current = point;
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
@@ -194,6 +201,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	public void addObjectParent(Parent<Point> newParent) {
 
 		if(!objectsParent.contains(newParent)) objectsParent.add(newParent);
+		System.out.println("Add object parent: " + hashCode());
 	}
 
 	public void forEveryParent(ParentCall call) {
@@ -223,10 +231,11 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		hit =  x >= -INPUT_RADIUS/2f && x < getWidth() + INPUT_RADIUS/2f && y >= -INPUT_RADIUS/2f && y < getHeight() + INPUT_RADIUS/2f;
 		return hit ? this : null;
 	}
-	//Executa una crida al objecte pare per poder notificar un canvi de posició i executar les comprovasions necessàries de la nova situació
+	//Executa una crida al objecte pare per poder notificar un canvi de posiciï¿½ i executar les comprovasions necessï¿½ries de la nova situaciï¿½
 	public void updatePosition() {
 		
-		if(hasObjectParent())forEveryParent((p)->{p.updatePosition(getX(), getY(), this);});
+		final Point a = this;
+		if(hasObjectParent())forEveryParent((p)->{p.updatePosition(getX(), getY(), a);});
 	}
 
 	@Override
@@ -285,7 +294,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	@Override
 	public void unselect() {
 		
-		current = point;
+		current = base;
 	}
 	@Override
 	public void select(int pointer) {

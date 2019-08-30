@@ -40,6 +40,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.layout.DragPane;
+import com.kotcrab.vis.ui.widget.Menu;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
@@ -347,6 +348,7 @@ public class UIStage extends Stage{
 		options.add(MenuItem.loadNewItem("shape.png", GState.CREATE_FAST_POLYGON));
 		options.add(MenuItem.loadNewItem("circle.png", GState.CREATE_CIRCLE));
 		options.add(MenuItem.loadNewItem("water.png", GState.CREATE_WATER));
+		options.add(MenuItem.loadNewItem("segment.png", GState.CREATE_LINE));
 	}
 
 	/**

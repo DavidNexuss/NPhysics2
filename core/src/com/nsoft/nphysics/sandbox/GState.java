@@ -36,6 +36,7 @@ public enum GState {
 	CREATE_SEGMENTS("menu-create-segments"),
 	CREATE_FORCE("menu-create-force"),
 	CREATE_WATER("menu-create-water"),
+	CREATE_LINE("menu-create-line"),
 	HOOK_FORCE_ARROW("menu-create-force.1"),
 	HOOK_FORCE_ARROW2("menu-create-force.2");	
 	

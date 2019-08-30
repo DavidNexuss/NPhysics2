@@ -153,6 +153,19 @@ public class Sandbox extends GridStage implements Handler{
 		super.addActor(actor);
 	}
 	private void initdebug() {
+
+
+		Point q = new Point(200, 400, false);
+		Point p = new Point(100, 100, false);
+		Line l = new Line(p, q);
+
+		Point k = new Point(600, 100, false);
+		l.addSlavePoint(k);
+
+		addActor(q);
+		addActor(p);
+		addActor(l);
+		addActor(k);
 	/*	PulleyComponent p = new PulleyComponent();
 		
 		Point GroundA = new Point(200, 100, false);
@@ -386,6 +399,9 @@ public class Sandbox extends GridStage implements Handler{
 			addActor(water);
 			
 			SimulationPackage.waterComponents.add(water);
+			return true;
+		case CREATE_LINE:
+				Line.createLine(getUnproject());
 			return true;
 		default:
 			
