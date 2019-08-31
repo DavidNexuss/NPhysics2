@@ -508,7 +508,8 @@ public class Sandbox extends GridStage implements Handler{
 			final SimpleAxis temp = axis;
 			ThreadManager.createTask(()->{temp.addAction(Actions.removeActor());}, temp.getFadeDuration());
 			
-			axis = new SimpleAxis(new PositionVector(getUnproject()));
+			Point k = Point.isThereAPoint(getUnprojectX(), getUnprojectY());
+			axis = new SimpleAxis(new PositionVector(k != null ? k.getVector() : getUnproject()));
 			axis.show();
 			setAxisPosition(axis.getCenter());
 			addActor(axis);
