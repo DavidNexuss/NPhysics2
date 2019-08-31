@@ -155,19 +155,9 @@ public class Sandbox extends GridStage implements Handler{
 	private void initdebug() {
 
 
-		Point q = new Point(200, 400, false);
-		Point p = new Point(100, 100, false);
-		Point c = new Point(150, 300, false);
-		ArcSlaver l = new ArcSlaver(p, q, c);
-
-		Point k = new Point(600, 100, false);
-		l.addSlavePoint(k);
-
-		addActor(q);
-		addActor(p);
-		addActor(l);
-		addActor(k);
-		addActor(c);
+		CircleSlaver cs = new CircleSlaver(Point.getPoint(200, 300), 
+										   Point.getPoint(600, 300));
+		addActor(cs);
 	/*	PulleyComponent p = new PulleyComponent();
 		
 		Point GroundA = new Point(200, 100, false);

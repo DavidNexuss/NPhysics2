@@ -1,5 +1,6 @@
 package com.nsoft.nphysics.sandbox;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
@@ -52,14 +53,16 @@ public class CircleSlaver extends PointSlaver {
     @Override
     public void updateCoeficients() {
         centerBuffer.set(C.getVector());
-        radius = C.getVector().sub(getChildList().get(1).getVector()).len();
+        radius = C.getVector().sub(getMasterPoints().get(1).getVector()).len();
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         
         NPhysics.currentStage.shapeline.begin(ShapeType.Line);
+        NPhysics.currentStage.shapeline.setColor(Color.BLUE);
         NPhysics.currentStage.shapeline.circle(centerBuffer.x, centerBuffer.y, radius);
+        NPhysics.currentStage.shapeline.end();
     }
 
     
