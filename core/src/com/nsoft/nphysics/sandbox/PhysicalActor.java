@@ -558,7 +558,7 @@ public abstract class PhysicalActor<D extends ObjectDefinition> extends Group im
 		
 		NPhysics.sandbox.polygonlist.remove(this);
 		for (Point p : points) {
-			
+			if(p.isSlave() || p.isMaster()) continue;
 			ArrayList<PolygonActor> list = p.getObjectParents(PolygonActor.class);
 			
 			boolean canRemove = true;

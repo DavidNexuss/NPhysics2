@@ -27,6 +27,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.nsoft.nphysics.sandbox.FastPolygonCreator;
 import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.Point;
+import com.nsoft.nphysics.sandbox.PointSlaver;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.ui.AlertWindow;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
@@ -156,11 +157,12 @@ public class NPhysics extends ApplicationAdapter {
 		if(currentStage == simulation) switchToSandbox();
 		
 		sandbox = new Sandbox();
+		currentStage = sandbox;
 		sandbox.setBackgroundColor(0.8f, 0.9f, 1f, 1f);
 		sandbox.init();
 
-		currentStage = sandbox;
 		Point.allpoints = new ArrayList<>();
+		PointSlaver.pointSlavers = new ArrayList<>();
 		ForceComponent.list = new ArrayList<>();
 		FastPolygonCreator.temp = null;
 		

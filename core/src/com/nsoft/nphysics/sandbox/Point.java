@@ -57,7 +57,9 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	static int RADIUS2 = RADIUS*RADIUS;
 	
 	boolean isTemp;
-	
+	private boolean isSlave;
+	private boolean isMaster;
+
 	private ArrayList<Parent<Point>> objectsParent = new ArrayList<>();
 	
 	static int pointCounter = 0;
@@ -143,19 +145,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		}
 		return parent;
 	}
-	public ArrayList<Parent<Point>> getObjectParentList(Class<?> clas){
-		
-		ArrayList<Parent<Point>> parent = new ArrayList<>();
-		
-		for (Parent<Point> p : objectsParent) {
-			
-			if(p.getClass() == clas) {
-				
-				parent.add(p);
-			}
-		}
-		return parent;
-	}
+	
 	public boolean hasObjectParent() {return !objectsParent.isEmpty();}
 	public <T> boolean hasObjectParent(Class<T> clas) { 
 		
@@ -169,6 +159,9 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		return false;
 	}
 	
+	public ArrayList<Parent<Point>> getObjectParents(){
+		return objectsParent;
+	}
 	public <T> ArrayList<T> getObjectParents(Class<T> clas){
 		
 		if(objectsParent.isEmpty()) throw new IllegalStateException();
@@ -221,6 +214,32 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	@Override public void setPosition(float x,float y) { setPosition(x, y, true);}
 	public void setPosition(float x, float y,boolean update) { super.setPosition(x- INPUT_RADIUS/2f, y - INPUT_RADIUS/2f); if(update)updatePosition(); }
 	
+
+	public void setMaster(boolean newMaster){
+
+		if(newMaster != isMaster){
+
+			isMaster = newMaster;
+			testColor();
+		}
+	}
+	public void setSlave(boolean newSlave){
+		
+		if(isSlave != newSlave){
+			
+			isSlave = newSlave;
+			testColor();
+		}
+	}
+
+	public void testColor(){
+
+		if(isMaster){ setColor(Color.RED); return;}
+		if(isSlave) setColor(Color.DARK_GRAY);
+	}
+	
+	public boolean isMaster(){return isMaster;}
+	public boolean isSlave(){ return isSlave;}
 	//----------------------INPUT----------------------
 	
 	boolean hit;

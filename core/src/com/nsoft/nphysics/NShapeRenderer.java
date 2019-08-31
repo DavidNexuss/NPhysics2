@@ -21,8 +21,8 @@ package com.nsoft.nphysics;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
- * Versió modificada de {@link ShapeRenderer} per poder renderitzar cercles tenint en compte
- * paràmetres com el tamany del zoom apart del seu radi.
+ * Versiï¿½ modificada de {@link ShapeRenderer} per poder renderitzar cercles tenint en compte
+ * parï¿½metres com el tamany del zoom apart del seu radi.
  * @author David
  *
  */
@@ -33,8 +33,12 @@ public class NShapeRenderer extends ShapeRenderer{
 		circle(x, y, radius, Math.max(1, segments(radius)));
 	}
 	
+	@Override
+	public void arc(float x, float y, float radius, float start, float degrees) {
+		super.arc(x, y, radius, start, degrees,segments(radius));
+	}
 	/**
-	 * Calcula el nombre de segments optim en funció del zoom del actual Escenari
+	 * Calcula el nombre de segments optim en funciï¿½ del zoom del actual Escenari
 	 * @param radius
 	 * @return El nombre de segments necessaris
 	 */
@@ -43,6 +47,6 @@ public class NShapeRenderer extends ShapeRenderer{
 		int var = (int)(6 * (float)Math.cbrt(radius) * (1 + 1f/ NPhysics.currentStage.camera.zoom));
 		if(var > 200) 
 			return 200;
-		else return var;
+		else return var > 0 ? var : 64;
 	}
 }
