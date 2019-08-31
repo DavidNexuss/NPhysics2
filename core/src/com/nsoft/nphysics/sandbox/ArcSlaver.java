@@ -75,8 +75,19 @@ public class ArcSlaver extends PointSlaver implements Say{
     public void draw(Batch batch, float parentAlpha) {
         
         NPhysics.currentStage.shapeline.begin(ShapeType.Line);
-        NPhysics.currentStage.shapeline.setColor(Color.BLUE);
+        NPhysics.currentStage.shapeline.setColor(getColor());
         NPhysics.currentStage.shapeline.arc(bufferC.x, bufferC.y, radius, start, degrees,32);
         NPhysics.currentStage.shapeline.end();
+    }
+
+    @Override
+    public boolean isInside(float x, float y) {
+        
+        if(!super.isInside(x, y)) return false;
+        
+        float r = (new Vector2(x,y).sub(bufferC)).len();
+
+        float factor = 40 * NPhysics.currentStage.getZoom();
+        return r < radius + factor && r > radius - factor;
     }
 }

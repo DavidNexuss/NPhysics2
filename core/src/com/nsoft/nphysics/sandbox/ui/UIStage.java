@@ -76,6 +76,7 @@ public class UIStage extends Stage{
 	public static VisLabel operation;
 	static Table back;
 	public static OptionPane contextMenu;
+	public static OptionPane mathContextMenu;
 	public static OptionPane doubleContextMenu;
 	public static ViewSelection view;
 	static ShapeRenderer shapefill;
@@ -284,6 +285,7 @@ public class UIStage extends Stage{
 		
 		loadOptionMenu();
 		loadContextMenu();
+		loadMathContextMenu();
 		loadDoubleContextMenu();
 	}
 	/**
@@ -300,6 +302,18 @@ public class UIStage extends Stage{
 		setOptionMenuItems();
 		options.pack();
 		addActor(options);	
+	}
+
+	private void loadMathContextMenu(){
+
+		mathContextMenu = new OptionPane();
+		mathContextMenu.setPosition(Gdx.graphics.getWidth() - 40, 0);	
+		mathContextMenu.setHeight(Gdx.graphics.getHeight());
+		mathContextMenu.setWidth(40);
+		
+		setMathContextMenuItems();
+		mathContextMenu.pack();
+		addActor(mathContextMenu);
 	}
 	/**
 	 * Carrega el submenu d'eines 
@@ -370,6 +384,14 @@ public class UIStage extends Stage{
 		doubleContextMenu.add(MenuItem.loadNewItem("segment.png", GState.CREATE_ROPE));
 		doubleContextMenu.add(MenuItem.loadNewItem("spring.png", GState.CREATE_SPRING));
 		doubleContextMenu.add(MenuItem.loadNewItem("pulley.png", GState.CREATE_PULLEY));
+	}
+
+	private void setMathContextMenuItems(){
+
+		mathContextMenu.add(MenuItem.loadNewItem("line.png", GState.CREATE_LINE));
+		mathContextMenu.add(MenuItem.loadNewItem("mediatrix.png", GState.CREATE_MEDIATRIX));
+		mathContextMenu.add(MenuItem.loadNewItem("circle-blue.png", GState.CREATE_MATH_CIRCLE));
+
 	}
 	private void loadSubMenu() {
 		

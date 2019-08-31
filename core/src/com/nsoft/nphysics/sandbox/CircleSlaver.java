@@ -1,5 +1,6 @@
 package com.nsoft.nphysics.sandbox;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -19,16 +20,13 @@ public class CircleSlaver extends PointSlaver {
 
     static Point A,B;
     public static void createCircle(Vector2 p){
-
-        if(A != null && B != null){
-            NPhysics.currentStage.addActor(new CircleSlaver(A,B));
-            A = null;
-            B = null;
-            return;
-        }
+        
         if(A != null){
             B = Point.getPoint(p.x, p.y);
             NPhysics.currentStage.addActor(B);
+            NPhysics.currentStage.addActor(new CircleSlaver(A,B));
+            A = null;
+            B = null;
             return;
         }
 
@@ -60,10 +58,20 @@ public class CircleSlaver extends PointSlaver {
     public void draw(Batch batch, float parentAlpha) {
         
         NPhysics.currentStage.shapeline.begin(ShapeType.Line);
-        NPhysics.currentStage.shapeline.setColor(Color.BLUE);
+        NPhysics.currentStage.shapeline.setColor(getColor());
         NPhysics.currentStage.shapeline.circle(centerBuffer.x, centerBuffer.y, radius);
         NPhysics.currentStage.shapeline.end();
     }
 
+    @Override
+    public boolean isInside(float x, float y) {
+        
+        if(!super.isInside(x, y)) return false;
+        
+        float r = (new Vector2(x,y).sub(centerBuffer)).len();
+
+        float factor = 40 * NPhysics.currentStage.getZoom();
+        return r < radius + factor && r > radius - factor;
+    }
     
 }

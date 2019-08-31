@@ -46,7 +46,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	}
 	static final Color point = new Color(0.2f, 0.4f, 0.2f, 1f);
 	static final Color pointselected = new Color(0.9f, 0.8f, 0.2f, 1f);
-	static final Color tempColor = new Color(0.2f, 0.8f, 0.2f, 0.2f);
+	public static final Color tempColor = new Color(0.2f, 0.8f, 0.2f, 0.2f);
 
 	public static ArrayList<Point> allpoints = new ArrayList<>();
 	
@@ -90,6 +90,12 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 			
 			p = new Point(x, y, false);
 			NPhysics.currentStage.addActor(p);
+
+			for (PointSlaver sl : PointSlaver.pointSlavers) {
+				if(sl.isInside(x, y)){
+					sl.addSlavePoint(p);
+				}
+			}
 		}
 		
 		return p;
@@ -98,6 +104,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 		
 		for (Point a : allpoints) {
 			
+			if(a.isTemp)continue;
 			if(Math.abs(a.getX() - x) < Point.INPUT_RADIUS && Math.abs(a.getY() - y) < Point.INPUT_RADIUS) {
 				
 				return a;

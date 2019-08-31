@@ -1,0 +1,8 @@
+	public static ArrayList<RawJoint> rawJoints = new ArrayList<>();
+	public static ArrayList<WaterComponent> waterComponents = new ArrayList<>();
+	public static ArrayList<Point> allpoints = new ArrayList<>();
+//	public static ArrayList<ForceComponent> unknownForcesList = new ArrayList<ForceComponent>();
+	public static ArrayList<ForceComponent> list = new ArrayList<>();
+    public static ArrayList<PointSlaver> pointSlavers = new ArrayList<>();
+	public static ArrayList<Task> stackTasks = new ArrayList<>();
+	public static ArrayList<Task> tasks = new ArrayList<>();

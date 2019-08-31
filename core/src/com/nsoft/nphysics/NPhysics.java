@@ -29,6 +29,7 @@ import com.nsoft.nphysics.sandbox.ForceComponent;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PointSlaver;
 import com.nsoft.nphysics.sandbox.Sandbox;
+import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.ui.AlertWindow;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
@@ -146,6 +147,11 @@ public class NPhysics extends ApplicationAdapter {
 		currentStage = simulation;
 		sandbox.clean();
 		simulation.setUp();
+				
+		UIStage.contextMenu.hide();
+		UIStage.doubleContextMenu.hide();
+		UIStage.options.hide();
+		UIStage.mathContextMenu.hide();
 		updateInput();
 	}
 	
@@ -156,15 +162,16 @@ public class NPhysics extends ApplicationAdapter {
 		
 		if(currentStage == simulation) switchToSandbox();
 		
+		Point.allpoints = new ArrayList<>();
+		PointSlaver.pointSlavers = new ArrayList<>();
+		ForceComponent.list = new ArrayList<>();
+		
+		FastPolygonCreator.temp = null;
+
 		sandbox = new Sandbox();
 		currentStage = sandbox;
 		sandbox.setBackgroundColor(0.8f, 0.9f, 1f, 1f);
 		sandbox.init();
-
-		Point.allpoints = new ArrayList<>();
-		PointSlaver.pointSlavers = new ArrayList<>();
-		ForceComponent.list = new ArrayList<>();
-		FastPolygonCreator.temp = null;
 		
 		SimulationPackage.update();
 		updateInput();

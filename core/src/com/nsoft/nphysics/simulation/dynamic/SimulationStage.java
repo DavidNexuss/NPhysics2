@@ -57,14 +57,14 @@ import com.nsoft.nphysics.sandbox.drawables.Pulley;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 /**
- * Fase encarregada de la simulació dinàmica del programa.
+ * Fase encarregada de la simulaciï¿½ dinï¿½mica del programa.
  * Es el node central al que tots els elements d'aquesta fase
  * s'afegeixen.
  * 
- * Conté l'objecte World i les llistes dels objectes.
- * També permet l'utilització no gràfica de les seves instruccions
- * per poder executarles al algoritme de resolució de problemes
- * d'estàtica.
+ * Contï¿½ l'objecte World i les llistes dels objectes.
+ * Tambï¿½ permet l'utilitzaciï¿½ no grï¿½fica de les seves instruccions
+ * per poder executarles al algoritme de resoluciï¿½ de problemes
+ * d'estï¿½tica.
  * @author David
  */
 public class SimulationStage extends GridStage{
@@ -90,8 +90,8 @@ public class SimulationStage extends GridStage{
 		
 	}
 	/**
-	 * Conté la informació única d'una simulació no gràfica, tota la part
-	 * estrictament logística que podrà ser utilitzada en un àmbit no gràfic
+	 * Contï¿½ la informaciï¿½ ï¿½nica d'una simulaciï¿½ no grï¿½fica, tota la part
+	 * estrictament logï¿½stica que podrï¿½ ser utilitzada en un ï¿½mbit no grï¿½fic
 	 * @author David
 	 */
 	public static class Simulation{
@@ -109,7 +109,7 @@ public class SimulationStage extends GridStage{
 		}
 		
 		/**
-		 * Aplica les forces a la simulació
+		 * Aplica les forces a la simulaciï¿½
 		 */
 		public void aplyForces() {
 			
@@ -164,12 +164,6 @@ public class SimulationStage extends GridStage{
 		initObjects(dynamicSimulation,true);
 		initRawJoints(dynamicSimulation,true);
 		initWater(dynamicSimulation);
-		
-		//UI
-		
-		UIStage.contextMenu.hide();
-		UIStage.doubleContextMenu.hide();
-		UIStage.options.hide();
 
 		
 		GameState.set(GState.START);
@@ -197,9 +191,9 @@ public class SimulationStage extends GridStage{
 		return new World(gravity, true);
 	}
 	/**
-	 * Inicialitza tots els objectes de Sandbox dins la simulació s
-	 * @param s La simulació a carregar
-	 * @param dynamicSimulation si es tracta de la simulació per a l'entorn gràfic
+	 * Inicialitza tots els objectes de Sandbox dins la simulaciï¿½ s
+	 * @param s La simulaciï¿½ a carregar
+	 * @param dynamicSimulation si es tracta de la simulaciï¿½ per a l'entorn grï¿½fic
 	 */
 	public static void initObjects(Simulation s,boolean dynamicSimulation) {
 		
@@ -225,9 +219,9 @@ public class SimulationStage extends GridStage{
 		}
 	}
 	/**
-	 * Carrega les joints primeres a la simulació s
-	 * @param s La simulació a carregar
-	 * @param dynamicSimulation si es tracta de la simulació per a l'entorn gràfic
+	 * Carrega les joints primeres a la simulaciï¿½ s
+	 * @param s La simulaciï¿½ a carregar
+	 * @param dynamicSimulation si es tracta de la simulaciï¿½ per a l'entorn grï¿½fic
 	 */
 	public static void initRawJoints(Simulation s,boolean dynamicSimulation) {
 		
@@ -334,7 +328,7 @@ public class SimulationStage extends GridStage{
 	}
 
 	/**
-	 * Executa un step de la simulació
+	 * Executa un step de la simulaciï¿½
 	 */
 	public void stepSimulation() {
 		

@@ -22,9 +22,11 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -154,10 +156,6 @@ public class Sandbox extends GridStage implements Handler{
 	}
 	private void initdebug() {
 
-
-		CircleSlaver cs = new CircleSlaver(Point.getPoint(200, 300), 
-										   Point.getPoint(600, 300));
-		addActor(cs);
 	/*	PulleyComponent p = new PulleyComponent();
 		
 		Point GroundA = new Point(200, 100, false);
@@ -266,6 +264,12 @@ public class Sandbox extends GridStage implements Handler{
 		switch (GameState.current) {
 		case CREATE_POINT: //Es crea un punt no vinculat en cap objecte
 			
+			for (PointSlaver sl : PointSlaver.pointSlavers) {
+				if(sl.isInside(Point.lastPoint.getX(),Point.lastPoint.getY())){
+					sl.addSlavePoint(Point.lastPoint);
+					say("add");
+				}
+			}
 			Point.lastPoint.isTemp = false;
 			if(isSnapping())Point.lastPoint = new Point(snapGrid(screenx),snapGrid(screeny), true);
 			else Point.lastPoint = new Point(screenx,screeny, true);
@@ -392,9 +396,14 @@ public class Sandbox extends GridStage implements Handler{
 			
 			SimulationPackage.waterComponents.add(water);
 			return true;
+		case CREATE_MEDIATRIX:
+				MediatrixSlaver.createMediatrix(getUnproject());
+				return true;
 		case CREATE_LINE:
 				Line.createLine(getUnproject());
 			return true;
+		case CREATE_MATH_CIRCLE:
+				CircleSlaver.createCircle(getUnproject());
 		default:
 			
 			if(GameState.current.fl == Flag.POLYGON) {
@@ -437,6 +446,18 @@ public class Sandbox extends GridStage implements Handler{
 			
 			if(isSnapping())Point.lastPoint.setPosition(snapGrid(screenx),snapGrid(screeny));
 			else Point.lastPoint.setPosition(screenx,screeny);
+
+			boolean normal = true;
+			for (PointSlaver sl : PointSlaver.pointSlavers) {
+				if(sl.isInside(Point.lastPoint.getX(), Point.lastPoint.getY())){
+
+					Point.lastPoint.setColor(Color.DARK_GRAY);
+					normal = false;
+					break;
+				}
+			}
+
+			if(normal) Point.lastPoint.setColor(Point.point);
 		case HOOK_FORCE_ARROW2:
 			
 			ArrowActor.updateHook(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
