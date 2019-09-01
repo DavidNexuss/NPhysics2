@@ -156,6 +156,9 @@ public class Sandbox extends GridStage implements Handler{
 	}
 	private void initdebug() {
 
+
+		VectorLineSlaver sl = new VectorLineSlaver(Point.getPoint(200, 300), new Vector2(100, 200));
+		addActor(sl);
 	/*	PulleyComponent p = new PulleyComponent();
 		
 		Point GroundA = new Point(200, 100, false);

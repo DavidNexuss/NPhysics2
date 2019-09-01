@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
 package com.nsoft.nphysics.sandbox;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -29,11 +30,35 @@ import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.Say;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 
+
+/**
+ * CollisionProfile
+ */
+class CollisionProfile {
+
+    Line A,B;
+    Point collision;
+
+    CollisionProfile(Line A,Line B, Point collision){
+        this.A = A;
+        this.B = B;
+        this.collision = collision;
+        collision.setColor(Color.TEAL);
+        collision.staticPosition = true;
+    }
+
+    public int combined(){
+        return A.hashCode() * B.hashCode();
+    }
+}
 /**
  * Line
  */
 public class Line extends PointSlaver implements  Say {
 
+
+    public static ArrayList<Line> lineList = new ArrayList<>();
+    public static HashMap<Integer,CollisionProfile> map = new HashMap<>();
 
     static final float drawLenght = 200000;
 
@@ -62,6 +87,7 @@ public class Line extends PointSlaver implements  Say {
         startBuffer = new Vector2();
         endBuffer = new Vector2();
         updateCoeficients();
+        lineList.add(this);
     }
 
     public void updateCoeficients(){
@@ -83,8 +109,28 @@ public class Line extends PointSlaver implements  Say {
             startBuffer.set(drawLenght, drawLenght * m + n);
             endBuffer.set(-drawLenght, -drawLenght *m + n);
         }
+
+        collisionCheck();
+
     }
 
+    public void collisionCheck(){
+
+        for (Line other : lineList) {
+
+            Vector2 vc = new Vector2(
+
+                (other.n - n) / (m - other.m),
+                (other.n - n) / (m - other.m) * m + n
+            );
+            if(map.containsKey(hashCode() * other.hashCode())){
+                map.get(hashCode() *other.hashCode()).collision.setPosition(vc.x, vc.y);
+            }else{
+
+                map.put(hashCode() * other.hashCode(), new CollisionProfile(this, other, Point.getPoint(vc.x, vc.y)));
+            }
+        }
+    }
     @Override
     public void adjustSlave(Point k){
         
@@ -118,6 +164,13 @@ public class Line extends PointSlaver implements  Say {
         d/=Math.sqrt((y2 - y1)*(y2 - y1) + (x2 - x1)*(x2 - x1));
 
         return d < 20;
+    }
+
+    @Override
+    public boolean remove() {
+
+        lineList.remove(this);
+        return super.remove();
     }
     
 }

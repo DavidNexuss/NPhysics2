@@ -26,6 +26,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.nsoft.nphysics.sandbox.FastPolygonCreator;
 import com.nsoft.nphysics.sandbox.ForceComponent;
+import com.nsoft.nphysics.sandbox.Line;
 import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.PointSlaver;
 import com.nsoft.nphysics.sandbox.Sandbox;
@@ -165,7 +166,7 @@ public class NPhysics extends ApplicationAdapter {
 		Point.allpoints = new ArrayList<>();
 		PointSlaver.pointSlavers = new ArrayList<>();
 		ForceComponent.list = new ArrayList<>();
-		
+		Line.lineList = new ArrayList<>();
 		FastPolygonCreator.temp = null;
 
 		sandbox = new Sandbox();

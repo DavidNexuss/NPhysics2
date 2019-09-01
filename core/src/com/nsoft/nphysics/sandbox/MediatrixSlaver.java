@@ -10,7 +10,8 @@ public class MediatrixSlaver extends Line{
 
 
 
-    static Point A,B,C;
+    static Point A,B;
+    Point C;
     Vector2 vc;
 
     public static void createMediatrix(Vector2 p){
@@ -36,6 +37,8 @@ public class MediatrixSlaver extends Line{
         Vector2 vq = getMasterPoints().get(0).getVector();
         Vector2 vp = getMasterPoints().get(1).getVector();
         
+        vertical = (vq.x - vp.x) == 0;
+
         m = (vq.y - vp.y) / (vq.x - vp.x);
         m = -1 / m;
 
@@ -48,8 +51,17 @@ public class MediatrixSlaver extends Line{
             C = Point.getPoint(vc.x, vc.y);
             addMasterPoint(C);
         }else C.setPosition(vc.x, vc.y);
-        startBuffer.set(drawLenght, drawLenght * m + n);
-        endBuffer.set(-drawLenght, -drawLenght *m + n);
+        
+        if(vertical){
 
+            startBuffer.set(vp.x,drawLenght);
+            endBuffer.set(vp.x,-drawLenght);
+        }else{
+
+            startBuffer.set(drawLenght, drawLenght * m + n);
+            endBuffer.set(-drawLenght, -drawLenght *m + n);
+        }
+        
+        collisionCheck();
     }
 }

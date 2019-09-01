@@ -59,7 +59,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	boolean isTemp;
 	private boolean isSlave;
 	private boolean isMaster;
-
+	boolean staticPosition = false;
 	private ArrayList<Parent<Point>> objectsParent = new ArrayList<>();
 	
 	static int pointCounter = 0;
@@ -274,6 +274,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	@Override
 	public void doDrag(boolean pool,float x,float y,InputEvent event) {
 		
+		if(staticPosition) return;
 		if(!getHandler().isSelected(this)) getHandler().setSelected(this);
     	
     	if (NPhysics.currentStage.isSnapping()) {
