@@ -25,8 +25,6 @@ public class ArcSlaver extends PointSlaver implements Say{
     float radius,start,degrees;
     Point Q,P,C;
 
-    HashMap<Point,Float> pointMap = new HashMap<>();
-
     public ArcSlaver(Point Q,Point P,Point C){
         super(Q, P);
         this.Q = Q;

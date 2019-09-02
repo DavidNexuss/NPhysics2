@@ -37,7 +37,7 @@ public class MediatrixSlaver extends Line{
         Vector2 vq = getMasterPoints().get(0).getVector();
         Vector2 vp = getMasterPoints().get(1).getVector();
         
-        vertical = (vq.x - vp.x) == 0;
+        vertical = (vq.y - vp.y) == 0;
 
         m = (vq.y - vp.y) / (vq.x - vp.x);
         m = -1 / m;
@@ -54,8 +54,8 @@ public class MediatrixSlaver extends Line{
         
         if(vertical){
 
-            startBuffer.set(vp.x,drawLenght);
-            endBuffer.set(vp.x,-drawLenght);
+            startBuffer.set(vc.x,drawLenght);
+            endBuffer.set(vc.x,-drawLenght);
         }else{
 
             startBuffer.set(drawLenght, drawLenght * m + n);

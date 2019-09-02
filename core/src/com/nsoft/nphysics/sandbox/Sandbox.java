@@ -156,9 +156,6 @@ public class Sandbox extends GridStage implements Handler{
 	}
 	private void initdebug() {
 
-
-		VectorLineSlaver sl = new VectorLineSlaver(Point.getPoint(200, 300), new Vector2(100, 200));
-		addActor(sl);
 	/*	PulleyComponent p = new PulleyComponent();
 		
 		Point GroundA = new Point(200, 100, false);
@@ -411,7 +408,7 @@ public class Sandbox extends GridStage implements Handler{
 			
 			if(GameState.current.fl == Flag.POLYGON) {
 				
-				FastPolygonCreator.handleClick(isSnapping() ? snapGrid(screenx) : screenx, isSnapping() ? snapGrid(screeny) : screeny);
+				FastPolygonCreator.handleClick(isSnapping() ? snapGrid(screenx) : screenx, isSnapping() ? snapGrid(screeny) : screeny, pointer);
 				return true;
 			}
 			if(!super.touchDown(screenX, screenY, pointer, button)) {

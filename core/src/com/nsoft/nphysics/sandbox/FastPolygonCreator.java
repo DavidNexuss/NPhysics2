@@ -18,12 +18,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
 package com.nsoft.nphysics.sandbox;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nsoft.nphysics.NPhysics;
 
 /**
- * Classe encarregada de la creació dels cossos a la fase Sandbox.
+ * Classe encarregada de la creaciï¿½ dels cossos a la fase Sandbox.
  * Gestiona quins passos s'han de seguir davant l'input.
  * @see Sandbox
  * @author David
@@ -34,24 +35,22 @@ public class FastPolygonCreator {
 	public static PhysicalActor<?> temp;
 	
 	/**
-	 * Dunció cridada cada vegada que l'usuari clica a l'escenari per afegir un cos.
-	 * Automatitza el procès de creació i maneig dels cossos.
-	 * Crea un cos si no està creat o l'anterior ja esta finalitzat,
+	 * Dunciï¿½ cridada cada vegada que l'usuari clica a l'escenari per afegir un cos.
+	 * Automatitza el procï¿½s de creaciï¿½ i maneig dels cossos.
+	 * Crea un cos si no estï¿½ creat o l'anterior ja esta finalitzat,
 	 * afegeix punts si el cos no esta finalitzat, en cas de que se seleccioni un punt ja existen
-	 * es reutilitza i per últim finalitza un cos si es selecciona el primer punt d'aquest.
-	 * En cas de que es tracte de la creació d'un cos especial on els punts no defineixen els limits d'aquest,
-	 * per exemple {@link CircleActor} s'utilitza un procés individual.
-	 * @param x posició x del cursor desprojectada
-	 * @param y posició y del cursor desprojectada
+	 * es reutilitza i per ï¿½ltim finalitza un cos si es selecciona el primer punt d'aquest.
+	 * En cas de que es tracte de la creaciï¿½ d'un cos especial on els punts no defineixen els limits d'aquest,
+	 * per exemple {@link CircleActor} s'utilitza un procï¿½s individual.
+	 * @param x posiciï¿½ x del cursor desprojectada
+	 * @param y posiciï¿½ y del cursor desprojectada
 	 */
-	public static void handleClick(float x,float y) {
+	public static void handleClick(float x,float y,int pointer) {
 		
 		if(GameState.is(GState.CREATE_FAST_POLYGON)) {
-			
 			if(temp == null || temp.isEnded()) create();
-			
-			Point p = Point.getPoint(x, y);
 
+			Point p = Point.getPoint(x, y);	
 			temp.addPoint(p);
 			if(temp.isEnded()) NPhysics.currentStage.addActor(temp);
 		}else if(GameState.is(GState.CREATE_CIRCLE)) {
@@ -77,14 +76,14 @@ public class FastPolygonCreator {
 	}
 	
 	/**
-	 * Crea un cos poligonal en forma de circunferència utilitzant PoligonActor
-	 * Aquest métode és extremadament ineficient ja que hem de transformar una circunferència en
-	 * un poligon regular d'un nombre molt alt de vértexs.
+	 * Crea un cos poligonal en forma de circunferï¿½ncia utilitzant PoligonActor
+	 * Aquest mï¿½tode ï¿½s extremadament ineficient ja que hem de transformar una circunferï¿½ncia en
+	 * un poligon regular d'un nombre molt alt de vï¿½rtexs.
 	 * Per crear un cos circular s'utilitza la variant {@link CircleActor}
 	 * 
-	 * Aquesta funció només té un ús per debugueig
-	 * @param center posició mundial del centre de la circunferència
-	 * @param radius radi de la circunferència
+	 * Aquesta funciï¿½ nomï¿½s tï¿½ un ï¿½s per debugueig
+	 * @param center posiciï¿½ mundial del centre de la circunferï¿½ncia
+	 * @param radius radi de la circunferï¿½ncia
 	 */
 	public static void createCircle(Vector2 center,float radius) {
 		

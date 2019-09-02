@@ -138,7 +138,7 @@ public class Line extends PointSlaver implements  Say {
             k.setPosition(getMasterPoints().get(0).getVector().x, k.getY());
         }else{
 
-            k.setPosition(k.getX(), k.getX() * m + n,false);
+            k.setPosition(k.getX(), k.getX() * m + n);
         }
     }
 
