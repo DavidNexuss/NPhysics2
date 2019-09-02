@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-package com.nsoft.nphysics.sandbox;
+package com.nsoft.nphysics.sandbox.math;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,6 +28,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nsoft.nphysics.NPhysics;
 import com.nsoft.nphysics.Say;
+import com.nsoft.nphysics.sandbox.Point;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 
 
@@ -36,10 +37,10 @@ import com.nsoft.nphysics.sandbox.interfaces.Parent;
  */
 class CollisionProfile {
 
-    Line A,B;
+    LineSlaver A,B;
     Point collision;
 
-    CollisionProfile(Line A,Line B, Point collision){
+    CollisionProfile(LineSlaver A,LineSlaver B, Point collision){
         this.A = A;
         this.B = B;
         this.collision = collision;
@@ -52,12 +53,12 @@ class CollisionProfile {
     }
 }
 /**
- * Line
+ * LineSlaver
  */
-public class Line extends PointSlaver implements  Say {
+public class LineSlaver extends PointSlaver implements  Say {
 
 
-    public static ArrayList<Line> lineList = new ArrayList<>();
+    public static ArrayList<LineSlaver> lineList = new ArrayList<>();
     public static HashMap<Integer,CollisionProfile> map = new HashMap<>();
 
     static final float drawLenght = 200000;
@@ -67,20 +68,18 @@ public class Line extends PointSlaver implements  Say {
     float n;
     boolean vertical;
 
-    static Point A,B;
+    static Point Atmp;
     public static void createLine(Vector2 p){
-        if(A != null){
-            B = Point.getPoint(p.x, p.y);
+        if(Atmp != null){
 
-            NPhysics.currentStage.addActor(new Line(A,B));
-            A = null;
-            B = null;
+            NPhysics.currentStage.addActor(new LineSlaver(Atmp,Point.getPoint(p.x, p.y)));
+            Atmp = null;
             return;
         }
 
-        A = Point.getPoint(p.x, p.y);
+        Atmp = Point.getPoint(p.x, p.y);
     }
-    public Line(Point Q,Point P){
+    public LineSlaver(Point Q,Point P){
         super(Q, P);
         startBuffer = new Vector2();
         endBuffer = new Vector2();
@@ -114,7 +113,7 @@ public class Line extends PointSlaver implements  Say {
 
     public void collisionCheck(){
 
-        for (Line other : lineList) {
+        for (LineSlaver other : lineList) {
 
             Vector2 vc = new Vector2(
 

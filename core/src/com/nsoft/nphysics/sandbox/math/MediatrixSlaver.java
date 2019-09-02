@@ -1,32 +1,43 @@
-package com.nsoft.nphysics.sandbox;
+/*NPhysics
+Copyright (C) 2018  David Garcia Tejeda
+
+Contact me at davidgt7d1@gmail.com
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
+
+package com.nsoft.nphysics.sandbox.math;
 
 import com.badlogic.gdx.math.Vector2;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.Point;
 
 /**
  * MediatrixSlaver
  */
-public class MediatrixSlaver extends Line{
+public class MediatrixSlaver extends LineSlaver{
 
-
-
-    static Point A,B;
     Point C;
     Vector2 vc;
 
     public static void createMediatrix(Vector2 p){
-        if(A != null){
-            B = Point.getPoint(p.x, p.y);
-            NPhysics.currentStage.addActor(B);
-
-            NPhysics.currentStage.addActor(new MediatrixSlaver(A,B));
-            A = null;
-            B = null;
+        if(Atmp != null){
+            NPhysics.currentStage.addActor(new MediatrixSlaver(Atmp,Point.getPoint(p.x, p.y)));
+            Atmp = null;
             return;
         }
 
-        A = Point.getPoint(p.x, p.y);
-        NPhysics.currentStage.addActor(A);
+        Atmp = Point.getPoint(p.x, p.y);
     }
     public MediatrixSlaver(Point P,Point Q){
         super(Q, P);

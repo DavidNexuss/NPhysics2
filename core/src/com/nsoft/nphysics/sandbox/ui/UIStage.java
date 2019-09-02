@@ -388,11 +388,11 @@ public class UIStage extends Stage{
 
 	private void setMathContextMenuItems(){
 
-		mathContextMenu.add(MenuItem.loadNewItem("line.png", GState.CREATE_LINE));
-		mathContextMenu.add(MenuItem.loadNewItem("mediatrix.png", GState.CREATE_MEDIATRIX));
-		mathContextMenu.add(MenuItem.loadNewItem("circle-blue.png", GState.CREATE_MATH_CIRCLE));
-		mathContextMenu.add(MenuItem.loadNewItem("arc.png", GState.CREATE_ARC));
-		mathContextMenu.add(MenuItem.loadNewItem("tangent.png", GState.CREATE_TANGENT));
+		mathContextMenu.add(MenuItem.loadNewItem("line.png", GState.CREATE_LINE,true));
+		mathContextMenu.add(MenuItem.loadNewItem("mediatrix.png", GState.CREATE_MEDIATRIX,true));
+		mathContextMenu.add(MenuItem.loadNewItem("circle-blue.png", GState.CREATE_MATH_CIRCLE,true));
+		mathContextMenu.add(MenuItem.loadNewItem("arc.png", GState.CREATE_ARC,true));
+		mathContextMenu.add(MenuItem.loadNewItem("tangent.png", GState.CREATE_TANGENT,true));
 
 	}
 	private void loadSubMenu() {

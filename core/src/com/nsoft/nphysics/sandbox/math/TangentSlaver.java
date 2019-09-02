@@ -16,18 +16,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-package com.nsoft.nphysics.sandbox;
+package com.nsoft.nphysics.sandbox.math;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.nsoft.nphysics.NPhysics;
+import com.nsoft.nphysics.sandbox.Point;
 
 /**
  * TangentSlaver
  */
-public class TangentSlaver extends Line {
+public class TangentSlaver extends LineSlaver {
 
 
     static Point Qtmp;

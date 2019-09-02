@@ -175,11 +175,6 @@ public class SimulationStage extends GridStage{
 		
 		super.clean(); //executa clear(), see DragStage.java
 		simulation = false;
-		
-		//UI
-		
-		UIStage.options.show();
-		UIStage.setOperationText(GameState.current.description);
 	}
 	
 	private void initStage() {

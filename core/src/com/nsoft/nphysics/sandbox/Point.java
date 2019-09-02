@@ -32,6 +32,7 @@ import com.nsoft.nphysics.sandbox.interfaces.Draggable;
 import com.nsoft.nphysics.sandbox.interfaces.Parent;
 import com.nsoft.nphysics.sandbox.interfaces.Position;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
+import com.nsoft.nphysics.sandbox.math.PointSlaver;
 
 /**
  * Actor encarregat de definir una posici� i dibuixar-hi amb renderitzaci� immediata un punt
@@ -59,7 +60,7 @@ public class Point extends Actor implements ClickIn, Position,Removeable, Dragga
 	boolean isTemp;
 	private boolean isSlave;
 	private boolean isMaster;
-	boolean staticPosition = false;
+	public boolean staticPosition = false;
 	private ArrayList<Parent<Point>> objectsParent = new ArrayList<>();
 	
 	static int pointCounter = 0;

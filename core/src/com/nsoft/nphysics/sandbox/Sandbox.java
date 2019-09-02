@@ -46,6 +46,12 @@ import com.nsoft.nphysics.sandbox.interfaces.Handler;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
 import com.nsoft.nphysics.sandbox.interfaces.Ready;
 import com.nsoft.nphysics.sandbox.interfaces.Removeable;
+import com.nsoft.nphysics.sandbox.math.ArcSlaver;
+import com.nsoft.nphysics.sandbox.math.CircleSlaver;
+import com.nsoft.nphysics.sandbox.math.LineSlaver;
+import com.nsoft.nphysics.sandbox.math.MediatrixSlaver;
+import com.nsoft.nphysics.sandbox.math.PointSlaver;
+import com.nsoft.nphysics.sandbox.math.TangentSlaver;
 import com.nsoft.nphysics.simulation.dynamic.ObjectDefinition;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
 import com.nsoft.nphysics.simulation.dynamic.SolveJob;
@@ -400,7 +406,7 @@ public class Sandbox extends GridStage implements Handler{
 				MediatrixSlaver.createMediatrix(getUnproject());
 				return true;
 		case CREATE_LINE:
-				Line.createLine(getUnproject());
+				LineSlaver.createLine(getUnproject());
 			return true;
 		case CREATE_MATH_CIRCLE:
 				CircleSlaver.createCircle(getUnproject());

@@ -26,11 +26,12 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.nsoft.nphysics.sandbox.FastPolygonCreator;
 import com.nsoft.nphysics.sandbox.ForceComponent;
-import com.nsoft.nphysics.sandbox.Line;
+import com.nsoft.nphysics.sandbox.GameState;
 import com.nsoft.nphysics.sandbox.Point;
-import com.nsoft.nphysics.sandbox.PointSlaver;
 import com.nsoft.nphysics.sandbox.Sandbox;
 import com.nsoft.nphysics.sandbox.interfaces.RawJoint;
+import com.nsoft.nphysics.sandbox.math.LineSlaver;
+import com.nsoft.nphysics.sandbox.math.PointSlaver;
 import com.nsoft.nphysics.sandbox.ui.AlertWindow;
 import com.nsoft.nphysics.sandbox.ui.UIStage;
 import com.nsoft.nphysics.simulation.dynamic.SimulationPackage;
@@ -166,7 +167,7 @@ public class NPhysics extends ApplicationAdapter {
 		Point.allpoints = new ArrayList<>();
 		PointSlaver.pointSlavers = new ArrayList<>();
 		ForceComponent.list = new ArrayList<>();
-		Line.lineList = new ArrayList<>();
+		LineSlaver.lineList = new ArrayList<>();
 		FastPolygonCreator.temp = null;
 
 		sandbox = new Sandbox();
@@ -187,6 +188,11 @@ public class NPhysics extends ApplicationAdapter {
 		
 		currentStage = sandbox;
 		simulation.clean();
+		
+		UIStage.options.show();
+		UIStage.setOperationText(GameState.current.description);
+		UIStage.mathContextMenu.show();
+		
 		sandbox.setUp();
 		updateInput();
 	}

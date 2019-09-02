@@ -47,7 +47,8 @@ public class MenuItem extends VisImageButton implements Say{
 	private VisLabel label;
 	private VisTable table;
 	
-	
+	public boolean invertLabel = false;
+
 	public MenuItem(String name,GState gstate) {
 		
 		this(getTexture(name));
@@ -108,6 +109,9 @@ public class MenuItem extends VisImageButton implements Say{
 		super.act(delta);
 		
 		if(table.isVisible()) {
+			if(invertLabel){
+				table.setPosition(Gdx.input.getX() - 70 - table.getPrefWidth(), Gdx.graphics.getHeight() - Gdx.input.getY());
+			}else
 			table.setPosition(Gdx.input.getX() + 70, Gdx.graphics.getHeight() - Gdx.input.getY());
 		}
 	}
@@ -133,6 +137,13 @@ public class MenuItem extends VisImageButton implements Say{
 	public static MenuItem loadNewItem(String name,GState g) {
 		
 		MenuItem m = initMenuItem(name,g);
+		return m;
+		
+	}
+	public static MenuItem loadNewItem(String name,GState g,boolean invert) {
+		
+		MenuItem m = loadNewItem(name, g);
+		m.invertLabel = invert;
 		return m;
 		
 	}

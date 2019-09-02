@@ -380,6 +380,31 @@ languages: {
 		ESP: "Licencia del programa GPL v3.0"
 		CAT: "Llicència del programa GPL v3.0"
 	}
+	menu-create-line:{
+		ENG: "Create straight line with two points"
+		ESP: "Crear una recta con dos puntos"
+		CAT: "Crear una recta amb dos punts"
+	}
+	menu-create-mediatrix:{
+		ENG: "Create a mediatrix between two points"
+		ESP: "Crear una mediatriz entre dos puntos"
+		CAT: "Crear una mediatriu entre dos punts"
+	}
+	menu-create-arc:{
+		ENG: "Create an arc using three points"
+		ESP: "Crear un arco usando tres puntos"
+		CAT: "Crear un arc amb tres punts"
+	}
+	menu-create-tangent:{
+		ENG: "Create a perpendicular line using two points"
+		ESP: "Crear una recta perpendicular con dos puntos"
+		CAT: "Crear una recta perpendicular amb dos punts"
+	}
+	menu-create-math-circle:{
+		ENG: "Ceath a circle using two points"
+		ESP: "Crear una circunferencia usando dos puntos"
+		CAT: "Crear una circunferència utilitzant dos punts"
+	}
 	license-message:{
 		ENG: "NPhysics
 		Copyright (C) 2018  David Garcia Tejeda
