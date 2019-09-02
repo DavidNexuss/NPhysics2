@@ -25,6 +25,23 @@ public class ArcSlaver extends PointSlaver implements Say{
     float radius,start,degrees;
     Point Q,P,C;
 
+    static Point aq,ap;
+
+    public static void createArcSlaver(Vector2 vc){
+
+        if(aq == null){
+            aq = Point.getPoint(vc.x, vc.y);
+            return;
+        }
+        if(ap == null){
+            ap = Point.getPoint(vc.x, vc.y);
+            return;
+        }
+
+        NPhysics.currentStage.addActor(new ArcSlaver(aq, ap, Point.getPoint(vc.x, vc.y)));
+        ap = null;
+        aq = null;
+    }
     public ArcSlaver(Point Q,Point P,Point C){
         super(Q, P);
         this.Q = Q;
@@ -48,6 +65,8 @@ public class ArcSlaver extends PointSlaver implements Say{
 
         float w = k.getVector().sub(bufferC).angle();
        // System.out.println(w);
+
+        w = Math.max(Math.min(start + degrees, w), start);
 
         k.setPosition(MathUtils.cos(w * MathUtils.degRad) * radius + bufferC.x, 
                       MathUtils.sin(w * MathUtils.degRad) * radius + bufferC.y);

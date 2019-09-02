@@ -112,12 +112,14 @@ public abstract class PointSlaver extends Actor implements Parent<Point>, ClickI
         super.remove();
         for (Point m : masterPoints) {
             
+            m.removeObjectParent(this);
             if(m.getObjectParents().size() > 1) continue;
             m.remove();
         }
 
         for (Point m : slavePoints) {
             
+            m.removeObjectParent(this);
             if(m.getObjectParents().size() > 1) continue;
             m.remove();
         }

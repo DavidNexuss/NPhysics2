@@ -71,7 +71,6 @@ public class Line extends PointSlaver implements  Say {
     public static void createLine(Vector2 p){
         if(A != null){
             B = Point.getPoint(p.x, p.y);
-            NPhysics.currentStage.addActor(B);
 
             NPhysics.currentStage.addActor(new Line(A,B));
             A = null;
@@ -80,7 +79,6 @@ public class Line extends PointSlaver implements  Say {
         }
 
         A = Point.getPoint(p.x, p.y);
-        NPhysics.currentStage.addActor(A);
     }
     public Line(Point Q,Point P){
         super(Q, P);

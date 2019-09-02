@@ -391,6 +391,7 @@ public class UIStage extends Stage{
 		mathContextMenu.add(MenuItem.loadNewItem("line.png", GState.CREATE_LINE));
 		mathContextMenu.add(MenuItem.loadNewItem("mediatrix.png", GState.CREATE_MEDIATRIX));
 		mathContextMenu.add(MenuItem.loadNewItem("circle-blue.png", GState.CREATE_MATH_CIRCLE));
+		mathContextMenu.add(MenuItem.loadNewItem("arc.png", GState.CREATE_ARC));
 
 	}
 	private void loadSubMenu() {
