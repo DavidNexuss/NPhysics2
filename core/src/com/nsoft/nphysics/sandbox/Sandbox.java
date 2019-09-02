@@ -404,8 +404,13 @@ public class Sandbox extends GridStage implements Handler{
 			return true;
 		case CREATE_MATH_CIRCLE:
 				CircleSlaver.createCircle(getUnproject());
+				return true;
 		case CREATE_ARC:
 				ArcSlaver.createArcSlaver(getUnproject());
+				return true;
+		case CREATE_TANGENT:
+				TangentSlaver.createTangentSlaver(getUnproject());
+				return true;
 		default:
 			
 			if(GameState.current.fl == Flag.POLYGON) {

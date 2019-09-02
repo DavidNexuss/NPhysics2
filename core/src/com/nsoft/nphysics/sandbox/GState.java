@@ -39,6 +39,7 @@ public enum GState {
 	CREATE_LINE("menu-create-line"),
 	CREATE_MEDIATRIX("menu-create-mediatrix"),
 	CREATE_ARC("menu-create-arc"),
+	CREATE_TANGENT("menu-create-tangent"),
 	CREATE_MATH_CIRCLE("menu-create-math-circle"),
 	HOOK_FORCE_ARROW("menu-create-force.1"),
 	HOOK_FORCE_ARROW2("menu-create-force.2");	
